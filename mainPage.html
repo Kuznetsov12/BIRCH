@@ -164,7 +164,7 @@
 
 </head>
 <body class="overflow-x-hidden">
-<div class="flex flex-col w-full">
+<div class="flex flex-col w-full mx-auto max-w-[1920px]">
 <section class="h-screen bg-cover bg-center bg-no-repeat relative flex flex-col" style="background-image: url('./src/img/mainPageFirst.png'); background-size: cover;">
   <header class="w-full flex justify-center pt-8" role="banner">
     <nav class="flex items-center max-w-[1700px] w-full h-[109px] px-8 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
@@ -219,10 +219,8 @@
       </div>
     </div>
   </div>
-</section>
-
-<section class="w-full bg-black border-t border-[#2D2D2D]">
-  <div class="max-w-[1700px] mx-auto px-8">
+  <div class="w-full bg-black border-t border-[#2D2D2D]">
+      <div class="max-w-[1700px] mx-auto px-8">
     <div class="grid grid-cols-4 text-white">
       <div class="text-center py-12 border-r border-[#2D2D2D] h-full flex flex-col justify-center">
         <div class="text-4xl font-bold mb-2">
@@ -250,11 +248,17 @@
       </div>
     </div>
   </div>
+  </div>
 </section>
-
 <!-- Секция "Твоя роль в экологии" -->
-<section class="w-full bg-white bg-right bg-no-repeat min-h-[700px] flex items-center relative" style="background-image: url('./src/img/tree.jpg'); background-size: 600px auto; background-position: calc(100% + 100px) center;">
-  <div class="max-w-[1700px] mx-auto px-8 w-full relative z-10">
+<section class="w-full bg-white min-h-[700px] flex items-center relative overflow-visible">
+  <!-- Деревья справа -->
+  <div class="absolute right-[-12px] top-0 w-[1200px] h-full">
+    <img src="./src/img/firstTree.png" alt="" class="absolute right-0 top-0 w-[600px] h-full object-cover z-10">
+    <img src="./src/img/secondTree.png" alt="" class="absolute right-[44px] top-[-150px] w-[600px] h-[calc(100%+150px)] object-cover z-20">
+  </div>
+  
+  <div class="max-w-[1700px] mx-auto px-8 w-full relative z-30">
     <div class="max-w-[1000px]">
       <!-- Заголовок секции -->
       <div class="flex items-center mb-6 gap-2">
@@ -281,11 +285,17 @@
     </div>
   </div>
 </section>
-
 <!-- Секция с пользователями и их достижениями -->
-<section class="leaderboard-section w-full py-20 relative" style="background-image: url('./src/img/bgSectionTree.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+<section class="leaderboard-section w-full py-20 relative bg-black overflow-hidden">
+  <!-- Зеленые фоновые круги -->
+     <div class="absolute bottom-60 -right-80 w-[600px] h-[600px] rounded-full blur-[600px] opacity-60"
+       style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div> 
+  <div class="absolute top-60 -left-80 w-[600px] h-[600px] rounded-full blur-[600px] opacity-60"
+       style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
 
-  <div class="max-w-full overflow-hidden">
+
+
+  <div class="max-w-full overflow-hidden relative z-10">
     <!-- Бегущая строка с пользователями -->
     <div class="relative overflow-hidden mb-16">
       <div class="flex animate-scroll">
@@ -406,7 +416,7 @@
     </div>
     
     <!-- Основной контент -->
-    <div class="text-left max-w-[1700px] mx-auto px-8">
+    <div class="text-left max-w-[1700px] mx-auto px-8 relative z-10">
       <div class="flex items-center justify-between w-full">
         <h2 class="text-6xl w-[80%] font-normal text-white tracking-tighter opacity-20 mb-12 max-w-3xl">
           Смотри, сколько деревьев уже<br>
@@ -419,7 +429,7 @@
         </button>
       </div>
     </div>
-  </div>
+  </div>  
 </section>
 
 <!-- Секция CO₂ калькулятор -->
@@ -484,7 +494,7 @@
 
   <!-- Контент слева -->
   <div class="relative z-10 max-w-[800px] text-white space-y-8 ">
-    <h2 class="text-6xl max-w-[1000px] font-normal text-white/50">Что происходит с <br> природой Казахстана</h2>
+    <h2 class="text-6xl max-w-[1000px] font-normal text-white opacity-20">Что происходит с <br> природой Казахстана</h2>
 
     <div class="space-y-6 max-w-[580px]">
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
@@ -504,7 +514,7 @@
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
           <h3 class="text-5xl mb-3 font-normal text-green-500">2024</h3>
-          <p class="text-lg font-normal text-white/70">BIRCH посадили 318 000 деревьев, снизили эмиссию <br> на 3 млн тонн CO₂, открыли 12 регионов высадки.</p>
+          <p class="text-lg font-normal text-white">BIRCH посадили 318 000 деревьев, снизили эмиссию <br> на 3 млн тонн CO₂, открыли 12 регионов высадки.</p>
         </div>
         <img src="./src/img/treesSvg.svg" alt="" class="w-14 h-14"/>
       </div>
@@ -515,7 +525,7 @@
     <span>И что делает BIRCH</span>
   </div>
   <!-- Колесо с годами -->
-  <div class="absolute bottom-0 right-0 z-10 w-[800px] h-[800px] -mb-[400px] -mr-[220px]">
+  <div class="absolute bottom-0 right-0 z-10 w-[800px] h-[800px] -mb-[400px] -mr-[380px]">
     <svg viewBox="0 0 1000 1000" class="w-full h-full" id="yearWheel">
       <!-- Внешние декоративные окружности -->
       <circle cx="500" cy="500" r="500" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>  
@@ -689,47 +699,45 @@
   </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- Секция компенсации углеродного следа -->
-<section class="w-full bg-white min-h-screen bg-cover bg-center bg-no-repeat relative flex items-start pt-32 pb-20" style="background-image: url('./src/img/forest.png'); background-size: cover; background-position: center;">
-  <div class="max-w-[1700px] mx-auto px-8 w-full relative z-10">
-    <div class="max-w-[1000px]">
-      <!-- Основной заголовок -->
-      <h2 class="text-6xl font-normal text-black mb-8 leading-tight">
-        Компенсируйте углеродный след — <br>
-        высаживайте леса
-      </h2>
-      
-      <!-- Описание -->
-      <div class="space-y-6 mb-12">
-        <p class="text-xl text-[#3C3C3C] leading-relaxed font-normal">
-          Карбоновый оффсет — это способ для бизнеса компенсировать выбросы <br> 
-          CO₂ и других парниковых газов, которые невозможно полностью избежать.
-        </p>
+  </section>
+  
+  <!-- Секция компенсации углеродного следа -->
+  <section class="w-full bg-white min-h-screen bg-cover bg-center bg-no-repeat relative flex items-start pt-32 pb-20" style="background-image: url('./src/img/forest.png'); background-size: cover; background-position: center;">
+    <div class="max-w-[1700px] mx-auto px-8 w-full relative z-10">
+      <div class="max-w-[1000px]">
+        <!-- Основной заголовок -->
+        <h2 class="text-6xl font-normal text-black mb-8 leading-tight">
+          Компенсируйте углеродный след — <br>
+          высаживайте леса
+        </h2>
         
-        <p class="text-xl text-[#3C3C3C] leading-relaxed font-normal">
-          С BIRCH вы поддерживаете реальные проекты по посадке деревьев <br>
-          и получаете прозрачный отчёт о сокращении углеродного следа.
-        </p>
-      </div>
-      
-      <!-- Кнопки -->
-      <div class="flex gap-6">
-        <button class="bg-[#23B77F] text-white h-[80px] px-8 py-6 rounded-[6px] font-bold text-lg hover:bg-green-600 transition flex items-center justify-center gap-3">
-          <img src="./src/img/plusMinus.svg" alt="">
-          Бесплатный расчёт
-        </button>
+        <!-- Описание -->
+        <div class="space-y-6 mb-12">
+          <p class="text-xl text-[#3C3C3C] leading-relaxed font-normal">
+            Карбоновый оффсет — это способ для бизнеса компенсировать выбросы <br> 
+            CO₂ и других парниковых газов, которые невозможно полностью избежать.
+          </p>
+          
+          <p class="text-xl text-[#3C3C3C] leading-relaxed font-normal">
+            С BIRCH вы поддерживаете реальные проекты по посадке деревьев <br>
+            и получаете прозрачный отчёт о сокращении углеродного следа.
+          </p>
+        </div>
         
-        <button class="bg-white/90 h-[80px] backdrop-blur-sm border border-black/20 text-black px-8 py-6 rounded-[6px] font-bold text-lg hover:bg-white transition">
-          Узнать больше о квотах
-        </button>
+        <!-- Кнопки -->
+        <div class="flex gap-6">
+          <button class="bg-[#23B77F] text-white h-[80px] px-8 py-6 rounded-[6px] font-bold text-lg hover:bg-green-600 transition flex items-center justify-center gap-3">
+            <img src="./src/img/plusMinus.svg" alt="">
+            Бесплатный расчёт
+          </button>
+          
+          <button class="bg-white/90 h-[80px] backdrop-blur-sm border border-black/20 text-black px-8 py-6 rounded-[6px] font-bold text-lg hover:bg-white transition">
+            Узнать больше о квотах
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-
+  </section>
 <!-- Секция партнеров -->
 <section class="relative bg-black overflow-hidden py-20">
   <div class="max-w-[1700px] mx-auto px-8">
@@ -737,8 +745,8 @@
       <!-- Зеленые фоновые круги -->
       <div class="absolute bottom-40 -left-40 w-[500px] h-[500px] rounded-full blur-[600px] opacity-100"
            style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
-
-      <div class="absolute -bottom-80 -right-40 w-[400px] h-[400px] rounded-full blur-[600px] opacity-100"
+           
+           <div class="absolute -bottom-80 -right-40 w-[400px] h-[400px] rounded-full blur-[600px] opacity-100"
            style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
                  <div class="absolute -top-60 -right-80 w-[300px] h-[350px] rounded-full blur-[200px] opacity-100"
            style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
@@ -800,21 +808,26 @@
         </div>
 
         <!-- Компании - увеличенный размер -->
-        <div class="flex justify-center items-center gap-6">
-          <img src="./src/img/companyFirst.png" alt="Первая компания" class="w-[600px] h-auto" />
-          <img src="./src/img/companySecond.png" alt="Вторая компания" class="w-[400px] h-auto" />
+        <div class="flex justify-center max-w-[1700px] items-center gap-6">
+          <img src="./src/img/companyFirst.png" alt="Первая компания" class="w-auto h-auto" />
+          <img src="./src/img/companySecond.png" alt="Вторая компания" class="w-auto h-auto" />
         </div>
       </div>
 
       <!-- Блок с текстом и кнопкой -->
       <div class="relative z-10 flex items-center justify-between">
         <!-- Левая часть с текстом -->
-        <div class="flex items-start max-w-[800px]">
-          <img src="./src/img/lepestki.svg" alt="Листочки" class="mr-6 mt-2" />
+        <div class="flex items-start max-w-[900px]">
           <div class="text-white">
-            <h3 class="text-5xl font-normal mb-6 leading-tight">
+            <div class="flex items-center">
+            <img src="./src/img/lepestki.svg" alt="Листочки" class="mr-2" />
+              <h3 class="text-5xl font-normal mb-6 leading-tight">
               Хотите стать нашим партнером?
             </h3>
+            
+            </div>
+
+            
             <p class="text-xl text-[#BFBFBF] font-normal mb-8 leading-relaxed">
               Нужен подзаголовок Нужен подзаголовок Нужен подзаголовок<br>
               Нужен подзаголовок Нужен подзаголовок
@@ -827,15 +840,392 @@
         </div>
 
         <!-- Правая часть с изображением руки -->
-        <div class="absolute -bottom-40 -right-20">
-          <img src="./src/img/hands.svg" alt="Рука" class="w-[700px] h-[700px]" />
+        <div class="absolute -bottom-40 -right-40">
+          <img src="./src/img/hands.svg" alt="Рука" class="w-[1000px] h-[800px]" />
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Секция команды BIRCH -->
+<section class="w-full py-20 px-8 bg-white">
+    <div class="max-w-[1700px] mx-auto px-8">
+      <!-- Заголовок секции с стрелками -->
+      <div class="mb-16 flex justify-between items-center">
+        <h2 class="text-6xl font-normal text-black leading-tight">
+          Команда BIRCH
+        </h2>
+        
+        <!-- Стрелки навигации -->
+        <div class="flex gap-4">
+          <button class="w-14 h-14 bg-[#5F6161] rounded-full flex items-center justify-center shadow-md" onclick="scrollTeamCards('left')">
+            <img src="./src/img/arrowLeft.svg" alt="Стрелка влево" class="w-6 h-6">
+          </button>
+
+          <button class="w-14 h-14 bg-[#5F6161] rounded-full flex items-center justify-center shadow-md" onclick="scrollTeamCards('right')">
+            <img src="./src/img/arrowRight.svg" alt="Стрелка вправо" class="w-6 h-6">
+          </button>
+        </div>
+      </div>
+      
+      <!-- Контейнер для карусели -->
+      <div class="relative">
+        <!-- Контейнер для прокрутки -->
+        <div class="overflow-hidden">
+          <div id="teamCarousel" class="flex gap-8 transition-transform duration-500 ease-in-out">
+            
+            <!-- Карточка 1 -->
+            <div class="min-w-[350px] rounded-[30px] overflow-hidden flex-shrink-0">
+              <div class="h-[400px] bg-gradient-to-b from-gray-200 to-gray-300 flex items-center justify-center rounded-[30px]">
+                <img src="./src/img/man.png" alt="Алексей Воробьев" class="w-full h-full rounded-[30px] object-cover">
+              </div>
+              <div class="py-8 text-center">
+                <h3 class="text-2xl font-bold text-left text-black mb-2">Алексей Воробьев</h3>
+                <p class="text-[#3C3C3C] text-xl font-normal text-left mb-6">Специалист по специальности</p>
+                <button class="w-full border text-xl border-black text-black py-3 px-6 rounded-md font-bold hover:bg-gray-50 transition-all duration-300">
+                  Связаться
+                </button>
+              </div>
+            </div>
+            
+            <!-- Карточка 2 -->
+            <div class="min-w-[350px] rounded-[30px] overflow-hidden flex-shrink-0">
+              <div class="h-[400px] bg-gradient-to-b from-gray-200 to-gray-300 flex items-center justify-center rounded-[30px]">
+                <img src="./src/img/man.png" alt="Алексей Воробьев" class="w-full h-full rounded-[30px] object-cover">
+              </div>
+              <div class="py-8 text-center">
+                <h3 class="text-2xl font-bold text-left text-black mb-2">Алексей Воробьев</h3>
+                <p class="text-[#3C3C3C] text-xl font-normal text-left mb-6">Специалист по специальности</p>
+                <button class="w-full border text-xl border-black text-black py-3 px-6 rounded-md font-bold hover:bg-gray-50 transition-all duration-300">
+                  Связаться
+                </button>
+              </div>
+            </div>
+            
+            <!-- Карточка 3 -->
+            <div class="min-w-[350px] rounded-[30px] overflow-hidden flex-shrink-0">
+              <div class="h-[400px] bg-gradient-to-b from-gray-200 to-gray-300 flex items-center justify-center rounded-[30px]">
+                <img src="./src/img/man.png" alt="Алексей Воробьев" class="w-full h-full rounded-[30px] object-cover">
+              </div>
+              <div class="py-8 text-center">
+                <h3 class="text-2xl font-bold text-left text-black mb-2">Алексей Воробьев</h3>
+                <p class="text-[#3C3C3C] text-xl font-normal text-left mb-6">Специалист по специальности</p>
+                <button class="w-full border text-xl border-black text-black py-3 px-6 rounded-md font-bold hover:bg-gray-50 transition-all duration-300">
+                  Связаться
+                </button>
+              </div>
+            </div>
+            
+            <!-- Карточка 4 -->
+            <div class="min-w-[350px] rounded-[30px] overflow-hidden flex-shrink-0">
+              <div class="h-[400px] bg-gradient-to-b from-gray-200 to-gray-300 flex items-center justify-center rounded-[30px]">
+                <img src="./src/img/man.png" alt="Алексей Воробьев" class="w-full h-full rounded-[30px] object-cover">
+              </div>
+              <div class="py-8 text-center">
+                <h3 class="text-2xl font-bold text-left text-black mb-2">Алексей Воробьев</h3>
+                <p class="text-[#3C3C3C] text-xl font-normal text-left mb-6">Специалист по специальности</p>
+                <button class="w-full border text-xl border-black text-black py-3 px-6 rounded-md font-bold hover:bg-gray-50 transition-all duration-300">
+                  Связаться
+                </button>
+              </div>
+            </div>
+            
+            <!-- Карточка 5 -->
+            <div class="min-w-[350px] rounded-[30px] overflow-hidden flex-shrink-0">
+              <div class="h-[400px] bg-gradient-to-b from-gray-200 to-gray-300 flex items-center justify-center rounded-[30px]">
+                <img src="./src/img/man.png" alt="Алексей Воробьев" class="w-full h-full rounded-[30px] object-cover">
+              </div>
+              <div class="py-8 text-center">
+                <h3 class="text-2xl font-bold text-left text-black mb-2">Алексей Воробьев</h3>
+                <p class="text-[#3C3C3C] text-xl font-normal text-left mb-6">Специалист по специальности</p>
+                <button class="w-full border text-xl border-black text-black py-3 px-6 rounded-md font-bold hover:bg-gray-50 transition-all duration-300">
+                  Связаться
+                </button>
+              </div>
+            </div>
+            <div class="min-w-[350px] rounded-[30px] overflow-hidden flex-shrink-0">
+              <div class="h-[400px] bg-gradient-to-b from-gray-200 to-gray-300 flex items-center justify-center rounded-[30px]">
+                <img src="./src/img/man.png" alt="Алексей Воробьев" class="w-full h-full rounded-[30px] object-cover">
+              </div>
+              <div class="py-8 text-center">
+                <h3 class="text-2xl font-bold text-left text-black mb-2">Алексей Воробьев</h3>
+                <p class="text-[#3C3C3C] text-xl font-normal text-left mb-6">Специалист по специальности</p>
+                <button class="w-full border text-xl border-black text-black py-3 px-6 rounded-md font-bold hover:bg-gray-50 transition-all duration-300">
+                  Связаться
+                </button>
+              </div>
+            </div>
+            <div class="min-w-[350px] rounded-[30px] overflow-hidden flex-shrink-0">
+              <div class="h-[400px] bg-gradient-to-b from-gray-200 to-gray-300 flex items-center justify-center rounded-[30px]">
+                <img src="./src/img/man.png" alt="Алексей Воробьев" class="w-full h-full rounded-[30px] object-cover">
+              </div>
+              <div class="py-8 text-center">
+                <h3 class="text-2xl font-bold text-left text-black mb-2">Алексей Воробьев</h3>
+                <p class="text-[#3C3C3C] text-xl font-normal text-left mb-6">Специалист по специальности</p>
+                <button class="w-full border text-xl border-black text-black py-3 px-6 rounded-md font-bold hover:bg-gray-50 transition-all duration-300">
+                  Связаться
+                </button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<!-- Секция наших проектов -->
+<footer class="relative bg-black overflow-hidden py-20">
+  <div class="max-w-[1700px] mx-auto px-8">
+    <div class="relative">
+      <!-- Зеленые фоновые круги -->
+      <div class="absolute top-[440px] -left-40 w-[500px] h-[520px] rounded-full blur-[600px] opacity-100"
+           style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
+           
+      <div class="absolute -bottom-40 -right-40 w-[400px] h-[400px] rounded-full blur-[600px] opacity-100"
+           style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
+           
+      <div class="absolute -top-60 -right-80 w-[300px] h-[350px] rounded-full blur-[200px] opacity-100"
+           style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
+
+      <!-- Заголовок секции с стрелками -->
+      <div class="relative z-10 mb-16 flex justify-between items-center border-b border-white/30">
+        <h2 class="text-6xl font-normal mb-12 text-white opacity-20 leading-tight">
+          Наши проекты
+        </h2>
+        
+        <!-- Стрелки навигации -->
+        <div class="flex gap-4">
+          <button class="w-16 h-16  border-[3px] mb-12 border-white opacity-30 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300" onclick="scrollProjectCards('left')">
+            <img src="./src/img/arrowLeft.svg" alt="Стрелка влево" class="w-6 h-6">
+          </button>
+          
+          <button class="w-16 h-16 border-[3px] border-white opacity-30 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300" onclick="scrollProjectCards('right')">
+            <img src="./src/img/arrowRight.svg" alt="Стрелка вправо" class="w-6 h-6  ">
+          </button>
+        </div>
+      </div>
+
+      <!-- Контейнер для карусели проектов -->
+      <div class="relative z-10">
+        <div class="overflow-hidden">
+          <div id="projectCarousel" class="flex transition-transform duration-500 ease-in-out">
+            
+            <!-- Первая страница - 4 карточки в сетке 2x2 -->
+            <div class="min-w-full grid grid-cols-2 gap-8 flex-shrink-0">
+              <!-- Карточка проекта 1 -->
+              <div class="rounded-[20px] overflow-hidden w-[800px] relative h-[450px] bg-cover bg-center bg-no-repeat" style="background-image: url('./src/img/usProjectOne.png');">
+                <div class="absolute inset-0"></div>
+                <div class="p-6 text-white relative h-full flex flex-col justify-end">
+                  <div class="flex justify-between items-end">
+                    <div class="flex-1">
+                      <h3 class="text-xl font-normal text-white mb-3">Перерабатываем мусор</h3>
+                      <p class="text-[#BFBFBF] text-base leading-relaxed">Капли в РК — это инструмент, позволяющий <br>   компенсировать компаниям выбросы CO₂</p>
+                    </div>
+                    <button class="bg-white backdrop-blur-md text-[#5F6161] px-6 py-2 rounded-full h-[74px] text-xl font-bold flex items-center gap-2 ml-4">
+                      Узнать подробнее
+                      <img src="./src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Карточка проекта 2 -->
+              <div class="rounded-[20px] overflow-hidden w-[800px] relative h-[450px] bg-cover bg-center bg-no-repeat" style="background-image: url('./src/img/usProjectTwo.png');">
+                <div class="absolute inset-0"></div>
+                <div class="p-6 text-white relative h-full flex flex-col justify-end">
+                  <div class="flex justify-between items-end">
+                    <div class="flex-1">
+                      <h3 class="text-xl font-normal text-white mb-3">Перерабатываем мусор</h3>
+                      <p class="text-[#BFBFBF] text-base leading-relaxed">Капли в РК — это инструмент, позволяющий <br>   компенсировать компаниям выбросы CO₂</p>
+                    </div>
+                    <button class="bg-white backdrop-blur-md text-[#5F6161] px-6 py-2 rounded-full h-[74px] text-xl font-bold flex items-center gap-2 ml-4">
+                      Узнать подробнее
+                      <img src="./src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Карточка проекта 3 -->
+              <div class="rounded-[20px] overflow-hidden w-[800px] relative h-[450px] bg-cover bg-center bg-no-repeat" style="background-image: url('./src/img/usProjectThree.png');">
+                <div class="absolute inset-0"></div>
+                <div class="p-6 text-white relative h-full flex flex-col justify-end">
+                  <div class="flex justify-between items-end">
+                    <div class="flex-1">
+                      <h3 class="text-xl font-normal text-white mb-3">Перерабатываем мусор</h3>
+                      <p class="text-[#BFBFBF] text-base leading-relaxed">Капли в РК — это инструмент, позволяющий <br>   компенсировать компаниям выбросы CO₂</p>
+                    </div>
+                    <button class="bg-white backdrop-blur-md text-[#5F6161] px-6 py-2 rounded-full h-[74px] text-xl font-bold flex items-center gap-2 ml-4">
+                      Узнать подробнее
+                      <img src="./src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Карточка проекта 4 -->
+              <div class="rounded-[20px] overflow-hidden w-[800px] relative h-[450px] bg-cover bg-center bg-no-repeat" style="background-image: url('./src/img/usProjectFour.png');">
+                <div class="absolute inset-0"></div>
+                <div class="p-6 text-white relative h-full flex flex-col justify-end">
+                  <div class="flex justify-between items-end">
+                    <div class="flex-1">
+                      <h3 class="text-xl font-normal text-white mb-3">Перерабатываем мусор</h3>
+                      <p class="text-[#BFBFBF] text-base leading-relaxed">Капли в РК — это инструмент, позволяющий <br>   компенсировать компаниям выбросы CO₂</p>
+                    </div>
+                    <button class="bg-white backdrop-blur-md text-[#5F6161] px-6 py-2 rounded-full h-[74px] text-xl font-bold flex items-center gap-2 ml-4">
+                      Узнать подробнее
+                      <img src="./src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Вторая страница - еще 4 карточки в сетке 2x2 -->
+            <div class="min-w-full grid grid-cols-2 gap-8 flex-shrink-0">
+              <!-- Карточка проекта 5 -->
+              <div class="rounded-[20px] overflow-hidden w-[800px] relative h-[450px] bg-cover bg-center bg-no-repeat" style="background-image: url('./src/img/usProjectOne.png');">
+                <div class="absolute inset-0"></div>
+                <div class="p-6 text-white relative h-full flex flex-col justify-end">
+                  <div class="flex justify-between items-end">
+                    <div class="flex-1">
+                      <h3 class="text-xl font-normal text-white mb-3">Перерабатываем мусор</h3>
+                      <p class="text-[#BFBFBF] text-base leading-relaxed">Капли в РК — это инструмент, позволяющий <br>   компенсировать компаниям выбросы CO₂</p>
+                    </div>
+                    <button class="bg-white backdrop-blur-md text-[#5F6161] px-6 py-2 rounded-full h-[74px] text-xl font-bold flex items-center gap-2 ml-4">
+                      Узнать подробнее
+                      <img src="./src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Карточка проекта 6 -->
+              <div class="rounded-[20px] overflow-hidden w-[800px] relative h-[450px] bg-cover bg-center bg-no-repeat" style="background-image: url('./src/img/usProjectOne.png');">
+                <div class="absolute inset-0"></div>
+                <div class="p-6 text-white relative h-full flex flex-col justify-end">
+                  <div class="flex justify-between items-end">
+                    <div class="flex-1">
+                      <h3 class="text-xl font-normal text-white mb-3">Перерабатываем мусор</h3>
+                      <p class="text-[#BFBFBF] text-base leading-relaxed">Капли в РК — это инструмент, позволяющий <br>   компенсировать компаниям выбросы CO₂</p>
+                    </div>
+                    <button class="bg-white backdrop-blur-md text-[#5F6161] px-6 py-2 rounded-full h-[74px] text-xl font-bold flex items-center gap-2 ml-4">
+                      Узнать подробнее
+                      <img src="./src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Карточка проекта 7 -->
+              <div class="rounded-[20px] overflow-hidden w-[800px] relative h-[450px] bg-cover bg-center bg-no-repeat" style="background-image: url('./src/img/usProjectOne.png');">
+                <div class="absolute inset-0"></div>
+                <div class="p-6 text-white relative h-full flex flex-col justify-end">
+                  <div class="flex justify-between items-end">
+                    <div class="flex-1">
+                      <h3 class="text-xl font-normal text-white mb-3">Перерабатываем мусор</h3>
+                      <p class="text-[#BFBFBF] text-base leading-relaxed">Капли в РК — это инструмент, позволяющий <br>   компенсировать компаниям выбросы CO₂</p>
+                    </div>
+                    <button class="bg-white backdrop-blur-md text-[#5F6161] px-6 py-2 rounded-full h-[74px] text-xl font-bold flex items-center gap-2 ml-4">
+                      Узнать подробнее
+                      <img src="./src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Карточка проекта 8 -->
+              <div class="rounded-[20px] overflow-hidden w-[800px] relative h-[450px] bg-cover bg-center bg-no-repeat" style="background-image: url('./src/img/usProjectOne.png');">
+                <div class="absolute inset-0"></div>
+                <div class="p-6 text-white relative h-full flex flex-col justify-end">
+                  <div class="flex justify-between items-end">
+                    <div class="flex-1">
+                      <h3 class="text-xl font-normal text-white mb-3">Перерабатываем мусор</h3>
+                      <p class="text-[#BFBFBF] text-base leading-relaxed">Капли в РК — это инструмент, позволяющий <br>   компенсировать компаниям выбросы CO₂</p>
+                    </div>
+                    <button class="bg-white backdrop-blur-md text-[#5F6161] px-6 py-2 rounded-full h-[74px] text-xl font-bold flex items-center gap-2 ml-4">
+                      Узнать подробнее
+                      <img src="./src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+    <div class="max-w-[1920px] mx-auto mt-20">
+    <div class="relative">
+      <!-- Основной контент футера с табличной структурой -->
+      <div class="relative z-10 grid grid-cols-4 gap-0 border-b border-t border-white/10">
+        
+        <!-- Первая колонка - Логотип BIRCH -->
+        <div class="border-r border-white/10 p-8 flex items-center justify-center">
+          <img src="./src/img/footerBirch.png" alt="BIRCH" class="w-auto h-auto">
+        </div>
+        
+        <!-- Вторая колонка - Контакты -->
+        <div class="border-r border-white/10 p-8 flex items-center justify-center">
+          <div class="text-left">
+            <h3 class="text-xl font-normal text-white mb-6">По вопросам сотрудничества<br>и партнёрства</h3>
+            
+            <div class="space-y-4 text-white/80">
+              <p class="text-base">Казахстан, г. Алматы, ул. Зелёная, 21</p>
+              <p class="text-base">+7(700)800 77 77</p>
+              <p class="text-base">info@birch.green</p>
+            </div>
+            
+            <h4 class="text-lg font-normal text-white mt-8 mb-4">Присоединяйтесь к нам</h4>
+            <div class="flex">
+              <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
+                <img src="./src/img/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
+                <img src="./src/img/tg.svg" alt="Telegram" class="w-8 h-8">
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
+                <img src="./src/img/vk.svg" alt="VK" class="w-8 h-8">
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Третья колонка - Навигация -->
+        <div class="border-r border-white/10 p-8 flex items-center justify-center">
+          <div class="text-left">
+            <h3 class="text-xl font-normal text-white mb-6">Навигация<br>по сайту</h3>
+            
+            <nav class="space-y-4">
+              <a href="#top" class="block text-white/80 hover:text-white transition-all text-base" onclick="scrollToTop()">Главная</a>
+              <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Донаты</a>
+              <a href="#" class="block text-white/80 hover:text-white transition-all text-base">B2B квоты</a>
+              <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Партнеры</a>
+              <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Проекты</a>
+              <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Контакты</a>
+            </nav>
+          </div>
+        </div>
+        
+        <!-- Четвертая колонка - Стрелка вверх -->
+        <div class="p-8 flex items-center justify-center">
+          <button onclick="scrollToTop()" class="w-16 h-16 rounded-full border-[3px] border-white/20 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
+            <img src="./src/img/arrowUp.svg" alt="Наверх" class="w-6 h-6">
+          </button>
+        </div>
+      </div>
+      
+      <!-- Нижняя часть футера -->
+      <div class="relative z-10 mt-8 pt-6 text-center">
+        <p class="text-[#DAFFF1] text-xl font-normal">© 2025 BIRCH. Все права защищены. | Сделано с заботой об экологии.</p>
+      </div>
+    </div>
+  </div>
+</footer>
 
-</div>
+  </div>
 
 </body>
 </html>

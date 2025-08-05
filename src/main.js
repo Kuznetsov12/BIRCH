@@ -147,3 +147,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
+// Функциональность карусели команды
+let currentSlide = 0;
+const totalSlides = 7; // Общее количество карточек
+const visibleSlides = 4; // Количество видимых карточек одновременно
+const maxSlide = totalSlides - visibleSlides; // Максимальный индекс слайда
+
+function scrollTeamCards(direction) {
+    const carousel = document.getElementById('teamCarousel');
+    const slideWidth = 358; // 350px ширина карточки + 8px gap
+    
+    if (direction === 'right' && currentSlide < maxSlide) {
+        currentSlide++;
+    } else if (direction === 'left' && currentSlide > 0) {
+        currentSlide--;
+    }
+    
+    const translateX = currentSlide * slideWidth;
+    carousel.style.transform = `translateX(-${translateX}px)`;
+}
+
+// Инициализация карусели при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    // Карусель команды уже готова к использованию
+});
+
+// Функциональность карусели проектов
+let currentProjectPage = 0;
+const totalProjectPages = 2; // Две страницы (первая и вторая с 4 карточками каждая)
+
+function scrollProjectCards(direction) {
+    const carousel = document.getElementById('projectCarousel');
+    
+    if (direction === 'right' && currentProjectPage < totalProjectPages - 1) {
+        currentProjectPage++;
+    } else if (direction === 'left' && currentProjectPage > 0) {
+        currentProjectPage--;
+    }
+    const translateX = currentProjectPage * 100; // Перемещаем на 100% ширины контейнера
+    carousel.style.transform = `translateX(-${translateX}%)`;
+}
+
+// Функция для прокрутки наверх
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
