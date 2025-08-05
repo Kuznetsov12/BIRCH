@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>BIRCH - Экологическая платформа для людей и компаний | Посади дерево, компенсируй выбросы CO₂</title>
+    <meta name="description" content="BIRCH - экологическая платформа для посадки деревьев и компенсации выбросов CO₂. 318,978+ деревьев посажено, 4,591+ людей поддержали проект. Присоединяйтесь к экологическому движению!">
+    <meta name="keywords" content="BIRCH, экология, посадка деревьев, компенсация CO2, экологическая платформа, зеленые технологии, климат, углеродный след, донаты на экологию, карбоновый оффсет, углеродные квоты, лесовосстановление">
+    <meta name="author" content="BIRCH">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="BIRCH - Экологическая платформа для людей и компаний">
+    <meta property="og:description" content="Каждый твой взнос — это реальное дерево, сертифицированная компенсация выбросов и твоя личная статистика экологичности. 318,978+ деревьев уже посажено!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://birch.ru">
+    <meta property="og:image" content="./src/img/mainPageFirst.png">
+    <meta property="og:site_name" content="BIRCH">
+    <meta property="og:locale" content="ru_RU">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BIRCH - Экологическая платформа для людей и компаний">
+    <meta name="twitter:description" content="Каждый твой взнос — это реальное дерево, сертифицированная компенсация выбросов и твоя личная статистика экологичности.">
+    <meta name="twitter:image" content="./src/img/mainPageFirst.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./src/img/mainLogo.png">
+    <link rel="apple-touch-icon" href="./src/img/mainLogo.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://birch.ru">
+    
+    <!-- CSS -->
+    <link href="./src/output.css" rel="stylesheet">
+    
+    <!-- Дополнительные стили для анимации -->
+    <style>
+      .year-text {
+        font-size: 30px;
+        font-weight: 400;
+      }
+      
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      
+      .animate-scroll {
+        animation: scroll 60s linear infinite;
+        width: calc(200%);
+      }
+      
+      .animate-scroll:hover {
+        animation-play-state: paused;
+      }
+      
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      
+      .animate-rotate {
+        animation: rotate 30s linear infinite;
+      }
+      
+      .circle-rotate-slow {
+        animation: rotate 60s linear infinite;
+      }
+      
+      .circle-rotate-medium {
+        animation: rotate 45s linear infinite reverse;
+      }
+      
+      .circle-rotate-fast {
+        animation: rotate 30s linear infinite;
+      }
+      
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      
+      /* Анимация для колеса с годами */
+      #yearWheel {
+        overflow: visible;
+      }
+      
+      #outerYears, #middleYears {
+        transition: transform 0.1s ease-out;
+        transform-origin: 500px 500px;
+      }
+      
+      .year-text {
+        font-size: 50px;
+        font-weight: 400;
+        fill: rgba(255, 255, 255, 0.3);
+        letter-spacing: 2px;
+      }
+      
+    </style>
+    
+    <!-- JavaScript -->
+    <script src="./src/main.js" defer></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "BIRCH",
+      "url": "https://birch.ru",
+      "logo": "./src/img/mainLogo.png",
+      "description": "Экологическая платформа для людей и компаний. Посадка деревьев, компенсация выбросов CO₂ и личная статистика экологичности",
+      "foundingDate": "2024",
+      "sameAs": [],
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "RU"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Экологические услуги",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Посадка деревьев",
+              "description": "Сертифицированная посадка деревьев для компенсации углеродного следа"
+            }
+          },
+          {
+            "@type": "Offer", 
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Компенсация выбросов CO₂",
+              "description": "Сертифицированная компенсация выбросов углекислого газа"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service", 
+              "name": "Карбоновый оффсет",
+              "description": "Углеродные квоты и компенсация углеродного следа для бизнеса через лесовосстановление"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+
+</head>
+<body class="overflow-x-hidden">
+<div class="flex flex-col w-full">
+<section class="h-screen bg-cover bg-center bg-no-repeat relative flex flex-col" style="background-image: url('./src/img/mainPageFirst.png'); background-size: cover;">
+  <header class="w-full flex justify-center pt-8" role="banner">
+    <nav class="flex items-center max-w-[1700px] w-full h-[109px] px-8 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <img src="./src/img/mainLogo.png" alt="Birch - логотип компании" class="h-[46px] w-[144px]" />
+      </div>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-6">
+        <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
+          <li><a href="#" class="font-bold border-b-2 border-white pb-1" aria-current="page">Главная</a></li>
+          <li><a href="#" class="hover:underline">Донаты</a></li>
+          <li><a href="#" class="hover:underline whitespace-nowrap">B2B&nbsp;квоты</a></li>
+          <li><a href="#" class="hover:underline">Партнеры</a></li>
+          <li><a href="#" class="hover:underline">Проекты</a></li>
+          <li><a href="#" class="hover:underline">Контакты</a></li>
+        </ul>
+        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0" aria-label="Оставить заявку на сотрудничество">
+          Оставить заявку
+          <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
+            <img src="./src/img/arrowdown.svg" alt="" class="w-11 h-11" />
+          </span>
+        </button>
+      </div>
+    </nav>
+  </header>
+  <div class="flex-1 flex items-center justify-center">
+    <div class="max-w-[1700px] w-full px-8 mx-auto">
+      <div class="text-white">
+        <div class="flex items-center mb-6">
+          <img src="./src/img/lepestki.svg" alt="Birch Logo" class="mr-4" />
+          <h1 class="font-medium text-[48px] leading-tight">
+            <span class="font-bold">BIRCH</span> - экологическая платформа<br>
+            для людей и компаний
+          </h1>
+        </div>     
+        
+        <div class="flex items-end justify-between w-full">
+          <p class="text-[24px] text-[#BFBFBF] max-w-[820px] font-normal leading-relaxed">
+            Каждый твой взнос — это реальное дерево, сертифицированная компенсация выбросов и твоя личная статистика экологичности
+          </p>   
+          
+          <div class="flex gap-6">
+            <button class="bg-[#23B77F] text-white px-8 py-6 h-[80px] rounded-md font-semibold hover:bg-green-600 transition flex items-center justify-center gap-3 w-[300px]">
+              <img src="./src/img/aloneLepestok.svg" alt="">
+              Посадить дерево
+            </button>
+            <button class="bg-white/10 backdrop-blur-md h-[80px] text-white px-8 py-6 rounded-md font-semibold hover:bg-white hover:text-gray-900 transition w-[300px]">
+              Узнать подробнее
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="w-full bg-black border-t border-[#2D2D2D]">
+  <div class="max-w-[1700px] mx-auto px-8">
+    <div class="grid grid-cols-4 text-white">
+      <div class="text-center py-12 border-r border-[#2D2D2D] h-full flex flex-col justify-center">
+        <div class="text-4xl font-bold mb-2">
+          <span class="counter" data-target="318978">0</span><span class="text-green-400">+</span>
+        </div>
+        <div class="text-sm opacity-80">Деревьев высажено</div>
+      </div>
+      <div class="text-center py-12 border-r border-[#2D2D2D] h-full flex flex-col justify-center">
+        <div class="text-4xl font-bold mb-2">
+          <span class="counter" data-target="4591">0</span><span class="text-green-400">+</span>
+        </div>
+        <div class="text-sm opacity-80">Людей поддержали проект</div>
+      </div>
+      <div class="text-center py-12 border-r border-[#2D2D2D] h-full flex flex-col justify-center">
+        <div class="text-4xl font-bold mb-2">
+          <span class="counter" data-target="22">0</span><span class="text-green-400">+</span>
+        </div>
+        <div class="text-sm opacity-80">Партнеров компаний</div>
+      </div>
+      <div class="text-center py-12 h-full flex flex-col justify-center">
+        <div class="text-4xl font-bold mb-2">
+          <span class="counter" data-target="3519937">0</span><span class="text-green-400">+</span>
+        </div>
+        <div class="text-sm opacity-80">Тонн CO₂ снижено</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Секция "Твоя роль в экологии" -->
+<section class="w-full bg-white bg-right bg-no-repeat min-h-[700px] flex items-center relative" style="background-image: url('./src/img/tree.jpg'); background-size: 600px auto; background-position: calc(100% + 100px) center;">
+  <div class="max-w-[1700px] mx-auto px-8 w-full relative z-10">
+    <div class="max-w-[1000px]">
+      <!-- Заголовок секции -->
+      <div class="flex items-center mb-6 gap-2">
+        <img src="./src/img/greenStar.svg" alt="">
+        <span class="text-[#23B77F] font-normal text-2xl uppercase tracking-wider">МЫ ДЕЛАЕМ МИР ЧИЩЕ</span>
+      </div>
+      
+      <!-- Основной заголовок -->
+      <h2 class="text-6xl font-normal text-black mb-8 leading-tight">
+        Твоя роль в экологии<br>
+        имеет значение
+      </h2>
+      
+      <!-- Описание -->
+      <p class="text-2xl text-[#3C3C3C] mb-12 leading-relaxed font-normal">
+        BIRCH помогает тебе посадить дерево, рассчитать и сократить свой углеродный след.<br>
+        Всё прозрачно — твоя статистика и сертификат у тебя всегда под рукой.
+      </p>
+      
+      <!-- Кнопка -->
+      <button class="bg-white border h-[80px] border-[#3C3C3C] text-[#3C3C3C] px-8 py-6 rounded-[6px] font-bold text-xl hover:bg-gray-50 transition-all duration-300 shadow-sm">
+        Узнать подробнее
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Секция с пользователями и их достижениями -->
+<section class="leaderboard-section w-full py-20 relative" style="background-image: url('./src/img/bgSectionTree.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+
+  <div class="max-w-full overflow-hidden">
+    <!-- Бегущая строка с пользователями -->
+    <div class="relative overflow-hidden mb-16">
+      <div class="flex animate-scroll">
+        <!-- Первый набор карточек -->
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">503</div>
+            <div class="text-lg text-gray-300 mt-1">Кирил О.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">261</div>
+            <div class="text-lg text-gray-300 mt-1">Думан К.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">127</div>
+            <div class="text-lg text-gray-300 mt-1">Василиса А.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">261</div>
+            <div class="text-lg text-gray-300 mt-1">Думан К.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">345</div>
+            <div class="text-lg text-gray-300 mt-1">Александр А.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">345</div>
+            <div class="text-lg text-gray-300 mt-1">Павел К.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">456</div>
+            <div class="text-lg text-gray-300 mt-1">Никита Л.</div>
+          </div>
+        </div>
+        
+        <!-- Дублируем карточки для бесконечной прокрутки -->
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">503</div>
+            <div class="text-lg text-gray-300 mt-1">Кирил О.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">261</div>
+            <div class="text-lg text-gray-300 mt-1">Думан К.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">127</div>
+            <div class="text-lg text-gray-300 mt-1">Василиса А.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">261</div>
+            <div class="text-lg text-gray-300 mt-1">Думан К.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">345</div>
+            <div class="text-lg text-gray-300 mt-1">Александр А.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">345</div>
+            <div class="text-lg text-gray-300 mt-1">Павел К.</div>
+          </div>
+        </div>
+        
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <span class="text-5xl mr-4">🌳</span>
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white">456</div>
+            <div class="text-lg text-gray-300 mt-1">Никита Л.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="text-left max-w-[1700px] mx-auto px-8">
+      <div class="flex items-center justify-between w-full">
+        <h2 class="text-6xl w-[80%] font-normal text-white tracking-tighter opacity-20 mb-12 max-w-3xl">
+          Смотри, сколько деревьев уже<br>
+          высадили такие же, как ты
+        </h2>
+        
+        <button class="bg-[#23B77F] text-white px-8 py-6 h-[80px] rounded-[6px] font-bold hover:bg-green-600 transition flex items-center justify-center gap-3 text-xl">
+          <img src="./src/img/AloneLepestok.svg" alt="">
+          Посадить дерево
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Секция CO₂ калькулятор -->
+<section class="w-full bg-white py-20">
+  <div class="max-w-[1700px] mx-auto px-8">
+    <div class="flex items-center">
+      <!-- Левая часть - изображение -->
+      <div class="flex-1">
+        <div class="relative">
+          <!-- Бейдж сверху -->
+          <img src="./src/img/dioxide.png" alt="CO₂ в руках - расчет углеродного следа" class="w-[500px] h-auto object-contain" />
+        </div>
+      </div>
+      
+      <!-- Правая часть - текст и форма -->
+      <div class="flex-1">
+            <div class="bg-[#3C3C3C] w-[250px] flex items-center justify-center h-[60px] text-center text-white px-4 py-2 rounded text-sm font-medium z-10">
+              <span class="text-2xl font-medium">4–12 ТОНН CO₂</span>
+          </div>
+        <h2 class="text-6xl font-normal text-black mb-8 leading-tight">
+          Один человек в среднем<br>
+          производит за год
+        </h2>
+        
+        <p class="text-2xl font-normal text-[#3C3C3C] mb-12 leading-relaxed">
+          Нужен подзаголовок относящийся к форме ниже Нужен подзаголовок
+          относящийся к форме ниже Нужен подзаголовок относящийся к форме ниже
+        </p>
+        
+        <!-- Форма -->
+        <div class="flex gap-14">
+          <input 
+            type="number" 
+            min="1"
+            max="100"
+            placeholder="Введите ваш возраст" 
+            class="flex-1 h-[80px] text-center max-w-2xs px-8 py-6 border-b text-[#CCCCCC] border-gray-300 text-xl font-medium focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            aria-label="Введите ваш возраст для расчета углеродного следа"
+          />
+          
+          <button class="bg-[#23B77F] text-white px-8 py-6 h-[80px] rounded-[6px] font-bold text-lg hover:bg-green-600 transition flex items-center justify-center gap-3 whitespace-nowrap">
+            <img src="./src/img/plusMinus.svg" alt="" class="w-5 h-5" />
+            Рассчитать свой след
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Секция временной шкалы с Казахстаном -->
+<section class="relative bg-black overflow-hidden py-20">
+  <div class="max-w-[1700px] mx-auto px-8">
+    <div class="relative flex flex-col md:flex-row justify-between items-center">
+      <!-- Зеленые фоновые круги -->
+  <div class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[600px] opacity-60"
+       style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
+
+  <!-- Второй зелёный градиентный круг -->
+  <div class="absolute -bottom-40 -right-40 w-[600px] h-[600px] rounded-full blur-[600px] opacity-60"
+       style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
+
+  <!-- Контент слева -->
+  <div class="relative z-10 max-w-[800px] text-white space-y-8 ">
+    <h2 class="text-6xl max-w-[1000px] font-normal text-white/50">Что происходит с <br> природой Казахстана</h2>
+
+    <div class="space-y-6 max-w-[580px]">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div>
+          <h3 class="text-5xl mb-3 font-normal">2015</h3>
+          <p class="text-lg font-normal text-[#BFBFBF]">Казахстан потерял 500 000 га лесов</p>
+        </div>
+        <img src="./src/img/axe.svg" alt="" class="w-14 h-14"/>
+      </div>
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div>
+          <h3 class="text-5xl mb-3 font-normal">2020</h3>
+          <p class="text-lg font-normal text-[#BFBFBF]">15% территорий признаны уязвимыми к эрозии почв</p>
+        </div>
+        <img src="./src/img/earth.svg" alt="" class="w-14 h-14"/>
+      </div>
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div>
+          <h3 class="text-5xl mb-3 font-normal text-green-500">2024</h3>
+          <p class="text-lg font-normal text-white/70">BIRCH посадили 318 000 деревьев, снизили эмиссию <br> на 3 млн тонн CO₂, открыли 12 регионов высадки.</p>
+        </div>
+        <img src="./src/img/treesSvg.svg" alt="" class="w-14 h-14"/>
+      </div>
+    </div>
+  </div>
+  <div class="flex gap-2 mb-100 text-2xl font-normal justify-start items-center mr-5">
+    <img src="./src/img/greenStarBgWhite.svg" alt="">
+    <span>И что делает BIRCH</span>
+  </div>
+  <!-- Колесо с годами -->
+  <div class="absolute bottom-0 right-0 z-10 w-[800px] h-[800px] -mb-[400px] -mr-[220px]">
+    <svg viewBox="0 0 1000 1000" class="w-full h-full" id="yearWheel">
+      <!-- Внешние декоративные окружности -->
+      <circle cx="500" cy="500" r="500" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>  
+      <circle cx="500" cy="500" r="350" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>
+      <circle cx="500" cy="500" r="250" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>
+
+      <!-- Путь для текста годов (внешний круг) -->
+      <defs>
+        <path id="yearPathOuter" d="M 500,50 A 450,450 0 1,1 499.9,50"/>
+        <path id="yearPathMiddle" d="M 500,150 A 350,350 0 1,1 499.9,150"/>
+      </defs>
+
+      <!-- Внешний текст с годами как отдельные элементы -->
+      <g id="outerYears" class=" text-5xl font-normal">
+        <!-- 2018 -->
+        <g transform="translate(500,500) rotate(0)">
+          <text class="year-text" data-year="2018" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2018</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(12)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2019 -->
+        <g transform="translate(500,500) rotate(24)">
+          <text class="year-text" data-year="2019" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2019</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(36)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2020 -->
+        <g transform="translate(500,500) rotate(48)">
+          <text class="year-text" data-year="2020" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2020</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(60)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2021 -->
+        <g transform="translate(500,500) rotate(72)">
+          <text class="year-text" data-year="2021" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2021</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(84)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2022 -->
+        <g transform="translate(500,500) rotate(96)">
+          <text class="year-text" data-year="2022" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2022</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(108)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2023 -->
+        <g transform="translate(500,500) rotate(120)">
+          <text class="year-text" data-year="2023" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2023</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(132)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2024 -->
+        <g transform="translate(500,500) rotate(144)">
+          <text class="year-text" data-year="2024" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2024</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(156)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2025 -->
+        <g transform="translate(500,500) rotate(168)">
+          <text class="year-text" data-year="2025" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2025</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(180)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2026 -->
+        <g transform="translate(500,500) rotate(192)">
+          <text class="year-text" data-year="2026" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2026</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(204)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2027 -->
+        <g transform="translate(500,500) rotate(216)">
+          <text class="year-text" data-year="2027" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2027</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(228)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2028 -->
+        <g transform="translate(500,500) rotate(240)">
+          <text class="year-text" data-year="2028" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2028</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(252)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2029 -->
+        <g transform="translate(500,500) rotate(264)">
+          <text class="year-text" data-year="2029" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2029</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(276)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2030 -->
+        <g transform="translate(500,500) rotate(288)">
+          <text class="year-text" data-year="2030" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2030</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(300)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2031 -->
+        <g transform="translate(500,500) rotate(312)">
+          <text class="year-text" data-year="2031" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2031</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(324)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+        
+        <!-- 2032 -->
+        <g transform="translate(500,500) rotate(336)">
+          <text class="year-text" data-year="2032" text-anchor="middle" x="0" y="-390" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2032</text>
+        </g>
+        
+        <!-- Квадратик разделитель -->
+        <g transform="translate(500,500) rotate(348)">
+          <rect width="8" height="8" x="-4" y="-410" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
+        </g>
+      </g>
+
+      <!-- Убираем средний круг с годами -->
+      <g id="middleYears" class="fill-white/30 text-base">
+      </g>
+
+    </svg>
+  </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Секция компенсации углеродного следа -->
+<section class="w-full bg-white min-h-screen bg-cover bg-center bg-no-repeat relative flex items-start pt-32 pb-20" style="background-image: url('./src/img/forest.png'); background-size: cover; background-position: center;">
+  <div class="max-w-[1700px] mx-auto px-8 w-full relative z-10">
+    <div class="max-w-[1000px]">
+      <!-- Основной заголовок -->
+      <h2 class="text-6xl font-normal text-black mb-8 leading-tight">
+        Компенсируйте углеродный след — <br>
+        высаживайте леса
+      </h2>
+      
+      <!-- Описание -->
+      <div class="space-y-6 mb-12">
+        <p class="text-xl text-[#3C3C3C] leading-relaxed font-normal">
+          Карбоновый оффсет — это способ для бизнеса компенсировать выбросы <br> 
+          CO₂ и других парниковых газов, которые невозможно полностью избежать.
+        </p>
+        
+        <p class="text-xl text-[#3C3C3C] leading-relaxed font-normal">
+          С BIRCH вы поддерживаете реальные проекты по посадке деревьев <br>
+          и получаете прозрачный отчёт о сокращении углеродного следа.
+        </p>
+      </div>
+      
+      <!-- Кнопки -->
+      <div class="flex gap-6">
+        <button class="bg-[#23B77F] text-white h-[80px] px-8 py-6 rounded-[6px] font-bold text-lg hover:bg-green-600 transition flex items-center justify-center gap-3">
+          <img src="./src/img/plusMinus.svg" alt="">
+          Бесплатный расчёт
+        </button>
+        
+        <button class="bg-white/90 h-[80px] backdrop-blur-sm border border-black/20 text-black px-8 py-6 rounded-[6px] font-bold text-lg hover:bg-white transition">
+          Узнать больше о квотах
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Секция партнеров -->
+<section class="relative bg-black overflow-hidden py-20">
+  <div class="max-w-[1700px] mx-auto px-8">
+    <div class="relative">
+      <!-- Зеленые фоновые круги -->
+      <div class="absolute bottom-40 -left-40 w-[500px] h-[500px] rounded-full blur-[600px] opacity-100"
+           style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
+
+      <div class="absolute -bottom-80 -right-40 w-[400px] h-[400px] rounded-full blur-[600px] opacity-100"
+           style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
+                 <div class="absolute -top-60 -right-80 w-[300px] h-[350px] rounded-full blur-[200px] opacity-100"
+           style="background: radial-gradient(circle, #03ff9a, #16ff67);"></div>
+
+      <!-- Заголовок секции -->
+      <div class="relative z-10 text-right mb-16">
+        <h2 class="absolute top-0 right-60 text-6xl tracking-tighter font-normal text-white mb-4">Наши партнеры</h2>
+        <p class=" absolute top-20 right-50 text-xl text-[#BFBFBF] font-normal">Компенсируют выбросы и поддерживают экологию</p>
+      </div>
+
+      <!-- Изображения партнеров -->
+      <div class="relative z-10 mb-20">
+        <!-- Мозаика из карточек партнеров точно как на макете -->
+        <div class="max-w-[1700px] mx-auto relative">
+          <!-- Первый ряд: 2 большие карточки слева -->
+          <div class="flex gap-4 mb-4">
+            <div class="w-[450px] h-[300px] rounded-lg overflow-hidden">
+              <img src="./src/img/collective.png" alt="Партнер" class="w-full h-full object-cover" />
+            </div>
+            <div class="w-[380px] h-[300px] rounded-lg overflow-hidden">
+              <img src="./src/img/collective.png" alt="Партнер" class="w-full h-full object-cover" />
+            </div>
+          </div>
+
+          <!-- Второй ряд: 3 карточки слева -->
+          <div class="flex gap-4 mb-4">
+            <!-- Маленькая -->
+            <div class="w-[150px] h-[213px] rounded-lg overflow-hidden">
+              <img src="./src/img/collective.png" alt="Партнер" class="w-full h-full object-cover" />
+            </div>
+            <!-- Средняя -->
+            <div class="w-[279px] h-[213px] rounded-lg overflow-hidden">
+              <img src="./src/img/collective.png" alt="Партнер" class="w-full h-full object-cover" />
+            </div>
+            <!-- Большая -->
+            <div class="w-[320px] h-[213px] rounded-lg overflow-hidden">
+              <img src="./src/img/collective.png" alt="Партнер" class="w-full h-full object-cover" />
+            </div>
+          </div>
+
+          <!-- Карточки справа - позиционируем абсолютно -->
+          <!-- Средняя карточка справа сверху -->
+          <div class="absolute top-[200px] right-[500px] w-[264px] h-[153px] rounded-lg overflow-hidden">
+            <img src="./src/img/collective.png" alt="Партнер" class="w-full h-full object-cover" />
+          </div>
+
+          <!-- Две карточки справа снизу -->
+          <div class="absolute top-[379px] left-[800px] flex gap-4">
+            <div class="w-[337px] h-[149px] rounded-lg overflow-hidden">
+              <img src="./src/img/collective.png" alt="Партнер" class="w-full h-full object-cover" />
+            </div>
+          </div>
+          <div class="absolute top-[210px] right-[100px] flex gap-4">
+            <div class="w-[380px] h-[320px] rounded-lg overflow-hidden">
+              <img src="./src/img/collective.png" alt="Партнер" class="w-full h-full object-cover" />
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Компании - увеличенный размер -->
+        <div class="flex justify-center items-center gap-6">
+          <img src="./src/img/companyFirst.png" alt="Первая компания" class="w-[600px] h-auto" />
+          <img src="./src/img/companySecond.png" alt="Вторая компания" class="w-[400px] h-auto" />
+        </div>
+      </div>
+
+      <!-- Блок с текстом и кнопкой -->
+      <div class="relative z-10 flex items-center justify-between">
+        <!-- Левая часть с текстом -->
+        <div class="flex items-start max-w-[800px]">
+          <img src="./src/img/lepestki.svg" alt="Листочки" class="mr-6 mt-2" />
+          <div class="text-white">
+            <h3 class="text-5xl font-normal mb-6 leading-tight">
+              Хотите стать нашим партнером?
+            </h3>
+            <p class="text-xl text-[#BFBFBF] font-normal mb-8 leading-relaxed">
+              Нужен подзаголовок Нужен подзаголовок Нужен подзаголовок<br>
+              Нужен подзаголовок Нужен подзаголовок
+            </p>
+            <button class="bg-[#23B77F] text-white px-8 py-6 h-[80px] rounded-[6px] font-bold text-lg hover:bg-green-600 transition flex items-center justify-center gap-3">
+              <img src="./src/img/deal.svg" alt="">
+              Стать партнером BIRCH
+            </button>
+          </div>
+        </div>
+
+        <!-- Правая часть с изображением руки -->
+        <div class="absolute -bottom-40 -right-20">
+          <img src="./src/img/hands.svg" alt="Рука" class="w-[700px] h-[700px]" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+</body>
+</html>
