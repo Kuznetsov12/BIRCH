@@ -101,3 +101,8 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Исправление для предупреждения vertical-align с display: block */
+img, svg, video, canvas, audio, iframe, embed, object {
+  vertical-align: unset;
+}

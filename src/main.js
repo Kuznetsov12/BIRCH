@@ -196,3 +196,355 @@ function scrollToTop() {
     behavior: 'smooth'
   });
 }
+
+// Google Maps функциональность
+let map;
+let markers = [];
+
+// Инициализация Google карты
+function initMap() {
+  // Координаты Алматы (центр карты)
+  const almaty = { lat: 43.2220, lng: 76.8512 };
+  
+  // Создаем карту
+  map = new google.maps.Map(document.getElementById("google-map"), {
+    zoom: 11,
+    center: almaty,
+    styles: [
+      {
+        "featureType": "all",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "weight": "2.00"
+          }
+        ]
+      },
+      {
+        "featureType": "all",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#9c9c9c"
+          }
+        ]
+      },
+      {
+        "featureType": "all",
+        "elementType": "labels.text",
+        "stylers": [
+          {
+            "visibility": "on"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+          {
+            "color": "#f2f2f2"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#ffffff"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape.man_made",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#ffffff"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+          {
+            "saturation": -100
+          },
+          {
+            "lightness": 45
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#eeeeee"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#7b7b7b"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#ffffff"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "simplified"
+          }
+        ]
+      },
+      {
+        "featureType": "road.arterial",
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+          {
+            "color": "#46bcec"
+          },
+          {
+            "visibility": "on"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#c8d7d4"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#070707"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#ffffff"
+          }
+        ]
+      }
+    ],
+    disableDefaultUI: true, // Отключаем стандартные элементы управления
+    gestureHandling: 'cooperative'
+  });
+
+  // Добавляем маркеры районов высадки
+  addTreePlantingMarkers();
+}
+
+// Функция добавления маркеров районов высадки
+function addTreePlantingMarkers() {
+  const plantingAreas = [
+    { lat: 43.2567, lng: 76.9286, title: "Район Степняка", trees: "465 деревьев" },
+    { lat: 43.2220, lng: 76.8512, title: "Район Степняка", trees: "465 деревьев" },
+    { lat: 43.1920, lng: 76.7812, title: "Район Степняка", trees: "465 деревьев" },
+    { lat: 43.2820, lng: 76.8212, title: "Район Степняка", trees: "465 деревьев" },
+    { lat: 43.2120, lng: 76.9012, title: "Район Степняка", trees: "465 деревьев" },
+    { lat: 43.1720, lng: 76.8712, title: "Район Степняка", trees: "465 деревьев" },
+    { lat: 43.2420, lng: 76.7912, title: "Район Степняка", trees: "465 деревьев" },
+    { lat: 43.2020, lng: 76.8312, title: "Район Степняка", trees: "465 деревьев" }
+  ];
+
+  plantingAreas.forEach(area => {
+    const marker = new google.maps.Marker({
+      position: { lat: area.lat, lng: area.lng },
+      map: map,
+      title: area.title,
+      icon: {
+        url: '../../src/img/map-marker.svg', // Кастомная иконка маркера
+        scaledSize: new google.maps.Size(40, 40),
+        anchor: new google.maps.Point(20, 40)
+      }
+    });
+
+    // Создаем информационное окно
+    const infoWindow = new google.maps.InfoWindow({
+      content: `
+        <div style="padding: 10px; font-family: Arial, sans-serif;">
+          <h3 style="margin: 0 0 5px 0; color: #23B77F; font-size: 16px;">${area.title}</h3>
+          <p style="margin: 0; color: #666; font-size: 14px;">${area.trees}</p>
+        </div>
+      `
+    });
+
+    // Открываем информационное окно при клике
+    marker.addListener('click', () => {
+      // Закрываем все открытые окна
+      markers.forEach(m => m.infoWindow && m.infoWindow.close());
+      infoWindow.open(map, marker);
+    });
+
+    // Сохраняем маркер и его информационное окно
+    marker.infoWindow = infoWindow;
+    markers.push(marker);
+  });
+}
+
+// Функции управления картой
+function zoomIn() {
+  if (map) {
+    const currentZoom = map.getZoom();
+    map.setZoom(currentZoom + 1);
+  }
+}
+
+function zoomOut() {
+  if (map) {
+    const currentZoom = map.getZoom();
+    map.setZoom(currentZoom - 1);
+  }
+}
+
+// Функция поиска по номеру телефона (заглушка)
+function findUserTrees(phoneNumber) {
+  // Здесь будет логика поиска деревьев пользователя по номеру телефона
+  console.log('Поиск деревьев для номера:', phoneNumber);
+  
+  // Пример: фокусируемся на случайном маркере
+  if (markers.length > 0) {
+    const randomMarker = markers[Math.floor(Math.random() * markers.length)];
+    map.setCenter(randomMarker.getPosition());
+    map.setZoom(15);
+    randomMarker.infoWindow.open(map, randomMarker);
+  }
+}
+
+// Обработчик формы поиска на карте
+document.addEventListener('DOMContentLoaded', () => {
+  const mapSearchButton = document.querySelector('#google-map').parentElement.parentElement.querySelector('button');
+  const mapSearchInput = document.querySelector('#google-map').parentElement.parentElement.querySelector('input[type="tel"]');
+  
+  if (mapSearchButton && mapSearchInput) {
+    mapSearchButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      const phoneNumber = mapSearchInput.value.trim();
+      if (phoneNumber) {
+        findUserTrees(phoneNumber);
+      }
+    });
+    
+    mapSearchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const phoneNumber = mapSearchInput.value.trim();
+        if (phoneNumber) {
+          findUserTrees(phoneNumber);
+        }
+      }
+    });
+  }
+});
+
+// Навигация между страницами
+document.addEventListener('DOMContentLoaded', () => {
+  // Обработка всех ссылок навигации
+  const navLinks = document.querySelectorAll('nav a, footer a');
+  
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    
+    // Добавляем плавный переход для внутренних ссылок
+    if (href && (href.includes('MainPage.html') || href.includes('donate.html'))) {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Добавляем эффект загрузки
+        document.body.style.opacity = '0.8';
+        document.body.style.transition = 'opacity 0.3s ease';
+        
+        // Переходим на страницу через небольшую задержку для плавности
+        setTimeout(() => {
+          window.location.href = href;
+        }, 150);
+      });
+    }
+  });
+  
+  // Восстанавливаем прозрачность при загрузке страницы
+  document.body.style.opacity = '1';
+  document.body.style.transition = 'opacity 0.3s ease';
+  
+  // Устанавливаем активную навигацию
+  setActiveNavigation();
+});
+
+// Функция определения текущей страницы для активной навигации
+function setActiveNavigation() {
+  const currentPath = window.location.pathname;
+  const navItems = document.querySelectorAll('nav a');
+  
+  navItems.forEach(item => {
+    const href = item.getAttribute('href');
+    
+    // Удаляем активные классы
+    item.classList.remove('font-bold', 'border-b-2', 'border-white', 'pb-1');
+    item.classList.add('hover:underline');
+    
+    // Проверяем соответствие текущей странице
+    if (currentPath.includes('Donate.html') && href.includes('Donate.html')) {
+      item.classList.add('font-bold', 'border-b-2', 'border-white', 'pb-1');
+      item.classList.remove('hover:underline');
+      item.setAttribute('aria-current', 'page');
+    } else if (currentPath.includes('MainPage.html') && href.includes('MainPage.html')) {
+      item.classList.add('font-bold', 'border-b-2', 'border-white', 'pb-1');
+      item.classList.remove('hover:underline');
+      item.setAttribute('aria-current', 'page');
+    }
+  });
+}
