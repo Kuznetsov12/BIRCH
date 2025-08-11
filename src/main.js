@@ -442,10 +442,16 @@ function updateEmissionPercentage(percentage) {
 
 // Пример использования: вызываем функцию при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
-  // Устанавливаем начальное значение (67%)
-  setTimeout(() => {
-    updateEmissionPercentage(67);
-  }, 100);
+  // Проверяем, находимся ли мы на странице EmissionAuth
+  const isEmissionAuthPage = window.location.pathname.includes('EmissionAuth.html');
+  
+  if (!isEmissionAuthPage) {
+    // Устанавливаем начальное значение (67%) только если НЕ на странице EmissionAuth
+    setTimeout(() => {
+      updateEmissionPercentage(67);
+    }, 100);
+  }
+  // Для страницы EmissionAuth оставляем статичное отображение "? %" и закрашенность на 33%
 });
 
 // Экспортируем функцию для использования из других скриптов
