@@ -38,8 +38,49 @@
     <!-- JavaScript -->
     <script src="../../src/main.js" defer></script>
     
-    <!-- Google Maps API -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=places"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Custom CSS для попапов карты -->
+    <style>
+      .custom-tree-popup .leaflet-popup-content-wrapper {
+        background: black !important;
+        opacity: 40% !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+      }
+      
+      .custom-tree-popup .leaflet-popup-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border-radius: 12px !important;
+      }
+      
+      .custom-tree-popup .leaflet-popup-tip {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+      
+      .custom-tree-popup .leaflet-popup-tip-container {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+    </style>
+    
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -362,10 +403,10 @@
           </p>
 
           <!-- Кнопка с иконкой plusMinus -->
-          <button class="bg-[#23B77F] text-white px-8 py-6 h-[85px] rounded-md font-semibold hover:bg-green-600 transition flex items-center justify-center gap-3 w-[400px] text-[18px]">
+          <a href="./Emission.html" class="bg-[#23B77F] text-white px-8 py-6 h-[85px] rounded-md font-semibold hover:bg-green-600 transition flex items-center justify-center gap-3 w-[400px] text-[18px] no-underline">
             <img src="../../src/img/plusMinus.svg" alt="" class="w-6 h-6">
             Рассчитать эмиссию
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -413,45 +454,41 @@
   </section>
 
   <!-- Секция с картой -->
-  <section class="relative bg-white overflow-hidden py-20">
+  <section class="relative bg-white overflow-hidden py-20 -mt-[180px] z-20">
     <div class="max-w-[1920px] mx-auto px-8">
-      <div class="flex items-start gap-8">
-        <!-- Левая панель с формой (30%) -->
-        <div class="w-[30%] bg-black/90 backdrop-blur-sm rounded-2xl p-8 flex flex-col gap-6 relative z-20">
-          <h3 class="text-white text-[32px] font-light leading-tight mb-4">
+      <div class="w-full h-[920px] relative rounded-2xl overflow-hidden">
+        <div id="openstreet-map" class="w-full h-full bg-gray-200 rounded-2xl">
+        </div>
+        
+        <!-- Панель "Посмотрите ваш прогресс" внутри карты слева снизу -->
+        <div class="absolute bottom-6 left-6 w-[350px] bg-black/30 opacity-100 backdrop-blur-sm rounded-2xl p-6 flex flex-col gap-4 z-[1000]">
+          <h3 class="text-white text-[44px] font-light leading-tight">
             Посмотрите<br>
             ваш прогресс
           </h3>
           
           <!-- Форма поиска -->
-          <div class="space-y-4">
+          <div class="space-y-3">
             <input 
               type="tel" 
               placeholder="Введите номер телефона" 
-              class="w-full h-[60px] px-6 bg-white border-none rounded-lg text-[16px] text-black font-normal placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#23B77F]"
+              class="w-full h-[85px] px-4 bg-white border-none rounded-lg text-[20px] text-black font-normal placeholder:text-[#474747] placeholder:text-center focus:outline-none focus:ring-2 focus:ring-[#23B77F]"
             >
-            <button class="bg-[#23B77F] text-white w-full h-[60px] rounded-lg font-semibold hover:bg-green-600 transition flex items-center justify-center gap-3 text-[16px]">
-              <img src="../../src/img/findLoop.svg" alt="" class="w-5 h-5">
+            <button class="bg-[#23B77F] text-white w-full h-[85px] rounded-lg font-bold hover:bg-green-600 transition flex items-center justify-center gap-2 text-[20px]">
+              <img src="../../src/img/findLoop.svg" alt="" class="w-4 h-4">
               Найти мои деревья
             </button>
           </div>
         </div>
-
-        <!-- Карта (70%) -->
-        <div class="w-[70%] h-[600px] relative rounded-2xl overflow-hidden">
-          <div id="google-map" class="w-full h-full bg-gray-200">
-            <!-- Google карта будет загружена здесь -->
-          </div>
-          
-          <!-- Элементы управления картой -->
-          <div class="absolute top-4 right-4 flex flex-col gap-2">
-            <button class="w-10 h-10 bg-white rounded shadow-lg flex items-center justify-center hover:bg-gray-50 transition" onclick="zoomIn()">
-              <span class="text-lg font-bold text-gray-700">+</span>
-            </button>
-            <button class="w-10 h-10 bg-white rounded shadow-lg flex items-center justify-center hover:bg-gray-50 transition" onclick="zoomOut()">
-              <span class="text-lg font-bold text-gray-700">−</span>
-            </button>
-          </div>
+        
+        <!-- Элементы управления картой слева сверху -->
+        <div class="absolute top-4 left-4 flex flex-col gap-2 z-[1000]">
+          <button class="w-10 h-10 bg-white rounded shadow-lg flex items-center justify-center hover:bg-gray-50 transition" onclick="zoomInMap()">
+            <span class="text-lg font-bold text-gray-700">+</span>
+          </button>
+          <button class="w-10 h-10 bg-white rounded shadow-lg flex items-center justify-center hover:bg-gray-50 transition" onclick="zoomOutMap()">
+            <span class="text-lg font-bold text-gray-700">−</span>
+          </button>
         </div>
       </div>
     </div>

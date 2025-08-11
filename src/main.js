@@ -197,192 +197,26 @@ function scrollToTop() {
   });
 }
 
-// Google Maps функциональность
+// OpenStreetMap функциональность
 let map;
 let markers = [];
 
-// Инициализация Google карты
+// Инициализация OpenStreetMap
 function initMap() {
   // Координаты Алматы (центр карты)
-  const almaty = { lat: 43.2220, lng: 76.8512 };
+  const almaty = [43.2220, 76.8512];
   
   // Создаем карту
-  map = new google.maps.Map(document.getElementById("google-map"), {
-    zoom: 11,
-    center: almaty,
-    styles: [
-      {
-        "featureType": "all",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "weight": "2.00"
-          }
-        ]
-      },
-      {
-        "featureType": "all",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#9c9c9c"
-          }
-        ]
-      },
-      {
-        "featureType": "all",
-        "elementType": "labels.text",
-        "stylers": [
-          {
-            "visibility": "on"
-          }
-        ]
-      },
-      {
-        "featureType": "landscape",
-        "elementType": "all",
-        "stylers": [
-          {
-            "color": "#f2f2f2"
-          }
-        ]
-      },
-      {
-        "featureType": "landscape",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#ffffff"
-          }
-        ]
-      },
-      {
-        "featureType": "landscape.man_made",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#ffffff"
-          }
-        ]
-      },
-      {
-        "featureType": "poi",
-        "elementType": "all",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "road",
-        "elementType": "all",
-        "stylers": [
-          {
-            "saturation": -100
-          },
-          {
-            "lightness": 45
-          }
-        ]
-      },
-      {
-        "featureType": "road",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#eeeeee"
-          }
-        ]
-      },
-      {
-        "featureType": "road",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#7b7b7b"
-          }
-        ]
-      },
-      {
-        "featureType": "road",
-        "elementType": "labels.text.stroke",
-        "stylers": [
-          {
-            "color": "#ffffff"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway",
-        "elementType": "all",
-        "stylers": [
-          {
-            "visibility": "simplified"
-          }
-        ]
-      },
-      {
-        "featureType": "road.arterial",
-        "elementType": "labels.icon",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "transit",
-        "elementType": "all",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "all",
-        "stylers": [
-          {
-            "color": "#46bcec"
-          },
-          {
-            "visibility": "on"
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#c8d7d4"
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#070707"
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "labels.text.stroke",
-        "stylers": [
-          {
-            "color": "#ffffff"
-          }
-        ]
-      }
-    ],
-    disableDefaultUI: true, // Отключаем стандартные элементы управления
-    gestureHandling: 'cooperative'
-  });
+  map = L.map('openstreet-map', {
+    zoomControl: false // Отключаем стандартные элементы управления
+  }).setView(almaty, 11);
+  
+  // Добавляем слой OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19,
+    minZoom: 5
+  }).addTo(map);
 
   // Добавляем маркеры районов высадки
   addTreePlantingMarkers();
@@ -401,53 +235,68 @@ function addTreePlantingMarkers() {
     { lat: 43.2020, lng: 76.8312, title: "Район Степняка", trees: "465 деревьев" }
   ];
 
+  // Создаем кастомную иконку
+  const customIcon = L.icon({
+    iconUrl: '../../src/img/customMarker.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, 100]
+  });
+
   plantingAreas.forEach(area => {
-    const marker = new google.maps.Marker({
-      position: { lat: area.lat, lng: area.lng },
-      map: map,
-      title: area.title,
-      icon: {
-        url: '../../src/img/map-marker.svg', // Кастомная иконка маркера
-        scaledSize: new google.maps.Size(40, 40),
-        anchor: new google.maps.Point(20, 40)
-      }
-    });
-
-    // Создаем информационное окно
-    const infoWindow = new google.maps.InfoWindow({
-      content: `
-        <div style="padding: 10px; font-family: Arial, sans-serif;">
-          <h3 style="margin: 0 0 5px 0; color: #23B77F; font-size: 16px;">${area.title}</h3>
-          <p style="margin: 0; color: #666; font-size: 14px;">${area.trees}</p>
+    const marker = L.marker([area.lat, area.lng], { icon: customIcon }).addTo(map);
+    
+    // Создаем стильный popup с белым полупрозрачным фоном как на скриншоте
+    const popupContent = `
+      <div style="
+        background: black/80 !important;
+        color: white !important;
+        padding: 12px 16px !important;
+        border-radius: 12px !important;
+        text-align: center !important;
+        min-width: 200px !important;
+        border: none !important;
+        box-shadow: none !important;
+        backdrop-filter: blur(10px) !important;
+        margin: 0 !important;
+      ">
+        <div style="font-size: 16px !important; font-weight: normal !important; margin-bottom: 4px !important; color: white !important;">
+          ${area.title}
         </div>
-      `
+        <div style="font-size: 14px !important; color: white !important;">
+          ${area.trees}
+        </div>
+      </div>
+    `;
+    
+    marker.bindPopup(popupContent, {
+      closeButton: false,
+      className: 'custom-tree-popup',
+      offset: [0, -10],
+      autoPan: false,
+      closeOnClick: false,
+      autoClose: false,
+      maxWidth: 'none',
+      minWidth: 0
     });
 
-    // Открываем информационное окно при клике
-    marker.addListener('click', () => {
-      // Закрываем все открытые окна
-      markers.forEach(m => m.infoWindow && m.infoWindow.close());
-      infoWindow.open(map, marker);
-    });
+    // Показываем попап постоянно (не при наведении)
+    marker.openPopup();
 
-    // Сохраняем маркер и его информационное окно
-    marker.infoWindow = infoWindow;
     markers.push(marker);
   });
 }
 
 // Функции управления картой
-function zoomIn() {
+function zoomInMap() {
   if (map) {
-    const currentZoom = map.getZoom();
-    map.setZoom(currentZoom + 1);
+    map.zoomIn();
   }
 }
 
-function zoomOut() {
+function zoomOutMap() {
   if (map) {
-    const currentZoom = map.getZoom();
-    map.setZoom(currentZoom - 1);
+    map.zoomOut();
   }
 }
 
@@ -459,16 +308,24 @@ function findUserTrees(phoneNumber) {
   // Пример: фокусируемся на случайном маркере
   if (markers.length > 0) {
     const randomMarker = markers[Math.floor(Math.random() * markers.length)];
-    map.setCenter(randomMarker.getPosition());
-    map.setZoom(15);
-    randomMarker.infoWindow.open(map, randomMarker);
+    const latlng = randomMarker.getLatLng();
+    map.setView([latlng.lat, latlng.lng], 15);
+    randomMarker.openPopup();
   }
 }
 
+// Инициализация карты при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+  // Проверяем, есть ли контейнер для карты
+  if (document.getElementById('openstreet-map')) {
+    initMap();
+  }
+});
+
 // Обработчик формы поиска на карте
 document.addEventListener('DOMContentLoaded', () => {
-  const mapSearchButton = document.querySelector('#google-map').parentElement.parentElement.querySelector('button');
-  const mapSearchInput = document.querySelector('#google-map').parentElement.parentElement.querySelector('input[type="tel"]');
+  const mapSearchButton = document.querySelector('#openstreet-map').parentElement.querySelector('.absolute button');
+  const mapSearchInput = document.querySelector('#openstreet-map').parentElement.querySelector('.absolute input[type="tel"]');
   
   if (mapSearchButton && mapSearchInput) {
     mapSearchButton.addEventListener('click', (e) => {
@@ -548,3 +405,48 @@ function setActiveNavigation() {
     }
   });
 }
+
+// Функция для динамического обновления эмиссии
+function updateEmissionPercentage(percentage) {
+  // Ограничиваем процент от 0 до 100
+  const percent = Math.max(0, Math.min(100, percentage));
+  
+  // Получаем элементы
+  const grayImage = document.getElementById('grayImage');
+  const colorImage = document.getElementById('colorImage');
+  const percentageText = document.getElementById('percentageText');
+  const percentageIndicator = document.getElementById('percentageIndicator');
+  
+  if (!grayImage || !colorImage || !percentageText || !percentageIndicator) {
+    console.warn('Emission elements not found');
+    return;
+  }
+  
+  // Рассчитываем позиции
+  const imageHeight = 950; // высота картинки
+  const grayPercentage = 100 - percent; // процент серой части сверху
+  
+  // Обновляем clip-path для серой части (сверху)
+  grayImage.style.clipPath = `polygon(0 0, 100% 0, 100% ${grayPercentage}%, 0 ${grayPercentage}%)`;
+  
+  // Обновляем clip-path для цветной части (снизу)
+  colorImage.style.clipPath = `polygon(0 ${grayPercentage}%, 100% ${grayPercentage}%, 100% 100%, 0 100%)`;
+  
+  // Обновляем текст процента
+  percentageText.textContent = `${percent}%`;
+  
+  // Обновляем позицию индикатора процента (на границе между серой и цветной частями)
+  const topPosition = (imageHeight * grayPercentage / 100) - 60;
+  percentageIndicator.style.top = `${topPosition}px`;
+}
+
+// Пример использования: вызываем функцию при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+  // Устанавливаем начальное значение (67%)
+  setTimeout(() => {
+    updateEmissionPercentage(67);
+  }, 100);
+});
+
+// Экспортируем функцию для использования из других скриптов
+window.updateEmissionPercentage = updateEmissionPercentage;

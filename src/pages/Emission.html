@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Калькулятор эмиссии CO₂ | BIRCH - Рассчитайте свой углеродный след</title>
+    <meta name="description" content="Узнайте точную эмиссию CO₂ и рассчитайте, сколько деревьев нужно посадить для компенсации. Персональный калькулятор углеродного следа от BIRCH.">
+    <meta name="keywords" content="калькулятор CO2, углеродный след, эмиссия CO2, компенсация выбросов, BIRCH калькулятор, экология">
+    <meta name="author" content="BIRCH">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Калькулятор эмиссии CO₂ | BIRCH">
+    <meta property="og:description" content="Узнайте точную эмиссию CO₂ и рассчитайте, сколько деревьев нужно посадить для компенсации. Персональный калькулятор углеродного следа от BIRCH.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://birch.ru/emission">
+    <meta property="og:image" content="../../src/img/mainPageFirst.png">
+    <meta property="og:site_name" content="BIRCH">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Калькулятор эмиссии CO₂ | BIRCH">
+    <meta name="twitter:description" content="Узнайте точную эмиссию CO₂ и рассчитайте, сколько деревьев нужно посадить для компенсации. Персональный калькулятор углеродного следа от BIRCH.">
+    <meta name="twitter:image" content="../../src/img/mainPageFirst.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../src/img/mainLogo.png">
+    <link rel="apple-touch-icon" href="../../src/img/mainLogo.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://birch.ru/emission">
+    
+    <!-- CSS -->
+    <link href="../../src/output.css" rel="stylesheet">
+    
+    <!-- JavaScript -->
+    <script src="../../src/main.js" defer></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Калькулятор эмиссии CO₂ BIRCH",
+      "url": "https://birch.ru/emission",
+      "description": "Персональный калькулятор для расчета углеродного следа и эмиссии CO₂",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "provider": {
+        "@type": "Organization",
+        "name": "BIRCH",
+        "url": "https://birch.ru"
+      }
+    }
+    </script>
+        <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Custom CSS для попапов карты -->
+    <style>
+      .custom-tree-popup .leaflet-popup-content-wrapper {
+        background: black !important;
+        opacity: 40% !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+      }
+      
+      .custom-tree-popup .leaflet-popup-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border-radius: 12px !important;
+      }
+      
+      .custom-tree-popup .leaflet-popup-tip {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+      
+      .custom-tree-popup .leaflet-popup-tip-container {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+    </style>
+    
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+</head>
+<body class="overflow-x-hidden bg-black">
+    <div class="flex flex-col w-full mx-auto max-w-[1920px]">
+        <section class="relative overflow-hidden">
+        <div class="absolute inset-0">
+      <!-- Большой круг слева -->
+  <div class="absolute  -bottom-[-250px] -right-[400px] w-[769px] h-[769px] rounded-full blur-[600px]"
+       style="background: radial-gradient(circle, #008852, #164125);"></div>
+         <div class="absolute  -top-[0px] -right-[400px] w-[769px] h-[769px] rounded-full blur-[600px]"
+       style="background: radial-gradient(circle, #008852, #164125);"></div>
+
+  <!-- Второй зелёный градиентный круг -->
+  <div class="absolute -top-[-600px] -left-96  w-[769px] h-[769px] rounded-full blur-[600px]"
+       style="background: radial-gradient(circle, #008852, #164125);"></div>
+    </div>
+        <header class="w-full flex justify-center pt-8 px-8" role="banner">
+    <nav class="flex items-center max-w-[1920px] w-full h-[109px] px-8 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <img src="../../src/img/mainLogo.png" alt="Birch - логотип компании" class="h-[46px] w-[144px]" />
+      </div>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-6">
+        <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
+          <li><a href="../pages/MainPage.html" class="hover:underline">Главная</a></li>
+          <li><a href="./Donate.html" class=" font-bold border-b-2 border-white pb-1" aria-current="page">Донаты</a></li>
+          <li><a href="#" class="hover:underline whitespace-nowrap">B2B&nbsp;квоты</a></li>
+          <li><a href="#" class="hover:underline">Партнеры</a></li>
+          <li><a href="#" class="hover:underline">Проекты</a></li>
+          <li><a href="#" class="hover:underline">Контакты</a></li>
+        </ul>
+        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0" aria-label="Оставить заявку на сотрудничество">
+          Оставить заявку
+          <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
+            <img src="../../src/img/arrowdown.svg" alt="" class="w-11 h-11" />
+          </span>
+        </button>
+      </div>
+    </nav>
+  </header>
+  
+  <!-- Основная секция с личным кабинетом -->
+  <section class="relative overflow-hidden py-20 flex-1">
+    <div class="max-w-[1920px] mx-auto px-8">
+      <div class="flex items-start justify-between h-full gap-16">
+        
+        <!-- Левая часть с информацией пользователя -->
+        <div class="flex-1 max-w-[900px] text-white space-y-0">
+          <!-- Имя пользователя -->
+           <div class="border-b border-white/20">
+          <h1 class="text-[84px] font-light leading-tight text-white mb-8">
+            Владимир О.
+          </h1>
+          </div>
+          
+          <!-- Блок 1: Вы высадили -->
+          <div class="pb-8 border-b border-white/20 mt-8">
+            <p class="text-[#BFBFBF] text-[24px] font-light mb-2">Вы высадили:</p>
+            <p class="text-white text-[48px] font-light">Вы высадили: 157 🌳</p>
+          </div>
+          
+          <!-- Блок 2: Это эквивалентно -->
+          <div class="py-8 border-b border-white/20">
+            <p class="text-[#BFBFBF] text-[24px] font-light mb-2">Это эквивалентно:</p>
+            <div class="space-y-2">
+              <p class="text-white leading-[130%] text-[48px] font-light">~ 7 - 11 тонн CO₂ очищено в год <br> ~ 314000₸ инвестировано в озеленение</p>
+            </div>
+          </div>
+          
+          <!-- Блок 3: Эмиссия и углеродный след -->
+          <div class="py-8 border-b border-white/20">
+            <div class="flex gap-24 items-start">
+              <div>
+                <p class="text-[#BFBFBF] text-[24px] font-light mb-2">Ваше восполнение эмиссии:</p>
+                <p class="text-white text-[48px] font-light">67%</p>
+              </div>
+              <div>
+                <p class="text-[#BFBFBF] text-left text-[24px] font-light mb-2">Ваш след углеродный след:</p>
+                <p class="text-white text-[48px] font-light">~ 11.7 тонн CO₂ в год</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Блок 4: Для полной компенсации -->
+          <div class="py-8">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-[#BFBFBF] text-left text-[24px] font-light mb-4">Для полной компенсации:</p>
+                <div class="space-y-2">
+                  <p class="text-white text-[48px] leading-[130%] font-light">~ 379 деревьев <br> ~ 192 700 ₸ <br> ~ 470 ₸ за тонну CO₂</p>
+                </div>
+              </div>
+              
+              <!-- Кнопка поделиться справа -->
+              <div class="bg-white rounded-3xl px-6 py-4 flex flex-col items-center justify-center min-w-[353px] h-[215px]">
+                <p class="text-black text-[32px] font-light mb-3">Поделиться <br> результатом</p>
+                <div class="flex gap-6">
+                  <a href="#" class="w-[55px] h-[55px] rounded-full bg-black flex items-center justify-center hover:bg-gray-800 transition-all">
+                    <img src="../../src/img/instagram.svg" alt="Instagram" class="w-[55px] h-[55px]">
+                  </a>
+                  <a href="#" class="w-[55px] h-[55px] rounded-full bg-black flex items-center justify-center hover:bg-gray-800 transition-all">
+                    <img src="../../src/img/twitter.svg" alt="Twitter" class="w-[55px] h-[55px]">
+                  </a>
+                  <a href="#" class="w-[55px] h-[55px] rounded-full bg-black flex items-center justify-center hover:bg-gray-800 transition-all">
+                    <img src="../../src/img/facebook.svg" alt="Facebook" class="w-[55px] h-[55px]">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Правая часть с картинкой и процентом -->
+        <div class="flex-1 flex items-start justify-start max-w-[663px] h-[950px] relative">
+          <!-- Контейнер с картинкой -->
+          <div class="relative">
+            <!-- Основная картинка с эффектом обесцвечивания -->
+            <div class="relative w-[663px] h-[950px] left-[-300px]">
+              <!-- Обесцвеченная часть картинки сверху (33%) -->
+              <img id="grayImage" src="../../src/img/colbaforest.png" alt="Лес в колбе" 
+                   class="absolute inset-0 w-full h-full object-contain"
+                   style="filter: grayscale(100%); clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);">
+              
+              <!-- Цветная часть картинки снизу (67%) -->
+              <img id="colorImage" src="../../src/img/colbaforest.png" alt="Лес в колбе" 
+                   class="absolute inset-0 w-full h-full object-contain"
+                   style="clip-path: polygon(0 33%, 100% 33%, 100% 100%, 0 100%);">
+            </div>
+            <!-- Процент справа от картинки с бордером на границе -->
+            <div id="percentageIndicator" class="absolute" style="top: calc(950px * 0.33); left: 250px; transform: translateY(-40px);">
+              <span id="percentageText" class="text-white text-[70px] font-light leading-none">67%</span>
+            </div>
+            
+            <!-- Бордер отдельно, точно на границе цветной части -->
+            <div id="borderIndicator" class="absolute w-64 h-[1px] bg-white/30" style="top: calc(950px * 0.33); left: 190px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    <section class="relative overflow-hidden py-20 -mt-32 z-20">
+    <div class="max-w-[1920px] mx-auto px-8">
+      <div class="w-full h-[920px] relative rounded-2xl overflow-hidden">
+        <div id="openstreet-map" class="w-full h-full bg-gray-200 rounded-2xl">
+        </div>
+        
+        <!-- Панель "Ваши деревья" внутри карты слева снизу -->
+        <div class="absolute bottom-[140px] text-center left-6 w-[450px] bg-black/60 backdrop-blur-sm rounded-2xl py-6 flex flex-col gap-4 z-[1000] border border-white/20">
+          <h3 class="text-white text-[48px] font-medium leading-tight mb-4">
+            Ваши деревья
+          </h3>
+          
+          <!-- Список деревьев -->
+          <div class="space-y-3 max-h-[500px] overflow-y-auto">
+            <div class=" py-2 border-t border-white/20">
+              <p class="text-[#DAFFF1] text-[20px] font-medium mb-1">Здесь высажено 10 ваших деревьев</p>
+              <p class="text-white text-[16px]">52.23415434, 76.237758584</p>
+            </div>
+                        <div class=" py-2 border-t border-white/20">
+              <p class="text-[#DAFFF1] text-[20px] font-medium mb-1">Здесь высажено 10 ваших деревьев</p>
+              <p class="text-white text-[16px]">52.23415434, 76.237758584</p>
+            </div>
+                        <div class=" py-2 border-t border-white/20">
+              <p class="text-[#DAFFF1] text-[20px] font-medium mb-1">Здесь высажено 10 ваших деревьев</p>
+              <p class="text-white text-[16px]">52.23415434, 76.237758584</p>
+            </div>
+                        <div class=" py-2 border-t border-white/20">
+              <p class="text-[#DAFFF1] text-[20px] font-medium mb-1">Здесь высажено 10 ваших деревьев</p>
+              <p class="text-white text-[16px]">52.23415434, 76.237758584</p>
+            </div>
+                        <div class=" py-2 border-t border-white/20">
+              <p class="text-[#DAFFF1] text-[20px] font-medium mb-1">Здесь высажено 10 ваших деревьев</p>
+              <p class="text-white text-[16px]">52.23415434, 76.237758584</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Элементы управления картой слева сверху -->
+        <div class="absolute top-4 left-4 flex flex-col gap-2 z-[1000]">
+          <button class="w-10 h-10 bg-white rounded shadow-lg flex items-center justify-center hover:bg-gray-50 transition" onclick="zoomInMap()">
+            <span class="text-lg font-bold text-gray-700">+</span>
+          </button>
+          <button class="w-10 h-10 bg-white rounded shadow-lg flex items-center justify-center hover:bg-gray-50 transition" onclick="zoomOutMap()">
+            <span class="text-lg font-bold text-gray-700">−</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <footer class="relative overflow-hidden py-5">
+    <div class="max-w-[1920px] mx-auto">
+    <div class="relative">
+      <!-- Основной контент футера с табличной структурой -->
+      <div class="relative z-10 grid grid-cols-4 gap-0 border-b border-t border-white/10">
+        
+        <!-- Первая колонка - Логотип BIRCH -->
+        <div class="border-r border-white/10 p-8 flex items-center justify-center">
+          <img src="../../src/img/footerBirch.png" alt="BIRCH" class="w-auto h-auto">
+        </div>
+        
+        <!-- Вторая колонка - Контакты -->
+        <div class="border-r border-white/10 p-8 flex items-center justify-center">
+          <div class="text-left">
+            <h3 class="text-xl font-normal text-white mb-6">По вопросам сотрудничества<br>и партнёрства</h3>
+            
+            <div class="space-y-4 text-white/80">
+              <p class="text-base">Казахстан, г. Алматы, ул. Зелёная, 21</p>
+              <p class="text-base">+7(700)800 77 77</p>
+              <p class="text-base">info@birch.green</p>
+            </div>
+            
+            <h4 class="text-lg font-normal text-white mt-8 mb-4">Присоединяйтесь к нам</h4>
+            <div class="flex">
+              <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
+                <img src="../../src/img/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
+                <img src="../../src/img/tg.svg" alt="Telegram" class="w-8 h-8">
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
+                <img src="../../src/img/vk.svg" alt="VK" class="w-8 h-8">
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Третья колонка - Навигация -->
+        <div class="border-r border-white/10 p-8 flex items-center justify-center">
+          <div class="text-left">
+            <h3 class="text-xl font-normal text-white mb-6">Навигация<br>по сайту</h3>
+            
+            <nav class="space-y-4">
+              <a href="../MainPage.html" class="block text-white/80 hover:text-white transition-all text-base">Главная</a>
+              <a href="./donate.html" class="block text-white/80 hover:text-white transition-all text-base">Донаты</a>
+              <a href="#" class="block text-white/80 hover:text-white transition-all text-base">B2B квоты</a>
+              <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Партнеры</a>
+              <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Проекты</a>
+              <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Контакты</a>
+            </nav>
+          </div>
+        </div>
+        
+        <!-- Четвертая колонка - Стрелка вверх -->
+        <div class="p-8 flex items-center justify-center">
+          <button onclick="scrollToTop()" class="w-16 h-16 rounded-full border-[3px] border-white/20 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
+            <img src="../../src/img/arrowUp.svg" alt="Наверх" class="w-6 h-6">
+          </button>
+        </div>
+      </div>
+      
+      <!-- Нижняя часть футера -->
+      <div class="relative z-10 mt-8 pt-6 text-center">
+        <p class="text-[#DAFFF1] text-xl font-normal">© 2025 BIRCH. Все права защищены. | Сделано с заботой об экологии.</p>
+      </div>
+    </div>
+  </div>
+  </footer>
+        </section>
+    </div>
+    
+</body>
+</html>
