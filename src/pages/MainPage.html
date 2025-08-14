@@ -97,6 +97,27 @@
         overflow: visible;
       }
       
+      /* Анимация для круговой картинки с годами */
+      .rotating-years {
+        animation: rotateYears 60s linear infinite;
+        transform-origin: 500px 500px;
+      }
+      
+      @keyframes rotateYears {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      
+      .years-image {
+        transform-origin: 400px 400px;
+        filter: brightness(0.8) contrast(1.1);
+      }
+      
+      /* Старые стили оставляем для совместимости */
       #outerYears, #middleYears {
         transition: transform 0.1s ease-out;
         transform-origin: 500px 500px;
@@ -176,7 +197,7 @@
         <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
           <li><a href="./MainPage.html" class="font-bold border-b-2 border-white pb-1" aria-current="page">Главная</a></li>
           <li><a href="./Donate.html" class="hover:underline">Донаты</a></li>
-          <li><a href="#" class="hover:underline whitespace-nowrap">B2B&nbsp;квоты</a></li>
+          <li><a href="./PlantForest.html" class="hover:underline whitespace-nowrap">B2B&nbsp;квоты</a></li>
           <li><a href="#" class="hover:underline">Партнеры</a></li>
           <li><a href="./Project.html" class="hover:underline">Проекты</a></li>
           <li><a href="#" class="hover:underline">Контакты</a></li>
@@ -302,114 +323,142 @@
       <div class="flex animate-scroll">
         <!-- Первый набор карточек -->
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">503</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              503
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Кирил О.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">261</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              261
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Думан К.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">127</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              127
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Василиса А.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">261</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              261
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Думан К.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">345</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              345
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Александр А.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">345</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              345
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Павел К.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">456</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              456
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Никита Л.</div>
           </div>
         </div>
         
         <!-- Дублируем карточки для бесконечной прокрутки -->
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">503</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              503
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Кирил О.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">261</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              261
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Думан К.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">127</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              127
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Василиса А.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">261</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              261
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Думан К.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">345</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              345
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Александр А.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">345</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              345
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Павел К.</div>
           </div>
         </div>
         
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-          <span class="text-5xl mr-4">🌳</span>
           <div class="text-left">
-            <div class="text-6xl font-normal text-white">456</div>
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              456
+              <span class="text-6xl">🌳</span>
+            </div>
             <div class="text-lg text-gray-300 mt-1">Никита Л.</div>
           </div>
         </div>
@@ -489,7 +538,7 @@
        style="background: radial-gradient(circle, #008852, #164125);"></div>
 
   <!-- Второй зелёный градиентный круг -->
-  <div class="absolute -bottom-[450px] -right-[500px] w-[900px] h-[900px] rounded-full blur-[600px]"
+  <div class="absolute -bottom-[450px] -right-[450px] w-[900px] h-[900px] rounded-full blur-[600px]"
        style="background: radial-gradient(circle, #008852, #164125);"></div>
 
   <!-- Контент слева -->
@@ -520,179 +569,29 @@
       </div>
     </div>
   </div>
-  <div class="flex gap-2 mb-100 text-2xl font-normal justify-start items-center mr-5">
+  <div class="flex gap-2 mb-100 text-2xl font-normal justify-start items-center mr-40">
     <img src="../../src/img/greenStarBgWhite.svg" alt="">
     <span>И что делает BIRCH</span>
   </div>
   <!-- Колесо с годами -->
-  <div class="absolute bottom-0 right-0 z-10 w-[1100px] h-[1100px] -mb-[700px] -mr-[380px]">
+  <div class="absolute bottom-0 right-0 z-10 w-[1100px] h-[1100px] -mb-[680px] -mr-[280px]">
     <svg viewBox="0 0 1000 1000" class="w-full h-full" id="yearWheel">
-      <!-- Внешние декоративные окружности -->
-      <circle cx="500" cy="500" r="500" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>  
-      <circle cx="500" cy="500" r="350" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>
-      <circle cx="500" cy="500" r="250" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>
+      <!-- Внешние декоративные окружности - увеличиваем размеры -->
+      <circle cx="500" cy="500" r="480" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>  
+      <circle cx="500" cy="500" r="320" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>
+      <circle cx="500" cy="500" r="200" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>
 
-      <!-- Путь для текста годов (внешний круг) -->
-      <defs>
-        <path id="yearPathOuter" d="M 500,50 A 450,450 0 1,1 499.9,50"/>
-        <path id="yearPathMiddle" d="M 500,150 A 350,350 0 1,1 499.9,150"/>
-      </defs>
-
-      <!-- Внешний текст с годами как отдельные элементы -->
-      <g id="outerYears" class=" text-5xl font-normal">
-        <!-- 2018 -->
-        <g transform="translate(500,500) rotate(0)">
-          <text class="year-text" data-year="2018" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2018</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(12)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2019 -->
-        <g transform="translate(500,500) rotate(24)">
-          <text class="year-text" data-year="2019" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2019</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(36)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2020 -->
-        <g transform="translate(500,500) rotate(48)">
-          <text class="year-text" data-year="2020" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2020</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(60)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2021 -->
-        <g transform="translate(500,500) rotate(72)">
-          <text class="year-text" data-year="2021" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2021</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(84)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2022 -->
-        <g transform="translate(500,500) rotate(96)">
-          <text class="year-text" data-year="2022" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2022</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(108)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2023 -->
-        <g transform="translate(500,500) rotate(120)">
-          <text class="year-text" data-year="2023" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2023</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(132)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2024 -->
-        <g transform="translate(500,500) rotate(144)">
-          <text class="year-text" data-year="2024" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2024</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(156)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2025 -->
-        <g transform="translate(500,500) rotate(168)">
-          <text class="year-text" data-year="2025" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2025</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(180)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2026 -->
-        <g transform="translate(500,500) rotate(192)">
-          <text class="year-text" data-year="2026" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2026</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(204)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2027 -->
-        <g transform="translate(500,500) rotate(216)">
-          <text class="year-text" data-year="2027" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2027</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(228)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2028 -->
-        <g transform="translate(500,500) rotate(240)">
-          <text class="year-text" data-year="2028" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2028</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(252)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2029 -->
-        <g transform="translate(500,500) rotate(264)">
-          <text class="year-text" data-year="2029" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2029</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(276)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2030 -->
-        <g transform="translate(500,500) rotate(288)">
-          <text class="year-text" data-year="2030" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2030</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(300)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2031 -->
-        <g transform="translate(500,500) rotate(312)">
-          <text class="year-text" data-year="2031" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2031</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(324)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-        
-        <!-- 2032 -->
-        <g transform="translate(500,500) rotate(336)">
-          <text class="year-text" data-year="2032" text-anchor="middle" x="0" y="-405" font-size="50" font-weight="400" letter-spacing="2px" fill="rgba(255, 255, 255, 0.3)">2032</text>
-        </g>
-        
-        <!-- Квадратик разделитель -->
-        <g transform="translate(500,500) rotate(348)">
-          <rect width="8" height="8" x="-4" y="-425" fill="rgba(255, 255, 255, 0.3)" class="square-separator"/>
-        </g>
-      </g>
-
-      <!-- Убираем средний круг с годами -->
-      <g id="middleYears" class="fill-white/30 text-base">
+      <!-- Круговая картинка с годами между первой и второй линиями -->
+      <g id="yearsImageGroup" class="rotating-years">
+        <image 
+          x="80" 
+          y="80" 
+          width="840" 
+          height="840" 
+          href="../../src/img/years.png" 
+          opacity="0.7"
+          class="years-image"
+        />
       </g>
 
     </svg>

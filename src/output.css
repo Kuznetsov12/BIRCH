@@ -301,6 +301,9 @@
   .-right-\[400px\] {
     right: calc(400px * -1);
   }
+  .-right-\[450px\] {
+    right: calc(450px * -1);
+  }
   .-right-\[500px\] {
     right: calc(500px * -1);
   }
@@ -514,8 +517,14 @@
   .mt-40 {
     margin-top: calc(var(--spacing) * 40);
   }
+  .-mr-\[280px\] {
+    margin-right: calc(280px * -1);
+  }
   .-mr-\[380px\] {
     margin-right: calc(380px * -1);
+  }
+  .-mr-\[480px\] {
+    margin-right: calc(480px * -1);
   }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
@@ -529,8 +538,32 @@
   .mr-20 {
     margin-right: calc(var(--spacing) * 20);
   }
+  .mr-40 {
+    margin-right: calc(var(--spacing) * 40);
+  }
+  .-mb-40 {
+    margin-bottom: calc(var(--spacing) * -40);
+  }
+  .-mb-60 {
+    margin-bottom: calc(var(--spacing) * -60);
+  }
+  .-mb-\[400px\] {
+    margin-bottom: calc(400px * -1);
+  }
+  .-mb-\[500px\] {
+    margin-bottom: calc(500px * -1);
+  }
+  .-mb-\[600px\] {
+    margin-bottom: calc(600px * -1);
+  }
+  .-mb-\[680px\] {
+    margin-bottom: calc(680px * -1);
+  }
   .-mb-\[700px\] {
     margin-bottom: calc(700px * -1);
+  }
+  .-mb-\[900px\] {
+    margin-bottom: calc(900px * -1);
   }
   .mb-1 {
     margin-bottom: calc(var(--spacing) * 1);
@@ -558,6 +591,12 @@
   }
   .mb-20 {
     margin-bottom: calc(var(--spacing) * 20);
+  }
+  .mb-40 {
+    margin-bottom: calc(var(--spacing) * 40);
+  }
+  .mb-50 {
+    margin-bottom: calc(var(--spacing) * 50);
   }
   .mb-100 {
     margin-bottom: calc(var(--spacing) * 100);

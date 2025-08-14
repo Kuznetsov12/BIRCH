@@ -274,28 +274,20 @@ document.addEventListener('DOMContentLoaded', () => {
 // Анимация колеса с годами
 document.addEventListener('DOMContentLoaded', () => {
   const yearWheel = document.getElementById('yearWheel');
-  const outerYears = document.getElementById('outerYears');
+  const yearsImageGroup = document.getElementById('yearsImageGroup');
   
-  if (yearWheel && outerYears) {
-    let rotation = 0;
+  if (yearWheel && yearsImageGroup) {
+    // Картинка уже анимируется через CSS, но можем добавить дополнительную логику
     
-    function animateWheel() {
-      // Вращаем весь круг с годами медленно
-      rotation += 0.1;
-      
-      // Применяем трансформацию к группе
-      outerYears.style.transform = `rotate(${rotation}deg)`;
-      outerYears.style.transformOrigin = '500px 500px';
-      
-      requestAnimationFrame(animateWheel);
-    }
-    
-    // Запускаем анимацию только когда секция в viewport
+    // Запускаем анимацию только когда секция в viewport для оптимизации
     const wheelObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          animateWheel();
-          wheelObserver.unobserve(entry.target); // Запускаем только один раз
+          // Активируем CSS анимацию
+          yearsImageGroup.style.animationPlayState = 'running';
+        } else {
+          // Приостанавливаем для экономии ресурсов
+          yearsImageGroup.style.animationPlayState = 'paused';
         }
       });
     }, {
