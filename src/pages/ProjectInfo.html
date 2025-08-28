@@ -112,6 +112,30 @@
             background-size: cover !important;
             background-position: center center !important;
         }
+        
+        /* Модальное окно */
+        #project-modal {
+            animation: fadeIn 0.3s ease-out;
+            display: flex;
+        }
+        
+        #project-modal.hidden {
+            display: none !important;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        #project-modal.fade-out {
+            animation: fadeOut 0.3s ease-out;
+        }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -140,7 +164,7 @@
       <div class="flex-1"></div>
       <div class="flex items-center gap-6">
         <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
-          <li><a href="./MainPage.html" class="hover:underline">Главная</a></li>
+          <li><a href="../../index.html" class="hover:underline">Главная</a></li>
           <li><a href="./Donate.html" class="hover:underline">Донаты</a></li>
           <li><a href="./PlantForest.html" class="hover:underline whitespace-nowrap">B2B&nbsp;квоты</a></li>
           <li><a href="#" class="hover:underline">Партнеры</a></li>
@@ -173,9 +197,17 @@
           </h1>
         </div>
         <div class="flex items-end justify-between w-full">
-          <p id="project-description" class="text-[24px] text-[#BFBFBF] max-w-[820px] font-normal leading-relaxed">
+          <div>
+            <p id="project-description" class="text-[24px] text-[#BFBFBF] max-w-[820px] font-normal leading-relaxed mb-8">
 В Казахстане действует национальная система торговли углеродными квотами (ETS), регулирующая объёмы выбросов CO₂ от производителей. <br>Компании получают квоты на выброс парниковых газов, и если выбросы превышают лимит — они обязаны доплатить.
-          </p>   
+            </p>
+            
+            <!-- Кнопка "Смотреть проект" -->
+            <button id="view-project-btn" class="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-4 rounded-full hover:bg-white/20 transition-all duration-300">
+              <img src="../../src/img/image.svg" alt="" class="w-6 h-6">
+              <span class="text-lg font-medium">Смотреть проект</span>
+            </button>
+          </div>
         </div>
         </div>
       </div>
@@ -250,6 +282,20 @@ style="background: radial-gradient(circle, #008852, #164125);"></div>
 </div>
 </div>
 </footer>
+    </div>
+    
+    <!-- Модальное окно для просмотра проекта -->
+    <div id="project-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center">
+        <div class="relative max-w-4xl max-h-screen p-8">
+            <button id="close-modal" class="absolute top-12 right-12 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 z-10">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <!-- Изображение проекта -->
+            <img id="modal-image" src="" alt="Изображение проекта" class="w-full h-auto rounded-lg max-h-[80vh] object-contain">
+        </div>
     </div>
     
     <script src="../main.js"></script>
