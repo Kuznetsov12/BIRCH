@@ -315,12 +315,22 @@ const totalProjectPages = 3; // Три страницы (первая, втор�
 
 function scrollProjectCards(direction) {
     const carousel = document.getElementById('projectCarousel');
+    const isTablet = window.innerWidth <= 1366; // Определяем планшетный режим
+    
+    // Проверяем, что карусель существует
+    if (!carousel) return;
     
     if (direction === 'right' && currentProjectPage < totalProjectPages - 1) {
         currentProjectPage++;
     } else if (direction === 'left' && currentProjectPage > 0) {
         currentProjectPage--;
+    } else if (isTablet && direction === 'right' && currentProjectPage >= totalProjectPages - 1) {
+        // На планшетах делаем круговое листание
+        currentProjectPage = 0;
+    } else if (isTablet && direction === 'left' && currentProjectPage <= 0) {
+        currentProjectPage = totalProjectPages - 1;
     }
+    
     const translateX = currentProjectPage * 100; // Перемещаем на 100% ширины контейнера
     carousel.style.transform = `translateX(-${translateX}%)`;
 }

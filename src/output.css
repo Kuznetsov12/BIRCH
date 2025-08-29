@@ -7,17 +7,14 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-orange-500: oklch(70.5% 0.213 47.604);
     --color-green-400: oklch(79.2% 0.209 151.711);
     --color-green-500: oklch(72.3% 0.219 149.579);
     --color-green-600: oklch(62.7% 0.194 149.214);
-    --color-green-800: oklch(44.8% 0.119 151.328);
     --color-gray-50: oklch(98.5% 0.002 247.839);
     --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-200: oklch(92.8% 0.006 264.531);
     --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
-    --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-gray-600: oklch(44.6% 0.03 256.802);
     --color-gray-700: oklch(37.3% 0.034 259.733);
     --color-gray-800: oklch(27.8% 0.033 256.848);
@@ -27,8 +24,6 @@
     --spacing: 0.25rem;
     --container-4xl: 56rem;
     --container-5xl: 64rem;
-    --text-xs: 0.75rem;
-    --text-xs--line-height: calc(1 / 0.75);
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
     --text-base: 1rem;
@@ -60,7 +55,6 @@
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
     --radius-3xl: 1.5rem;
-    --drop-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.15);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --blur-sm: 8px;
     --blur-md: 12px;
@@ -147,6 +141,7 @@
   }
   img, svg, video, canvas, audio, iframe, embed, object {
     display: block;
+    vertical-align: middle;
   }
   img, video {
     max-width: 100%;
@@ -215,9 +210,6 @@
   }
 }
 @layer utilities {
-  .pointer-events-none {
-    pointer-events: none;
-  }
   .absolute {
     position: absolute;
   }
@@ -245,23 +237,11 @@
   .-top-\[0px\] {
     top: calc(0px * -1);
   }
-  .-top-\[150px\] {
-    top: calc(150px * -1);
-  }
-  .-top-\[200px\] {
-    top: calc(200px * -1);
-  }
-  .-top-\[300px\] {
-    top: calc(300px * -1);
-  }
   .-top-\[450px\] {
     top: calc(450px * -1);
   }
   .-top-\[550px\] {
     top: calc(550px * -1);
-  }
-  .-top-\[950px\] {
-    top: calc(950px * -1);
   }
   .top-0 {
     top: calc(var(--spacing) * 0);
@@ -296,9 +276,6 @@
   .top-\[364px\] {
     top: 364px;
   }
-  .top-\[950px\] {
-    top: 950px;
-  }
   .-right-35 {
     right: calc(var(--spacing) * -35);
   }
@@ -314,9 +291,6 @@
   .-right-\[450px\] {
     right: calc(450px * -1);
   }
-  .-right-\[500px\] {
-    right: calc(500px * -1);
-  }
   .-right-\[600px\] {
     right: calc(600px * -1);
   }
@@ -328,9 +302,6 @@
   }
   .right-0 {
     right: calc(var(--spacing) * 0);
-  }
-  .right-4 {
-    right: calc(var(--spacing) * 4);
   }
   .right-8 {
     right: calc(var(--spacing) * 8);
@@ -356,9 +327,6 @@
   .right-\[570px\] {
     right: 570px;
   }
-  .-bottom-20 {
-    bottom: calc(var(--spacing) * -20);
-  }
   .-bottom-30 {
     bottom: calc(var(--spacing) * -30);
   }
@@ -380,9 +348,6 @@
   .-bottom-\[450px\] {
     bottom: calc(450px * -1);
   }
-  .-bottom-\[700px\] {
-    bottom: calc(700px * -1);
-  }
   .bottom-0 {
     bottom: calc(var(--spacing) * 0);
   }
@@ -392,35 +357,17 @@
   .bottom-60 {
     bottom: calc(var(--spacing) * 60);
   }
-  .bottom-\[-00px\] {
-    bottom: -00px;
-  }
-  .bottom-\[-400px\] {
-    bottom: -400px;
-  }
-  .bottom-\[-500px\] {
-    bottom: -500px;
-  }
   .bottom-\[-700px\] {
     bottom: -700px;
   }
   .bottom-\[-800px\] {
     bottom: -800px;
   }
-  .bottom-\[-900px\] {
-    bottom: -900px;
-  }
-  .bottom-\[-1200px\] {
-    bottom: -1200px;
-  }
   .bottom-\[-1300px\] {
     bottom: -1300px;
   }
   .bottom-\[140px\] {
     bottom: 140px;
-  }
-  .bottom-\[300px\] {
-    bottom: 300px;
   }
   .-left-80 {
     left: calc(var(--spacing) * -80);
@@ -430,12 +377,6 @@
   }
   .-left-\[-50px\] {
     left: calc(-50px * -1);
-  }
-  .-left-\[-150px\] {
-    left: calc(-150px * -1);
-  }
-  .-left-\[150px\] {
-    left: calc(150px * -1);
   }
   .-left-\[350px\] {
     left: calc(350px * -1);
@@ -494,20 +435,11 @@
   .mx-auto {
     margin-inline: auto;
   }
-  .-mt-8 {
-    margin-top: calc(var(--spacing) * -8);
-  }
-  .-mt-20 {
-    margin-top: calc(var(--spacing) * -20);
+  .my-10 {
+    margin-block: calc(var(--spacing) * 10);
   }
   .-mt-32 {
     margin-top: calc(var(--spacing) * -32);
-  }
-  .-mt-40 {
-    margin-top: calc(var(--spacing) * -40);
-  }
-  .-mt-48 {
-    margin-top: calc(var(--spacing) * -48);
   }
   .-mt-60 {
     margin-top: calc(var(--spacing) * -60);
@@ -527,23 +459,14 @@
   .mt-8 {
     margin-top: calc(var(--spacing) * 8);
   }
-  .mt-12 {
-    margin-top: calc(var(--spacing) * 12);
-  }
   .mt-20 {
     margin-top: calc(var(--spacing) * 20);
   }
-  .mt-40 {
-    margin-top: calc(var(--spacing) * 40);
+  .mt-auto {
+    margin-top: auto;
   }
   .-mr-\[280px\] {
     margin-right: calc(280px * -1);
-  }
-  .-mr-\[380px\] {
-    margin-right: calc(380px * -1);
-  }
-  .-mr-\[480px\] {
-    margin-right: calc(480px * -1);
   }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
@@ -551,38 +474,14 @@
   .mr-4 {
     margin-right: calc(var(--spacing) * 4);
   }
-  .mr-5 {
-    margin-right: calc(var(--spacing) * 5);
-  }
   .mr-20 {
     margin-right: calc(var(--spacing) * 20);
   }
   .mr-40 {
     margin-right: calc(var(--spacing) * 40);
   }
-  .-mb-40 {
-    margin-bottom: calc(var(--spacing) * -40);
-  }
-  .-mb-60 {
-    margin-bottom: calc(var(--spacing) * -60);
-  }
-  .-mb-\[400px\] {
-    margin-bottom: calc(400px * -1);
-  }
-  .-mb-\[500px\] {
-    margin-bottom: calc(500px * -1);
-  }
-  .-mb-\[600px\] {
-    margin-bottom: calc(600px * -1);
-  }
   .-mb-\[680px\] {
     margin-bottom: calc(680px * -1);
-  }
-  .-mb-\[700px\] {
-    margin-bottom: calc(700px * -1);
-  }
-  .-mb-\[900px\] {
-    margin-bottom: calc(900px * -1);
   }
   .mb-1 {
     margin-bottom: calc(var(--spacing) * 1);
@@ -611,12 +510,6 @@
   .mb-20 {
     margin-bottom: calc(var(--spacing) * 20);
   }
-  .mb-40 {
-    margin-bottom: calc(var(--spacing) * 40);
-  }
-  .mb-50 {
-    margin-bottom: calc(var(--spacing) * 50);
-  }
   .mb-100 {
     margin-bottom: calc(var(--spacing) * 100);
   }
@@ -643,9 +536,6 @@
   }
   .hidden {
     display: none;
-  }
-  .h-3 {
-    height: calc(var(--spacing) * 3);
   }
   .h-4 {
     height: calc(var(--spacing) * 4);
@@ -674,14 +564,8 @@
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
-  .h-20 {
-    height: calc(var(--spacing) * 20);
-  }
   .h-24 {
     height: calc(var(--spacing) * 24);
-  }
-  .h-32 {
-    height: calc(var(--spacing) * 32);
   }
   .h-36 {
     height: calc(var(--spacing) * 36);
@@ -689,17 +573,8 @@
   .h-\[1px\] {
     height: 1px;
   }
-  .h-\[20vh\] {
-    height: 20vh;
-  }
-  .h-\[40vh\] {
-    height: 40vh;
-  }
   .h-\[46px\] {
     height: 46px;
-  }
-  .h-\[50vh\] {
-    height: 50vh;
   }
   .h-\[55px\] {
     height: 55px;
@@ -710,9 +585,6 @@
   .h-\[60vh\] {
     height: 60vh;
   }
-  .h-\[64px\] {
-    height: 64px;
-  }
   .h-\[72px\] {
     height: 72px;
   }
@@ -722,23 +594,14 @@
   .h-\[80px\] {
     height: 80px;
   }
-  .h-\[80vh\] {
-    height: 80vh;
-  }
   .h-\[82px\] {
     height: 82px;
   }
   .h-\[85px\] {
     height: 85px;
   }
-  .h-\[100vh\] {
-    height: 100vh;
-  }
   .h-\[109px\] {
     height: 109px;
-  }
-  .h-\[120px\] {
-    height: 120px;
   }
   .h-\[128px\] {
     height: 128px;
@@ -755,17 +618,11 @@
   .h-\[169px\] {
     height: 169px;
   }
-  .h-\[200px\] {
-    height: 200px;
-  }
   .h-\[213px\] {
     height: 213px;
   }
   .h-\[215px\] {
     height: 215px;
-  }
-  .h-\[300px\] {
-    height: 300px;
   }
   .h-\[305px\] {
     height: 305px;
@@ -778,9 +635,6 @@
   }
   .h-\[469px\] {
     height: 469px;
-  }
-  .h-\[715px\] {
-    height: 715px;
   }
   .h-\[760px\] {
     height: 760px;
@@ -817,9 +671,6 @@
   }
   .h-full {
     height: 100%;
-  }
-  .h-max {
-    height: max-content;
   }
   .h-screen {
     height: 100vh;
@@ -866,20 +717,11 @@
   .w-16 {
     width: calc(var(--spacing) * 16);
   }
-  .w-20 {
-    width: calc(var(--spacing) * 20);
-  }
   .w-24 {
     width: calc(var(--spacing) * 24);
   }
-  .w-32 {
-    width: calc(var(--spacing) * 32);
-  }
   .w-36 {
     width: calc(var(--spacing) * 36);
-  }
-  .w-40 {
-    width: calc(var(--spacing) * 40);
   }
   .w-64 {
     width: calc(var(--spacing) * 64);
@@ -893,14 +735,8 @@
   .w-\[60\%\] {
     width: 60%;
   }
-  .w-\[64px\] {
-    width: 64px;
-  }
   .w-\[82px\] {
     width: 82px;
-  }
-  .w-\[120px\] {
-    width: 120px;
   }
   .w-\[144px\] {
     width: 144px;
@@ -949,12 +785,6 @@
   }
   .w-\[454px\] {
     width: 454px;
-  }
-  .w-\[460px\] {
-    width: 460px;
-  }
-  .w-\[470px\] {
-    width: 470px;
   }
   .w-\[490px\] {
     width: 490px;
@@ -1025,29 +855,14 @@
   .max-w-\[820px\] {
     max-width: 820px;
   }
-  .max-w-\[830px\] {
-    max-width: 830px;
-  }
   .max-w-\[900px\] {
     max-width: 900px;
   }
   .max-w-\[910px\] {
     max-width: 910px;
   }
-  .max-w-\[920px\] {
-    max-width: 920px;
-  }
-  .max-w-\[940px\] {
-    max-width: 940px;
-  }
-  .max-w-\[960px\] {
-    max-width: 960px;
-  }
   .max-w-\[1000px\] {
     max-width: 1000px;
-  }
-  .max-w-\[1200px\] {
-    max-width: 1200px;
   }
   .max-w-\[1500px\] {
     max-width: 1500px;
@@ -1055,20 +870,8 @@
   .max-w-\[1800px\] {
     max-width: 1800px;
   }
-  .max-w-\[1820px\] {
-    max-width: 1820px;
-  }
-  .max-w-\[1900px\] {
-    max-width: 1900px;
-  }
-  .max-w-\[1900pz\] {
-    max-width: 1900pz;
-  }
   .max-w-\[1920px\] {
     max-width: 1920px;
-  }
-  .max-w-\[9320px\] {
-    max-width: 9320px;
   }
   .max-w-full {
     max-width: 100%;
@@ -1170,24 +973,6 @@
   .gap-24 {
     gap: calc(var(--spacing) * 24);
   }
-  .gap-40 {
-    gap: calc(var(--spacing) * 40);
-  }
-  .gap-\[40px\] {
-    gap: 40px;
-  }
-  .gap-\[200px\] {
-    gap: 200px;
-  }
-  .gap-\[280px\] {
-    gap: 280px;
-  }
-  .gap-\[350px\] {
-    gap: 350px;
-  }
-  .gap-\[400px\] {
-    gap: 400px;
-  }
   .space-y-0 {
     :where(& > :not(:last-child)) {
       --tw-space-y-reverse: 0;
@@ -1284,10 +1069,6 @@
     border-style: var(--tw-border-style);
     border-width: 3px;
   }
-  .border-\[010101\] {
-    border-style: var(--tw-border-style);
-    border-width: 010101;
-  }
   .border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
@@ -1300,17 +1081,9 @@
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
   }
-  .border-b-1 {
-    border-bottom-style: var(--tw-border-style);
-    border-bottom-width: 1px;
-  }
   .border-b-2 {
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 2px;
-  }
-  .border-b-4 {
-    border-bottom-style: var(--tw-border-style);
-    border-bottom-width: 4px;
   }
   .border-none {
     --tw-border-style: none;
@@ -1325,17 +1098,8 @@
   .border-\[\#3C3C3C\] {
     border-color: #3C3C3C;
   }
-  .border-\[\#010101\] {
-    border-color: #010101;
-  }
-  .border-\[\#B1B1B1\] {
-    border-color: #B1B1B1;
-  }
   .border-\[\#BFBFBF\] {
     border-color: #BFBFBF;
-  }
-  .border-\[B1B1B1\] {
-    border-color: B1B1B1;
   }
   .border-black {
     border-color: var(--color-black);
@@ -1421,35 +1185,14 @@
       background-color: color-mix(in oklab, var(--color-black) 80%, transparent);
     }
   }
-  .bg-gray-50 {
-    background-color: var(--color-gray-50);
-  }
   .bg-gray-200 {
     background-color: var(--color-gray-200);
-  }
-  .bg-gray-500 {
-    background-color: var(--color-gray-500);
   }
   .bg-gray-600 {
     background-color: var(--color-gray-600);
   }
-  .bg-green-500 {
-    background-color: var(--color-green-500);
-  }
-  .bg-orange-500 {
-    background-color: var(--color-orange-500);
-  }
-  .bg-transparent {
-    background-color: transparent;
-  }
   .bg-white {
     background-color: var(--color-white);
-  }
-  .bg-white\/5 {
-    background-color: color-mix(in srgb, #fff 5%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-white) 5%, transparent);
-    }
   }
   .bg-white\/10 {
     background-color: color-mix(in srgb, #fff 10%, transparent);
@@ -1499,12 +1242,6 @@
   .fill-none {
     fill: none;
   }
-  .fill-white\/30 {
-    fill: color-mix(in srgb, #fff 30%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      fill: color-mix(in oklab, var(--color-white) 30%, transparent);
-    }
-  }
   .stroke-black\/10 {
     stroke: color-mix(in srgb, #000 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1541,15 +1278,6 @@
   .px-12 {
     padding-inline: calc(var(--spacing) * 12);
   }
-  .px-16 {
-    padding-inline: calc(var(--spacing) * 16);
-  }
-  .px-32 {
-    padding-inline: calc(var(--spacing) * 32);
-  }
-  .px-40 {
-    padding-inline: calc(var(--spacing) * 40);
-  }
   .px-52 {
     padding-inline: calc(var(--spacing) * 52);
   }
@@ -1580,17 +1308,11 @@
   .py-20 {
     padding-block: calc(var(--spacing) * 20);
   }
-  .pt-5 {
-    padding-top: calc(var(--spacing) * 5);
-  }
   .pt-6 {
     padding-top: calc(var(--spacing) * 6);
   }
   .pt-8 {
     padding-top: calc(var(--spacing) * 8);
-  }
-  .pt-20 {
-    padding-top: calc(var(--spacing) * 20);
   }
   .pt-32 {
     padding-top: calc(var(--spacing) * 32);
@@ -1600,12 +1322,6 @@
   }
   .pb-1 {
     padding-bottom: calc(var(--spacing) * 1);
-  }
-  .pb-1\.5 {
-    padding-bottom: calc(var(--spacing) * 1.5);
-  }
-  .pb-2 {
-    padding-bottom: calc(var(--spacing) * 2);
   }
   .pb-4 {
     padding-bottom: calc(var(--spacing) * 4);
@@ -1660,13 +1376,6 @@
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
   }
-  .text-xs {
-    font-size: var(--text-xs);
-    line-height: var(--tw-leading, var(--text-xs--line-height));
-  }
-  .text-\[14px\] {
-    font-size: 14px;
-  }
   .text-\[16px\] {
     font-size: 16px;
   }
@@ -1690,9 +1399,6 @@
   }
   .text-\[60px\] {
     font-size: 60px;
-  }
-  .text-\[64px\] {
-    font-size: 64px;
   }
   .text-\[70px\] {
     font-size: 70px;
@@ -1792,23 +1498,14 @@
   .text-\[\#FFFFFF\] {
     color: #FFFFFF;
   }
-  .text-\[010101\] {
-    color: 010101;
-  }
   .text-black {
     color: var(--color-black);
   }
   .text-gray-300 {
     color: var(--color-gray-300);
   }
-  .text-gray-600 {
-    color: var(--color-gray-600);
-  }
   .text-gray-700 {
     color: var(--color-gray-700);
-  }
-  .text-gray-900 {
-    color: var(--color-gray-900);
   }
   .text-green-400 {
     color: var(--color-green-400);
@@ -1818,12 +1515,6 @@
   }
   .text-white {
     color: var(--color-white);
-  }
-  .text-white\/70 {
-    color: color-mix(in srgb, #fff 70%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      color: color-mix(in oklab, var(--color-white) 70%, transparent);
-    }
   }
   .text-white\/80 {
     color: color-mix(in srgb, #fff 80%, transparent);
@@ -1840,9 +1531,6 @@
   .underline {
     text-decoration-line: underline;
   }
-  .opacity-0 {
-    opacity: 0%;
-  }
   .opacity-20 {
     opacity: 20%;
   }
@@ -1851,9 +1539,6 @@
   }
   .opacity-40 {
     opacity: 40%;
-  }
-  .opacity-60 {
-    opacity: 60%;
   }
   .opacity-100 {
     opacity: 100%;
@@ -1880,11 +1565,6 @@
   }
   .blur-\[600px\] {
     --tw-blur: blur(600px);
-    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-  }
-  .drop-shadow-sm {
-    --tw-drop-shadow-size: drop-shadow(0 1px 2px var(--tw-drop-shadow-color, rgb(0 0 0 / 0.15)));
-    --tw-drop-shadow: drop-shadow(var(--drop-shadow-sm));
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .filter {
@@ -2018,14 +1698,6 @@
       }
     }
   }
-  .hover\:shadow-2xl {
-    &:hover {
-      @media (hover: hover) {
-        --tw-shadow: 0 25px 50px -12px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
-        box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-      }
-    }
-  }
   .focus\:border-transparent {
     &:focus {
       border-color: transparent;
@@ -2095,6 +1767,12 @@
 * {
   font-family: 'PP Neue Montreal', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
+.tablet-partner-image {
+  display: none;
+}
+.desktop-partner-mosaic {
+  display: block;
+}
 body {
   margin: 0;
   padding: 0;
@@ -2143,6 +1821,771 @@ button:focus, button:focus-visible {
 }
 img, svg, video, canvas, audio, iframe, embed, object {
   vertical-align: unset;
+}
+@media (min-width: 768px) and (max-width: 1366px) {
+  section.w-full.bg-white.min-h-\[700px\] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .max-w-\[1920px\] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    padding-left: 2rem !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .max-w-\[1000px\] {
+    max-width: 100% !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .flex.items-center.mb-6 {
+    justify-content: flex-start !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] h2 {
+    text-align: left !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] p {
+    text-align: left !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] button {
+    margin-left: 0 !important;
+  }
+}
+@media (min-width: 1367px) {
+  .desktop-partner-mosaic {
+    display: block !important;
+  }
+  .tablet-partner-image {
+    display: none !important;
+  }
+  .desktop-height-fix {
+    height: 600px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .max-w-\[1920px\] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    padding-left: 3rem !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .max-w-\[1000px\] {
+    max-width: 100% !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .flex.items-center.mb-6 {
+    justify-content: flex-start !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] h2 {
+    text-align: left !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] p {
+    text-align: left !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] button {
+    margin-left: 0 !important;
+  }
+}
+body {
+  margin: 0;
+  padding: 0;
+  max-width: 1920px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+h1 {
+  line-height: 1.1;
+}
+#app {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2em #3178c6aa);
+}
+.card {
+  padding: 2em;
+}
+.read-the-docs {
+  color: #888;
+}
+button:focus, button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+img, svg, video, canvas, audio, iframe, embed, object {
+  vertical-align: unset;
+}
+section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
+  display: none;
+}
+@media (max-width: 1366px) {
+  body {
+    background: transparent !important;
+  }
+  header {
+    padding: 8px 12px !important;
+  }
+  nav.max-w-\[1920px\] {
+    height: 60px !important;
+    padding: 0 2px !important;
+    max-width: 100% !important;
+    justify-content: center !important;
+  }
+  nav img {
+    padding-left: 8px !important;
+    height: 24px !important;
+    width: auto !important;
+  }
+  nav.flex ul.flex {
+    gap: 0px !important;
+    justify-content: center !important;
+    flex: 1 !important;
+  }
+  nav.flex ul.flex.gap-6 {
+    gap: 0px !important;
+  }
+  header nav ul {
+    gap: 0px !important;
+  }
+  .flex.gap-6 {
+    gap: 0px !important;
+  }
+  nav ul li {
+    margin-right: 2px !important;
+  }
+  nav ul li:last-child {
+    margin-right: 0 !important;
+  }
+  nav ul li a {
+    font-size: 14px !important;
+    padding: 4px 6px !important;
+  }
+  nav button {
+    height: 45px !important;
+    padding: 6px 12px !important;
+    font-size: 13px !important;
+  }
+  nav button span {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  nav button img {
+    max-width: none !important;
+    padding-left: 0 !important;
+    width: 26px !important;
+    height: 26px !important;
+  }
+  .h-screen {
+    min-height: 100vh !important;
+    height: 100vh !important;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+  .text-\[84px\] {
+    font-size: 32px !important;
+    line-height: 1.1 !important;
+  }
+  .text-\[48px\] {
+    font-size: 24px !important;
+    line-height: 1.2 !important;
+  }
+  .text-6xl {
+    font-size: 26px !important;
+  }
+  .text-5xl {
+    font-size: 22px !important;
+  }
+  .text-2xl {
+    font-size: 15px !important;
+  }
+  .text-xl {
+    font-size: 14px !important;
+  }
+  .text-lg {
+    font-size: 13px !important;
+  }
+  .flex.items-end.justify-between {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+  .text-\[24px\] {
+    font-size: 16px !important;
+    max-width: 100% !important;
+  }
+  .flex.gap-6 {
+    width: 100% !important;
+    display: flex !important;
+    gap: 16px !important;
+  }
+  .h-\[80px\] {
+    height: 60px !important;
+    font-size: 15px !important;
+    padding: 12px 20px !important;
+  }
+  .w-\[300px\] {
+    width: 100% !important;
+    max-width: 250px !important;
+  }
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0 !important;
+  }
+  .w-full.bg-black.border-t {
+    border-top: none !important;
+  }
+  .grid-cols-4 > div {
+    border-top: 1px solid #2D2D2D !important;
+  }
+  .grid-cols-4 > div:nth-child(1) {
+    border-right: 1px solid #2D2D2D !important;
+  }
+  .grid-cols-4 > div:nth-child(3) {
+    border-right: 1px solid #2D2D2D !important;
+  }
+  .grid-cols-4 > div:nth-child(2) {
+    border-right: 0 !important;
+  }
+  .grid-cols-4 > div:nth-child(4) {
+    margin-left: 0 !important;
+  }
+  .text-7xl {
+    font-size: 28px !important;
+  }
+  .grid-cols-4 .text-xl {
+    font-size: 13px !important;
+  }
+  .py-12 {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+  }
+  .absolute.right-\[-12px\] {
+    display: none !important;
+  }
+  .absolute.right-\[44px\] {
+    display: none !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
+    display: block !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] {
+    position: relative !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\]::after {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 550px;
+    height: 350px;
+    background-image: url('img/headerTree.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+    pointer-events: none;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .max-w-\[1000px\] {
+    position: relative !important;
+    z-index: 10 !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+    margin-top: 510px !important;
+    padding: 40px 0 !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .text-\[84px\] {
+    font-size: 48px !important;
+    line-height: 1.1 !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .text-2xl {
+    font-size: 20px !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .text-xl {
+    font-size: 18px !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .h-\[80px\] {
+    height: 70px !important;
+    font-size: 18px !important;
+    padding: 16px 24px !important;
+  }
+  section.w-full.bg-white.min-h-\[700px\] .text-2xl.uppercase {
+    font-size: 18px !important;
+  }
+  .max-w-\[1920px\] {
+    max-width: 100% !important;
+  }
+  .max-w-\[1000px\] {
+    max-width: 90% !important;
+  }
+  .max-w-\[800px\] {
+    max-width: 85% !important;
+  }
+  .px-8 {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .py-20 {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+  .p-6 {
+    padding: 12px !important;
+  }
+  .p-8 {
+    padding: 12px !important;
+  }
+  section {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+  }
+  .w-\[769px\].h-\[769px\] {
+    width: 300px !important;
+    height: 300px !important;
+  }
+  .w-\[1000px\].h-\[1000px\] {
+    width: 400px !important;
+    height: 400px !important;
+  }
+  .w-\[900px\].h-\[900px\] {
+    width: 400px !important;
+    height: 400px !important;
+  }
+  .w-\[860px\].h-\[860px\] {
+    width: 300px !important;
+    height: 300px !important;
+  }
+  .w-\[760px\].h-\[760px\] {
+    width: 300px !important;
+    height: 300px !important;
+  }
+  .flex.flex-col.md\:flex-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    position: relative !important;
+    padding-bottom: 300px !important;
+  }
+  section.relative.bg-black.overflow-hidden .max-w-\[800px\] {
+    max-width: 95% !important;
+    margin-bottom: 50px !important;
+    z-index: 10 !important;
+    position: relative !important;
+  }
+  section.relative.bg-black.overflow-hidden .text-\[84px\] {
+    font-size: 40px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 30px !important;
+  }
+  section.relative.bg-black.overflow-hidden .space-y-6.max-w-\[1000px\] .flex.items-center {
+    justify-content: flex-start !important;
+  }
+  section.relative.bg-black.overflow-hidden .text-5xl {
+    font-size: 24px !important;
+    text-align: left !important;
+  }
+  section.relative.bg-black.overflow-hidden .text-lg {
+    font-size: 16px !important;
+    text-align: left !important;
+  }
+  section.relative.bg-black.overflow-hidden .space-y-6.max-w-\[1000px\] .flex.items-center.justify-between > div {
+    flex: 1 !important;
+    text-align: left !important;
+  }
+  section.relative.bg-black.overflow-hidden .w-14.h-14 {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .flex.gap-2.mb-100 {
+    justify-content: center !important;
+    margin: 30px 0 50px 0 !important;
+    text-align: center !important;
+    position: relative !important;
+    z-index: 15 !important;
+  }
+  .flex.gap-2.mb-100 .text-2xl {
+    font-size: 18px !important;
+  }
+  .w-\[1100px\].h-\[1100px\] {
+    position: absolute !important;
+    width: 600px !important;
+    height: 600px !important;
+    bottom: -300px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: auto !important;
+    right: auto !important;
+    margin: 0 !important;
+    z-index: 5 !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 #projectCarousel .h-\[469px\] {
+    height: 350px !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 #projectCarousel .min-w-full .rounded-\[20px\] {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 #projectCarousel .absolute.inset-0 {
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.2) 100%) !important;
+    opacity: 1 !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 #projectCarousel .flex.justify-between.items-end {
+    display: block !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 #projectCarousel h3.text-xl {
+    font-size: 18px !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6) !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 #projectCarousel p.text-\[#BFBFBF\] {
+    font-size: 14px !important;
+    margin-bottom: 16px !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8) !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 #projectCarousel button.bg-white {
+    margin: 15px auto 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 80% !important;
+    max-width: 250px !important;
+    height: 60px !important;
+    font-size: 16px !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 #projectCarousel button.bg-white img {
+    width: 24px !important;
+    height: 24px !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .flex.gap-4 button {
+    width: 50px !important;
+    height: 50px !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    opacity: 0.9 !important;
+    margin-bottom: 0 !important;
+    border-width: 2px !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .flex.gap-4 button:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    opacity: 1 !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 #projectCarousel .grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 #projectCarousel .flex.flex-nowrap > * {
+    min-width: 100% !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20::before {
+    content: '';
+    position: absolute;
+    left: -200px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #008852, #164125);
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 1;
+  }
+  section.relative.bg-black.overflow-hidden.py-20::after {
+    content: '';
+    position: absolute;
+    right: -200px;
+    top: -100px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #008852, #164125);
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 1;
+  }
+  section.w-full.bg-black::before {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -90px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #008852, #164125);
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: 1;
+  }
+  section.w-full.bg-black::after {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -90px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #008852, #164125);
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: 1;
+  }
+  section.w-full.bg-white.py-20 .flex.items-center {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  section.w-full.bg-white.py-20 .flex-1:first-child {
+    width: 100% !important;
+    margin-bottom: 20px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+  section.w-full.bg-white.py-20 img[src*="dioxide"] {
+    width: 600px !important;
+    height: auto !important;
+    max-width: 600px !important;
+  }
+  section.w-full.bg-white.py-20 .bg-\[#3C3C3C\] {
+    width: 200px !important;
+    height: 50px !important;
+    margin: 0 auto 30px auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  section.w-full.bg-white.py-20 .bg-\[#3C3C3C\] span {
+    font-size: 16px !important;
+  }
+  section.w-full.bg-white.py-20 .flex-1:last-child {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  section.w-full.bg-white.py-20 h2.text-\[84px\] {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 15px !important;
+    margin-top: 20px !important;
+  }
+  section.w-full.bg-white.py-20 p.text-2xl {
+    font-size: 16px !important;
+    margin-bottom: 20px !important;
+    max-width: 90% !important;
+  }
+  section.w-full.bg-white.py-20 .flex.gap-14 {
+    flex-direction: row !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 500px !important;
+    margin: 0 auto !important;
+  }
+  section.w-full.bg-white.py-20 .flex.gap-14 input {
+    height: 60px !important;
+    font-size: 14px !important;
+    padding: 12px 16px !important;
+    width: 240px !important;
+    max-width: 240px !important;
+    flex: none !important;
+    box-sizing: border-box !important;
+  }
+  section.w-full.bg-white.py-20 .flex.gap-14 button {
+    height: 60px !important;
+    font-size: 13px !important;
+    padding: 12px 16px !important;
+    width: 240px !important;
+    max-width: 240px !important;
+    flex: none !important;
+    box-sizing: border-box !important;
+  }
+  section.w-full.bg-white.py-20 input.flex-1.h-\[80px\].text-center.max-w-\[340px\] {
+    height: 60px !important;
+    font-size: 14px !important;
+    padding: 12px 16px !important;
+    width: 240px !important;
+    max-width: 240px !important;
+    flex: none !important;
+    box-sizing: border-box !important;
+  }
+  section.w-full.bg-white.py-20 button.bg-\[#23B77F\].text-white.w-\[340px\].h-\[80px\].rounded-\[6px\] {
+    height: 50px !important;
+    font-size: 13px !important;
+    padding: 12px 16px !important;
+    width: 200px !important;
+    max-width: 200px !important;
+    flex: none !important;
+    box-sizing: border-box !important;
+  }
+  section.w-full.bg-white.py-20 button img {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  section.w-full.bg-white.min-h-screen {
+    min-height: auto !important;
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+  section.w-full.bg-white.min-h-screen .max-w-\[1500px\] {
+    max-width: 95% !important;
+    margin-top: 40px !important;
+  }
+  section.w-full.bg-white.min-h-screen .text-\[84px\] {
+    font-size: 42px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 25px !important;
+  }
+  section.w-full.bg-white.min-h-screen .text-2xl {
+    font-size: 18px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 20px !important;
+  }
+  section.w-full.bg-white.min-h-screen .space-y-6 {
+    margin-bottom: 30px !important;
+  }
+  section.w-full.bg-white.min-h-screen .flex.gap-6 {
+    flex-direction: column !important;
+    gap: 15px !important;
+    align-items: flex-start !important;
+  }
+  section.w-full.bg-white.min-h-screen .h-\[80px\] {
+    height: 60px !important;
+    font-size: 16px !important;
+    width: 100% !important;
+    max-width: 280px !important;
+  }
+  section.w-full.bg-white.min-h-screen .w-\[320px\] {
+    width: 100% !important;
+    max-width: 280px !important;
+  }
+  section.w-full.bg-white.min-h-screen .w-\[300px\] {
+    width: 100% !important;
+    max-width: 280px !important;
+  }
+  .desktop-partner-mosaic {
+    display: none !important;
+  }
+  .tablet-partner-image {
+    display: block !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .relative.z-10.mb-20 {
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .relative.z-10.text-right.mb-16 {
+    text-align: center !important;
+    margin-bottom: 2rem !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.-top-20.right-60 {
+    position: static !important;
+    font-size: 32px !important;
+    margin-bottom: 1rem !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.top-10.right-55 {
+    position: static !important;
+    font-size: 16px !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .grid.grid-cols-6 {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 2rem !important;
+    max-width: 90% !important;
+    margin: 0 auto !important;
+    display: grid !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .w-\[150px\].h-\[150px\] {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .w-36.h-36 {
+    width: 70px !important;
+    height: 70px !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .py-10.max-w-\[1920px\].mb-20 {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .relative.z-10.flex.items-center.mb-20:last-child {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin-bottom: 0 !important;
+    margin-top: 40px !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .flex.items-start.max-w-\[900px\] {
+    max-width: 90% !important;
+    text-align: center !important;
+    margin-bottom: 40px !important;
+    align-items: center !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .text-5xl {
+    font-size: 28px !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .text-2xl {
+    font-size: 18px !important;
+    text-align: center !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 {
+    position: static !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    padding-left: 20px !important;
+  }
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 img {
+    width: 900px !important;
+    height: 550px !important;
+  }
+  .desktop-button {
+    display: none !important;
+  }
+  .tablet-menu {
+    display: block !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+  nav.max-w-\[1920px\] {
+    padding-right: 1.5rem !important;
+  }
+}
+.tablet-menu {
+  display: none;
 }
 @property --tw-translate-x {
   syntax: "*";
@@ -2470,639 +2913,4 @@ img, svg, video, canvas, audio, iframe, embed, object {
       --tw-ease: initial;
     }
   }
-}
-
-/* Скрываем дерево adaptivTree на десктопе */
-section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
-  display: none;
-}
-
-/* Адаптация главной страницы для планшетов (до 1024px) */
-@media (max-width: 1366px) {
-  
-  /* Убираем серый фон - делаем полноэкранными секции */
-  body {
-    background: transparent !important;
-  }
-  
-  /* Хедер - делаем на весь экран и меньше */
-  header {
-    padding: 8px 12px !important;
-  }
-  
-  nav.max-w-\[1920px\] {
-    height: 60px !important;
-    padding: 0 2px !important;
-    max-width: 100% !important;
-    justify-content: center !important;
-  }
-  
-  /* Логотип BIRCH - делаем еще меньше */
-  nav img {
-    padding-left: 8px !important;
-    height: 24px !important;
-    width: auto !important;
-  }
-  
-  /* Навигация - еще меньше отступы и по центру */
-  nav.flex ul.flex {
-    gap: 0px !important;
-    justify-content: center !important;
-    flex: 1 !important;
-  }
-  
-  nav.flex ul.flex.gap-6 {
-    gap: 0px !important;
-  }
-  
-  header nav ul {
-    gap: 0px !important;
-  }
-  
-  /* Дополнительные селекторы для переопределения Tailwind */
-  .flex.gap-6 {
-    gap: 0px !important;
-  }
-  
-  /* Используем margin вместо gap */
-  nav ul li {
-    margin-right: 2px !important;
-  }
-  
-  nav ul li:last-child {
-    margin-right: 0 !important;
-  }
-  
-  nav ul li a {
-    font-size: 14px !important;
-    padding: 4px 6px !important;
-  }
-  
-  /* Кнопка "Оставить заявку" - исправляем иконку */
-  nav button {
-    height: 45px !important;
-    padding: 6px 12px !important;
-    font-size: 13px !important;
-  }
-  
-  nav button span {
-    width: 16px !important;
-    height: 16px !important;
-  }
-  
-  nav button img {
-    max-width: none !important;
-    padding-left: 0 !important;
-    width: 26px !important;
-    height: 26px !important;
-  }
-  
-  /* Главная секция - делаем фон полностью видимым */
-  .h-screen {
-    min-height: 100vh !important;
-    height: 100vh !important;
-    background-size: cover !important;
-    background-position: center !important;
-  }
-  
-  /* Заголовки - значительно уменьшаем */
-  .text-\[84px\] {
-    font-size: 32px !important;
-    line-height: 1.1 !important;
-  }
-  
-  .text-\[48px\] {
-    font-size: 24px !important;
-    line-height: 1.2 !important;
-  }
-  
-  .text-6xl {
-    font-size: 26px !important;
-  }
-  
-  .text-5xl {
-    font-size: 22px !important;
-  }
-  
-  .text-2xl {
-    font-size: 15px !important;
-  }
-  
-  .text-xl {
-    font-size: 14px !important;
-  }
-  
-  .text-lg {
-    font-size: 13px !important;
-  }
-  
-  /* Главная секция - текст и кнопки друг под другом */
-  .flex.items-end.justify-between {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 20px !important;
-  }
-  
-  .text-\[24px\] {
-    font-size: 16px !important;
-    max-width: 100% !important;
-  }
-  
-  /* Кнопки под текстом - высота 60px */
-  .flex.gap-6 {
-    width: 100% !important;
-    display: flex !important;
-    gap: 16px !important;
-  }
-  
-  .h-\[80px\] {
-    height: 60px !important;
-    font-size: 15px !important;
-    padding: 12px 20px !important;
-  }
-  
-  .w-\[300px\] {
-    width: 100% !important;
-    max-width: 250px !important;
-  }
-  
-  /* Статистика - делаем 2x2 с правильными бордерами */
-  .grid-cols-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0 !important;
-  }
-  
-  /* Убираем общий бордер, добавляем только к блокам */
-  .w-full.bg-black.border-t {
-    border-top: none !important;
-  }
-  
-  /* Правильные бордеры для статистики 2x2 */
-  .grid-cols-4 > div {
-    border-top: 1px solid #2D2D2D !important;
-  }
-  
-  .grid-cols-4 > div:nth-child(1) {
-    border-right: 1px solid #2D2D2D !important;
-  }
-  .grid-cols-4 > div:nth-child(3) {
-    border-right: 1px solid #2D2D2D !important;
-  }
-  .grid-cols-4 > div:nth-child(2) {
-    border-right: 0 !important;
-  }
-  
-  .grid-cols-4 > div:nth-child(4) {
-    margin-left: 0 !important;
-  }
-  
-  /* Текст в статистике меньше */
-  .text-7xl {
-    font-size: 28px !important;
-  }
-  
-  .grid-cols-4 .text-xl {
-    font-size: 13px !important;
-  }
-  
-  /* Отступы статистики */
-  .py-12 {
-    padding-top: 16px !important;
-    padding-bottom: 16px !important;
-  }
-  
-  /* Новая адаптивная логика размещения деревьев */
-  
-  /* Убираем старые деревья справа для планшетов */
-  .absolute.right-\[-12px\] {
-    display: none !important;
-  }
-  
-  .absolute.right-\[44px\] {
-    display: none !important;
-  }
-  
-  /* Показываем основное дерево как обычную картинку только на планшетах */
-  section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
-    display: block !important;
-  }
-  
-  /* Секция для деревьев - только позиционирование */
-  section.w-full.bg-white.min-h-\[700px\] {
-    position: relative !important;
-  }
-  
-  /* Только верхнее дерево (headerTree) через позиционирование */
-  section.w-full.bg-white.min-h-\[700px\]::after {
-    content: '';
-    position: absolute;
-    top: -120px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 550px;
-    height: 350px;
-    background-image: url('img/headerTree.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    z-index: 2;
-    pointer-events: none;
-  }
-  
-  /* Текст внизу под картинками - добавляем отступ сверху */
-  section.w-full.bg-white.min-h-\[700px\] .max-w-\[1000px\] {
-    position: relative !important;
-    z-index: 10 !important;
-    text-align: center !important;
-    margin: 0 auto !important;
-    margin-top: 510px !important;
-    padding: 40px 0 !important;
-  }
-  
-  /* Заголовки в этой секции больше */
-  section.w-full.bg-white.min-h-\[700px\] .text-\[84px\] {
-    font-size: 48px !important;
-    line-height: 1.1 !important;
-  }
-  
-  section.w-full.bg-white.min-h-\[700px\] .text-2xl {
-    font-size: 20px !important;
-  }
-  
-  section.w-full.bg-white.min-h-\[700px\] .text-xl {
-    font-size: 18px !important;
-  }
-  
-  /* Кнопка "Узнать подробнее" в секции больше */
-  section.w-full.bg-white.min-h-\[700px\] .h-\[80px\] {
-    height: 70px !important;
-    font-size: 18px !important;
-    padding: 16px 24px !important;
-  }
-  
-  /* Зеленая звездочка и текст "МЫ ДЕЛАЕМ МИР ЧИЩЕ" */
-  section.w-full.bg-white.min-h-\[700px\] .text-2xl.uppercase {
-    font-size: 18px !important;
-  }
-  
-  /* Максимальная ширина контейнеров */
-  .max-w-\[1920px\] {
-    max-width: 100% !important;
-  }
-  
-  .max-w-\[1000px\] {
-    max-width: 90% !important;
-  }
-  
-  .max-w-\[800px\] {
-    max-width: 85% !important;
-  }
-  
-  /* Отступы - уменьшаем */
-  .px-8 {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-  
-  .py-20 {
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
-  }
-  
-  .p-6 {
-    padding: 12px !important;
-  }
-  
-  .p-8 {
-    padding: 12px !important;
-  }
-  
-  /* Секции - уменьшаем отступы между ними */
-  section {
-    padding-top: 30px !important;
-    padding-bottom: 30px !important;
-  }
-  
-  /* Фоновые градиентные круги - уменьшаем для производительности */
-  .w-\[769px\].h-\[769px\] {
-    width: 300px !important;
-    height: 300px !important;
-  }
-  
-  .w-\[1000px\].h-\[1000px\] {
-    width: 400px !important;
-    height: 400px !important;
-  }
-  
-  .w-\[900px\].h-\[900px\] {
-    width: 400px !important;
-    height: 400px !important;
-  }
-  
-  .w-\[860px\].h-\[860px\] {
-    width: 300px !important;
-    height: 300px !important;
-  }
-  
-  .w-\[760px\].h-\[760px\] {
-    width: 300px !important;
-    height: 300px !important;
-  }
-  
-  /* Временная шкала - адаптация для планшетов */
-  .flex.flex-col.md\:flex-row {
-    flex-direction: column !important;
-    align-items: center !important;
-    position: relative !important;
-    padding-bottom: 300px !important;
-  }
-  
-  /* Контент слева - увеличиваем текст */
-  section.relative.bg-black.overflow-hidden .max-w-\[800px\] {
-    max-width: 95% !important;
-    margin-bottom: 50px !important;
-    z-index: 10 !important;
-    position: relative !important;
-  }
-  
-  /* Заголовок секции больше */
-  section.relative.bg-black.overflow-hidden .text-\[84px\] {
-    font-size: 40px !important;
-    line-height: 1.1 !important;
-    margin-bottom: 30px !important;
-  }
-  
-  /* Элементы временной шкалы */
-  section.relative.bg-black.overflow-hidden .text-5xl {
-    font-size: 24px !important;
-  }
-  
-  section.relative.bg-black.overflow-hidden .text-lg {
-    font-size: 16px !important;
-  }
-  
-  /* Иконки в временной шкале */
-  section.relative.bg-black.overflow-hidden .w-14.h-14 {
-    width: 40px !important;
-    height: 40px !important;
-  }
-  
-  /* Блок "И что делает BIRCH" */
-  .flex.gap-2.mb-100 {
-    justify-content: center !important;
-    margin: 30px 0 50px 0 !important;
-    text-align: center !important;
-    position: relative !important;
-    z-index: 15 !important;
-  }
-  
-  .flex.gap-2.mb-100 .text-2xl {
-    font-size: 18px !important;
-  }
-  
-  /* Колесо - строго под текстом, половина видна */
-  .w-\[1100px\].h-\[1100px\] {
-    position: absolute !important;
-    width: 600px !important;
-    height: 600px !important;
-    bottom: -300px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    top: auto !important;
-    right: auto !important;
-    margin: 0 !important;
-    z-index: 5 !important;
-  }
-  
-  /* Добавляем зеленые круги для этой секции */
-  section.relative.bg-black.overflow-hidden.py-20::before {
-    content: '';
-    position: absolute;
-    left: -200px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #008852, #164125);
-    filter: blur(100px);
-    pointer-events: none;
-    z-index: 1;
-  }
-  
-  section.relative.bg-black.overflow-hidden.py-20::after {
-    content: '';
-    position: absolute;
-    right: -200px;
-    top: -100px;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #008852, #164125);
-    filter: blur(100px);
-    pointer-events: none;
-    z-index: 1;
-  }
-  
-  /* Зеленые круги для секции "Смотри, сколько деревьев" только на планшетах */
-  section.w-full.bg-black::before {
-    content: '';
-    position: absolute;
-    bottom: -50px;
-    left: -90px;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #008852, #164125);
-    filter: blur(50px);
-    pointer-events: none;
-    z-index: 1;
-  }
-  
-  section.w-full.bg-black::after {
-    content: '';
-    position: absolute;
-    top: -50px;
-    right: -90px;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #008852, #164125);
-    filter: blur(50px);
-    pointer-events: none;
-    z-index: 1;
-  }
-  
-  /* Секция CO2 калькулятор - адаптация для планшетов */
-  section.w-full.bg-white.py-20 .flex.items-center {
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-  }
-  
-  /* Картинка CO2 сверху по центру */
-  section.w-full.bg-white.py-20 .flex-1:first-child {
-    width: 100% !important;
-    margin-bottom: 20px !important;
-    display: flex !important;
-    justify-content: center !important;
-  }
-  
-  section.w-full.bg-white.py-20 img[src*="dioxide"] {
-    width: 600px !important;
-    height: auto !important;
-    max-width: 600px !important;
-  }
-  
-  /* Бейдж "4-12 тонн CO2" под картинкой по центру */
-  section.w-full.bg-white.py-20 .bg-\[#3C3C3C\] {
-    width: 200px !important;
-    height: 50px !important;
-    margin: 0 auto 30px auto !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-  
-  section.w-full.bg-white.py-20 .bg-\[#3C3C3C\] span {
-    font-size: 16px !important;
-  }
-  
-  /* Правая часть - тоже по центру */
-  section.w-full.bg-white.py-20 .flex-1:last-child {
-    width: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-  }
-  
-  /* Заголовок меньше */
-  section.w-full.bg-white.py-20 h2.text-\[84px\] {
-    font-size: 28px !important;
-    line-height: 1.2 !important;
-    margin-bottom: 15px !important;
-    margin-top: 20px !important;
-  }
-  
-  /* Описание меньше */
-  section.w-full.bg-white.py-20 p.text-2xl {
-    font-size: 16px !important;
-    margin-bottom: 20px !important;
-    max-width: 90% !important;
-  }
-  
-  /* Форма - две колонки */
-  section.w-full.bg-white.py-20 .flex.gap-14 {
-    flex-direction: row !important;
-    gap: 10px !important;
-    width: 100% !important;
-    max-width: 500px !important;
-    margin: 0 auto !important;
-  }
-  
-  /* Дополнительные селекторы для принудительного применения стилей */
-  section.w-full.bg-white.py-20 .flex.gap-14 input {
-    height: 60px !important;
-    font-size: 14px !important;
-    padding: 12px 16px !important;
-    width: 240px !important;
-    max-width: 240px !important;
-    flex: none !important;
-    box-sizing: border-box !important;
-  }
-  
-  section.w-full.bg-white.py-20 .flex.gap-14 button {
-    height: 60px !important;
-    font-size: 13px !important;
-    padding: 12px 16px !important;
-    width: 240px !important;
-    max-width: 240px !important;
-    flex: none !important;
-    box-sizing: border-box !important;
-  }
-  
-  /* Инпут меньше - максимально специфичный селектор */
-  section.w-full.bg-white.py-20 input.flex-1.h-\[80px\].text-center.max-w-\[340px\] {
-    height: 60px !important;
-    font-size: 14px !important;
-    padding: 12px 16px !important;
-    width: 240px !important;
-    max-width: 240px !important;
-    flex: none !important;
-    box-sizing: border-box !important;
-  }
-  
-  /* Кнопка меньше - максимально специфичный селектор */
-  section.w-full.bg-white.py-20 button.bg-\[#23B77F\].text-white.w-\[340px\].h-\[80px\].rounded-\[6px\] {
-    height: 50px !important;
-    font-size: 13px !important;
-    padding: 12px 16px !important;
-    width: 200px !important;
-    max-width: 200px !important;
-    flex: none !important;
-    box-sizing: border-box !important;
-  }
-  
-  section.w-full.bg-white.py-20 button img {
-    width: 16px !important;
-    height: 16px !important;
-  }
-  
-  /* Секция компенсации углеродного следа - адаптация для планшетов */
-  section.w-full.bg-white.min-h-screen {
-    min-height: auto !important;
-    padding-top: 60px !important;
-    padding-bottom: 60px !important;
-  }
-  
-  /* Контейнер секции */
-  section.w-full.bg-white.min-h-screen .max-w-\[1500px\] {
-    max-width: 95% !important;
-    margin-top: 40px !important;
-  }
-  
-  /* Заголовок секции больше */
-  section.w-full.bg-white.min-h-screen .text-\[84px\] {
-    font-size: 42px !important;
-    line-height: 1.1 !important;
-    margin-bottom: 25px !important;
-  }
-  
-  /* Описания больше */
-  section.w-full.bg-white.min-h-screen .text-2xl {
-    font-size: 18px !important;
-    line-height: 1.4 !important;
-    margin-bottom: 20px !important;
-  }
-  
-  /* Контейнер для описаний */
-  section.w-full.bg-white.min-h-screen .space-y-6 {
-    margin-bottom: 30px !important;
-  }
-  
-  /* Кнопки меньше и адаптивные */
-  section.w-full.bg-white.min-h-screen .flex.gap-6 {
-    flex-direction: column !important;
-    gap: 15px !important;
-    align-items: flex-start !important;
-  }
-  
-  section.w-full.bg-white.min-h-screen .h-\[80px\] {
-    height: 60px !important;
-    font-size: 16px !important;
-    width: 100% !important;
-    max-width: 280px !important;
-  }
-  
-  section.w-full.bg-white.min-h-screen .w-\[320px\] {
-    width: 100% !important;
-    max-width: 280px !important;
-  }
-  
-  section.w-full.bg-white.min-h-screen .w-\[300px\] {
-    width: 100% !important;
-    max-width: 280px !important;
-  }
-  
 }

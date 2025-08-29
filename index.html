@@ -202,12 +202,13 @@
           <li><a href="./src/pages/Project.html" class="hover:underline">Проекты</a></li>
           <li><a href="#" class="hover:underline">Контакты</a></li>
         </ul>
-        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0" aria-label="Оставить заявку на сотрудничество">
+        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
           Оставить заявку
           <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
             <img src="./src/img/arrowdown.svg" alt="" class="w-11 h-11" />
           </span>
         </button>
+        <img src="./src/img/headerTable.svg" alt="Меню" class="w-11 h-11 tablet-menu" />
       </div>
     </nav>
   </header>
@@ -286,8 +287,8 @@
   </div>
   
   <!-- Контент внизу под картинками -->
-  <div class="max-w-[1920px] mx-auto px-8 w-full relative z-30 mt-auto">
-    <div class="max-w-[1000px] mx-auto text-center">
+  <div class="max-w-[1920px] flex flex-col justify-center px-8 w-full relative z-30 mt-auto desktop-height-fix">
+    <div class="max-w-[1000px] text-center">
       <!-- Заголовок секции -->
       <div class="flex items-center mb-6 gap-2">
         <img src="./src/img/greenStar.svg" alt="">
@@ -663,8 +664,13 @@
 
       <!-- Изображения партнеров -->
       <div class="relative z-10 mb-20">
-        <!-- Мозаика из карточек партнеров точно как на макете -->
-        <div class="max-w-[1920px] mx-auto relative">
+        <!-- Изображение для планшетов -->
+        <div class="tablet-partner-image hidden">
+          <img src="./src/img/partnerPhone.png" alt="Партнеры на планшете" class="w-full h-auto max-w-[600px] mx-auto my-10" />
+        </div>
+        
+        <!-- Мозаика из карточек партнеров точно как на макете (для десктопа) -->
+        <div class="desktop-partner-mosaic max-w-[1920px] mx-auto relative">
           <!-- Первый ряд: 2 большие карточки слева -->
           <div class="flex gap-8 mb-4">
             <div class="w-[542px] h-[305px] rounded-lg overflow-hidden">
