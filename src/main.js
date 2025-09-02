@@ -1,3 +1,24 @@
+// Функция для переключения мобильного меню
+function toggleMobileMenu() {
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (mobileMenu.style.display === 'flex') {
+    // Плавно скрываем меню
+    mobileMenu.style.opacity = '0';
+    setTimeout(() => {
+      mobileMenu.style.display = 'none';
+      document.body.style.overflow = 'auto'; // Разрешаем прокрутку страницы
+    }, 300);
+  } else {
+    // Плавно показываем меню
+    mobileMenu.style.display = 'flex';
+    mobileMenu.style.opacity = '0';
+    setTimeout(() => {
+      mobileMenu.style.opacity = '1';
+    }, 10);
+    document.body.style.overflow = 'hidden'; // Запрещаем прокрутку страницы когда меню открыто
+  }
+}
+
 // Анимация счетчиков
 function animateCounter(element, target, duration = 2000) {
   let start = 0;

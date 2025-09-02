@@ -1128,3 +1128,307 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   display: none;
 }
 
+/* Стили для мобильного меню */
+.mobile-menu {
+  display: none;
+}
+
+/* Стили для выпадающего мобильного меню */
+#mobileMenu {
+  transition: opacity 0.3s ease-in-out;
+  backdrop-filter: blur(10px);
+}
+
+/* Адаптация сайта для мобильных устройств (до 767px) */
+@media (max-width: 767px) {
+  /* Хедер - бургер меню */
+  header {
+    padding: 4px 8px !important;
+  }
+  
+  nav.max-w-\[1920px\] {
+    height: 50px !important;
+    padding: 0 8px !important;
+    max-width: 100% !important;
+    justify-content: space-between !important;
+  }
+  
+  /* Логотип BIRCH - еще меньше */
+  nav img {
+    padding-left: 0 !important;
+    height: 18px !important;
+    width: auto !important;
+  }
+  
+  /* Скрываем обычное меню навигации и кнопку */
+  nav.flex ul.flex, .desktop-button, .tablet-menu {
+    display: none !important;
+  }
+  
+  /* Показываем бургер-меню */
+  .mobile-menu {
+    display: block !important;
+    width: 30px !important;
+    height: 30px !important;
+  }
+  
+  /* Меняем фон на мобильную версию */
+  section.h-screen {
+    background-image: url('./img/mainPhone.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+  
+  /* Заголовки - значительно уменьшаем */
+  .text-\[48px\] {
+    font-size: 20px !important;
+    line-height: 1.2 !important;
+  }
+  
+  .text-\[84px\] {
+    font-size: 26px !important;
+    line-height: 1.1 !important;
+  }
+  
+  .text-\[24px\] {
+    font-size: 14px !important;
+    max-width: 100% !important;
+  }
+  
+  /* Главная секция - все элементы в столбик */
+  .flex.items-end.justify-between {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+  
+  /* Кнопки под текстом - в столбик */
+  .flex.gap-6 {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  
+  /* Размер кнопок */
+  .h-\[80px\] {
+    height: 60px !important; /* Увеличиваем до 60px для удобства нажатия */
+    font-size: 14px !important;
+    padding: 10px 16px !important;
+  }
+  
+  .w-\[300px\] {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  
+  /* Статистика - делаем 2x2 с небольшими размерами */
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0 !important;
+  }
+  
+  /* Правильные бордеры для статистики 2x2 */
+  .w-full.bg-black.border-t {
+    border-top: none !important;
+  }
+  
+  .grid-cols-4 > div {
+    border-top: 1px solid #2D2D2D !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+  
+  .grid-cols-4 > div:nth-child(1) {
+    border-right: 1px solid #2D2D2D !important;
+    border-top: none !important;
+  }
+  .grid-cols-4 > div:nth-child(2) {
+    border-top: none !important;
+    border-right: none !important;
+  }
+  
+  /* Вторая секция "Твоя роль в экологии" для мобильных */
+  section.w-full.bg-white.min-h-\[700px\] {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important; /* Контент внизу */
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+  }
+
+  /* Настраиваем адаптивное дерево */  
+  section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
+    width: 320px !important;
+    height: auto !important;
+  }
+  
+  /* Уменьшаем отступы для верхнего дерева через ::after */
+  section.w-full.bg-white.min-h-\[700px\]::after {
+    width: 320px !important;
+    height: 200px !important;
+    top: -70px !important;
+  }
+  
+  /* Деревья справа - позиционируем для мобильной версии */
+  section.w-full.bg-white.min-h-\[700px\] .absolute.right-\[-12px\] {
+    width: 100% !important;
+    right: -30% !important;
+    top: 0 !important;
+    height: 70% !important;
+  }
+  
+  section.w-full.bg-white.min-h-\[700px\] .absolute.right-\[44px\] {
+    width: 100% !important;
+    right: -15% !important;
+    top: -10% !important;
+    height: 75% !important;
+  }
+  
+  /* Уменьшаем размер блока с текстом и добавляем отступы по бокам */
+  section.w-full.bg-white.min-h-\[700px\] .max-w-\[1000px\] {
+    position: relative !important;
+    z-index: 10 !important;
+    text-align: left !important;
+    margin: 0 auto !important;
+    margin-top: 10px !important; /* Минимальный отступ сверху */
+    padding: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* Заголовки в этой секции уменьшаем */
+  section.w-full.bg-white.min-h-\[700px\] .text-\[84px\] {
+    font-size: 28px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 12px !important;
+  }
+  
+  section.w-full.bg-white.min-h-\[700px\] .text-2xl {
+    font-size: 16px !important;
+  }
+  
+  section.w-full.bg-white.min-h-\[700px\] .text-xl {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    padding: 0 10px !important;
+  }
+  
+  /* Уменьшаем отступы */
+  section.w-full.bg-white.min-h-\[700px\] .mb-12 {
+    margin-bottom: 12px !important;
+  }
+  
+  section.w-full.bg-white.min-h-\[700px\] .mb-8 {
+    margin-bottom: 12px !important;
+  }
+  
+  section.w-full.bg-white.min-h-\[700px\] .mb-6 {
+    margin-bottom: 10px !important;
+  }
+  
+  /* Кнопка "Узнать подробнее" на всю ширину с небольшими отступами */
+  section.w-full.bg-white.min-h-\[700px\] button {
+    width: calc(100% - 20px) !important;
+    height: 60px !important; /* Увеличиваем до 60px для удобства нажатия */
+    font-size: 16px !important;
+    padding: 12px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    margin-top: 10px !important;
+  }
+  
+  .grid-cols-4 > div:nth-child(3) {
+    border-right: 1px solid #2D2D2D !important;
+  }
+  .grid-cols-4 > div:nth-child(4) {
+    margin-left: 0 !important;
+    border-right: none !important;
+  }
+  
+  /* Текст в статистике меньше */
+  .text-7xl {
+    font-size: 22px !important;
+    margin-bottom: 0 !important;
+  }
+  
+  .grid-cols-4 .text-xl {
+    font-size: 11px !important;
+  }
+  
+  /* Отступы статистики */
+  .py-12 {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+  
+  /* Общие уменьшенные отступы для мобильных */
+  .px-8 {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  
+  .py-20 {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+  
+  /* Третья секция - "Смотри, сколько деревьев" */
+  section.w-full.bg-black {
+    position: relative !important;
+    overflow: hidden !important;
+    padding: 30px 0 !important;
+  }
+  
+  /* Перемещаем зеленые круги в углы для мобильных устройств */
+  section.w-full.bg-black::before {
+    width: 180px !important;
+    height: 180px !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    filter: blur(100px) !important;
+    opacity: 0.8 !important;
+    border-radius: 0 !important;
+    transform: translate(-30%, 30%) !important;
+  }
+  
+  section.w-full.bg-black::after {
+    width: 180px !important;
+    height: 180px !important;
+    top: 0 !important;
+    right: 0 !important;
+    filter: blur(100px) !important;
+    opacity: 0.8 !important;
+    border-radius: 0 !important;
+    transform: translate(30%, -30%) !important;
+  }
+  
+  /* Расположение контейнера с текстом и кнопкой в столбик */
+  section.w-full.bg-black .flex.items-center.justify-between {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+
+  /* Убираем отступ у бегущей строки с пользователями */
+  .relative.overflow-hidden.mb-16 {
+    margin-bottom: 0px !important;
+  }
+  
+  /* Стили для заголовка */
+    section.relative.bg-black.overflow-hidden .text-\[84px\] {
+    font-size: 30px !important;
+    line-height: 1.2 !important;
+    text-align: left !important;
+    margin-bottom: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  /* Стили для кнопки */
+  section.w-full.bg-black button {
+    width: 372px !important;
+    height: 60px !important;
+    font-size: 16px !important;
+  }
+}
+

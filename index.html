@@ -208,9 +208,28 @@
             <img src="./src/img/arrowdown.svg" alt="" class="w-11 h-11" />
           </span>
         </button>
+        <!-- Меню для планшетов -->
         <img src="./src/img/headerTable.svg" alt="Меню" class="w-11 h-11 tablet-menu" />
+        <!-- Бургер-меню для мобильных -->
+        <img src="./src/img/burgerMenu.svg" alt="Меню" class="w-8 h-8 mobile-menu" onclick="toggleMobileMenu()" />
       </div>
     </nav>
+    
+    <!-- Мобильное меню (скрыто по умолчанию) -->
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-black/95 z-50 hidden flex-col items-center justify-center">
+      <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
+      <ul class="flex flex-col gap-8 text-white text-xl text-center">
+        <li><a href="#" class="font-bold" onclick="toggleMobileMenu()">Главная</a></li>
+        <li><a href="./src/pages/Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Донаты</a></li>
+        <li><a href="./src/pages/PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">B2B квоты</a></li>
+        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
+        <li><a href="./src/pages/Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
+        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
+      </ul>
+      <button class="mt-10 bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600" onclick="toggleMobileMenu()">
+        Оставить заявку
+      </button>
+    </div>
   </header>
   <div class="flex-1 flex items-center justify-center">
     <div class="max-w-[1920px] w-full px-8 mx-auto">
