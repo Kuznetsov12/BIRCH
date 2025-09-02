@@ -1008,9 +1008,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-window.openProjectInfo = openProjectInfo;
-window.previousProject = previousProject;
-window.nextProject = nextProject;
+
+// Функция для показа/скрытия мобильного блока "И что делает BIRCH"
+function toggleMobileBirchInfo() {
+  const birchMobileInfo = document.querySelector('.birch-mobile-info');
+  if (!birchMobileInfo) return;
+  
+  if (window.innerWidth <= 767) {
+    birchMobileInfo.classList.remove('hidden');
+  } else {
+    birchMobileInfo.classList.add('hidden');
+  }
+}
+
+// Вызываем функцию при загрузке и при изменении размера окна
+window.addEventListener('DOMContentLoaded', toggleMobileBirchInfo);
+window.addEventListener('resize', toggleMobileBirchInfo);
 
 // Функция для прокрутки наверх (используется в футере)
 function scrollToTop() {
