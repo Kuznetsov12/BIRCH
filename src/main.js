@@ -334,12 +334,84 @@ document.addEventListener('DOMContentLoaded', function() {
 let currentProjectPage = 0;
 const totalProjectPages = 3; // Три страницы (первая, вторая и третья с 4, 4 и 2 карточками соответственно)
 
+// Функция для реструктуризации карусели проектов на мобильных устройствах
+function restructureProjectCarousel() {
+    const carousel = document.getElementById('projectCarousel');
+    const isMobile = window.innerWidth <= 767;
+    
+    if (!carousel) return;
+    
+    if (isMobile) {
+        // Собираем все карточки проектов
+        const allCards = [];
+        const pages = carousel.querySelectorAll('.min-w-full');
+        
+        pages.forEach(page => {
+            const cards = page.querySelectorAll('[class*="rounded-[20px]"]');
+            cards.forEach(card => {
+                allCards.push(card.cloneNode(true));
+            });
+        });
+        
+        // Очищаем карусель
+        carousel.innerHTML = '';
+        
+        // Создаем новую структуру для мобильных - каждая карточка в отдельном контейнере
+        allCards.forEach(card => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'min-w-full flex-shrink-0';
+            wrapper.appendChild(card);
+            carousel.appendChild(wrapper);
+        });
+        
+        // Добавляем обработчики свайпа для мобильных
+        addMobileSwipeHandlers(carousel.parentElement);
+    }
+}
+
+// Функция для добавления свайп-жестов на мобильных
+function addMobileSwipeHandlers(carousel) {
+    let startX = 0;
+    let scrollLeft = 0;
+    let isDown = false;
+
+    carousel.addEventListener('touchstart', (e) => {
+        isDown = true;
+        startX = e.touches[0].pageX - carousel.offsetLeft;
+        scrollLeft = carousel.scrollLeft;
+    });
+
+    carousel.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX - carousel.offsetLeft;
+        const walk = (x - startX) * 2;
+        carousel.scrollLeft = scrollLeft - walk;
+    });
+
+    carousel.addEventListener('touchend', () => {
+        isDown = false;
+    });
+}
+
 function scrollProjectCards(direction) {
     const carousel = document.getElementById('projectCarousel');
     const isTablet = window.innerWidth <= 1366; // Определяем планшетный режим
+    const isMobile = window.innerWidth <= 767; // Определяем мобильный режим
     
     // Проверяем, что карусель существует
     if (!carousel) return;
+    
+    // Для мобильных устройств используем нативный скролл вместо трансформации
+    if (isMobile) {
+        const cardWidth = carousel.querySelector('.min-w-full').offsetWidth;
+        const scrollAmount = direction === 'right' ? cardWidth + 12 : -(cardWidth + 12); // 12px - это отступ между карточками
+        carousel.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
+        return;
+    }
     
     if (direction === 'right' && currentProjectPage < totalProjectPages - 1) {
         currentProjectPage++;
@@ -362,6 +434,45 @@ function scrollToTop() {
     top: 0,
     behavior: 'smooth'
   });
+}
+
+// Простая функция для скролла мобильных проектов
+function scrollMobileProjects() {
+  console.log("Mobile arrow clicked");
+  
+  // Нужно найти контейнер .overflow-hidden, а не сам carousel
+  const projectsSection = document.querySelector('section.relative.bg-black.overflow-hidden.py-20:last-of-type');
+  const scrollContainer = projectsSection ? projectsSection.querySelector('.overflow-hidden') : null;
+  
+  console.log("Projects section found:", projectsSection);
+  console.log("Scroll container found:", scrollContainer);
+  
+  if (scrollContainer) {
+    const carousel = document.getElementById('projectCarousel');
+    const cards = carousel ? carousel.querySelectorAll('.min-w-full') : [];
+    
+    console.log("Carousel found:", carousel);
+    console.log("Number of cards found:", cards.length);
+    
+    if (cards.length > 0) {
+      // Получаем ширину одной карточки (75% экрана + gap)
+      const cardWidth = cards[0].offsetWidth;
+      const gap = 12; // gap из CSS
+      const scrollDistance = cardWidth + gap;
+      
+      console.log("Card width:", cardWidth);
+      console.log("Scroll distance:", scrollDistance);
+      console.log("Current scroll position:", scrollContainer.scrollLeft);
+      
+      // Прокручиваем контейнер на одну карточку вправо
+      scrollContainer.scrollBy({
+        left: scrollDistance,
+        behavior: 'smooth'
+      });
+      
+      console.log("Scrolling container by:", scrollDistance);
+    }
+  }
 }
 
 // OpenStreetMap функциональность
@@ -1034,3 +1145,73 @@ function scrollToTop() {
 }
 
 window.scrollToTop = scrollToTop;
+
+// Функционал свайпа для команды на мобильных устройствах
+document.addEventListener('DOMContentLoaded', function() {
+    const teamCarousel = document.getElementById('teamCarousel');
+    
+    if (teamCarousel) {
+        // Проверяем, если мы на мобильном устройстве
+        const isMobile = window.innerWidth <= 767;
+        
+        if (isMobile) {
+            // Отключаем стандартную навигацию стрелками для мобильных
+            // и включаем свайп-навигацию
+            
+            // Добавляем индикаторы слайдов
+            const teamCards = teamCarousel.querySelectorAll('.min-w-[350px]');
+            const indicatorsContainer = document.createElement('div');
+            indicatorsContainer.className = 'flex justify-center gap-3 mt-4';
+            
+            // Создаем индикаторы для каждой карточки
+            teamCards.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'w-3 h-3 rounded-full bg-gray-300';
+                if (index === 0) {
+                    dot.classList.add('bg-gray-800'); // Активный индикатор
+                }
+                indicatorsContainer.appendChild(dot);
+            });
+            
+            // Добавляем индикаторы после карусели
+            teamCarousel.parentNode.parentNode.appendChild(indicatorsContainer);
+            
+            // Отслеживаем прокрутку для обновления индикаторов
+            teamCarousel.parentNode.addEventListener('scroll', function() {
+                const scrollPosition = this.scrollLeft;
+                const cardWidth = teamCards[0].offsetWidth + 16; // Ширина + gap
+                
+                // Вычисляем текущий активный индекс на основе прокрутки
+                // Используем более точную формулу для расчета индекса с учетом 85% ширины карточки
+                const activeIndex = Math.round(scrollPosition / (cardWidth * 0.85));
+                
+                // Обновляем индикаторы
+                const dots = indicatorsContainer.querySelectorAll('div');
+                dots.forEach((dot, index) => {
+                    if (index === activeIndex) {
+                        dot.classList.add('bg-gray-800');
+                        dot.classList.remove('bg-gray-300');
+                    } else {
+                        dot.classList.add('bg-gray-300');
+                        dot.classList.remove('bg-gray-800');
+                    }
+                });
+            });
+        }
+    }
+});
+
+// Инициализация мобильной карусели проектов
+document.addEventListener('DOMContentLoaded', function() {
+    // Инициализируем карусель проектов при загрузке
+    restructureProjectCarousel();
+    
+    // Переинициализируем при изменении размера окна
+    window.addEventListener('resize', function() {
+        // Добавляем небольшую задержку, чтобы избежать частых вызовов
+        clearTimeout(window.resizeTimer);
+        window.resizeTimer = setTimeout(function() {
+            restructureProjectCarousel();
+        }, 250);
+    });
+});

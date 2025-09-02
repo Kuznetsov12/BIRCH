@@ -1037,7 +1037,6 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   
   /* Логотипы партнеров в 3 ряда по 4 логотипа */
   section.relative.bg-black.overflow-hidden.py-20 .grid.grid-cols-6 {
-    grid-template-columns: repeat(4, 1fr) !important;
     gap: 2rem !important;
     max-width: 90% !important;
     margin: 0 auto !important;
@@ -1072,56 +1071,31 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
     text-align: center !important;
     margin-bottom: 0 !important;
     margin-top: 40px !important;
+    overflow: hidden !important;
   }
 
   /* Текст по центру */
   section.relative.bg-black.overflow-hidden.py-20 .flex.items-start.max-w-\[900px\] {
-    max-width: 90% !important;
+    max-width: 335px !important;
     text-align: center !important;
-    margin-bottom: 40px !important;
+    margin: 0 auto 30px auto !important;
     align-items: center !important;
+    justify-content: center !important;
   }
 
-  section.relative.bg-black.overflow-hidden.py-20 .text-5xl {
-    font-size: 28px !important;
+  section.relative.bg-black.overflow-hidden.py-20 .flex.items-center {
+    gap: 10px !important;
   }
 
-  section.relative.bg-black.overflow-hidden.py-20 .text-2xl {
-    font-size: 18px !important;
-    text-align: center !important;
-  }
-
-  /* Картинка с руками - увеличиваем и перемещаем влево */
-  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 {
-    position: static !important;
-    width: 100% !important;
+  /* Настраиваем внутренний контейнер */
+  section.relative.bg-black.overflow-hidden.py-20 .flex.items-start.max-w-\[900px\] .text-white {
     display: flex !important;
-    justify-content: flex-start !important;
-    padding-left: 20px !important;
-  }
-
-  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 img {
-    width: 900px !important;
-    height: 550px !important;
-  }
-  
-  /* Стили для кнопки/SVG в хедере */
-  .desktop-button {
-    display: none !important;
-  }
-  
-  .tablet-menu {
-    display: block !important;
-    width: 44px !important;
-    height: 44px !important;
-  }
-  
-  /* Добавляем отступ справа в навигации для планшетов */
-  nav.max-w-\[1920px\] {
-    padding-right: 1.5rem !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
   }
 }
-  
+
 /* Стили для переключения кнопки/SVG в хедере */
 .tablet-menu {
   display: none;
@@ -1140,6 +1114,12 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
 
 /* Адаптация сайта для мобильных устройств (до 767px) */
 @media (max-width: 767px) {
+  /* Убираем горизонтальный скролл */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+  }
+  
   /* Хедер - бургер меню */
   header {
     padding: 4px 8px !important;
@@ -1722,6 +1702,531 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   section.relative.bg-black.overflow-hidden.py-20 {
     position: relative !important;
     z-index: 1 !important;
+    
+  }
+  
+  /* --- МОБИЛЬНАЯ АДАПТАЦИЯ СЕКЦИИ ПАРТНЕРОВ --- */
+  
+  /* Отступы секции */
+  section.relative.bg-black.overflow-hidden.py-20 {
+    padding-top: 40px !important;
+  }
+  
+  /* Внутренние отступы контейнера */
+  section.relative.bg-black.overflow-hidden.py-20 .max-w-\[1920px\].mx-auto.px-8 {
+    padding: 0 20px !important;
+  }
+  
+  /* Заголовок и описание - меньше размер */
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.-top-20.right-60 {
+    position: static !important;
+    font-size: 26px !important;
+    margin-bottom: 0.5rem !important;
+  }
+  section.w-full.bg-white.py-20 .flex.items-center{
+    align-items: flex-start !important;
+  }
+
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.top-10.right-55 {
+    position: static !important;
+    font-size: 14px !important;
+  }
+  
+  /* Размер логотипов компаний еще меньше для мобильных */
+  section.relative.bg-black.overflow-hidden.py-20 .w-\[150px\].h-\[150px\] {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  section.relative.bg-black.overflow-hidden.py-20 .w-36.h-36 {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  
+  /* Отступы сетки логотипов */
+  section.relative.bg-black.overflow-hidden.py-20 .grid.grid-cols-6 {
+    gap: 2rem !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  
+  /* Текстовый блок "Хотите стать нашим партнером?" */
+  section.relative.bg-black.overflow-hidden.py-20 .text-5xl {
+    font-size: 22px !important;
+    margin-bottom: 12px !important;
+    line-height: 1.2 !important;
+    text-align: left !important;
+    max-width: 335px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  section.relative.bg-black.overflow-hidden.py-20 .text-2xl {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 24px !important;
+    text-align: left !important;
+  }
+  
+  /* Кнопка "Стать партнером BIRCH" */
+  section.relative.bg-black.overflow-hidden.py-20 .bg-\[#23B77F\] {
+    width: 335px !important;
+    max-width: 335px !important;
+    height: 60px !important;
+    font-size: 16px !important;
+    padding: 0 16px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    flex-direction: row !important;
+  }
+  
+  /* Центрирование блока с руками */
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 {
+    position: relative !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin-top: 40px !important;
+    left: 0 !important;
+    right: 0 !important;
+    overflow: visible !important;
+  }
+  
+  /* Изображение рук - размер для мобильных */
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 img {
+    width: 600px !important;
+    height: auto !important;
+    max-width: none !important;
+    position: relative !important;
+    top: -250px !important;
+    transform: translateX(-10%) !important; /* Небольшое смещение для лучшего выравнивания */
+  }
+}
+
+/* Планшетные стили (768px - 1366px) */
+@media (max-width: 1366px) {
+  /* Картинка с руками для планшета - фиксируем позицию вниз */
+  @media (min-width: 768px) and (max-width: 1366px) {
+    section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 {
+      position: relative !important;
+      bottom: auto !important;
+      right: auto !important;
+      display: flex !important;
+      justify-content: center !important;
+      width: 100% !important;
+      z-index: 5 !important;
+      overflow: hidden !important;
+    }
+    
+    section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 img {
+      width: 700px !important;
+      height: auto !important;
+          transform: translateX(-10%) !important;
+    }
+  }
+}
+
+/* Стили для команды на мобильных */
+@media (max-width: 767px) {
+  section.w-full.py-20.px-8.bg-white {
+    padding: 30px 16px !important;
+  }
+
+  /* Заголовок секции */
+  section.w-full.py-20.px-8.bg-white h2.text-\[84px\] {
+    font-size: 32px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 24px !important;
+    text-align: left !important;
+    padding-left: 0 !important;
+  }
+  
+  /* Контейнер заголовка и стрелок */
+  section.w-full.py-20.px-8.bg-white .mb-16 {
+    margin-bottom: 20px !important;
+  }
+  
+  /* Скрываем стрелки навигации на мобильных */
+  section.w-full.py-20.px-8.bg-white .flex.gap-4 {
+    display: none !important;
+  }
+  
+  /* Делаем контейнер карусели полноразмерным */
+  section.w-full.py-20.px-8.bg-white .overflow-hidden {
+    width: 100% !important;
+    overflow-x: auto !important; /* Разрешаем горизонтальную прокрутку свайпом */
+    -webkit-overflow-scrolling: touch !important; /* Плавная прокрутка на iOS */
+    scroll-snap-type: x proximity !important; /* Привязка к карточкам, но с возможностью видеть часть соседней */
+    padding: 0 !important;
+  }
+  
+  /* Настраиваем карусель */
+  #teamCarousel {
+    transform: none !important; /* Отключаем JS трансформацию */
+    width: 100% !important;
+    padding: 0 0 20px 0 !important; /* Добавляем отступ снизу для индикаторов */
+    gap: 16px !important; /* Меньший отступ между карточками */
+  }
+  
+  /* Делаем карточки команды адаптивными */
+  #teamCarousel .min-w-\[350px\] {
+    min-width: 85% !important; /* Показываем одну карточку и часть второй */
+    width: 85% !important;
+    flex: 0 0 85% !important;
+    scroll-snap-align: start !important; /* Привязка к началу карточки при прокрутке */
+    margin-right: 15px !important;
+  }
+  
+  /* Первая карточка с отступом слева */
+  #teamCarousel .min-w-\[350px\]:first-child {
+    margin-left: 16px !important;
+  }
+  
+  /* Изображения в карточках */
+  #teamCarousel .h-\[400px\] {
+    height: 380px !important; /* Увеличиваем высоту для лучшего отображения фото */
+  }
+  
+  /* Текст в карточках */
+  #teamCarousel .py-8 {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+  
+  /* Уменьшаем кнопки */
+  #teamCarousel button {
+    padding: 12px !important;
+    font-size: 16px !important;
+    margin-bottom: 5px !important;
+  }
+  
+  /* Индикаторы слайдов */
+  .flex.justify-center.gap-2.mt-4 {
+    margin-top: 20px !important;
+  }
+  
+  /* Мобильная адаптация секции с проектами */
+  /* Заголовок и стрелки навигации */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type {
+    padding-top: 40px !important;
+    padding-bottom: 0 !important;
+    position: relative !important;
+    overflow-x: hidden !important;
+  }
+  
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type .mb-16 {
+    margin-bottom: 20px !important;
+  }
+  
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type h2.text-6xl {
+    font-size: 26px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 20px !important;
+    text-align: left !important;
+  }
+  
+  /* Скрываем стрелки навигации на мобильных */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type .flex.gap-4 {
+    display: none !important;
+  }
+  
+  /* Адаптация карусели проектов - горизонтальный скролл */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type .overflow-hidden {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x proximity !important;
+    padding: 0 0 16px 0 !important;
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE and Edge */
+  }
+  
+  /* Скрываем скроллбар в WebKit браузерах */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type .overflow-hidden::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  /* Настройка контейнера карусели - показываем карточки в ряд */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel {
+    display: flex !important;
+    flex-direction: row !important;
+    padding-left: 16px !important;
+    gap: 12px !important;
+    transform: none !important;
+    width: auto !important;
+  }
+  
+  /* Контейнеры карточек для мобильной версии */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel .min-w-full {
+    min-width: 75% !important; /* Одна карточка занимает 75% экрана, справа видно 1/3 следующей */
+    width: 75% !important;
+    max-width: 75% !important;
+    flex: 0 0 75% !important;
+    scroll-snap-align: start !important;
+    padding: 0 !important;
+  }
+  
+  /* Убираем сетку, оставляем одну карточку */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel .grid {
+    display: block !important;
+    width: 100% !important;
+  }
+  
+  /* Настройка карточки проекта */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel .rounded-\[20px\] {
+    height: 455px !important;
+    width: 100% !important;
+    border-radius: 12px !important;
+    margin: 0 !important;
+    position: relative !important;
+  }
+  
+  /* Настройка внутреннего контента карточки - прибиваем к низу */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel .p-6 {
+    padding: 20px !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+  }
+  
+  /* Уменьшаем размер текста на карточках */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel h3.text-xl {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 8px !important;
+  }
+  
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel p.text-\[\#BFBFBF\] {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 16px !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  
+  /* Кнопка на карточке - делаем больше и позиционируем слева */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel button.bg-white {
+    width: 210px !important;
+    height: 50px !important;
+    font-size: 14px !important;
+    padding: 12px 16px !important;
+    border-radius: 30px !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+  
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel button.bg-white img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  
+  /* Контейнер для кнопки и текста - убираем justify-between */
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel .flex.justify-between {
+    display: block !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
+  }
+  
+  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel .flex-1 {
+    flex: none !important;
+    min-width: auto !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+  }
+  
+  /* Адаптация футера согласно макету */
+  footer.relative.overflow-hidden.py-20 {
+    padding: 30px 0 20px 0 !important;
+  }
+
+  /* Зеленый круг в правом нижнем углу футера - как у других секций */
+  footer.relative.overflow-x-hidden.py-20::before {
+    content: '';
+    position: absolute;
+    right: -280px;
+    bottom: -220px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #008852, #164125);
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  /* Основной контейнер футера */
+  footer .max-w-\[1920px\] {
+    max-width: 100% !important;
+    padding: 0 16px !important;
+  }
+  
+  /* Главная сетка - убираем границы и делаем вертикальную */
+  footer .grid.grid-cols-4 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    border: none !important;
+  }
+  
+  /* Убираем все границы между блоками */
+  footer .border-r, footer .border-b, footer .border-t {
+    border: none !important;
+  }
+  
+  /* Border-top на всю ширину экрана */
+  footer .grid.grid-cols-4::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 1px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+  }
+  
+  /* Скрываем логотип на мобильных */
+  footer .grid.grid-cols-4 > div:first-child {
+    display: none !important;
+  }
+  
+  /* Скрываем стрелку вверх на мобильных */
+  footer .grid.grid-cols-4 > div:last-child {
+    display: none !important;
+  }
+  
+  /* Вторая колонка - контактная информация */
+  footer .grid.grid-cols-4 > div:nth-child(2) {
+    padding: 24px 0 !important;
+    border-bottom: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  
+  footer .grid.grid-cols-4 > div:nth-child(2) .text-left {
+    width: 100% !important;
+  }
+  
+  /* Заголовок "По вопросам сотрудничества" */
+  footer .grid.grid-cols-4 > div:nth-child(2) h3.text-xl {
+    font-size: 20px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 16px !important;
+    color: white !important;
+    font-weight: 400 !important;
+  }
+  
+  /* Контактные данные */
+  footer .grid.grid-cols-4 > div:nth-child(2) .space-y-4 {
+    margin-bottom: 20px !important;
+  }
+  
+  footer .grid.grid-cols-4 > div:nth-child(2) .text-base {
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin-bottom: 4px !important;
+  }
+  
+  /* Заголовок "Присоединяйтесь к нам" */
+  footer .grid.grid-cols-4 > div:nth-child(2) h4.text-lg {
+    font-size: 18px !important;
+    margin-top: 20px !important;
+    margin-bottom: 12px !important;
+    color: white !important;
+    font-weight: 400 !important;
+  }
+  
+  /* Социальные сети */
+  /* Социальные сети - только иконки без фонов */
+  footer .grid.grid-cols-4 > div:nth-child(2) .flex {
+    gap: 16px !important;
+  }
+  
+  footer .grid.grid-cols-4 > div:nth-child(2) .flex a {
+    width: auto !important;
+    height: auto !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  footer .grid.grid-cols-4 > div:nth-child(2) .flex a img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  
+  /* Скрываем навигацию на мобильных */
+  footer .grid.grid-cols-4 > div:nth-child(3) {
+    display: none !important;
+  }
+  
+  /* Нижняя часть - логотип BIRCH */
+  footer .mt-8.pt-6.text-center {
+    margin-top: 30px !important;
+    padding: 24px 0 0 0 !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+  
+  /* Border-top перед логотипом на всю ширину */
+  footer .mt-8.pt-6.text-center::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 1px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+  }
+  
+  /* Логотип BIRCH в нижнюю часть */
+  footer .mt-8.pt-6.text-center::after {
+    content: '' !important;
+    width: 140px !important;
+    height: 50px !important;
+    background: url('./img/logoPhone.png') no-repeat left !important;
+    background-size: contain !important;
+    display: block !important;
+    margin-bottom: 16px !important;
+    order: -1 !important;
+    align-self: flex-start !important;
+  }
+
+  /* Контейнер с текстом копирайта */
+  footer .relative.z-10.mt-8.pt-6.text-center {
+    text-align: left !important;
+  }
+  
+  /* Текст копирайта - точный селектор */
+  footer .relative.z-10.mt-8.pt-6.text-center p.text-\[#DAFFF1\].text-xl.font-normal {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    color: rgba(218, 255, 241, 0.8) !important;
+    text-align: left !important;
+  }
+
+  /* Резервный селектор */
+  footer p.text-\[#DAFFF1\] {
+    text-align: left !important;
   }
 }
 

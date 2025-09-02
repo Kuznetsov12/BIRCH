@@ -932,8 +932,11 @@
             Наши проекты
           </h2>
           
+          <!-- Стрелочка для мобильных -->
+          <img src="./src/img/arrowRightGray.svg" alt="Следующий проект" class="w-6 h-6 md:hidden mb-4 cursor-pointer " onclick="scrollMobileProjects()">
+          
           <!-- Стрелки навигации -->
-          <div class="flex gap-4">
+          <div class="gap-4 hidden md:flex">
             <button class="w-16 h-16  border-[3px] mb-12 border-white opacity-30 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300" onclick="scrollProjectCards('left')">
               <img src="./src/img/arrowLeft.svg" alt="Стрелка влево" class="w-6 h-6">
             </button>
@@ -1133,84 +1136,79 @@
         </div>
       </div>
     </div>
+    <footer class="relative overflow-x-hidden overflow-y-hidden py-20">
+      <div class="max-w-[1920px] mx-auto px-8">
+        <div class="relative">
+          <!-- Зеленые фоновые круги -->
+    
+          <!-- Основной контент футера с табличной структурой -->
+          <div class="relative z-10 grid grid-cols-4 gap-0 border-b border-t border-white/10">
+            
+            <!-- Первая колонка - Логотип BIRCH -->
+            <div class="border-r border-white/10 p-8 flex items-center justify-center">
+              <img src="./src/img/footerBirch.png" alt="BIRCH" class="w-auto h-auto">
+            </div>
+            
+            <!-- Вторая колонка - Контакты -->
+            <div class="border-r border-white/10 p-8 flex items-center justify-center">
+              <div class="text-left">
+                <h3 class="text-xl font-normal text-white mb-6">По вопросам сотрудничества<br>и партнёрства</h3>
+                
+                <div class="space-y-4 text-white/80">
+                  <p class="text-base">Казахстан, г. Алматы, ул. Зелёная, 21</p>
+                  <p class="text-base">+7(700)800 77 77</p>
+                  <p class="text-base">info@birch.green</p>
+                </div>
+                
+                <h4 class="text-lg font-normal text-white mt-8 mb-4">Присоединяйтесь к нам</h4>
+                <div class="flex">
+                  <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
+                    <img src="./src/img/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
+                  </a>
+                  <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
+                    <img src="./src/img/tg.svg" alt="Telegram" class="w-8 h-8">
+                  </a>
+                  <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
+                    <img src="./src/img/vk.svg" alt="VK" class="w-8 h-8">
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Третья колонка - Навигация -->
+            <div class="border-r border-white/10 p-8 flex items-center justify-center">
+              <div class="text-left">
+                <h3 class="text-xl font-normal text-white mb-6">Навигация<br>по сайту</h3>
+                
+                <nav class="space-y-4">
+                  <a href="#top" class="block text-white hover:text-white transition-all text-base font-extrabold border-b-2 border-white pb-1" onclick="scrollToTop()" style="border-bottom: 2px solid white; padding-bottom: 4px; font-weight: 800;">Главная</a>
+                  <a href="./src/pages/Donate.html" class="block text-white/80 hover:text-white transition-all text-base">Донаты</a>
+                  <a href="./src/pages/PlantForest.html" class="block text-white/80 hover:text-white transition-all text-base">B2B квоты</a>
+                  <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Партнеры</a>
+                  <a href="./src/pages/Project.html" class="block text-white/80 hover:text-white transition-all text-base">Проекты</a>
+                  <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Контакты</a>
+                </nav>
+              </div>
+            </div>
+            
+            <!-- Четвертая колонка - Стрелка вверх -->
+            <div class="p-8 flex items-center justify-center">
+              <button onclick="scrollToTop()" class="w-16 h-16 rounded-full border-[3px] border-white/20 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
+                <img src="./src/img/arrowUp.svg" alt="Наверх" class="w-6 h-6">
+              </button>
+            </div>
+          </div>
+          
+          <!-- Нижняя часть футера -->
+          <div class="relative z-10 mt-8 pt-6 text-center">
+            <p class="text-[#DAFFF1] text-xl font-normal">© 2025 BIRCH. Все права защищены. | Сделано с заботой об экологии.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
   </section>
 
 <!-- Футер -->
-<footer class="relative bg-black overflow-hidden py-20">
-  <div class="max-w-[1920px] mx-auto px-8">
-    <div class="relative">
-      <!-- Зеленые фоновые круги -->
-      <div class="absolute top-[150px] -left-[350px] w-[1000px] h-[1000px] rounded-full blur-[600px] opacity-100"
-           style="background: radial-gradient(circle, #008852, #164125);"></div>
-                      
-      <div class="absolute -bottom-[300px] -right-[600px] w-[760px] h-[760px] rounded-full blur-[600px] opacity-100"
-           style="background: radial-gradient(circle, #008852, #164125);"></div>
-
-      <!-- Основной контент футера с табличной структурой -->
-      <div class="relative z-10 grid grid-cols-4 gap-0 border-b border-t border-white/10">
-        
-        <!-- Первая колонка - Логотип BIRCH -->
-        <div class="border-r border-white/10 p-8 flex items-center justify-center">
-          <img src="./src/img/footerBirch.png" alt="BIRCH" class="w-auto h-auto">
-        </div>
-        
-        <!-- Вторая колонка - Контакты -->
-        <div class="border-r border-white/10 p-8 flex items-center justify-center">
-          <div class="text-left">
-            <h3 class="text-xl font-normal text-white mb-6">По вопросам сотрудничества<br>и партнёрства</h3>
-            
-            <div class="space-y-4 text-white/80">
-              <p class="text-base">Казахстан, г. Алматы, ул. Зелёная, 21</p>
-              <p class="text-base">+7(700)800 77 77</p>
-              <p class="text-base">info@birch.green</p>
-            </div>
-            
-            <h4 class="text-lg font-normal text-white mt-8 mb-4">Присоединяйтесь к нам</h4>
-            <div class="flex">
-              <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
-                <img src="./src/img/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
-              </a>
-              <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
-                <img src="./src/img/tg.svg" alt="Telegram" class="w-8 h-8">
-              </a>
-              <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
-                <img src="./src/img/vk.svg" alt="VK" class="w-8 h-8">
-              </a>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Третья колонка - Навигация -->
-        <div class="border-r border-white/10 p-8 flex items-center justify-center">
-          <div class="text-left">
-            <h3 class="text-xl font-normal text-white mb-6">Навигация<br>по сайту</h3>
-            
-            <nav class="space-y-4">
-              <a href="#top" class="block text-white hover:text-white transition-all text-base font-extrabold border-b-2 border-white pb-1" onclick="scrollToTop()" style="border-bottom: 2px solid white; padding-bottom: 4px; font-weight: 800;">Главная</a>
-              <a href="./src/pages/Donate.html" class="block text-white/80 hover:text-white transition-all text-base">Донаты</a>
-              <a href="./src/pages/PlantForest.html" class="block text-white/80 hover:text-white transition-all text-base">B2B квоты</a>
-              <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Партнеры</a>
-              <a href="./src/pages/Project.html" class="block text-white/80 hover:text-white transition-all text-base">Проекты</a>
-              <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Контакты</a>
-            </nav>
-          </div>
-        </div>
-        
-        <!-- Четвертая колонка - Стрелка вверх -->
-        <div class="p-8 flex items-center justify-center">
-          <button onclick="scrollToTop()" class="w-16 h-16 rounded-full border-[3px] border-white/20 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
-            <img src="./src/img/arrowUp.svg" alt="Наверх" class="w-6 h-6">
-          </button>
-        </div>
-      </div>
-      
-      <!-- Нижняя часть футера -->
-      <div class="relative z-10 mt-8 pt-6 text-center">
-        <p class="text-[#DAFFF1] text-xl font-normal">© 2025 BIRCH. Все права защищены. | Сделано с заботой об экологии.</p>
-      </div>
-    </div>
-  </div>
-</footer>
   </div>
 
 </body>
