@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIRCH API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; }
+        button { padding: 10px 20px; margin: 5px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background: #45a049; }
+        .result { background: #f9f9f9; padding: 10px; margin: 10px 0; border-left: 4px solid #4CAF50; }
+        input, select { padding: 5px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>BIRCH API Тестирование</h1>
+    
+    <div class="section">
+        <h2>1. Получить всех пользователей с посадками</h2>
+        <button onclick="getUsers()">Получить пользователей</button>
+        <div id="usersResult" class="result"></div>
+    </div>
+    
+    <div class="section">
+        <h2>2. Найти пользователя по номеру телефона</h2>
+        <form onsubmit="getUserByPhone(event)">
+            <div>
+                <label>Номер телефона:</label>
+                <input type="tel" id="searchPhone" value="+77771234567" required>
+            </div>
+            <button type="submit">Найти пользователя</button>
+        </form>
+        <div id="userByPhoneResult" class="result"></div>
+    </div>
+    
+    <div class="section">
+        <h2>3. Создать посадку (с автоматической регистрацией пользователя)</h2>
+        <form onsubmit="createPlanting(event)">
+            <div>
+                <label>Фамилия:</label>
+                <input type="text" id="userSurname" value="Иванов" required>
+            </div>
+            <div>
+                <label>Имя:</label>
+                <input type="text" id="userName" value="Алексей" required>
+            </div>
+            <div>
+                <label>Телефон:</label>
+                <input type="tel" id="userPhone" value="+77771234567" required>
+            </div>
+            <div>
+                <label>Город:</label>
+                <input type="text" id="userCity" value="Алматы" required>
+            </div>
+            <div>
+                <label>Количество деревьев:</label>
+                <input type="number" id="treesQuantity" value="50" required>
+            </div>
+            <button type="submit">Создать посадку</button>
+        </form>
+        <div id="plantingResult" class="result"></div>
+    </div>
+
+    <div class="section">
+        <h2>4. Расчет эмиссии CO2</h2>
+        <form onsubmit="calculateEmission(event)">
+            <div>
+                <label>Электричество (кВт·ч):</label>
+                <input type="number" id="electricity" value="150" step="0.1" required>
+            </div>
+            <div>
+                <label>Коэффициент электричества:</label>
+                <input type="number" id="electricityCoeff" value="0.5" step="0.01" required>
+            </div>
+            <div>
+                <label>КМ на авто:</label>
+                <input type="number" id="carKm" value="1000" step="1" required>
+            </div>
+            <div>
+                <label>Коэффициент автомобиля:</label>
+                <input type="number" id="carCoeff" value="0.2" step="0.01" required>
+            </div>
+            <div>
+                <label>Часов на общественном транспорте:</label>
+                <input type="number" id="publicTransport" value="50" step="0.1" required>
+            </div>
+            <div>
+                <label>Часы авиаперелета:</label>
+                <input type="number" id="flightHours" value="10" step="0.1" required>
+            </div>
+            <div>
+                <label>Рацион питания:</label>
+                <input type="number" id="dietType" value="800" step="1" required>
+            </div>
+            <div>
+                <label>Физическая активность:</label>
+                <input type="number" id="physicalActivity" value="1.2" step="0.1" required>
+            </div>
+            <div>
+                <label>Вес (кг):</label>
+                <input type="number" id="weightKg" value="70" step="0.1" required>
+            </div>
+            <div>
+                <label>Сортирует отходы (множитель):</label>
+                <input type="number" id="wasteSorting" value="0.8" step="0.1" required>
+            </div>
+            <button type="submit">Рассчитать эмиссию</button>
+        </form>
+        <div id="emissionResult" class="result"></div>
+    </div>
+
+    <div class="section">
+        <h2>5. Расчет и обновление эмиссии пользователя</h2>
+        <form onsubmit="updateUserEmission(event)">
+            <div>
+                <label>Телефон пользователя:</label>
+                <input type="tel" id="updatePhone" value="+77771234567" required>
+            </div>
+            <div>
+                <label>Электричество (кВт·ч):</label>
+                <input type="number" id="updateElectricity" value="150" step="0.1" required>
+            </div>
+            <div>
+                <label>Коэффициент электричества:</label>
+                <input type="number" id="updateElectricityCoeff" value="0.5" step="0.01" required>
+            </div>
+            <div>
+                <label>КМ на авто:</label>
+                <input type="number" id="updateCarKm" value="1000" step="1" required>
+            </div>
+            <div>
+                <label>Коэффициент автомобиля:</label>
+                <input type="number" id="updateCarCoeff" value="0.2" step="0.01" required>
+            </div>
+            <div>
+                <label>Часов на общественном транспорте:</label>
+                <input type="number" id="updatePublicTransport" value="50" step="0.1" required>
+            </div>
+            <div>
+                <label>Часы авиаперелета:</label>
+                <input type="number" id="updateFlightHours" value="10" step="0.1" required>
+            </div>
+            <div>
+                <label>Рацион питания:</label>
+                <input type="number" id="updateDietType" value="800" step="1" required>
+            </div>
+            <div>
+                <label>Физическая активность:</label>
+                <input type="number" id="updatePhysicalActivity" value="1.2" step="0.1" required>
+            </div>
+            <div>
+                <label>Вес (кг):</label>
+                <input type="number" id="updateWeightKg" value="70" step="0.1" required>
+            </div>
+            <div>
+                <label>Сортирует отходы (множитель):</label>
+                <input type="number" id="updateWasteSorting" value="0.8" step="0.1" required>
+            </div>
+            <button type="submit">Обновить эмиссию пользователя</button>
+        </form>
+        <div id="updateEmissionResult" class="result"></div>
+    </div>
+
+    <div class="section">
+        <h2>6. Отправка заявки от организации</h2>
+        <form onsubmit="sendOrganizationRequest(event)">
+            <div>
+                <label>Наименование организации:</label>
+                <input type="text" id="organizationName" value="ООО Зеленый Мир" required>
+            </div>
+            <div>
+                <label>ФИО контактного лица:</label>
+                <input type="text" id="contactPerson" value="Иванов Алексей Петрович" required>
+            </div>
+            <div>
+                <label>Телефон или Email:</label>
+                <input type="text" id="contactInfo" value="+77771234567" required>
+            </div>
+            <div>
+                <label>Потенциальный бюджет (₸):</label>
+                <input type="text" id="potentialBudget" value="500000" required>
+            </div>
+            <button type="submit">Отправить заявку</button>
+        </form>
+        <div id="organizationRequestResult" class="result"></div>
+    </div>
+
+    <script>
+        async function getUsers() {
+            try {
+                const response = await fetch('/api/users/read.php');
+                const data = await response.json();
+                document.getElementById('usersResult').innerHTML = 
+                    '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('usersResult').innerHTML = 
+                    '<span style="color: red;">Error: ' + error.message + '</span>';
+            }
+        }
+
+        async function getUserByPhone(event) {
+            event.preventDefault();
+            
+            const phone = document.getElementById('searchPhone').value;
+            
+            try {
+                const response = await fetch(`/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`);
+                const data = await response.json();
+                
+                let resultHtml = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                if (data.status === 'success') {
+                    resultHtml += '<p style="color: green;">✓ Пользователь найден</p>';
+                    resultHtml += '<p><strong>Всего посадок:</strong> ' + data.data.plantings.length + '</p>';
+                } else {
+                    resultHtml += '<p style="color: red;">✗ ' + data.message + '</p>';
+                }
+                
+                document.getElementById('userByPhoneResult').innerHTML = resultHtml;
+            } catch (error) {
+                document.getElementById('userByPhoneResult').innerHTML = 
+                    '<span style="color: red;">Error: ' + error.message + '</span>';
+            }
+        }
+
+        async function createPlanting(event) {
+            event.preventDefault();
+            
+            const plantingData = {
+                surname: document.getElementById('userSurname').value,
+                name: document.getElementById('userName').value,
+                phone: document.getElementById('userPhone').value,
+                city: document.getElementById('userCity').value,
+                trees_quantity: parseInt(document.getElementById('treesQuantity').value)
+            };
+
+            try {
+                const response = await fetch('/api/plantings/create.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(plantingData)
+                });
+                
+                const data = await response.json();
+                let resultHtml = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                if (data.status === 'success') {
+                    if (data.user_created) {
+                        resultHtml += '<p style="color: green;">✓ Создан новый пользователь с ID: ' + data.user_id + '</p>';
+                    } else {
+                        resultHtml += '<p style="color: blue;">ℹ Использован существующий пользователь с ID: ' + data.user_id + '</p>';
+                    }
+                }
+                
+                document.getElementById('plantingResult').innerHTML = resultHtml;
+                    
+                // Если создание успешно, обновляем список пользователей
+                if (data.status === 'success') {
+                    getUsers();
+                }
+            } catch (error) {
+                document.getElementById('plantingResult').innerHTML = 
+                    '<span style="color: red;">Error: ' + error.message + '</span>';
+            }
+        }
+
+        async function calculateEmission(event) {
+            event.preventDefault();
+            
+            const emissionData = {
+                electricity: parseFloat(document.getElementById('electricity').value),
+                electricity_coefficient: parseFloat(document.getElementById('electricityCoeff').value),
+                car_km: parseFloat(document.getElementById('carKm').value),
+                car_coefficient: parseFloat(document.getElementById('carCoeff').value),
+                public_transport_hours: parseFloat(document.getElementById('publicTransport').value),
+                flight_hours: parseFloat(document.getElementById('flightHours').value),
+                diet_type: parseFloat(document.getElementById('dietType').value),
+                physical_activity: parseFloat(document.getElementById('physicalActivity').value),
+                weight_kg: parseFloat(document.getElementById('weightKg').value),
+                waste_sorting: parseFloat(document.getElementById('wasteSorting').value)
+            };
+
+            try {
+                const response = await fetch('/api/emission/calculate.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(emissionData)
+                });
+                
+                const data = await response.json();
+                let resultHtml = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                if (data.status === 'success') {
+                    resultHtml += '<div style="background: #e8f5e8; padding: 15px; margin: 10px 0; border-radius: 5px;">';
+                    resultHtml += '<h3 style="color: #2d5a2d; margin-top: 0;">📊 Результат расчета эмиссии CO2</h3>';
+                    resultHtml += '<p><strong>Общая эмиссия:</strong> <span style="color: #d9534f; font-size: 18px; font-weight: bold;">' + data.data.total_emission_kg + ' кг CO2</span></p>';
+                    resultHtml += '<h4>Детализация по источникам:</h4>';
+                    resultHtml += '<ul>';
+                    resultHtml += '<li>🔌 Электричество: ' + data.data.breakdown.electricity + ' кг</li>';
+                    resultHtml += '<li>🚗 Автомобиль: ' + data.data.breakdown.car + ' кг</li>';
+                    resultHtml += '<li>🚌 Общественный транспорт: ' + data.data.breakdown.public_transport + ' кг</li>';
+                    resultHtml += '<li>✈️ Авиаперелеты: ' + data.data.breakdown.flight + ' кг</li>';
+                    resultHtml += '<li>🏃 Физическая активность: ' + data.data.breakdown.physical_activity + ' кг</li>';
+                    resultHtml += '<li>🍽️ Питание: ' + data.data.breakdown.diet_type + ' кг</li>';
+                    resultHtml += '</ul>';
+                    resultHtml += '<p><strong>Промежуточная сумма:</strong> ' + data.data.breakdown.subtotal + ' кг</p>';
+                    resultHtml += '<p><strong>Множитель сортировки отходов:</strong> ' + data.data.breakdown.waste_sorting_multiplier + '</p>';
+                    resultHtml += '</div>';
+                }
+                
+                document.getElementById('emissionResult').innerHTML = resultHtml;
+            } catch (error) {
+                document.getElementById('emissionResult').innerHTML = 
+                    '<span style="color: red;">Error: ' + error.message + '</span>';
+            }
+        }
+
+        async function updateUserEmission(event) {
+            event.preventDefault();
+            
+            const emissionData = {
+                phone: document.getElementById('updatePhone').value,
+                electricity: parseFloat(document.getElementById('updateElectricity').value),
+                electricity_coefficient: parseFloat(document.getElementById('updateElectricityCoeff').value),
+                car_km: parseFloat(document.getElementById('updateCarKm').value),
+                car_coefficient: parseFloat(document.getElementById('updateCarCoeff').value),
+                public_transport_hours: parseFloat(document.getElementById('updatePublicTransport').value),
+                flight_hours: parseFloat(document.getElementById('updateFlightHours').value),
+                diet_type: parseFloat(document.getElementById('updateDietType').value),
+                physical_activity: parseFloat(document.getElementById('updatePhysicalActivity').value),
+                weight_kg: parseFloat(document.getElementById('updateWeightKg').value),
+                waste_sorting: parseFloat(document.getElementById('updateWasteSorting').value)
+            };
+
+            try {
+                const response = await fetch('/api/emission/update_user.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(emissionData)
+                });
+                
+                const data = await response.json();
+                let resultHtml = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                if (data.status === 'success') {
+                    resultHtml += '<div style="background: #e8f5e8; padding: 15px; margin: 10px 0; border-radius: 5px;">';
+                    resultHtml += '<h3 style="color: #2d5a2d; margin-top: 0;">✅ Данные пользователя обновлены успешно</h3>';
+                    resultHtml += '<p><strong>Пользователь:</strong> ' + data.data.user_name + ' (ID: ' + data.data.user_id + ')</p>';
+                    resultHtml += '<p><strong>Телефон:</strong> ' + data.data.phone + '</p>';
+                    resultHtml += '<p><strong>Обновленная эмиссия:</strong> <span style="color: #d9534f; font-size: 18px; font-weight: bold;">' + data.data.total_emission_kg + ' кг CO2</span></p>';
+                    resultHtml += '<h4>Детализация по источникам:</h4>';
+                    resultHtml += '<ul>';
+                    resultHtml += '<li>🔌 Электричество: ' + data.data.breakdown.electricity + ' кг</li>';
+                    resultHtml += '<li>🚗 Автомобиль: ' + data.data.breakdown.car + ' кг</li>';
+                    resultHtml += '<li>🚌 Общественный транспорт: ' + data.data.breakdown.public_transport + ' кг</li>';
+                    resultHtml += '<li>✈️ Авиаперелеты: ' + data.data.breakdown.flight + ' кг</li>';
+                    resultHtml += '<li>🏃 Физическая активность: ' + data.data.breakdown.physical_activity + ' кг</li>';
+                    resultHtml += '<li>🍽️ Питание: ' + data.data.breakdown.diet_type + ' кг</li>';
+                    resultHtml += '</ul>';
+                    resultHtml += '<p><strong>Промежуточная сумма:</strong> ' + data.data.breakdown.subtotal + ' кг</p>';
+                    resultHtml += '<p><strong>Множитель сортировки отходов:</strong> ' + data.data.breakdown.waste_sorting_multiplier + '</p>';
+                    resultHtml += '</div>';
+                    
+                    // Обновляем список пользователей после успешного обновления
+                    getUsers();
+                } else {
+                    resultHtml += '<div style="background: #f8d7da; padding: 15px; margin: 10px 0; border-radius: 5px;">';
+                    resultHtml += '<h3 style="color: #721c24; margin-top: 0;">❌ Ошибка</h3>';
+                    resultHtml += '<p>' + data.message + '</p>';
+                    resultHtml += '</div>';
+                }
+                
+                document.getElementById('updateEmissionResult').innerHTML = resultHtml;
+            } catch (error) {
+                document.getElementById('updateEmissionResult').innerHTML = 
+                    '<span style="color: red;">Error: ' + error.message + '</span>';
+            }
+        }
+
+        async function sendOrganizationRequest(event) {
+            event.preventDefault();
+            
+            const organizationData = {
+                organization_name: document.getElementById('organizationName').value,
+                contact_person: document.getElementById('contactPerson').value,
+                contact_info: document.getElementById('contactInfo').value,
+                potential_budget: document.getElementById('potentialBudget').value
+            };
+
+            try {
+                const response = await fetch('/api/email/send_organization_request.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(organizationData)
+                });
+                
+                const data = await response.json();
+                let resultHtml = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                if (data.status === 'success') {
+                    resultHtml += '<div style="background: #d4edda; padding: 15px; margin: 10px 0; border-radius: 5px; border: 1px solid #c3e6cb;">';
+                    resultHtml += '<h3 style="color: #155724; margin-top: 0;">📧 Заявка отправлена успешно!</h3>';
+                    resultHtml += '<p><strong>Организация:</strong> ' + data.data.organization_name + '</p>';
+                    resultHtml += '<p><strong>Контактное лицо:</strong> ' + data.data.contact_person + '</p>';
+                    resultHtml += '<p><strong>Контактная информация:</strong> ' + data.data.contact_info + '</p>';
+                    resultHtml += '<p><strong>Бюджет:</strong> ' + data.data.potential_budget + ' ₸</p>';
+                    resultHtml += '<p><strong>Отправлено на:</strong> ' + data.data.sent_to + '</p>';
+                    resultHtml += '<p><strong>Время отправки:</strong> ' + data.data.sent_at + '</p>';
+                    resultHtml += '</div>';
+                } else {
+                    resultHtml += '<div style="background: #f8d7da; padding: 15px; margin: 10px 0; border-radius: 5px; border: 1px solid #f5c6cb;">';
+                    resultHtml += '<h3 style="color: #721c24; margin-top: 0;">❌ Ошибка отправки</h3>';
+                    resultHtml += '<p>' + data.message + '</p>';
+                    resultHtml += '</div>';
+                }
+                
+                document.getElementById('organizationRequestResult').innerHTML = resultHtml;
+            } catch (error) {
+                document.getElementById('organizationRequestResult').innerHTML = 
+                    '<span style="color: red;">Error: ' + error.message + '</span>';
+            }
+        }
+
+        // Загружаем пользователей при загрузке страницы
+        window.onload = function() {
+            getUsers();
+        };
+    </script>
+</body>
+</html>

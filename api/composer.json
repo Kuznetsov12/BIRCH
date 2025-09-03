@@ -1,0 +1,13 @@
+{
+    "name": "birch/api",
+    "description": "BIRCH API",
+    "type": "project",
+    "authors": [
+        {
+            "name": "BIRCH Team"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.10"
+    }
+}

@@ -1,0 +1,67 @@
+services:
+  # PHP-FPM с Apache
+  web:
+    image: php:8.1-apache
+    container_name: birch_web
+    restart: always
+    ports:
+      - "3000:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mysql
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_DATABASE=birch_db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=rootpassword
+    command: >
+      bash -c "
+      docker-php-ext-install pdo pdo_mysql &&
+      apache2-foreground
+      "
+    networks:
+      - birch_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: birch_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: birch_db
+      MYSQL_USER: birch_user
+      MYSQL_PASSWORD: birch_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./api/database_setup.sql:/docker-entrypoint-initdb.d/database_setup.sql
+      - ./api/migration_add_user_fields.sql:/docker-entrypoint-initdb.d/migration_add_user_fields.sql
+    networks:
+      - birch_network
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: birch_phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - birch_network
+
+volumes:
+  mysql_data:
+
+networks:
+  birch_network:
+    driver: bridge

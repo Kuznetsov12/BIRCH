@@ -1,0 +1,474 @@
+# BIRCH API Documentation
+
+## Настройка базы данных
+
+1. Измените настройки подключения в `config/database.php`
+2. Импортируйте `database_setup.sql` для создания структуры БД
+
+## Настройка email (PHPMailer)
+
+1. **Установка зависимостей:**
+   ```bash
+   cd api
+   composer install
+   ```
+
+2. **Настройка SMTP в `config/email.php`:**
+   ```php
+   'smtp' => [
+       'host' => 'smtp.gmail.com',           // Ваш SMTP сервер
+       'username' => 'your-email@gmail.com', // Ваш email
+       'password' => 'your-app-password',    // Пароль приложения
+       'port' => 587,
+       'encryption' => 'tls',
+   ],
+   ```
+
+3. **Для Gmail:**
+   - Включите двухфакторную аутентификацию
+   - Создайте пароль приложения в настройках Google
+   - Используйте пароль приложения вместо основного пароля
+
+4. **Настройка получателей:**
+   ```php
+   'recipients' => [
+       'organization_requests' => 'info@birch-project.kz', // Замените на ваш email
+   ],
+   ```
+
+5. **Для других почтовых провайдеров:**
+   - **Yandex:** `smtp.yandex.ru`, порт 465 (SSL) или 587 (TLS)
+   - **Mail.ru:** `smtp.mail.ru`, порт 465 (SSL) или 587 (TLS)
+   - **Outlook:** `smtp-mail.outlook.com`, порт 587 (TLS)
+
+## API Endpoints
+
+### 1. Получение всех пользователей с их посадками
+
+**URL:** `GET /api/users/read.php`
+
+**Ответ:**
+```json
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 1,
+      "surname": "Иванов",
+      "name": "Алексей",
+      "phone": "+77771234567",
+      "city": "Алматы",
+      "emission_kg": 1250.5,
+      "created_at": "2024-12-03 10:00:00",
+      "plantings": [
+        {
+          "id": 1,
+          "trees_quantity": 50,
+          "year": 2024,
+          "city": "Алматы",
+          "created_at": "2024-12-03 10:30:00"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### 2. Получение пользователя по номеру телефона
+
+**URL:** `GET /api/users/get_by_phone.php?phone=+77771234567`
+
+**Параметры запроса:**
+- `phone` (обязательный) - номер телефона пользователя
+
+**Ответ при успехе:**
+```json
+{
+  "status": "success",
+  "data": {
+    "id": 1,
+    "surname": "Иванов",
+    "name": "Алексей",
+    "phone": "+77771234567",
+    "city": "Алматы",
+    "emission_kg": 1250.5,
+    "created_at": "2024-12-03 10:00:00",
+    "plantings": [
+      {
+        "id": 1,
+        "trees_quantity": 50,
+        "year": 2024,
+        "city": "Алматы",
+        "created_at": "2024-12-03 10:30:00"
+      }
+    ]
+  }
+}
+```
+
+**Ответ при ошибке (пользователь не найден):**
+```json
+{
+  "status": "error",
+  "message": "User not found with phone number: +77771234567"
+}
+```
+
+### 3. Создание посадки (с автоматической регистрацией пользователя)
+
+**URL:** `POST /api/plantings/create.php`
+
+**Описание:** При создании посадки происходит автоматическая регистрация пользователя, если он не найден по номеру телефона.
+
+**Тело запроса:**
+```json
+{
+  "surname": "Иванов",
+  "name": "Алексей",
+  "phone": "+77771234567",
+  "city": "Алматы",
+  "trees_quantity": 100
+}
+```
+
+**Примечание:** Год посадки автоматически устанавливается как текущий год на сервере.
+
+**Ответ:**
+```json
+{
+  "status": "success",
+  "message": "Planting was created successfully.",
+  "user_created": true,
+  "user_id": 1
+}
+```
+
+### 4. Расчет эмиссии CO2
+
+**URL:** `POST /api/emission/calculate.php`
+
+**Описание:** Рассчитывает выбросы CO2 на основе данных о потреблении и активности пользователя.
+
+**Формула:** `((электричество * коэф_электричества) + (км_авто * коэф_авто) + (общ_транспорт * 2.625) + (часы_авиа * 90) + (вес * физ_активность) + тип_питания) * сортировка_отходов`
+
+**Тело запроса:**
+```json
+{
+  "electricity": 150,
+  "electricity_coefficient": 0.5,
+  "car_km": 1000,
+  "car_coefficient": 0.2,
+  "public_transport_hours": 50,
+  "flight_hours": 10,
+  "diet_type": 800,
+  "physical_activity": 1.2,
+  "weight_kg": 70,
+  "waste_sorting": 0.8
+}
+```
+
+**Ответ:**
+```json
+{
+  "status": "success",
+  "data": {
+    "total_emission_kg": 1416.25,
+    "breakdown": {
+      "electricity": 75.0,
+      "car": 200.0,
+      "public_transport": 131.25,
+      "flight": 900.0,
+      "physical_activity": 84.0,
+      "diet_type": 800,
+      "subtotal": 2190.25,
+      "waste_sorting_multiplier": 0.8
+    }
+  },
+  "formula": "((electricity * coeff) + (car_km * coeff) + (public_transport * 2.625) + (flight * 90) + (weight * activity) + diet) * waste_sorting"
+}
+```
+
+### 5. Расчет и обновление эмиссии пользователя
+
+**URL:** `POST /api/emission/update_user.php`
+
+**Описание:** Рассчитывает выбросы CO2 и обновляет поле `emission_kg` пользователя по номеру телефона.
+
+**Формула:** `((электричество * коэф_электричества) + (км_авто * коэф_авто) + (общ_транспорт * 2.625) + (часы_авиа * 90) + (вес * физ_активность) + тип_питания) * сортировка_отходов`
+
+**Тело запроса:**
+```json
+{
+  "phone": "+77771234567",
+  "electricity": 150,
+  "electricity_coefficient": 0.5,
+  "car_km": 1000,
+  "car_coefficient": 0.2,
+  "public_transport_hours": 50,
+  "flight_hours": 10,
+  "diet_type": 800,
+  "physical_activity": 1.2,
+  "weight_kg": 70,
+  "waste_sorting": 0.8
+}
+```
+
+**Ответ при успехе:**
+```json
+{
+  "status": "success",
+  "message": "Emission calculated and user data updated successfully",
+  "data": {
+    "user_id": 1,
+    "phone": "+77771234567",
+    "user_name": "Иванов Алексей",
+    "total_emission_kg": 1416.25,
+    "breakdown": {
+      "electricity": 75.0,
+      "car": 200.0,
+      "public_transport": 131.25,
+      "flight": 900.0,
+      "physical_activity": 84.0,
+      "diet_type": 800,
+      "subtotal": 2190.25,
+      "waste_sorting_multiplier": 0.8
+    }
+  }
+}
+```
+
+**Ответ при ошибке (пользователь не найден):**
+```json
+{
+  "status": "error",
+  "message": "Error: User not found with phone number: +77771234567"
+}
+```
+
+### 6. Отправка заявки от организации
+
+**URL:** `POST /api/email/send_organization_request.php`
+
+**Описание:** Отправляет письмо с данными организации на указанную почту.
+
+**Тело запроса:**
+```json
+{
+  "organization_name": "ООО Зеленый Мир",
+  "contact_person": "Иванов Алексей Петрович",
+  "contact_info": "+77771234567",
+  "potential_budget": "500000"
+}
+```
+
+**Ответ при успехе:**
+```json
+{
+  "status": "success",
+  "message": "Email sent successfully",
+  "data": {
+    "organization_name": "ООО Зеленый Мир",
+    "contact_person": "Иванов Алексей Петрович", 
+    "contact_info": "+77771234567",
+    "potential_budget": "500000",
+    "sent_to": "info@birch-project.kz",
+    "sent_at": "2025-09-04 15:30:25"
+  }
+}
+```
+
+**Ответ при ошибке:**
+```json
+{
+  "status": "error",
+  "message": "Email sending failed: Failed to send email"
+}
+```
+
+## Примеры использования с fetch
+
+### Отправка заявки от организации
+```javascript
+const organizationData = {
+  organization_name: 'ООО Зеленый Мир',
+  contact_person: 'Иванов Алексей Петрович',
+  contact_info: '+77771234567',
+  potential_budget: '500000'
+};
+
+fetch('/api/email/send_organization_request.php', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(organizationData)
+})
+.then(response => response.json())
+.then(data => {
+  if (data.status === 'success') {
+    console.log('Заявка отправлена успешно');
+    console.log('Отправлено на:', data.data.sent_to);
+    console.log('Время отправки:', data.data.sent_at);
+  }
+})
+.catch(error => console.error('Error:', error));
+```
+
+### Расчет и обновление эмиссии пользователя
+```javascript
+const emissionData = {
+  phone: '+77771234567',
+  electricity: 150,
+  electricity_coefficient: 0.5,
+  car_km: 1000,
+  car_coefficient: 0.2,
+  public_transport_hours: 50,
+  flight_hours: 10,
+  diet_type: 800,
+  physical_activity: 1.2,
+  weight_kg: 70,
+  waste_sorting: 0.8
+};
+
+fetch('/api/emission/update_user.php', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(emissionData)
+})
+.then(response => response.json())
+.then(data => {
+  if (data.status === 'success') {
+    console.log('Эмиссия рассчитана и данные пользователя обновлены');
+    console.log('Пользователь:', data.data.user_name);
+    console.log('Общая эмиссия:', data.data.total_emission_kg, 'кг CO2');
+    console.log('Детализация:', data.data.breakdown);
+  }
+})
+.catch(error => console.error('Error:', error));
+```
+
+### Расчет эмиссии CO2
+```javascript
+const emissionData = {
+  electricity: 150,
+  electricity_coefficient: 0.5,
+  car_km: 1000,
+  car_coefficient: 0.2,
+  public_transport_hours: 50,
+  flight_hours: 10,
+  diet_type: 800,
+  physical_activity: 1.2,
+  weight_kg: 70,
+  waste_sorting: 0.8
+};
+
+fetch('/api/emission/calculate.php', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(emissionData)
+})
+.then(response => response.json())
+.then(data => {
+  if (data.status === 'success') {
+    console.log('Общая эмиссия CO2:', data.data.total_emission_kg, 'кг');
+    console.log('Детализация:', data.data.breakdown);
+  }
+})
+.catch(error => console.error('Error:', error));
+```
+
+### Получение пользователей
+```javascript
+fetch('/api/users/read.php')
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 'success') {
+      console.log('Users:', data.data);
+    }
+  })
+  .catch(error => console.error('Error:', error));
+```
+
+### Получение пользователя по телефону
+```javascript
+const phone = '+77771234567';
+
+fetch(`/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`)
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 'success') {
+      console.log('User found:', data.data);
+      console.log('User plantings:', data.data.plantings);
+    } else {
+      console.log('User not found:', data.message);
+    }
+  })
+  .catch(error => console.error('Error:', error));
+```
+
+### Создание посадки (с автоматической регистрацией)
+```javascript
+const plantingData = {
+  surname: 'Иванов',
+  name: 'Алексей',
+  phone: '+77771234567',
+  city: 'Алматы',
+  trees_quantity: 100
+};
+
+fetch('/api/plantings/create.php', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(plantingData)
+})
+.then(response => response.json())
+.then(data => {
+  if (data.status === 'success') {
+    console.log('Посадка создана успешно');
+    if (data.user_created) {
+      console.log('Создан новый пользователь с ID:', data.user_id);
+    } else {
+      console.log('Использован существующий пользователь с ID:', data.user_id);
+    }
+  }
+})
+.catch(error => console.error('Error:', error));
+```
+
+## Структура файлов
+
+```
+api/
+├── config/
+│   ├── database.php         # Конфигурация базы данных
+│   └── email.php            # Конфигурация email (PHPMailer)
+├── models/
+│   ├── User.php             # Модель пользователя
+│   └── Planting.php         # Модель посадки
+├── users/
+│   ├── read.php             # Получение всех пользователей
+│   └── get_by_phone.php     # Получение пользователя по телефону
+├── plantings/
+│   └── create.php           # Создание посадки (с автоматической регистрацией)
+├── emission/
+│   ├── calculate.php        # Расчет эмиссии CO2
+│   └── update_user.php      # Расчет эмиссии и обновление пользователя
+├── email/
+│   └── send_organization_request.php  # Отправка заявки от организации (PHPMailer)
+├── vendor/                  # Composer зависимости (PHPMailer)
+├── composer.json            # Composer конфигурация
+├── database_setup.sql       # SQL для создания БД
+└── migration_add_user_fields.sql  # Миграция для обновления БД
+```
+
+## Требования
+
+- PHP 7.4+
+- MySQL 5.7+
+- PDO расширение для PHP
