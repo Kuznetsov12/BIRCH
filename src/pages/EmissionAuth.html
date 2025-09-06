@@ -113,6 +113,14 @@
   <div class="absolute -top-[-600px] -left-96  w-[769px] h-[769px] rounded-full blur-[600px]"
        style="background: radial-gradient(circle, #008852, #164125);"></div>
     </div>
+            <div id="firstCircleEmission" class="mobile-header-circle hidden absolute top-0 right-0 w-[200px] h-[200px] rounded-full blur-[100px] z-0"
+             style="background: radial-gradient(circle, #008852, #164125);"></div>
+        <div id="secondCircleEmission" class="mobile-header-circle hidden absolute top-0 right-0 w-[200px] h-[200px] rounded-full blur-[100px] z-0"
+             style="background: radial-gradient(circle, #008852, #164125);"></div>
+            <div id="threeCircleEmission" class="mobile-header-circle hidden absolute top-0 right-0 w-[200px] h-[200px] rounded-full blur-[100px] z-0"
+             style="background: radial-gradient(circle, #008852, #164125);"></div>
+              <div id="fourCircleEmission" class="mobile-header-circle hidden absolute top-0 right-0 w-[200px] h-[200px] rounded-full blur-[100px] z-0"
+             style="background: radial-gradient(circle, #008852, #164125);"></div>
         <header class="w-full flex justify-center pt-8 px-8" role="banner">
     <nav class="flex items-center max-w-[1920px] z-10 w-full h-[109px] px-8 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
       <div class="flex items-center gap-3 flex-shrink-0">
@@ -128,68 +136,87 @@
           <li><a href="./Project.html" class="hover:underline">Проекты</a></li>
           <li><a href="#" class="hover:underline">Контакты</a></li>
         </ul>
-        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0" aria-label="Оставить заявку на сотрудничество">
+        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
           Оставить заявку
           <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
             <img src="../../src/img/arrowdown.svg" alt="" class="w-11 h-11" />
           </span>
         </button>
+        <!-- Меню для планшетов -->
+        <img src="../../src/img/headerTable.svg" alt="Меню" class="w-11 h-11 tablet-menu" />
+        <!-- Бургер-меню для мобильных -->
+        <img src="../../src/img/burgerMenu.svg" alt="Меню" class="w-8 h-8 mobile-menu" onclick="toggleMobileMenu()" />
       </div>
     </nav>
+    <!-- Мобильное меню (скрыто по умолчанию) -->
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-black/95 z-50 hidden flex-col items-center justify-center">
+      <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
+      <ul class="flex flex-col gap-8 text-white text-xl text-center">
+        <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Главная</a></li>
+        <li><a href="./Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Донаты</a></li>
+        <li><a href="./PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">B2B квоты</a></li>
+        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
+        <li><a href="./Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
+        <li><a href="#" class="font-bold" onclick="toggleMobileMenu()">Эмиссии</a></li>
+      </ul>
+      <button class="mt-10 bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600" onclick="toggleMobileMenu()">
+        Оставить заявку
+      </button>
+    </div>
   </header>
   
   <!-- Основная секция с личным кабинетом -->
   <section class="relative overflow-hidden z-10 py-20 flex-1">
     <div class="max-w-[1920px] mx-auto px-8">
-      <div class="flex items-start justify-between h-full gap-16">
+      <div id="allContent" class="flex items-start justify-between h-full gap-16">
         
         <!-- Левая часть с информацией пользователя -->
         <div class="flex-1 max-w-[900px] text-white space-y-0">
           <!-- Имя пользователя -->
            <div class="border-b border-white/20">
-          <h1 class="text-[84px] font-light leading-tight text-white mb-8">
+          <h1 id="firstText" class="text-[84px] font-light leading-tight text-white mb-8">
             Владимир О.
           </h1>
           </div>
           
           <!-- Блок 1: Вы высадили -->
-          <div class="pb-8 border-b border-white/20 mt-8">
+          <div id="viVisadili" class="pb-8 border-b border-white/20 mt-8">
             <p class="text-[#BFBFBF] text-[24px] font-light mb-2">Вы высадили:</p>
             <p class="text-white text-[48px] font-light">Вы высадили: 157 🌳</p>
           </div>
           
           <!-- Блок 2: Это эквивалентно -->
-          <div class="py-8 border-b border-white/20">
-            <p class="text-[#BFBFBF] text-[24px] font-light mb-2">Это эквивалентно:</p>
+          <div id="ecvivalent" class="py-8 border-b border-white/20">
+            <p id="firstEcvivalent" class="text-[#BFBFBF] text-[24px] font-light mb-2">Это эквивалентно:</p>
             <div class="space-y-2">
-              <p class="text-white leading-[130%] text-[48px] font-light">~ 7 - 11 тонн CO₂ очищено в год <br> ~ 314000₸ инвестировано в озеленение</p>
+              <p id="secondEcvivalent" class="text-white leading-[130%] text-[48px] font-light">~ 7 - 11 тонн CO₂ очищено в год <br> ~ 314000₸ инвестировано в озеленение</p>
             </div>
           </div>
           
           <!-- Блок 4: Призыв к действию -->
           <div class="py-8 border-white/20">
-            <div class="flex items-center gap-6 mb-8">
+            <div id="callToAction" class="flex items-center gap-6 mb-8">
               <img src="../../src/img/greenLepestki.svg" alt="Зеленые лепестки" class="w-[82px] h-[82px] flex-shrink-0">
-              <div class="flex-1">
-                <p class="text-[#4ADE80] text-[44px] font-medium leading-[130%] tracking-[-4%]">Хотите видеть более<br>точную статистику?</p>
+              <div id="callToActionBlock" class="flex-1">
+                <p id="callToActionText" class="text-[#4ADE80] text-[44px] font-medium leading-[130%] tracking-[-4%]">Хотите видеть более<br>точную статистику?</p>
               </div>
             </div>
-            
-            <div class="flex items-center gap-12 mt-6">
-              <button class="bg-[#4ADE80] text-white font-bold text-[20px] h-[85px] px-8 py-4 rounded-[6px] hover:bg-green-400 transition-all duration-300 flex items-center gap-3">
+
+            <div id="emissionCalculator" class="flex items-center gap-12 mt-6">
+              <button id="emissionCalculatorButton" class="bg-[#4ADE80] text-white font-bold text-[20px] h-[85px] px-8 py-4 rounded-[6px] hover:bg-green-400 transition-all duration-300 flex items-center gap-3">
                 <span class="flex items-center gap-2">
                     <img src="../img/plusMinus.svg" alt="">
                   Рассчитать эмиссию
                 </span>
               </button>
-              <p class="text-[#BFBFBF] text-[24px] font-light">Пройдите полный расчёт эмиссии<br>CO₂ — это займёт всего 1 минуту!</p>
-              
+              <p id="emissionCalculatorText" class="text-[#BFBFBF] text-[24px] font-light">Пройдите полный расчёт эмиссии<br>CO₂ — это займёт всего 1 минуту!</p>
+
             </div>
-                      <div class="py-8">
+            <div class="py-8">
             <div class="flex justify-start">
-              <div class="bg-white rounded-3xl px-6 py-4 flex gap-12 items-center justify-center min-w-[503px] h-[128px]">
-                <p class="text-black text-[32px] font-light mb-3">Поделиться <br> результатом</p>
-                <div class="flex gap-6">
+              <div id="shareResult" class="bg-white rounded-3xl px-6 py-4 flex gap-12 items-center justify-center min-w-[503px] h-[128px]">
+                <p id="shareResultText" class="text-black text-[32px] font-light mb-3">Поделиться <br> результатом</p>
+                <div id="shareResultIcons" class="flex gap-6">
                   <a href="#" class="w-[55px] h-[55px] rounded-full bg-black flex items-center justify-center hover:bg-gray-800 transition-all">
                     <img src="../../src/img/instagram.svg" alt="Instagram" class="w-[55px] h-[55px]">
                   </a>
@@ -210,7 +237,7 @@
         </div>
         
         <!-- Правая часть с картинкой и процентом -->
-        <div class="flex-1 flex items-start justify-start max-w-[663px] h-[950px] relative">
+        <div id="imageContainer" class="flex-1 flex items-start justify-start max-w-[663px] h-[950px] relative">
           <!-- Контейнер с картинкой -->
           <div class="relative">
             <!-- Основная картинка с эффектом обесцвечивания -->

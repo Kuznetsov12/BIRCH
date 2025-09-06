@@ -74,7 +74,7 @@ h1 {
   margin: 0;
   padding: 0;
   text-align: center;
-}
+} 
 
 .logo {
   height: 6em;
@@ -280,6 +280,25 @@ img, svg, video, canvas, audio, iframe, embed, object {
 /* Скрываем дерево adaptivTree на десктопе */
 section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   display: none;
+}
+
+/* Адаптация для мобильных на странице Emission */
+body.emission-mobile .emission-stats {
+  gap: 0 !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+}
+
+body.emission-mobile .emission-stats > div {
+  margin-bottom: 12px !important;
+}
+
+body.emission-mobile .emission-stats p.text-\[48px\] {
+  font-size: 32px !important;
+}
+
+body.emission-mobile .emission-stats p.text-\[24px\] {
+  font-size: 18px !important;
 }
 
 /* Адаптация главной страницы для планшетов (до 1024px) */
@@ -580,12 +599,6 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   
   .p-8 {
     padding: 12px !important;
-  }
-  
-  /* Секции - уменьшаем отступы между ними */
-  section {
-    padding-top: 30px !important;
-    padding-bottom: 30px !important;
   }
   
   /* Фоновые градиентные круги - уменьшаем для производительности */
@@ -2116,9 +2129,11 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
     margin-left: calc(-50vw + 50%) !important;
   }
   
-  /* Скрываем логотип на мобильных */
+  /* Отображаем логотип на мобильных */
   footer .grid.grid-cols-4 > div:first-child {
-    display: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
   
   /* Скрываем стрелку вверх на мобильных */
@@ -2994,9 +3009,12 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
       margin-left: calc(-50vw + 50%) !important;
     }
     
-    /* Скрываем логотип на мобильных */
+    /* Отображаем логотип на мобильных */
     body.donate-mobile footer .grid.grid-cols-4 > div:first-child {
-      display: none !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      order: -1 !important; /* Логотип первым */
     }
     
     /* Скрываем стрелку вверх на мобильных */
@@ -3146,5 +3164,384 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
     body.donate-mobile footer p.text-\[#DAFFF1\] {
       text-align: left !important;
     }
+}
+
+/* Мобильная адаптация для страницы эмиссий */
+@media screen and (max-width: 768px) {
+  /* Общие стили для страницы эмиссий на мобильных */
+  body.emission-mobile {
+    overflow-x: hidden !important;
+    background-color: black !important;
+  }
+  
+  /* Скрытие десктопного меню и кнопки, показ мобильного меню */
+  body.emission-mobile .desktop-nav,
+  body.emission-mobile .desktop-button {
+    display: none !important;
+  }
+  
+  body.emission-mobile .tablet-menu {
+    display: none !important;
+  }
+  
+  body.emission-mobile .mobile-menu {
+    display: block !important;
+  }
+  
+  /* По умолчанию скрываем меню для планшетов и мобильных */
+  @media screen and (min-width: 769px) {
+    .mobile-menu {
+      display: none !important;
+    }
+    
+    .tablet-menu {
+      display: none !important;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .tablet-menu {
+      display: none !important;
+    }
+    
+    .mobile-menu {
+      display: block !important;
+    }
+  }
+  
+  @media screen and (min-width: 481px) and (max-width: 768px) {
+    .mobile-menu {
+      display: none !important;
+    }
+    
+    .tablet-menu {
+      display: block !important;
+    }
+  }
+  
+  /* Стили для мобильной навигации */
+  body.emission-mobile nav {
+    height: 70px !important;
+    padding: 0 16px !important;
+    border-radius: 50px !important;
+  }
+  
+  body.emission-mobile nav img.h-\[46px\].w-\[144px\] {
+    height: 48px !important;
+    width: 150px !important;
+  }
+  
+  /* Стили для основного контейнера */
+  body.emission-mobile .flex.flex-col.w-full.mx-auto.max-w-\[1920px\] {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  
+  /* Показываем зеленый круг в мобильной версии */
+  body.emission-mobile .mobile-header-circle {
+    display: block !important;
+    opacity: 0.7 !important;
+    top: -50px !important;
+    right: -100px !important;
+    width: 250px !important;
+    height: 250px !important;
+  }
+  #secondCircle {
+    display: block !important;
+    top: 400px !important;
+    width: 450px !important;
+    height: 450px !important;
+    left: -260px !important;
+  }
+  #threeCircle {
+    display: block !important;
+    top: 1400px !important;
+    right: -250px !important;
+    width: 450px !important;
+    height: 450px !important;
+  }
+  #fourCircle {
+    display: block !important;
+    top: 2800px !important;
+    left: 300px !important;
+    width: 400px !important;
+    height: 400px !important;
+  }
+  #percentageIndicator{
+    left: 210px !important;
+  }
+  #map {
+    margin-top: 120px !important;
+  }
+  #urTree{
+    display: none !important;
+  }
+
+  /* Изменяем размер логотипа в хедере для мобильной версии */
+  body.emission-mobile .header-logo {
+    height: 48px !important;
+    width: 150px !important;
+  }
+  
+  /* Убираем отступы у основной секции */
+  body.emission-mobile .relative.z-10.overflow-hidden.py-20.flex-1,
+  body.emission-mobile section.relative.z-10.overflow-hidden.py-20.flex-1 {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* Адаптация размеров шрифта */
+  body.emission-mobile h1 {
+    font-size: 32px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 16px !important;
+  }
+  
+  body.emission-mobile .text-\[84px\] {
+    font-size: 32px !important;
+  }
+  
+  /* Колбы и анимации */
+  body.emission-mobile .cylinder-container {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    transform: scale(0.8) !important;
+  }
+  
+  /* Секция с картой */
+  body.emission-mobile #map {
+    height: 750px !important;
+    width: 100% !important;
+  }
+  
+  /* Секция с метриками */
+  body.emission-mobile .flex.items-start.justify-between {
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+  
+  body.emission-mobile .flex-1.max-w-\[900px\] {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  body.emission-mobile .max-w-\[400px\] {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  /* Информационные блоки */
+  body.emission-mobile .border-b.border-white\/20 {
+    padding-bottom: 16px !important;
+  }
+  
+  /* Карточки с информацией */
+  body.emission-mobile .flex.flex-row.gap-4 {
+    flex-direction: column !important;
+  }
+  
+  /* Изменяем блок с восполнением эмиссии и углеродным следом */
+  body.emission-mobile .flex.gap-24.items-start {
+    gap: 0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+  }
+  
+  /* Кнопки */
+  body.emission-mobile .bg-white.text-\[\#5F6161\].px-6.py-3.rounded-full {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 16px !important;
+  }
+  
+  
+  /* Попапы карты */
+  body.emission-mobile .custom-tree-popup {
+    width: 90% !important;
+    max-width: 250px !important;
+  }
+  
+  /* Зеленые круги - сделаем меньше для мобильных */
+  body.emission-mobile .absolute.w-\[769px\].h-\[769px\].rounded-full.blur-\[600px\] {
+    width: 400px !important;
+    height: 400px !important;
+    opacity: 0.3 !important;
+  }
+  #emissionIcon {
+    flex-direction: row !important;
+    gap: 20px !important;
+  }
+  #textIcon {
+    width: 100% !important;
+  }
+  
+  /* Футер */
+  body.emission-mobile footer {
+    padding: 40px 20px !important;
+  }
+  
+  body.emission-mobile footer .grid.grid-cols-4 {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+  
+  body.emission-mobile footer .border-r {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding-bottom: 20px !important;
+  }
+  
+  /* Лого в футере */
+  body.emission-mobile footer img[src*="footerBirch.png"] {
+    width: 140px !important;
+    height: auto !important;
+  }
+  
+  /* Лого в футере для мобильной версии */
+  @media screen and (max-width: 768px) {
+    footer .grid.grid-cols-4 > div:first-child img[src*="footerBirch.png"] {
+      content: url('../../src/img/logoPhone.png') !important;
+      display: none !important;
+    }
+    
+    /* Лого над копирайтом для мобильной версии */
+    .footer-copyright-logo {
+      content: url('../../src/img/logoPhone.png') !important;
+      width: 140px !important;
+      height: auto !important;
+      background: transparent !important;
+    }
+    #mobileAddIcon{
+      background: transparent !important;
+    }
+    
+    /* Скрываем первую колонку футера на мобильных */
+    footer .grid.grid-cols-4 > div:first-child {
+      display: none !important;
+    }
+  }
+  
+  /* Кнопки социальных сетей */
+  body.emission-mobile footer .flex {
+    justify-content: flex-start !important;
+    gap: 12px !important;
+  }
+  
+  /* Копирайт */
+  body.emission-mobile footer > div > div:last-child {
+    font-size: 12px !important;
+    text-align: center !important;
+    margin-top: 30px !important;
+  }
+  
+  /* Всплывающее меню */
+  body.emission-mobile #mobileMenu {
+    background-color: rgba(0, 0, 0, 0.95) !important;
+  }
+
+#firstText{
+  margin-bottom: 10px !important;
+  font-size: 32px !important;
+}
+#viVisadili {
+  padding-bottom: 16px !important;
+  margin-top: 16px !important;
+}
+#ecvivalent{
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+#firstEcvivalent{
+  font-size: 14px !important;
+}
+#secondEcvivalent{
+  font-size: 18px !important;
+}
+#callToAction{
+  display: flex !important;
+  flex-direction: row !important;
+}
+#callToActionBlock{
+  max-width: 300px !important;
+}
+#callToActionText{
+  font-size: 24px !important;
+}
+#emissionCalculator{
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 16px !important;
+}
+#emissionCalculatorButton{
+  width: 350px;
+  justify-content: center !important;
+}
+#emissionCalculatorText{
+  text-align: center !important;
+  width: 350px;
+}
+
+#shareResultText br {
+  display: none;
+}
+#shareResult{
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: 350px !important;
+  min-width: 350px !important;
+  height: auto !important;
+  gap: 0 !important;
+background: rgba(255, 255, 255, 0.379) !important;
+opacity: 80% !important;
+
+}
+#shareResultText{
+  font-size: 26px !important;
+}
+#shareResultIcons{
+  flex-direction: row !important;
+  gap: 66px !important;
+}
+#imageContainer{
+  display: block !important;
+}
+#allContent{
+  flex-direction: column !important;
+  gap: 0px !important;
+}
+
+#firstCircleEmission{
+    display: block !important;
+    opacity: 0.7 !important;
+    top: -150px !important;
+    right: -200px !important;
+    width: 300px !important;
+    height: 300px !important;
+}
+#secondCircleEmission{
+    display: block !important;
+    top: 400px !important;
+    width: 450px !important;
+    height: 450px !important;
+    left: -360px !important;
+}
+#threeCircleEmission{
+    display: block !important;
+    top: 1100px !important;
+    right: -350px !important;
+    width: 450px !important;
+    height: 450px !important;
+}
+#fourCircleEmission{
+    display: block !important;
+    top: 2000px !important;
+    left: 300px !important;
+    width: 400px !important;
+    height: 400px !important;
+}
+
 }
 
