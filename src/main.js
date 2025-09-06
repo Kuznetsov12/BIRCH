@@ -49,6 +49,21 @@ window.addEventListener('load', () => {
     const target = parseInt(counter.getAttribute('data-target'));
     animateCounter(counter, target);
   });
+  
+  // Добавляем обработчик для стрелки прокрутки проектов на странице Donate
+  if (document.querySelector('body.donate-mobile')) {
+    const projectHeaderArrow = document.querySelector('body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 .mb-16::after');
+    const headerProjectsSection = document.querySelector('body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 .mb-16');
+    
+    if (headerProjectsSection) {
+      headerProjectsSection.addEventListener('click', function(e) {
+        // Проверяем, что клик был по стрелке (или примерно в той области)
+        if (e.offsetX > headerProjectsSection.offsetWidth - 50) {
+          scrollProjectCards('right');
+        }
+      });
+    }
+  }
 });
 
 // Плавная прокрутка для навигации (SEO-friendly)
@@ -1206,12 +1221,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализируем карусель проектов при загрузке
     restructureProjectCarousel();
     
+    // Добавляем класс donate-mobile для страницы Donate.html на мобильных устройствах
+    function checkAndAddDonateClass() {
+        if (window.location.pathname.includes('Donate.html') && window.innerWidth <= 767) {
+            document.body.classList.add('donate-mobile');
+        } else if (window.location.pathname.includes('Donate.html') && window.innerWidth > 767) {
+            document.body.classList.remove('donate-mobile');
+        }
+    }
+    
+    // Проверяем при загрузке
+    checkAndAddDonateClass();
+    
     // Переинициализируем при изменении размера окна
     window.addEventListener('resize', function() {
         // Добавляем небольшую задержку, чтобы избежать частых вызовов
         clearTimeout(window.resizeTimer);
         window.resizeTimer = setTimeout(function() {
             restructureProjectCarousel();
+            checkAndAddDonateClass();
         }, 250);
     });
 });
