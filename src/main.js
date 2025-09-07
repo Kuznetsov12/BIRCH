@@ -455,9 +455,19 @@ function scrollToTop() {
 function scrollMobileProjects() {
   console.log("Mobile arrow clicked");
   
-  // Нужно найти контейнер .overflow-hidden, а не сам carousel
-  const projectsSection = document.querySelector('section.relative.bg-black.overflow-hidden.py-20:last-of-type');
-  const scrollContainer = projectsSection ? projectsSection.querySelector('.overflow-hidden') : null;
+  // Проверяем, на какой мы странице и ищем соответствующий контейнер
+  let projectsSection = null;
+  let scrollContainer = null;
+  
+  // Для PlantForest.html ищем секцию с id forestProjectsSection
+  if (window.location.pathname.includes('PlantForest.html')) {
+    projectsSection = document.querySelector('#forestProjectsSection');
+    scrollContainer = projectsSection ? projectsSection.querySelector('.overflow-hidden') : null;
+  } else {
+    // Для других страниц используем старый селектор
+    projectsSection = document.querySelector('section.relative.bg-black.overflow-hidden.py-20:last-of-type');
+    scrollContainer = projectsSection ? projectsSection.querySelector('.overflow-hidden') : null;
+  }
   
   console.log("Projects section found:", projectsSection);
   console.log("Scroll container found:", scrollContainer);
