@@ -195,33 +195,67 @@ function switchCategory(category) {
 }
 
 function renderProjects(projects) {
-  const container = document.getElementById('projects-container');
+  const carousel = document.getElementById('projectCarousel');
+  const container = carousel || document.getElementById('projects-container');
   
   // Fade out
   container.style.opacity = '0';
   
   setTimeout(() => {
-    container.innerHTML = `
-      <div class="min-w-full grid grid-cols-2 gap-8 flex-shrink-0">
-        ${projects.map(project => `
-          <div class="rounded-[20px] overflow-hidden w-full relative h-[469px] bg-cover bg-center bg-no-repeat project-card" style="background-image: url('${project.image}');">
-            <div class="absolute inset-0"></div>
-            <div class="p-6 text-white relative h-full flex flex-col justify-end">
-              <div class="flex justify-between items-end">
-                <div class="flex-1">
-                  <h3 class="text-xl font-normal text-white mb-3">${project.title}</h3>
-                  <p class="text-[#BFBFBF] text-base leading-relaxed">${project.description}</p>
+    // Проверяем размер экрана для определения мобильной версии
+    const isMobile = window.innerWidth <= 768;
+    const isProjectPage = window.location.pathname.includes('Project.html');
+    
+    let content;
+    if (isMobile && isProjectPage) {
+      // Для мобильной версии Project.html создаем flex структуру для горизонтального скролла
+      content = `
+        <div class="flex overflow-x-auto overflow-y-hidden gap-4 pb-4" style="scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none;">
+          ${projects.map(project => `
+            <div class="rounded-[20px] overflow-hidden relative h-[455px] bg-cover bg-center bg-no-repeat project-card flex-shrink-0" style="background-image: url('${project.image}'); width: 300px; scroll-snap-align: start;">
+              <div class="absolute inset-0"></div>
+              <div class="p-6 text-white relative h-full flex flex-col justify-end">
+                <div class="flex justify-between items-end">
+                  <div class="flex-1">
+                    <h3 class="text-xl font-normal text-white mb-3">${project.title}</h3>
+                    <p class="text-[#BFBFBF] text-base leading-relaxed">${project.description}</p>
+                  </div>
+                  <button onclick="openProjectInfo(${project.id})" class="bg-white backdrop-blur-md text-[#5F6161] px-8 py-3 rounded-full h-[80px] text-xl font-bold flex items-center gap-2 ml-4">
+                    Узнать подробнее
+                    <img src="../../src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
+                  </button>
                 </div>
-                <button onclick="openProjectInfo(${project.id})" class="bg-white backdrop-blur-md text-[#5F6161] px-6 py-2 rounded-full h-[74px] text-xl font-bold flex items-center gap-2 ml-4">
-                  Узнать подробнее
-                  <img src="../../src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
-                </button>
               </div>
             </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
+          `).join('')}
+        </div>
+      `;
+    } else {
+      // Для десктопной версии используем grid с 2 колонками
+      content = `
+        <div class="grid grid-cols-2 gap-8">
+          ${projects.map(project => `
+            <div class="rounded-[20px] overflow-hidden w-full relative h-[455px] bg-cover bg-center bg-no-repeat project-card" style="background-image: url('${project.image}');">
+              <div class="absolute inset-0"></div>
+              <div class="p-6 text-white relative h-full flex flex-col justify-end">
+                <div class="flex justify-between items-end">
+                  <div class="flex-1">
+                    <h3 class="text-xl font-normal text-white mb-3">${project.title}</h3>
+                    <p class="text-[#BFBFBF] text-base leading-relaxed">${project.description}</p>
+                  </div>
+                  <button onclick="openProjectInfo(${project.id})" class="bg-white backdrop-blur-md text-[#5F6161] px-8 py-3 rounded-full h-[80px] text-xl font-bold flex items-center gap-2 ml-4">
+                    Узнать подробнее
+                    <img src="../../src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
+                  </button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+    
+    container.innerHTML = content;
     
     // Fade in
     container.style.opacity = '1';
@@ -455,7 +489,41 @@ function scrollToTop() {
 function scrollMobileProjects() {
   console.log("Mobile arrow clicked");
   
-  // Проверяем, на какой мы странице и ищем соответствующий контейнер
+  // Для Project.html используем специальную логику
+  if (window.location.pathname.includes('Project.html')) {
+    const projectsContainer = document.getElementById('projects-container');
+    const scrollContainer = projectsContainer ? projectsContainer.querySelector('.flex.overflow-x-auto') : null;
+    
+    console.log("Projects container found:", projectsContainer);
+    console.log("Scroll container found:", scrollContainer);
+    
+    if (scrollContainer) {
+      const cards = scrollContainer.querySelectorAll('.project-card');
+      console.log("Number of cards found:", cards.length);
+      
+      if (cards.length > 0) {
+        // Получаем ширину одной карточки + gap
+        const cardWidth = 300; // Фиксированная ширина карточки
+        const gap = 16; // gap-4 = 16px
+        const scrollDistance = cardWidth + gap;
+        
+        console.log("Card width:", cardWidth);
+        console.log("Scroll distance:", scrollDistance);
+        console.log("Current scroll position:", scrollContainer.scrollLeft);
+        
+        // Прокручиваем контейнер на одну карточку вправо
+        scrollContainer.scrollBy({
+          left: scrollDistance,
+          behavior: 'smooth'
+        });
+        
+        console.log("Scrolling container by:", scrollDistance);
+      }
+    }
+    return;
+  }
+  
+  // Для других страниц (PlantForest.html и т.д.)
   let projectsSection = null;
   let scrollContainer = null;
   
