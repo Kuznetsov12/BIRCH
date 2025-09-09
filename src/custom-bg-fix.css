@@ -58,6 +58,9 @@ body.overflow-x-hidden.bg-black {
   footer.relative.overflow-hidden {
     background-color: black !important;
   }
+  #plantForestFooter{
+    background-color: black !important;
+  }
   
   /* Специально для Project.html - страница проектов */
   .bg-black.relative.overflow-hidden footer.relative.overflow-hidden {

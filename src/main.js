@@ -19,6 +19,133 @@ function toggleMobileMenu() {
   }
 }
 
+// Создание модального окна партнерства
+function createPartnershipModal() {
+  const modalHTML = `
+    <div id="partnership-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center">
+      <div class="bg-white rounded-3xl w-full max-w-[600px] sm:w-full sm:mx-4 transform transition-all duration-300 scale-95 opacity-0 relative border-2 border-gray-200" id="modal-content">
+        <!-- Крестик для закрытия -->
+        <button 
+          id="close-modal-btn" 
+          class="absolute top-6 right-6 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200"
+          type="button"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+        
+        <div class="px-12 py-12 text-center">
+          <h2 class="text-[27px] font-bold text-gray-800 mb-2">Хотите стать нашим партнёром?</h2>
+          <p class="text-[20px] text-gray-600 mb-8">Партнёрство, которое работает на репутацию и планету</p>
+          
+          <form id="partnership-form" class="space-y-4">
+            <div>
+              <input 
+                type="text" 
+                id="company-name" 
+                placeholder="Наименование организации"
+                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                required
+              >
+            </div>
+            
+            <div>
+              <input 
+                type="text" 
+                id="contact-person" 
+                placeholder="Контактное лицо (ФИО)"
+                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                required
+              >
+            </div>
+            
+            <div>
+              <input 
+                type="email" 
+                id="contact-email" 
+                placeholder="Телефон или e-mail"
+                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                required
+              >
+            </div>
+            
+            <button 
+              type="submit" 
+              class="w-full h-[80px] bg-[#23B77F] text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition duration-200 flex items-center justify-center gap-2 mt-8"
+            >
+              <img src="./src/img/stayPartner.svg" alt="" class="w-5 h-5">
+              Оставить заявку
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // Добавляем модалку в body
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+// Функция открытия модального окна
+function openPartnershipModal() {
+  const modal = document.getElementById('partnership-modal');
+  const modalContent = document.getElementById('modal-content');
+  
+  if (modal && modalContent) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    
+    // Анимация появления
+    setTimeout(() => {
+      modalContent.classList.remove('scale-95', 'opacity-0');
+      modalContent.classList.add('scale-100', 'opacity-100');
+    }, 10);
+  }
+}
+
+// Функция закрытия модального окна
+function closePartnershipModal() {
+  const modal = document.getElementById('partnership-modal');
+  const modalContent = document.getElementById('modal-content');
+  
+  if (modal && modalContent) {
+    // Анимация исчезновения
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    modalContent.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }, 300);
+  }
+}
+
+// Обработка отправки формы
+function handlePartnershipFormSubmit(event) {
+  event.preventDefault();
+  
+  const companyName = document.getElementById('company-name').value;
+  const contactPerson = document.getElementById('contact-person').value;
+  const contactEmail = document.getElementById('contact-email').value;
+  
+  // Здесь можно добавить отправку данных на сервер
+  console.log('Форма партнерства отправлена:', {
+    companyName,
+    contactPerson,
+    contactEmail
+  });
+  
+  // Показываем сообщение об успешной отправке
+  alert('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+  
+  // Закрываем модалку и очищаем форму
+  closePartnershipModal();
+  document.getElementById('partnership-form').reset();
+}
+
 // Анимация счетчиков
 function animateCounter(element, target, duration = 2000) {
   let start = 0;
@@ -1489,4 +1616,61 @@ document.addEventListener('DOMContentLoaded', function() {
         // Обновляем данные каждые 5 минут
         setInterval(loadUsersForMarquee, 5 * 60 * 1000);
     }
+});
+
+// Инициализация модального окна партнерства
+document.addEventListener('DOMContentLoaded', function() {
+    // Создаем модальное окно
+    createPartnershipModal();
+    
+    // Обработчики для кнопок открытия модалки
+    const openModalBtn = document.getElementById('open-partnership-modal');
+    const openModalMobileBtn = document.getElementById('open-partnership-modal-mobile');
+    
+    if (openModalBtn) {
+        openModalBtn.addEventListener('click', openPartnershipModal);
+    }
+    
+    if (openModalMobileBtn) {
+        openModalMobileBtn.addEventListener('click', function() {
+            toggleMobileMenu(); // Закрываем мобильное меню
+            setTimeout(() => {
+                openPartnershipModal(); // Открываем модалку после закрытия меню
+            }, 300);
+        });
+    }
+    
+    // Обработчик для закрытия модалки при клике на фон
+    document.addEventListener('click', function(event) {
+        const modal = document.getElementById('partnership-modal');
+        const modalContent = document.getElementById('modal-content');
+        
+        if (modal && event.target === modal && !modalContent.contains(event.target)) {
+            closePartnershipModal();
+        }
+    });
+    
+    // Обработчик для крестика закрытия модалки
+    document.addEventListener('click', function(event) {
+        if (event.target.id === 'close-modal-btn' || event.target.closest('#close-modal-btn')) {
+            closePartnershipModal();
+        }
+    });
+    
+    // Обработчик для отправки формы
+    document.addEventListener('submit', function(event) {
+        if (event.target.id === 'partnership-form') {
+            handlePartnershipFormSubmit(event);
+        }
+    });
+    
+    // Закрытие модалки по ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const modal = document.getElementById('partnership-modal');
+            if (modal && !modal.classList.contains('hidden')) {
+                closePartnershipModal();
+            }
+        }
+    });
 });

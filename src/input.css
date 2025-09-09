@@ -649,11 +649,16 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     position: relative !important;
     padding-bottom: 300px !important;
   }
+  #mainPageFirstContent{
+    height: 100% !important;
+    display: flex !important;
+    align-items: end !important;
+  }
   
   /* Контент слева - увеличиваем текст */
   section.relative.bg-black.overflow-hidden .max-w-\[800px\] {
     max-width: 95% !important;
-    margin-bottom: 50px !important;
+    margin-bottom: 0 !important;
     z-index: 10 !important;
     position: relative !important;
   }
@@ -710,7 +715,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     position: absolute !important;
     width: 600px !important;
     height: 600px !important;
-    bottom: -300px !important;
+    bottom: -350px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
     top: auto !important;
@@ -1084,12 +1089,12 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
 
   /* Добавляем стили для структуры логотипов - 3 ряда по 4 */
   section.relative.bg-black.overflow-hidden.py-20 .py-10.max-w-\[1920px\].mb-20 {
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
   
   /* Текстовый блок под логотипами - оставляем все стили текста и кнопки */
@@ -1098,7 +1103,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     align-items: center !important;
     text-align: center !important;
     margin-bottom: 0 !important;
-    margin-top: 40px !important;
+    margin-top: 0 !important;
     overflow: hidden !important;
   }
 
@@ -1253,6 +1258,9 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   .grid-cols-4 {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 0 !important;
+  }
+  #fullstackinformationMain{
+    margin-top: 140px !important;
   }
   
   /* Правильные бордеры для статистики 2x2 */
@@ -1644,7 +1652,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   /* Секция компенсации углеродного следа - мобильная версия */
   section.w-full.max-h-\[1200px\].bg-white {
     min-height: auto !important;
-    height: calc(100vh + 50px) !important; /* Увеличиваем высоту секции */
+    height: calc(100vh - 70px) !important; /* Увеличиваем высоту секции */
     background-image: url('./img/phoneForest.png') !important;
     background-size: cover !important;
     background-position: center bottom !important;
@@ -3012,6 +3020,9 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     body.donate-mobile footer .border-b, 
     body.donate-mobile footer .border-t {
       border: none !important;
+    }
+    #borderNoneFooterPlant::before{
+      display: none !important;
     }
     
     /* Border-top на всю ширину экрана */

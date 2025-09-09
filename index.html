@@ -205,7 +205,7 @@
           <li><a href="./src/pages/Project.html" class="hover:underline">Проекты</a></li>
           <li><a href="#footerMainPageFirst" class="hover:underline">Контакты</a></li>
         </ul>
-        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
+        <button id="open-partnership-modal" class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
           Оставить заявку
           <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
             <img src="./src/img/arrowdown.svg" alt="" class="w-11 h-11" />
@@ -227,15 +227,15 @@
         <li><a href="./src/pages/PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">B2B квоты</a></li>
         <li><a href="#partnersMainPage" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
         <li><a href="./src/pages/Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
-        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
+        <li><a href="#footerMainPageFirst" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
       </ul>
-      <button class="mt-10 bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600" onclick="toggleMobileMenu()">
+      <button id="open-partnership-modal-mobile" class="mt-10 bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600" onclick="toggleMobileMenu()">
         Оставить заявку
       </button>
     </div>
   </header>
   <div class="flex-1 flex items-center justify-center">
-    <div class="max-w-[1920px] w-full px-8 mx-auto">
+    <div id="mainPageFirstContent" class="max-w-[1920px] w-full px-8 mx-auto">
       <div class="text-white">
         <div class="flex items-center mb-6">
           <img src="./src/img/lepestki.svg" alt="Birch Logo" class="mr-4" />
@@ -265,7 +265,7 @@
   </div>
   <div class="w-full bg-black border-t border-[#2D2D2D]">
       <div class="max-w-[1920px] mx-auto px-8">
-    <div class="grid grid-cols-4 text-white">
+    <div id="fullstackinformationMain" class="grid grid-cols-4 text-white">
       <div class="text-center py-12 border-r border-[#2D2D2D] h-full flex flex-col justify-center">
         <div class="text-7xl font-normal mb-2">
           <span class="counter" data-target="318978">0</span><span class="text-green-400">+</span>
@@ -1187,9 +1187,9 @@
                   <a href="#top" class="block text-white hover:text-white transition-all text-base font-extrabold border-b-2 border-white pb-1" onclick="scrollToTop()" style="border-bottom: 2px solid white; padding-bottom: 4px; font-weight: 800;">Главная</a>
                   <a href="./src/pages/Donate.html" class="block text-white/80 hover:text-white transition-all text-base">Донаты</a>
                   <a href="./src/pages/PlantForest.html" class="block text-white/80 hover:text-white transition-all text-base">B2B квоты</a>
-                  <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Партнеры</a>
+                  <a href="#partnersMainPage" class="block text-white/80 hover:text-white transition-all text-base">Партнеры</a>
                   <a href="./src/pages/Project.html" class="block text-white/80 hover:text-white transition-all text-base">Проекты</a>
-                  <a href="#" class="block text-white/80 hover:text-white transition-all text-base">Контакты</a>
+                  <a href="#footerMainPageFirst" class="block text-white/80 hover:text-white transition-all text-base">Контакты</a>
                 </nav>
               </div>
             </div>
