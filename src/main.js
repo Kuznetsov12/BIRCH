@@ -620,7 +620,7 @@ function addTreePlantingMarkers() {
     // Создаем стильный popup с белым полупрозрачным фоном как на скриншоте
     const popupContent = `
       <div style="
-        background: black/80 !important;
+        background: rgba(0,0,0,0.8) !important;
         color: white !important;
         padding: 12px 16px !important;
         border-radius: 12px !important;
@@ -1320,4 +1320,173 @@ document.addEventListener('DOMContentLoaded', function() {
             checkAndAddDonateClass();
         }, 250);
     });
+});
+
+// === Код для динамической бегущей строки ===
+
+// Получаем API URL из переменных окружения или используем fallback
+const getApiConfig = () => {
+    // Используем переменные из .env файла через глобальные переменные или fallback
+    return {
+        apiBaseUrl: window.VITE_API_BASE_URL || 'http://localhost:3000',
+        isDebug: window.VITE_APP_DEBUG === 'true' || false
+    };
+};
+
+// Функция для загрузки пользователей из API
+async function loadUsersForMarquee() {
+    const config = getApiConfig();
+    
+    try {
+        if (config.isDebug) {
+            console.log('Загружаем данные пользователей из API...');
+        }
+        
+        const apiUrl = `${config.apiBaseUrl}/api/users/read.php`;
+        console.log('Запрос к API:', apiUrl);
+        
+        const response = await fetch(apiUrl);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (config.isDebug) {
+            console.log('Получены данные из API:', data);
+        }
+        
+        if (data.status === 'success' && data.data && data.data.length > 0) {
+            console.log(`Загружено ${data.data.length} пользователей`);
+            generateMarqueeContent(data.data);
+        } else {
+            console.warn('API вернул пустые данные, используем статичные данные');
+            // Оставляем статичные данные если API вернул пустой результат
+        }
+    } catch (error) {
+        console.warn('Ошибка загрузки пользователей:', error.message);
+        console.log('Используем статичные данные как fallback');
+        // Оставляем статичные данные при ошибке
+    }
+}
+
+// Функция для генерации контента бегущей строки
+function generateMarqueeContent(users) {
+    // Проверяем какая страница открыта и какой контейнер использовать
+    const mainMarqueeContainer = document.getElementById('dynamic-marquee');
+    const forestMarqueeContainer = document.getElementById('forest-dynamic-marquee');
+    
+    let marqueeContainer = null;
+    let isForestPage = false;
+    
+    if (forestMarqueeContainer) {
+        marqueeContainer = forestMarqueeContainer;
+        isForestPage = true;
+    } else if (mainMarqueeContainer) {
+        marqueeContainer = mainMarqueeContainer;
+        isForestPage = false;
+    }
+    
+    if (!marqueeContainer) {
+        console.warn('Контейнер бегущей строки не найден');
+        return;
+    }
+    
+    // Очищаем контейнер
+    marqueeContainer.innerHTML = '';
+    
+    // Функция для создания карточки пользователя
+    function createUserCard(user) {
+        // Считаем общее количество деревьев
+        const totalTrees = user.plantings.reduce((sum, planting) => sum + planting.trees_quantity, 0);
+        
+        // Формируем короткое имя (Имя + первая буква фамилии)
+        const shortName = `${user.name} ${user.surname.charAt(0)}.`;
+        
+        if (isForestPage) {
+            // Формат для лесной страницы (карточки с деревьями)
+            return `
+                <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+                    <div class="text-left">
+                        <div class="text-6xl font-normal text-white flex items-center gap-2">
+                            ${totalTrees}
+                            <span class="text-6xl">🌳</span>
+                        </div>
+                        <div class="text-lg text-gray-300 mt-1">${shortName}</div>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Формат для главной страницы (простые карточки)
+            return `
+                <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+                    <div class="text-left">
+                        <div class="text-6xl font-normal text-white flex items-center gap-2">
+                            ${totalTrees}
+                            <span class="text-6xl">🌳</span>
+                        </div>
+                        <div class="text-lg text-gray-300 mt-1">${shortName}</div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+    
+    // Фильтруем пользователей у которых есть посадки
+    const usersWithPlantings = users.filter(user => user.plantings && user.plantings.length > 0);
+    
+    if (usersWithPlantings.length === 0) {
+        console.warn('Нет пользователей с посадками, оставляем статичные данные');
+        return;
+    }
+    
+    // Создаем карточки для пользователей
+    let content = '';
+    usersWithPlantings.forEach(user => {
+        content += createUserCard(user);
+    });
+    
+    // Дублируем контент для бесконечной прокрутки (минимум 2 раза)
+    const duplicatedContent = content + content + content;
+    
+    // Если пользователей мало, дублируем еще раз для плавной анимации
+    if (usersWithPlantings.length < 8) {
+        marqueeContainer.innerHTML = duplicatedContent + content;
+    } else {
+        marqueeContainer.innerHTML = duplicatedContent;
+    }
+    
+    console.log(`Динамическая бегущая строка обновлена с данными из API (${isForestPage ? 'лесная' : 'главная'} страница)`);
+}
+
+// Инициализация загрузки пользователей для главной страницы
+document.addEventListener('DOMContentLoaded', function() {
+    // Проверяем, что мы на главной странице
+    const isMainPage = window.location.pathname === '/' || 
+                      window.location.pathname.includes('index.html') || 
+                      window.location.pathname === '';
+    
+    if (isMainPage && document.getElementById('dynamic-marquee')) {
+        console.log('Инициализируем загрузку пользователей для бегущей строки главной страницы...');
+        
+        // Загружаем пользователей сразу
+        loadUsersForMarquee();
+        
+        // Обновляем данные каждые 5 минут
+        setInterval(loadUsersForMarquee, 5 * 60 * 1000);
+    }
+    
+    // Проверяем, что мы на странице PlantForest
+    const isForestPage = window.location.pathname.includes('PlantForest.html');
+    
+    if (isForestPage && document.getElementById('forest-dynamic-marquee')) {
+        console.log('Инициализируем загрузку пользователей для бегущей строки лесной страницы...');
+        
+        // Загружаем пользователей сразу
+        loadUsersForMarquee();
+        
+        // Обновляем данные каждые 5 минут
+        setInterval(loadUsersForMarquee, 5 * 60 * 1000);
+    }
 });

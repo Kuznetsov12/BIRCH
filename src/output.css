@@ -1468,9 +1468,6 @@
   .text-\[48px\] {
     font-size: 48px;
   }
-  .text-\[60px\] {
-    font-size: 60px;
-  }
   .text-\[70px\] {
     font-size: 70px;
   }
@@ -2215,9 +2212,23 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     font-size: 13px !important;
   }
   .flex.items-end.justify-between {
+    display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 20px !important;
+  }
+  #projectCarouselMainContainer #projectCarousel .p-6 {
+    padding: 20px !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+  }
+  #projectCarouselMainContainer #projectCarousel .flex.justify-between {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
   }
   .text-\[24px\] {
     font-size: 16px !important;
@@ -2809,6 +2820,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     max-width: 100% !important;
   }
   .flex.items-end.justify-between {
+    display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 16px !important;
@@ -3427,7 +3439,6 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     position: relative !important;
   }
   section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel .p-6 {
-    padding: 20px !important;
     height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
@@ -3453,7 +3464,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     padding: 12px 16px !important;
     border-radius: 30px !important;
     font-weight: 600 !important;
-    margin: 0 !important;
+    margin-top: 20px !important;
     flex-shrink: 0 !important;
     display: flex !important;
     align-items: center !important;
@@ -3848,6 +3859,9 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     line-height: 1.1 !important;
     margin-bottom: 15px !important;
     text-align: left !important;
+  }
+  body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 h2.text-black.text-\[84px\] sub {
+    display: none !important;
   }
   body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 p.text-\[\#3C3C3C\] {
     font-size: 16px !important;
@@ -4351,7 +4365,6 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   }
   body.emission-mobile nav {
     height: 70px !important;
-    padding: 0 16px !important;
     border-radius: 50px !important;
   }
   body.emission-mobile nav img.h-\[46px\].w-\[144px\] {
@@ -4468,9 +4481,29 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   #emissionIcon {
     flex-direction: row !important;
     gap: 20px !important;
+    justify-content: center !important;
+  }
+  #emissionFullCompens {
+    font-size: 18px !important;
+  }
+  #emissionFullCompensValue {
+    font-size: 18px !important;
+  }
+  #emissionTextNumberFour {
+    font-size: 18px !important;
+  }
+  #emissionTextNumberThree {
+    font-size: 18px !important;
+  }
+  #emissionTextNumberTwo {
+    font-size: 18px !important;
+  }
+  #emissionTextNumberOne {
+    font-size: 18px !important;
   }
   #textIcon {
     width: 100% !important;
+    text-align: center !important;
   }
   body.emission-mobile footer {
     padding: 40px 20px !important;
@@ -4845,9 +4878,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
       overflow: hidden !important;
     }
     body.project-mobile #projects-container button {
-      background: rgba(255, 255, 255, 0.2) !important;
       backdrop-filter: blur(10px) !important;
-      color: white !important;
       padding: 16px 32px !important;
       font-size: 16px !important;
       border-radius: 20px !important;
@@ -5117,6 +5148,24 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   }
   .project-bg .max-w-\[820px\] {
     max-width: 100% !important;
+  }
+  #btnMainPageSled {
+    flex-direction: row !important;
+    display: flex !important;
+    font-size: 16px !important;
+    gap: 16px !important;
+    align-items: center !important;
+  }
+  #btnMainPageSled img {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  #btnMainPageDealBirch {
+    display: flex !important;
+    flex-direction: row !important;
+    font-size: 16px !important;
+    gap: 16px !important;
+    align-items: center !important;
   }
 }
 @media (min-width: 769px) {

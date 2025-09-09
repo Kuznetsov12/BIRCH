@@ -133,6 +133,8 @@
       
     </style>
     
+   
+    
     <!-- JavaScript -->
     <script src="./src/main.js" defer></script>
     
@@ -199,9 +201,9 @@
           <li><a href="#" class="font-bold transition-all" aria-current="page" style="padding-bottom: 4px; font-weight: 700; border-bottom: 2px solid white;">Главная</a></li>
           <li><a href="./src/pages/Donate.html" class="hover:underline">Донаты</a></li>
           <li><a href="./src/pages/PlantForest.html" class="hover:underline whitespace-nowrap">B2B&nbsp;квоты</a></li>
-          <li><a href="#" class="hover:underline">Партнеры</a></li>
+          <li><a href="#partnersMainPage" class="hover:underline">Партнеры</a></li>
           <li><a href="./src/pages/Project.html" class="hover:underline">Проекты</a></li>
-          <li><a href="#" class="hover:underline">Контакты</a></li>
+          <li><a href="#footerMainPageFirst" class="hover:underline">Контакты</a></li>
         </ul>
         <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
           Оставить заявку
@@ -223,7 +225,7 @@
         <li><a href="#" class="font-bold" onclick="toggleMobileMenu()">Главная</a></li>
         <li><a href="./src/pages/Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Донаты</a></li>
         <li><a href="./src/pages/PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">B2B квоты</a></li>
-        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
+        <li><a href="#partnersMainPage" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
         <li><a href="./src/pages/Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
         <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
       </ul>
@@ -253,7 +255,7 @@
               <img src="./src/img/aloneLepestok.svg" alt="">
               Посадить дерево
             </button>
-            <button class="bg-white/10 backdrop-blur-md h-[80px] text-white px-8 py-6 rounded-md font-semibold hover:bg-white hover:text-gray-900 transition w-[300px]">
+            <button onclick="window.location.href='./src/pages/PlantForest.html'" class="bg-white/10 backdrop-blur-md h-[80px] text-white px-8 py-6 rounded-md font-semibold hover:bg-white hover:text-gray-900 transition w-[300px]">
               Узнать подробнее
             </button>
           </div>
@@ -328,7 +330,7 @@
       </p>
       
       <!-- Кнопка -->
-      <button class="bg-white border h-[80px] border-[#3C3C3C] text-[#3C3C3C] px-8 py-6 rounded-[6px] font-bold text-xl hover:bg-gray-50 transition-all duration-300 shadow-sm">
+      <button onclick="window.location.href='./src/pages/PlantForest.html'" class="bg-white border h-[80px] border-[#3C3C3C] text-[#3C3C3C] px-8 py-6 rounded-[6px] font-bold text-xl hover:bg-gray-50 transition-all duration-300 shadow-sm">
         Узнать подробнее
       </button>
     </div>
@@ -346,8 +348,8 @@
   <div class="max-w-full overflow-hidden relative z-10">
     <!-- Бегущая строка с пользователями -->
     <div class="relative overflow-hidden mb-16">
-      <div class="flex animate-scroll">
-        <!-- Первый набор карточек -->
+      <div class="flex animate-scroll" id="dynamic-marquee">
+        <!-- Статичные данные как fallback - будут заменены динамическими -->
         <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
           <div class="text-left">
             <div class="text-6xl font-normal text-white flex items-center gap-2">
@@ -545,7 +547,7 @@
             aria-label="Введите ваш возраст для расчета углеродного следа"
           />
           
-          <button class="bg-[#23B77F] text-white w-[340px] px-8 py-6 h-[80px] rounded-[6px] font-bold text-lg hover:bg-green-600 transition flex items-center justify-center gap-3 whitespace-nowrap">
+          <button id="btnMainPageSled" class="bg-[#23B77F] text-white w-[340px] px-8 py-6 h-[80px] rounded-[6px] font-bold text-lg hover:bg-green-600 transition flex items-center justify-center gap-3 whitespace-nowrap">
             <img src="./src/img/plusMinus.svg" alt="" class="w-5 h-5" />
             Рассчитать свой след
           </button>
@@ -662,7 +664,7 @@
             Бесплатный расчёт
           </button>
           
-          <button class="bg-white/90 h-[80px] w-[300px] backdrop-blur-sm border border-black/20 text-black px-8 py-6 rounded-[6px] font-bold text-lg hover:bg-white transition">
+          <button onclick="window.location.href='./src/pages/PlantForest.html'" class="bg-white/90 h-[80px] w-[300px] backdrop-blur-sm border border-black/20 text-black px-8 py-6 rounded-[6px] font-bold text-lg hover:bg-white transition">
             Узнать больше о квотах
           </button>
         </div>
@@ -671,7 +673,7 @@
   </section>
 
 <!-- Секция партнеров -->
-<section class="relative bg-black overflow-hidden py-20">
+<section id="partnersMainPage" class="relative bg-black overflow-hidden py-20">
   <div class="max-w-[1920px] mx-auto px-8">
     <div class="relative">
       <!-- Зеленые фоновые круги -->
@@ -809,7 +811,7 @@
               Партнёрство, которое работает на репутацию и планету<br>
               Вместе мы создадим сильные экологические проекты
             </p>
-            <button class="bg-[#23B77F] text-white px-8 py-6 h-[80px] rounded-[6px] font-bold text-lg hover:bg-green-600 transition flex items-center justify-center gap-3">
+            <button id="btnMainPageDealBirch" class="bg-[#23B77F] text-white px-8 py-6 h-[80px] rounded-[6px] font-bold text-lg hover:bg-green-600 transition flex items-center justify-center gap-3">
               <img src="./src/img/deal.svg" alt="">
               Стать партнером BIRCH
             </button>
@@ -949,7 +951,7 @@
         </div>
 
         <!-- Контейнер для карусели проектов -->
-        <div class="relative z-10">
+        <div id="projectCarouselMainContainer" class="relative z-10">
           <div class="overflow-hidden">
             <div id="projectCarousel" class="flex transition-transform duration-500 ease-in-out">
               
@@ -1137,7 +1139,7 @@
         </div>
       </div>
     </div>
-    <footer class="relative overflow-x-hidden overflow-y-hidden py-20">
+    <footer id="footerMainPageFirst" class="relative overflow-x-hidden overflow-y-hidden py-20">
       <div class="max-w-[1920px] mx-auto px-8">
         <div class="relative">
           <!-- Зеленые фоновые круги -->
