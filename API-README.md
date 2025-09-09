@@ -245,7 +245,110 @@
 }
 ```
 
-### 6. Отправка заявки от организации
+### 6. Расчет эмиссии с автоматической регистрацией/обновлением пользователя
+
+**URL:** `POST /api/emission/calculate_with_user.php`
+
+**Описание:** Рассчитывает выбросы CO2 и автоматически создает нового пользователя или обновляет существующего по номеру телефона. Если пользователь с указанным номером телефона не найден, создается новый пользователь с рассчитанной эмиссией. Если пользователь найден, обновляется его эмиссия.
+
+**Формула:** `((электричество * коэф_электричества) + (км_авто * коэф_авто) + (общ_транспорт * 2.625) + (часы_авиа * 90) + (вес * физ_активность) + тип_питания) * сортировка_отходов`
+
+**Тело запроса:**
+```json
+{
+  "phone": "+77771234567",
+  "surname": "Иванов",
+  "name": "Алексей",
+  "city": "Алматы",
+  "electricity": 150,
+  "electricity_coefficient": 0.5,
+  "car_km": 1000,
+  "car_coefficient": 0.2,
+  "public_transport_hours": 50,
+  "flight_hours": 10,
+  "diet_type": 800,
+  "physical_activity": 1.2,
+  "weight_kg": 70,
+  "waste_sorting": 0.8
+}
+```
+
+**Обязательные поля:**
+- `phone` - номер телефона пользователя
+- Все поля для расчета эмиссии (как в `/api/emission/calculate.php`)
+
+**Опциональные поля:**
+- `surname` - фамилия (используется только при создании нового пользователя)
+- `name` - имя (используется только при создании нового пользователя)
+- `city` - город (используется только при создании нового пользователя)
+
+**Ответ при создании нового пользователя:**
+```json
+{
+  "status": "success",
+  "data": {
+    "total_emission_kg": 1416.25,
+    "user": {
+      "id": 5,
+      "phone": "+77771234567",
+      "surname": "Иванов",
+      "name": "Алексей",
+      "city": "Алматы",
+      "action": "created"
+    },
+    "breakdown": {
+      "electricity": 75.0,
+      "car": 200.0,
+      "public_transport": 131.25,
+      "flight": 900.0,
+      "physical_activity": 84.0,
+      "diet_type": 800,
+      "subtotal": 2190.25,
+      "waste_sorting_multiplier": 0.8
+    }
+  },
+  "formula": "((electricity * coeff) + (car_km * coeff) + (public_transport * 2.625) + (flight * 90) + (weight * activity) + diet) * waste_sorting"
+}
+```
+
+**Ответ при обновлении существующего пользователя:**
+```json
+{
+  "status": "success",
+  "data": {
+    "total_emission_kg": 1416.25,
+    "user": {
+      "id": 1,
+      "phone": "+77771234567",
+      "surname": "Иванов",
+      "name": "Алексей",
+      "city": "Алматы",
+      "action": "updated"
+    },
+    "breakdown": {
+      "electricity": 75.0,
+      "car": 200.0,
+      "public_transport": 131.25,
+      "flight": 900.0,
+      "physical_activity": 84.0,
+      "diet_type": 800,
+      "subtotal": 2190.25,
+      "waste_sorting_multiplier": 0.8
+    }
+  },
+  "formula": "((electricity * coeff) + (car_km * coeff) + (public_transport * 2.625) + (flight * 90) + (weight * activity) + diet) * waste_sorting"
+}
+```
+
+**Ответ при ошибке:**
+```json
+{
+  "status": "error",
+  "message": "Calculation error: Failed to create new user"
+}
+```
+
+### 7. Отправка заявки от организации
 
 **URL:** `POST /api/email/send_organization_request.php`
 
@@ -309,6 +412,50 @@ fetch('/api/email/send_organization_request.php', {
     console.log('Заявка отправлена успешно');
     console.log('Отправлено на:', data.data.sent_to);
     console.log('Время отправки:', data.data.sent_at);
+  }
+})
+.catch(error => console.error('Error:', error));
+```
+
+### Расчет эмиссии с автоматической регистрацией/обновлением пользователя
+```javascript
+const emissionWithUserData = {
+  phone: '+77771234567',
+  surname: 'Иванов',
+  name: 'Алексей', 
+  city: 'Алматы',
+  electricity: 150,
+  electricity_coefficient: 0.5,
+  car_km: 1000,
+  car_coefficient: 0.2,
+  public_transport_hours: 50,
+  flight_hours: 10,
+  diet_type: 800,
+  physical_activity: 1.2,
+  weight_kg: 70,
+  waste_sorting: 0.8
+};
+
+fetch('/api/emission/calculate_with_user.php', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(emissionWithUserData)
+})
+.then(response => response.json())
+.then(data => {
+  if (data.status === 'success') {
+    console.log('Эмиссия рассчитана:', data.data.total_emission_kg, 'кг CO2');
+    console.log('Действие с пользователем:', data.data.user.action); // "created" или "updated"
+    console.log('Пользователь ID:', data.data.user.id);
+    console.log('Детализация:', data.data.breakdown);
+    
+    if (data.data.user.action === 'created') {
+      console.log('Создан новый пользователь:', data.data.user.surname, data.data.user.name);
+    } else {
+      console.log('Обновлен существующий пользователь:', data.data.user.surname, data.data.user.name);
+    }
   }
 })
 .catch(error => console.error('Error:', error));
@@ -457,8 +604,9 @@ api/
 ├── plantings/
 │   └── create.php           # Создание посадки (с автоматической регистрацией)
 ├── emission/
-│   ├── calculate.php        # Расчет эмиссии CO2
-│   └── update_user.php      # Расчет эмиссии и обновление пользователя
+│   ├── calculate.php             # Расчет эмиссии CO2
+│   ├── calculate_with_user.php   # Расчет эмиссии с автоматической регистрацией/обновлением пользователя
+│   └── update_user.php           # Расчет эмиссии и обновление пользователя
 ├── email/
 │   └── send_organization_request.php  # Отправка заявки от организации (PHPMailer)
 ├── vendor/                  # Composer зависимости (PHPMailer)

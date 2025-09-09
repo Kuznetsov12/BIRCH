@@ -95,5 +95,22 @@ class User {
         
         return false;
     }
+
+    // Обновить эмиссию пользователя
+    function updateEmission() {
+        $query = "UPDATE " . $this->table_name . " 
+                SET emission_kg = :emission_kg 
+                WHERE id = :id";
+        
+        $stmt = $this->conn->prepare($query);
+        
+        $this->emission_kg = floatval($this->emission_kg);
+        $this->id = intval($this->id);
+        
+        $stmt->bindParam(":emission_kg", $this->emission_kg);
+        $stmt->bindParam(":id", $this->id);
+        
+        return $stmt->execute();
+    }
 }
 ?>
