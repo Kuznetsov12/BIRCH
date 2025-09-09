@@ -35,6 +35,7 @@
     
     <!-- CSS -->
     <link href="../../src/output.css" rel="stylesheet">
+    <link href="../../src/custom-bg-fix.css" rel="stylesheet">
     
     <style>
         .project-bg {
@@ -140,56 +141,77 @@
 </head>
 <body class="overflow-x-hidden">
     <div class="flex flex-col w-full mx-auto max-w-[1920px]">
-        <section id="project-hero" class="h-screen overflow-x-hidden bg-cover bg-center bg-no-repeat relative flex flex-col project-bg" style="background-image: url('../../src/img/projectOne.png'); background-size: cover; image-rendering: -webkit-optimize-contrast; will-change: background-image;">
+        <section id="project-hero" class="min-h-screen h-auto overflow-x-hidden bg-cover bg-center bg-no-repeat relative flex flex-col project-bg" style="background-image: url('../../src/img/projectOne.png'); background-size: cover; image-rendering: -webkit-optimize-contrast; will-change: background-image;">
+
           
-          <!-- Navigation Arrows -->
-          <button id="leftProject" class="nav-arrow absolute text-center left-8 top-1/2 transform -translate-y-1/2 w-24 h-24 rounded-full flex items-center justify-center z-20 " aria-label="Предыдущий проект">
-            <img src="../../src/img/rightProject.svg" alt="Предыдущий" class="w-12 h-12">
+          <!-- Navigation Arrows - adaptive positioning -->
+          <button id="leftProject" class="nav-arrow absolute text-center left-8 top-[70px] md:top-1/2 md:-translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center z-20 " aria-label="Предыдущий проект">
+            <img src="../../src/img/rightProject.svg" alt="Предыдущий" class="w-8 h-8">
           </button>
           
           <!-- Анимированный круг для левой стрелки -->
-          <div id="leftBlurCircle" class="blur-circle" style="left: -80px; top: 50%;"></div>
+          <div id="leftBlurCircle" class="blur-circle" style="left: -80px; top: 140px;"></div>
           
-          <button id="rightProject" class="nav-arrow absolute right-8 top-1/2 transform -translate-y-1/2 w-24 h-24 rounded-full  flex items-center justify-center z-20 " aria-label="Следующий проект">
-            <img src="../../src/img/leftProject.svg" alt="Следующий" class="w-12 h-12">
+          <button id="rightProject" class="nav-arrow absolute right-8 top-[70px] md:top-1/2 md:-translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center z-20 " aria-label="Следующий проект">
+            <img src="../../src/img/leftProject.svg" alt="Следующий" class="w-8 h-8">
           </button>
           
           <!-- Анимированный круг для правой стрелки -->
-          <div id="rightBlurCircle" class="blur-circle" style="right: -282px; top: 50%;"></div>
-  <header class="w-full flex justify-center pt-8 px-8" role="banner">
+          <div id="rightBlurCircle" class="blur-circle" style="right: -282px; top: 140px;"></div>
+  <header id="headerProjectInfo" class="w-full flex justify-center pt-8 px-8" role="banner">
     <nav class="flex items-center max-w-[1920px] w-full h-[109px] px-8 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
       <div class="flex items-center gap-3 flex-shrink-0">
         <img src="../../src/img/mainLogo.png" alt="Birch - логотип компании" class="h-[46px] w-[144px]" />
       </div>
       <div class="flex-1"></div>
       <div class="flex items-center gap-6">
-        <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
+        <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap desktop-nav">
           <li><a href="../../index.html" class="hover:underline">Главная</a></li>
           <li><a href="./Donate.html" class="hover:underline">Донаты</a></li>
           <li><a href="./PlantForest.html" class="hover:underline whitespace-nowrap">B2B&nbsp;квоты</a></li>
           <li><a href="#" class="hover:underline">Партнеры</a></li>
-        <li><span class="font-bold border-b-2 border-white pb-1 cursor-default" aria-current="page">Проекты</span></li>
+          <li><span class="font-bold border-b-2 border-white pb-1 cursor-default" aria-current="page">Проекты</span></li>
           <li><a href="#" class="hover:underline">Контакты</a></li>
         </ul>
-        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0" aria-label="Оставить заявку на сотрудничество">
+        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
           Оставить заявку
           <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
             <img src="../../src/img/arrowdown.svg" alt="" class="w-11 h-11" />
           </span>
         </button>
+        <!-- Меню для планшетов -->
+        <img src="../../src/img/headerTable.svg" alt="Меню" class="w-11 h-11 tablet-menu" />
+        <!-- Бургер-меню для мобильных -->
+        <img src="../../src/img/burgerMenu.svg" alt="Меню" class="w-8 h-8 mobile-menu" onclick="toggleMobileMenu()" />
       </div>
     </nav>
+    
+    <!-- Мобильное меню (скрыто по умолчанию) -->
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-black/95 z-50 hidden flex-col items-center justify-center">
+      <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
+      <ul class="flex flex-col gap-8 text-white text-xl text-center">
+        <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Главная</a></li>
+        <li><a href="./Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Донаты</a></li>
+        <li><a href="./PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">B2B квоты</a></li>
+        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
+        <li><a href="./Project.html" class="font-bold" onclick="toggleMobileMenu()">Проекты</a></li>
+        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
+      </ul>
+      <button class="mt-10 bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600" onclick="toggleMobileMenu()">
+        Оставить заявку
+      </button>
+    </div>
   </header>
-  <div class="flex-1 flex items-center justify-center">
-    <div class="max-w-[1920px] w-full px-52 mx-auto">
+  <div class="flex-1 flex items-center justify-center pb-20">
+    <div class="max-w-[1920px] w-full px-8 md:px-52 mx-auto">
       <div class="text-white">
-        <div class="mb-6">
+        <div id="projectInfoContent" class="mb-6">
         <div class="flex items-center mb-6 gap-2">
         <img src="../../src/img/lepestki.svg" class="w-14 h-14" alt="">
-        <span id="project-category" class="text-[#FFFFFF] font-normal text-2xl uppercase tracking-wider">НАШИ ПРОЕКТЫ</span>
+        <span id="project-category" class="text-[#FFFFFF] font-normal text-lg md:text-2xl uppercase tracking-wider">НАШИ ПРОЕКТЫ</span>
       </div>
       <div class="flex items-center mb-8">
-          <h1 id="project-title" class="font-medium text-[48px] leading-tight">
+          <h1 id="project-title" class="font-medium text-3xl md:text-[56px] leading-tight">
             <span class="font-light leading-[100%]">2 billion Trees<br>
 Экологический проект по<br>
 лесовосстановлению в Казахстане
@@ -197,15 +219,15 @@
           </h1>
         </div>
         <div class="flex items-end justify-between w-full">
-          <div>
-            <p id="project-description" class="text-[24px] text-[#BFBFBF] max-w-[820px] font-normal leading-relaxed mb-8">
+          <div class="flex-1">
+            <p id="project-description" class="text-xl md:text-[28px] text-[#BFBFBF] max-w-full md:max-w-[820px] font-normal leading-relaxed mb-8">
 В Казахстане действует национальная система торговли углеродными квотами (ETS), регулирующая объёмы выбросов CO₂ от производителей. <br>Компании получают квоты на выброс парниковых газов, и если выбросы превышают лимит — они обязаны доплатить.
             </p>
             
             <!-- Кнопка "Смотреть проект" -->
             <button id="view-project-btn" class="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-4 rounded-full hover:bg-white/20 transition-all duration-300">
               <img src="../../src/img/image.svg" alt="" class="w-6 h-6">
-              <span class="text-lg font-medium">Смотреть проект</span>
+              <span class="text-base md:text-lg font-medium">Смотреть проект</span>
             </button>
           </div>
         </div>
@@ -214,7 +236,9 @@
     </div>
   </div>
 </section>
-<footer class="relative overflow-hidden bg-black z-20 -mt-32">
+<footer id="footerProjectInfo"  class="relative overflow-hidden bg-black z-20 -mt-32">
+                        <div class="absolute mobile-circle-3 rounded-full opacity-100 mobile-circle"
+           style="background: radial-gradient(circle, #008852, #164125);"></div>
 <div class="absolute bottom-[-800px] -left-[-50px] w-[1000px] h-[1000px] rounded-full blur-[600px] opacity-100"
 style="background: radial-gradient(circle, #008852, #164125);"></div>
 <div class="max-w-[1920px] mx-auto h-full pb-20">
@@ -276,8 +300,11 @@ style="background: radial-gradient(circle, #008852, #164125);"></div>
   </button>
 </div>
 </div>
-    <div class="relative z-10 mt-8 text-center">
-<p class="text-[#DAFFF1] text-xl font-normal">© 2025 BIRCH. Все права защищены. | Сделано с заботой об экологии.</p>
+    <div id="footerLastCont" class="relative z-10 mt-8 text-center">
+              <div id="mobileAddIcon" class="footer-logo-container mb-6 flex justify-center mobile-menu">
+          <img src="../../src/img/footerBirch.png" alt="BIRCH" class="footer-copyright-logo w-auto h-auto" style="max-width: 150px;">
+        </div>
+<p id="copyrightProjecctInfo" class="text-[#DAFFF1] text-xl font-normal">© 2025 BIRCH. Все права защищены. | Сделано с заботой об экологии.</p>
 </div>
 </div>
 </div>

@@ -1,0 +1,113 @@
+/* Черный фон вне медиа-запроса для всех устройств */
+body.overflow-x-hidden.bg-black {
+  background-color: black !important;
+}
+
+/* Основные стили для растягивания фона на всю ширину экрана (только для десктопа) */
+@media (min-width: 1200px) {
+  
+  /* Убираем ограничения ширины у всех секций и футера - БЕЗОПАСНЫЙ способ */
+  section,
+  footer {
+    width: 100vw !important;
+    max-width: none !important;
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
+    /* НЕ трогаем position, left, transform - это ломает элементы */
+  }
+  
+  /* Центрируем контент внутри секций, НО НЕ ТРОГАЕМ позиционирование самих секций */
+  section > div.max-w-\[1920px\],
+  footer > div.max-w-\[1920px\] {
+    max-width: 1920px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  
+  /* Специальная обработка для секции "Твоя роль в экологии" */
+  section.w-full.bg-white.min-h-\[700px\].flex.flex-col.relative.overflow-visible {
+    /* НЕ трогаем position: relative - это важно для абсолютных элементов внутри */
+    background-color: white !important;
+  }
+  
+  /* Обеспечиваем правильное отображение фоновых изображений */
+  .bg-cover {
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
+  
+  /* Черные секции */
+  section.bg-black,
+  section.leaderboard-section {
+    background-color: black !important;
+  }
+  
+  /* Белые секции */
+  section.bg-white {
+    background-color: white !important;
+  }
+
+  #forestProjectsSection{
+    background-color: white !important;
+  }
+  
+  /* Общие стили для футеров */
+  footer.relative.overflow-hidden {
+    background-color: black !important;
+  }
+  
+  /* Специально для Project.html - страница проектов */
+  .bg-black.relative.overflow-hidden footer.relative.overflow-hidden {
+    /* Сохраняем прозрачный фон для футера внутри черной секции, чтобы был виден зеленый круг */
+    background-color: transparent !important;
+  }
+  
+
+  
+  /* Специально для Emission.html и EmissionAuth.html */
+  body > footer.relative.overflow-hidden.py-5 {
+    background-color: transparent !important;
+    z-index: 10 !important;
+  }
+  
+  /* Добавляем черный фон для страниц авторизации */
+  body {
+    background-color: black !important;
+  }
+  
+  /* Особые стили для страниц авторизации */
+  body.overflow-x-hidden.bg-black {
+    width: 100vw !important;
+    max-width: none !important;
+    background-color: black !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Делаем контейнеры с контентом на страницах авторизации шире */
+  body.overflow-x-hidden.bg-black > div.flex.flex-col.w-full.mx-auto.max-w-\[1920px\] {
+    width: 100vw !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  
+  /* Убираем отступы у контейнера EmissionAuth для черного фона по всей ширине */
+  body.overflow-x-hidden.bg-black {
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    margin: 0 !important;
+  }
+  
+  /* Делаем зеленые круги в Emission и EmissionAuth видимыми в футере */
+  .absolute.w-\[769px\].h-\[769px\].rounded-full.blur-\[600px\] {
+    z-index: 1 !important;
+    opacity: 0.7 !important;
+  }
+  
+}

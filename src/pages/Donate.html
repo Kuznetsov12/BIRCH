@@ -34,6 +34,7 @@
     
     <!-- CSS -->
     <link href="../../src/output.css" rel="stylesheet">
+    <link href="../../src/custom-bg-fix.css" rel="stylesheet">
     
     <!-- JavaScript -->
     <script src="../../src/main.js" defer></script>
@@ -188,9 +189,9 @@
     }
     </script>
 </head>
-<body class="overflow-x-hidden">
+<body class="overflow-x-hidden donate-mobile">
     <div class="flex flex-col w-full mx-auto max-w-[1920px]">
-<section class="h-screen bg-cover bg-center bg-no-repeat relative flex flex-col" style="background-image: url('../../src/img/donatePageBg.png'); background-size: cover;">
+<section class="h-screen max-h-[1200px] bg-cover bg-center bg-no-repeat relative flex flex-col donate-page" style="background-image: url('../../src/img/donatePageBg.png'); background-size: cover;">
   <header class="w-full flex justify-center pt-8 px-8" role="banner">
     <nav class="flex items-center max-w-[1920px] w-full h-[109px] px-8 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
       <div class="flex items-center gap-3 flex-shrink-0">
@@ -200,20 +201,40 @@
       <div class="flex items-center gap-6">
         <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
           <li><a href="../../index.html" class="hover:underline">Главная</a></li>
-          <li><a href="./Donate.html" class=" font-bold border-b-2 border-white pb-1" aria-current="page">Донаты</a></li>
+          <li><a href="./Donate.html" class="font-bold transition-all" aria-current="page" style="padding-bottom: 4px; font-weight: 700; border-bottom: 2px solid white;">Донаты</a></li>
           <li><a href="./PlantForest.html" class="hover:underline whitespace-nowrap">B2B&nbsp;квоты</a></li>
           <li><a href="#" class="hover:underline">Партнеры</a></li>
           <li><a href="./Project.html" class="hover:underline">Проекты</a></li>
           <li><a href="#" class="hover:underline">Контакты</a></li>
         </ul>
-        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0" aria-label="Оставить заявку на сотрудничество">
+        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
           Оставить заявку
           <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
             <img src="../../src/img/arrowdown.svg" alt="" class="w-11 h-11" />
           </span>
         </button>
+        <!-- Меню для планшетов -->
+        <img src="../../src/img/headerTable.svg" alt="Меню" class="w-11 h-11 tablet-menu" />
+        <!-- Бургер-меню для мобильных -->
+        <img src="../../src/img/burgerMenu.svg" alt="Меню" class="w-8 h-8 mobile-menu" onclick="toggleMobileMenu()" />
       </div>
     </nav>
+    
+    <!-- Мобильное меню (скрыто по умолчанию) -->
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-black/95 z-50 hidden flex-col items-center justify-center">
+      <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
+      <ul class="flex flex-col gap-8 text-white text-xl text-center">
+        <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Главная</a></li>
+        <li><a href="./Donate.html" class="font-bold" onclick="toggleMobileMenu()">Донаты</a></li>
+        <li><a href="./PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">B2B квоты</a></li>
+        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
+        <li><a href="./Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
+        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
+      </ul>
+      <button class="mt-10 bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600" onclick="toggleMobileMenu()">
+        Оставить заявку
+      </button>
+    </div>
   </header>
   <div class="flex-1 flex items-center justify-center">
     <div class="max-w-[1920px] w-full px-8 mx-auto">
@@ -258,6 +279,11 @@
   <!-- Контент слева -->
   <div class="relative z-10 max-w-[800px] text-black space-y-8 ">
     <h2 class="text-[84px] max-w-[1000px] mb-[50px] font-light leading-[100%] text-black">Что происходит с <br> природой Казахстана</h2>
+              <div class="birch-mobile-info hidden">
+      <img src="../../src/img/greenStar.svg" alt="">
+      <span class="text-black">И что делает BIRCH</span>
+    </div>
+
 
     <div class="space-y-6 max-w-[1000px]">
       <div class="flex items-center justify-between border-b border-black/10 pb-4">
@@ -456,6 +482,8 @@
           <h2 class="text-6xl font-normal mb-12 text-white opacity-20 leading-tight">
             Наши проекты
           </h2>
+          <!-- Кнопка для мобильной версии -->
+          <button id="mobileProjectArrow" onclick="scrollMobileProjects()" aria-label="Следующие проекты"></button>
           
           <!-- Стрелки навигации -->
           <div class="flex gap-4">
@@ -664,7 +692,7 @@
       <div class="relative z-10 grid grid-cols-4 gap-0 border-b border-t border-white/10">
         
         <!-- Первая колонка - Логотип BIRCH -->
-        <div class="border-r border-white/10 p-8 flex items-center justify-center">
+        <div class="border-r border-white/10 p-8 flex items-center justify-center descktop-only">
           <img src="../../src/img/footerBirch.png" alt="BIRCH" class="w-auto h-auto">
         </div>
         
@@ -720,6 +748,9 @@
       
       <!-- Нижняя часть футера -->
       <div class="relative z-10 mt-8 pt-6 text-center">
+        <div id="mobileAddIcon" class="footer-logo-container mb-6 flex justify-center mobile-menu">
+          <img src="../../src/img/footerBirch.png" alt="BIRCH" class="footer-copyright-logo w-auto h-auto" style="max-width: 150px;">
+        </div>
         <p class="text-[#DAFFF1] text-xl font-normal">© 2025 BIRCH. Все права защищены. | Сделано с заботой об экологии.</p>
       </div>
     </div>
@@ -728,5 +759,107 @@
 
     </div>
     
+<script>
+// Специальный скрипт для стрелки в мобильной версии
+document.addEventListener('DOMContentLoaded', function() {
+  // Проверяем, находимся ли мы на странице Donate.html
+  if (window.location.pathname.includes('Donate.html')) {
+    // Добавляем класс для мобильной версии и настраиваем стрелку
+    function setupMobileView() {
+      const mobileProjectArrow = document.getElementById('mobileProjectArrow');
+      
+      if (window.innerWidth <= 767) {
+        document.body.classList.add('donate-mobile');
+        // Показываем мобильную кнопку-стрелку
+        if (mobileProjectArrow) {
+          mobileProjectArrow.style.display = 'block';
+          
+          // Принудительно добавляем обработчик клика
+          mobileProjectArrow.onclick = function() {
+            console.log('Прокрутка проектов вправо');
+            scrollMobileProjects();
+          };
+        }
+      } else {
+        document.body.classList.remove('donate-mobile');
+        // Скрываем мобильную кнопку-стрелку
+        if (mobileProjectArrow) {
+          mobileProjectArrow.style.display = 'none';
+        }
+      }
+    }
+    
+    // Запускаем сразу при загрузке
+    setupMobileView();
+    
+    // Обновляем состояние при изменении размера окна
+    window.addEventListener('resize', function() {
+      setupMobileView();
+    });
+    
+    // Функция для мобильной прокрутки проектов
+    window.scrollMobileProjects = function() {
+      console.log("Mobile arrow clicked");
+      
+      // Ищем футер вместо секции, так как проекты в Donate.html находятся в футере
+      const projectsContainer = document.querySelector('footer.relative.bg-black.overflow-hidden.py-20');
+      const scrollContainer = projectsContainer ? projectsContainer.querySelector('.overflow-hidden') : null;
+      
+      console.log("Projects container found:", projectsContainer);
+      console.log("Scroll container found:", scrollContainer);
+      
+      if (scrollContainer) {
+        const carousel = document.getElementById('projectCarousel');
+        const cards = carousel ? carousel.querySelectorAll('.min-w-full') : [];
+        
+        console.log("Carousel found:", carousel);
+        console.log("Number of cards found:", cards.length);
+        
+        if (cards.length > 0) {
+          // Получаем ширину одной карточки (75% экрана + gap)
+          const cardWidth = cards[0].offsetWidth;
+          const gap = 12; // gap из CSS
+          const scrollDistance = cardWidth + gap;
+          
+          console.log("Card width:", cardWidth);
+          console.log("Scroll distance:", scrollDistance);
+          console.log("Current scroll position:", scrollContainer.scrollLeft);
+          
+          // Прокручиваем контейнер на одну карточку вправо
+          scrollContainer.scrollBy({
+            left: scrollDistance,
+            behavior: 'smooth'
+          });
+          
+          console.log("Scrolling container by:", scrollDistance);
+        }
+      }
+    };
+    
+    // Проверим наличие функции scrollProjectCards и создадим ее, если отсутствует
+    if (typeof scrollProjectCards !== 'function') {
+      window.scrollProjectCards = function(direction) {
+        console.log('Прокрутка в направлении:', direction);
+        
+        // Для мобильных устройств используем scrollMobileProjects
+        if (window.innerWidth <= 767) {
+          scrollMobileProjects();
+          return;
+        }
+        
+        const carousel = document.getElementById('projectCarousel');
+        if (carousel) {
+          const cardWidth = carousel.querySelector('.min-w-full').offsetWidth;
+          const scrollAmount = direction === 'right' ? cardWidth + 12 : -(cardWidth + 12);
+          carousel.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+          });
+        }
+      };
+    }
+  }
+});
+</script>
 </body>
 </html>

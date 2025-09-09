@@ -74,7 +74,7 @@ h1 {
   margin: 0;
   padding: 0;
   text-align: center;
-}
+} 
 
 .logo {
   height: 6em;
@@ -280,6 +280,25 @@ img, svg, video, canvas, audio, iframe, embed, object {
 /* Скрываем дерево adaptivTree на десктопе */
 section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   display: none;
+}
+
+/* Адаптация для мобильных на странице Emission */
+body.emission-mobile .emission-stats {
+  gap: 0 !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+}
+
+body.emission-mobile .emission-stats > div {
+  margin-bottom: 12px !important;
+}
+
+body.emission-mobile .emission-stats p.text-\[48px\] {
+  font-size: 32px !important;
+}
+
+body.emission-mobile .emission-stats p.text-\[24px\] {
+  font-size: 18px !important;
 }
 
 /* Адаптация главной страницы для планшетов (до 1024px) */
@@ -580,12 +599,6 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   
   .p-8 {
     padding: 12px !important;
-  }
-  
-  /* Секции - уменьшаем отступы между ними */
-  section {
-    padding-top: 30px !important;
-    padding-bottom: 30px !important;
   }
   
   /* Фоновые градиентные круги - уменьшаем для производительности */
@@ -1122,20 +1135,32 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   
   /* Хедер - бургер меню */
   header {
-    padding: 4px 8px !important;
+    padding: 4px 16px 4px 8px !important; /* Увеличиваем правый отступ */
   }
   
   nav.max-w-\[1920px\] {
     height: 50px !important;
-    padding: 0 8px !important;
+    padding: 0 0 0 8px !important; /* Убираем правый отступ у nav */
     max-width: 100% !important;
     justify-content: space-between !important;
+    background: none !important; /* Убираем фон у всего хедера */
+    backdrop-filter: none !important; /* Убираем размытие */
+    box-shadow: none !important; /* Убираем тень */
+    position: relative !important; /* Добавляем относительное позиционирование */
   }
   
-  /* Логотип BIRCH - еще меньше */
+  /* Правый блок с бургер-меню прижимаем к краю */
+  nav .flex.items-center.gap-6 {
+    align-items: end !important; /* Прижимаем бургер-меню к правому краю */
+  }
+    .bg-white\/10.backdrop-blur-md.h-\[80px\].text-white.px-8.py-6.rounded-md.font-semibold.hover\:bg-white.hover\:text-gray-900.transition.w-\[300px\] {
+    display: none !important;
+  }
+
+  /* Логотип BIRCH - увеличиваем */
   nav img {
     padding-left: 0 !important;
-    height: 18px !important;
+    height: 48px !important; /* Увеличиваем с 18px до 24px */
     width: auto !important;
   }
   
@@ -1144,11 +1169,17 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
     display: none !important;
   }
   
-  /* Показываем бургер-меню */
+  /* Показываем бургер-меню и добавляем фон только ему */
   .mobile-menu {
     display: block !important;
-    width: 30px !important;
-    height: 30px !important;
+    width: 50px !important; /* Увеличиваем для круга */
+    height: 50px !important; /* Увеличиваем для круга */
+    padding: 12px !important; /* Увеличиваем внутренний отступ */
+    background: rgba(255, 255, 255, 0.2) !important; /* Фон только для бургера */
+    backdrop-filter: blur(10px) !important; /* Размытие только для бургера */
+    border-radius: 50% !important; /* Делаем полностью круглым */
+    cursor: pointer !important;
+    flex-shrink: 0 !important; /* Не сжимаем */
   }
   
   /* Меняем фон на мобильную версию */
@@ -1156,6 +1187,7 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
     background-image: url('./img/mainPhone.png') !important;
     background-size: cover !important;
     background-position: center !important;
+    padding-top: 0 !important; /* Убираем верхний отступ */
   }
   
   /* Заголовки - значительно уменьшаем */
@@ -1276,6 +1308,7 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
     width: 100% !important;
     max-width: 100% !important;
   }
+
   
   /* Заголовки в этой секции уменьшаем */
   section.w-full.bg-white.min-h-\[700px\] .text-\[84px\] {
@@ -1543,11 +1576,13 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   .birch-mobile-info {
     display: flex !important;
     align-items: center;
-    gap: 8px;
+    gap: 8px; /* Увеличен гэп между элементами до 30px */
     margin: 24px 0;
     font-size: 18px !important;
-    color: white;
+    color: white; /* Изменен цвет на черный для второй секции */
     font-weight: normal;
+    max-width: 100%; /* Максимальная ширина 100% */
+    width: 100%; /* Полная ширина */
   }
   
   /* Гарантируем, что на десктопе и планшете блок всегда будет скрыт */
@@ -1591,7 +1626,7 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   }
   
   /* Секция компенсации углеродного следа - мобильная версия */
-  section.w-full.bg-white.min-h-screen {
+  section.w-full.max-h-\[1200px\].bg-white {
     min-height: auto !important;
     height: calc(100vh + 50px) !important; /* Увеличиваем высоту секции */
     background-image: url('./img/phoneForest.png') !important;
@@ -1609,18 +1644,18 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   }
   
   /* Контейнер секции */
-  section.w-full.bg-white.min-h-screen .max-w-\[1920px\] {
+  section.w-full.bg-white.max-h-\[1200px\] .max-w-\[1920px\] {
     padding: 0 20px !important;
     display: flex !important;
     flex-direction: column !important;
     height: 100% !important;
   }
-  section.w-full.bg-white.min-h-screen .w-\[320px\] {
-    width: 335px !important; 
-    max-width: 335px !important;
+  section.w-full.bg-white.max-h-\[1200px\] .w-\[320px\] {
+    width: 340px !important; 
+    max-width: 340px !important;
   }
   
-  section.w-full.bg-white.min-h-screen .max-w-\[1500px\] {
+  section.w-full.bg-white.max-h-\[1200px\] .max-w-\[1500px\] {
     max-width: 100% !important;
     margin: 0 !important;
     display: flex !important;
@@ -1629,7 +1664,7 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   }
   
   /* Заголовок секции */
-  section.w-full.bg-white.min-h-screen .text-\[84px\] {
+  section.w-full.bg-white.max-h-\[1200px\] .text-\[84px\] {
     font-size: 26px !important;
     line-height: 1.2 !important;
     margin-bottom: 16px !important;
@@ -1638,7 +1673,7 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   }
   
   /* Описание */
-  section.w-full.bg-white.min-h-screen .text-2xl {
+  section.w-full.bg-white.max-h-\[1200px\] .text-2xl {
     font-size: 14px !important;
     line-height: 1.4 !important;
     margin-bottom: 12px !important;
@@ -1646,33 +1681,33 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
     color: #3C3C3C !important;
   }
   
-  section.w-full.bg-white.min-h-screen .text-2xl br {
+  section.w-full.bg-white.max-h-\[1200px\] .text-2xl br {
     display: none !important;
   }
   
   /* Контейнер для описаний */
-  section.w-full.bg-white.min-h-screen .space-y-6 {
+  section.w-full.bg-white.max-h-\[1200px\] .space-y-6 {
     margin-bottom: 40px !important;
     gap: 16px !important;
   }
   
   /* Кнопки в столбик для мобильных */
-  section.w-full.bg-white.min-h-screen .flex.gap-6 {
+  section.w-full.bg-white.max-h-\[1200px\] .flex.gap-6 {
     flex-direction: column !important;
     gap: 10px !important;
-    width: 335px !important; /* Устанавливаем ширину контейнера кнопок */
-    max-width: 335px !important;
+    width: 340px !important; /* Устанавливаем ширину контейнера кнопок */
+    max-width: 340px !important;
     margin: 0 auto !important;
     position: relative !important;
     z-index: 3 !important;
   }
   
   /* Зеленая кнопка */
-  section.w-full.bg-white.min-h-screen .bg-\[#23B77F\] {
+  section.w-full.bg-white.max-h-\[1200px\] .bg-\[#23B77F\] {
     height: 60px !important;
     font-size: 16px !important;
-    width: 335px !important; /* Устанавливаем точную ширину 335px */
-    max-width: 335px !important;
+    width: 370px !important; /* Устанавливаем точную ширину 370px */
+    max-width: 370px !important;
     padding: 0 !important;
     border-radius: 5px !important;
     font-weight: 500 !important;
@@ -1680,11 +1715,11 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   }
   
   /* Белая кнопка */
-  section.w-full.bg-white.min-h-screen .bg-white\/90 {
+  section.w-full.bg-white.max-h-\[1200px\] .bg-white\/90 {
     height: 60px !important;
     font-size: 16px !important;
-    width: 335px !important; /* Устанавливаем точную ширину 335px */
-    max-width: 335px !important;
+    width: 340px !important; /* Устанавливаем точную ширину 335px */
+    max-width: 340px !important;
     padding: 0 !important;
     border-radius: 5px !important;
     background-color: white !important;
@@ -1998,7 +2033,7 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
     margin-bottom: 8px !important;
   }
   
-  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel p.text-\[\#BFBFBF\] {
+  section.relative.bg-black.overflow-hidden.py-20:last-of:type #projectCarousel p.text-\[\#BFBFBF\] {
     font-size: 11px !important;
     line-height: 1.3 !important;
     margin-bottom: 16px !important;
@@ -2029,13 +2064,13 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   }
   
   /* Контейнер для кнопки и текста - убираем justify-between */
-  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel .flex.justify-between {
+  section.relative.bg-black.overflow-hidden.py-20:last-of_type #projectCarousel .flex.justify-between {
     display: block !important;
     align-items: flex-start !important;
     gap: 0 !important;
   }
   
-  section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel .flex-1 {
+  section.relative.bg-black.overflow-hidden.py-20:last_of_type #projectCarousel .flex-1 {
     flex: none !important;
     min-width: auto !important;
     width: 100% !important;
@@ -2094,9 +2129,11 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
     margin-left: calc(-50vw + 50%) !important;
   }
   
-  /* Скрываем логотип на мобильных */
+  /* Отображаем логотип на мобильных */
   footer .grid.grid-cols-4 > div:first-child {
-    display: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
   
   /* Скрываем стрелку вверх на мобильных */
@@ -2230,3 +2267,1895 @@ section.w-full.bg-white.min-h-\[700px\] img[src*="adaptivTree"] {
   }
 }
 
+/* Мобильная адаптация для страницы Donate.html */
+@media (max-width: 767px) {
+  /* Меняем фон на мобильную версию для страницы Donate */
+  .donate-page section.h-screen {
+    background-image: url('./img/donatePhone.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+  
+  /* Общие стили для мобильной адаптации Donate страницы */
+  body.donate-mobile {
+    overflow-x: hidden !important;
+  }
+  
+  body.donate-mobile section.h-screen {
+    background-image: url('./img/donatePhone.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    min-height: 100vh !important; /* Увеличиваем высоту секции */
+    height: auto !important; /* Разрешаем автоматическую высоту */
+  }
+  
+  /* Хедер для Donate страницы */
+  body.donate-mobile header {
+    padding: 4px 16px 4px 8px !important; /* Увеличиваем правый отступ */
+  }
+  
+  body.donate-mobile nav.max-w-\[1920px\] {
+    height: 50px !important;
+    padding: 0 0 0 8px !important; /* Убираем правый отступ у nav */
+    max-width: 100% !important;
+    justify-content: space-between !important;
+    background: none !important; /* Убираем фон у всего хедера */
+    backdrop-filter: none !important; /* Убираем размытие */
+    box-shadow: none !important; /* Убираем тень */
+  }
+  
+  /* Правый блок с бургер-меню прижимаем к краю */
+  body.donate-mobile nav .flex.items-center.gap-6 {
+    align-items: end !important; /* Прижимаем бургер-меню к правому краю */
+  }
+  
+  /* Логотип в хедере */
+  body.donate-mobile nav img[alt*="логотип"] {
+    height: 48px !important; /* Увеличиваем с 18px до 24px */
+    width: auto !important;
+  }
+  
+  /* Скрываем десктопное меню */
+  body.donate-mobile nav.flex ul.flex, 
+  body.donate-mobile .desktop-button, 
+  body.donate-mobile .tablet-menu {
+    display: none !important;
+  }
+  
+  /* Показываем бургер-меню и добавляем фон только ему */
+  body.donate-mobile .mobile-menu {
+    display: block !important;
+    width: 50px !important; /* Увеличиваем для круга */
+    height: 50px !important; /* Увеличиваем для круга */
+    padding: 12px !important; /* Увеличиваем внутренний отступ */
+    background: rgba(255, 255, 255, 0.2) !important; /* Фон только для бургера */
+    backdrop-filter: blur(10px) !important; /* Размытие только для бургера */
+    border-radius: 50% !important; /* Делаем полностью круглым */
+    cursor: pointer !important;
+    flex-shrink: 0 !important; /* Не сжимаем */
+  }
+  
+  /* Главный контент секции */
+  body.donate-mobile .flex-1.flex.items-center.justify-center {
+    padding: 40px 0 80px 0 !important; /* Больше отступов сверху и снизу */
+    justify-content: flex-start !important; /* Выравниваем контент по верху */
+    align-items: flex-end !important; /* Выравниваем контент по низу */
+  }
+  
+  body.donate-mobile .max-w-\[1920px\].w-full.px-8.mx-auto {
+    padding: 0 16px !important;
+  }
+  
+  /* Верхний блок с иконкой и текстом */
+  body.donate-mobile .flex.items-center.mb-6.gap-2 {
+    margin-bottom: 16px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+  
+  body.donate-mobile .flex.items-center.mb-6.gap-2 img {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
+  body.donate-mobile .flex.items-center.mb-6.gap-2 span {
+    font-size: 12px !important;
+    letter-spacing: 1px !important;
+  }
+  
+  /* Заголовок */
+  body.donate-mobile .flex.items-center.mb-8 h1 {
+    font-size: 20px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 16px !important;
+  }
+  
+  /* Основной блок с текстом и кнопками */
+  body.donate-mobile .flex.items-end.justify-between.w-full {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 24px !important; /* Увеличиваем отступ между элементами */
+  }
+  
+  /* Описательный текст */
+  body.donate-mobile .text-\[24px\].text-\[\#BFBFBF\] {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    max-width: 100% !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Контейнер с кнопками */
+  body.donate-mobile .flex.gap-6 {
+    width: 100% !important;
+    flex-direction: column !important;
+    gap: 16px !important; /* Увеличиваем отступ между кнопками */
+  }
+  
+  /* Кнопки */
+  body.donate-mobile .bg-\[#23B77F\],
+  body.donate-mobile .bg-white\/10 {
+    height: 60px !important;
+    width: 100% !important;
+    font-size: 14px !important;
+    padding: 12px 16px !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+  
+  body.donate-mobile .w-\[300px\] {
+    width: 100% !important;
+  }
+  
+  body.donate-mobile .h-\[80px\] {
+    height: 60px !important;
+  }
+  
+  /* Адаптация второй секции "Что происходит с природой Казахстана" */
+  body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-60.z-20 {
+    margin-top: -40px !important;
+  }
+  
+  body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-60.z-20 .max-w-\[1920px\] {
+    padding: 0 16px !important;
+  }
+  
+  /* Организуем контент в колонку */
+  body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-60.z-20 .flex-col.md\:flex-row {
+    flex-direction: column !important;
+  }
+  
+  /* Основной контентный блок */
+  body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-60.z-20 .relative.z-10.max-w-\[800px\].text-black.space-y-8 {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  /* Заголовок и основной контент */
+  body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-60.z-20 h2 {
+    font-size: 26px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 24px !important;
+    max-width: 100% !important;
+  }
+  
+  /* Блок с годами и описанием */
+  body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-60.z-20 .space-y-6 {
+    margin-bottom: 24px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  /* Стилизация каждого блока с годом и описанием */
+  body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-60.z-20 .flex.items-center.justify-between {
+    gap: 30px !important; /* Отступ между текстом и иконкой */
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-60.z-20 .text-5xl {
+    font-size: 24px !important;
+    margin-bottom: 8px !important;
+  }
+  
+  body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-60.z-20 .text-lg {
+    font-size: 14px !important;
+    max-width: 100% !important;
+  }
+  
+  /* Стилизация блока "И что делает BIRCH" */
+  body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-60.z-20 .flex.gap-2.mb-100 {
+    display: none !important;
+  }
+    body.donate-mobile section.relative.bg-black.overflow-hidden.py-20 {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    position: relative !important;
+    z-index: 10 !important;
+  }
+  
+  /* Основной контейнер с отступами */
+  body.donate-mobile section.relative.bg-black.overflow-hidden.py-20 .max-w-\[1920px\].mx-auto.px-8 {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  /* Меняем направление flex-контейнера на колонку */
+  body.donate-mobile section.relative.bg-black.overflow-hidden.py-20 .flex.items-center.justify-between {
+    flex-direction: column !important;
+    gap: 25px !important;
+  }
+  
+  /* Выравнивание текстового блока */
+  body.donate-mobile section.relative.bg-black.overflow-hidden.py-20 .flex-1.max-w-\[800px\] {
+    width: 100% !important;
+    max-width: 100% !important;
+    order: 1 !important; /* Текст первым */
+    text-align: left !important;
+  }
+  
+  /* Заголовок текстового блока */
+  body.donate-mobile section.relative.bg-black.overflow-hidden.py-20 h2.text-white.text-\[84px\] {
+    font-size: 36px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 15px !important;
+  }
+  
+  /* Текст описания */
+  body.donate-mobile section.relative.bg-black.overflow-hidden.py-20 p.text-\[\#BFBFBF\] {
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 20px !important;
+    max-width: 100% !important;
+  }
+  
+  /* Кнопка - стилизация и позиционирование */
+  body.donate-mobile section.relative.bg-black.overflow-hidden.py-20 a.bg-\[\#23B77F\] {
+    width: 100% !important;
+    max-width: 535px !important;
+    height: 60px !important;
+    font-size: 16px !important;
+    padding: 0 15px !important;
+    margin: 0 !important;
+    order: 2 !important; /* Кнопка второй */
+  }
+  
+  /* Контейнер с изображением дерева */
+  body.donate-mobile section.relative.bg-black.overflow-hidden.py-20 .flex-shrink-0.mr-20 {
+    margin-right: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    order: 3 !important; /* Изображение последним */
+  }
+  
+  /* Изображение дерева */
+  body.donate-mobile section.relative.bg-black.overflow-hidden.py-20 .flex-shrink-0.mr-20 img {
+    max-width: 635px !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+  
+  /* Уменьшаем размер зеленых градиентных кругов для фона */
+  body.donate-mobile section.relative.bg-black.overflow-hidden.py-20 .absolute.w-\[769px\].h-\[769px\] {
+    width: 300px !important;
+    height: 300px !important;
+    opacity: 0.6 !important;
+  }
+
+      body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 {
+      margin-top: -40px !important;
+      padding-top: 40px !important;
+      padding-bottom: 40px !important;
+      position: relative !important;
+      z-index: 10 !important;
+    }
+    
+    /* Основной контейнер с отступами */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 .max-w-\[1920px\] {
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+    }
+    
+    /* Меняем направление flex-контейнера на колонку */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 .flex.items-center.justify-between {
+      flex-direction: column !important;
+      gap: 25px !important;
+      align-items: flex-start !important;
+    }
+    
+    /* Текстовый блок - на всю ширину */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 .w-\[60\%\] {
+      width: 100% !important;
+      padding-right: 0 !important;
+      order: 1 !important;
+    }
+    
+    /* Заголовок текстового блока */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 h2.text-black.text-\[84px\] {
+      font-size: 36px !important;
+      line-height: 1.1 !important;
+      margin-bottom: 15px !important;
+      text-align: left !important;
+    }
+    
+    /* Текст описания */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 p.text-\[\#3C3C3C\] {
+      font-size: 16px !important;
+      line-height: 1.4 !important;
+      margin-bottom: 10px !important;
+      margin-top: 15px !important;
+      max-width: 100% !important;
+      text-align: left !important;
+    }
+    
+    /* Убираем перенос строки в тексте */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 p.text-\[\#3C3C3C\] br {
+      display: none !important;
+    }
+    
+    /* Форма с инпутом и кнопкой - на всю ширину */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 .flex.items-center.gap-16 {
+      width: 100% !important;
+      flex-direction: column !important;
+      height: 140px !important;
+      gap: 15px !important;
+      align-items: flex-start !important;
+    }
+    
+    /* Инпут */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 input.flex-1.h-\[85px\] {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 60px !important;
+      font-size: 16px !important;
+    }
+    
+    /* Кнопка */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 button.bg-\[\#23B77F\] {
+      width: 100% !important;
+      height: 60px !important;
+      font-size: 16px !important;
+      margin-top: 5px !important;
+    }
+    
+    /* Блок с изображением */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 .w-\[40\%\] {
+      width: 100% !important;
+      display: flex !important;
+      justify-content: center !important;
+      order: 2 !important;
+    }
+    
+    /* Изображение */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 .w-\[40\%\] img {
+      max-width: 435px !important;
+      width: 100% !important;
+      height: auto !important;
+    }
+
+    /* Секция с картой */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-\[180px\].z-20 {
+      margin-top: -120px !important;
+      padding-top: 0 !important;
+      padding-bottom: 40px !important;
+    }
+    
+    /* Основной контейнер с отступами */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-\[180px\].z-20 .max-w-\[1920px\] {
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+    }
+    
+    /* Меняем структуру расположения элементов секции с картой */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-\[180px\].z-20 .w-full.h-\[920px\] {
+      height: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 15px !important;
+      margin-bottom: 30px !important;
+    }
+    
+    /* Панель "Посмотрите ваш прогресс" - вынимаем из карты, ставим над ней */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-\[180px\].z-20 .absolute.bottom-6.left-6.w-\[350px\] {
+      position: relative !important; /* Меняем на относительное позиционирование */
+      width: 100% !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: auto !important; /* Отменяем позиционирование снизу */
+      top: auto !important; /* Отменяем позиционирование сверху */
+      padding: 20px !important;
+      margin-bottom: 0 !important;
+      order: 1 !important; /* Блок будет первым */
+      background-color: rgba(128, 128, 128, 0.2) !important; /* Серый полупрозрачный фон */
+      backdrop-filter: blur(4px) !important;
+      border-radius: 12px !important;
+      border: 0.61px solid rgba(255, 255, 255, 0.2) !important; /* Тонкая полупрозрачная белая рамка */
+      z-index: 2 !important;
+    }
+    
+    /* Заголовок в панели */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-\[180px\].z-20 h3.text-white.text-\[44px\] {
+      font-size: 28px !important;
+      line-height: 1.2 !important;
+      margin-bottom: 5px !important;
+      color: #000 !important; /* Меняем цвет текста на черный */
+    }
+    
+    /* Контейнер с картой - размещаем под панелью */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-\[180px\].z-20 #openstreet-map {
+      height: 500px !important;
+      border-radius: 12px !important;
+      order: 2 !important; /* Карта будет второй */
+      margin-top: 0 !important;
+    }
+    
+    /* Форма в панели */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-\[180px\].z-20 .space-y-3 {
+      gap: 10px !important;
+      margin-top: 15px !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    
+    /* Инпут в панели */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-\[180px\].z-20 .space-y-3 input {
+      height: 55px !important;
+      font-size: 16px !important;
+      width: 100% !important;
+      border-radius: 8px !important;
+      text-align: center !important;
+      margin-bottom: 10px !important;
+    }
+    
+    /* Кнопка в панели */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-\[180px\].z-20 .space-y-3 button {
+      height: 55px !important;
+      font-size: 16px !important;
+      width: 100% !important;
+      border-radius: 8px !important;
+      font-weight: bold !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+    }
+    
+    /* Скрываем элементы управления картой (кнопки + и -) */
+    body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-\[180px\].z-20 .absolute.top-4.left-4 {
+      display: none !important; /* Полностью скрываем элементы управления */
+    }
+    
+    /* Стили для секции проектов (скопировано из index.html) */
+    /* Заголовок и стрелки навигации */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 {
+      padding-top: 40px !important;
+      padding-bottom: 0 !important;
+      position: relative !important;
+      overflow-x: hidden !important;
+    }
+    
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 .mb-16 {
+      margin-bottom: 20px !important;
+      position: relative !important;
+      padding-bottom: 16px !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 h2.text-6xl {
+      font-size: 26px !important;
+      line-height: 1.3 !important;
+      margin-bottom: 0 !important;
+      text-align: left !important;
+      opacity: 0.2 !important;
+      color: white !important;
+    }
+    
+    /* Добавляем серую стрелочку справа */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #mobileProjectArrow {
+      width: 24px !important;
+      height: 24px !important;
+      background: url('./img/arrowRightGray.svg') no-repeat center !important;
+      background-size: contain !important;
+      display: block !important;
+      position: absolute !important;
+      right: 0 !important;
+      top: 10px !important;
+      cursor: pointer !important;
+      z-index: 10 !important; /* Чтобы стрелка была кликабельной */
+      border: none !important;
+      padding: 0 !important;
+      background-color: transparent !important;
+    }
+  
+    /* Скрываем стрелки навигации на мобильных - показываем одну */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 .flex.gap-4 {
+      display: none !important;
+      justify-content: flex-end !important;
+      position: absolute !important;
+      top: 40px !important;
+      right: 20px !important;
+      width: auto !important;
+      padding: 0 !important;
+      
+    }
+    
+    /* Скрываем левую стрелку, оставляем только правую */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 .flex.gap-4 button:first-child {
+      display: none !important;
+    }
+    
+    /* Стилизация кнопки стрелки */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 .flex.gap-4 button:last-child {
+      width: 40px !important;
+      height: 40px !important;
+      background: transparent !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    /* Фоновые зеленые градиенты - справа сверху */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20::after {
+      content: '' !important;
+      position: absolute !important;
+      top: -40% !important;
+      right: -500px !important;
+      width: 700px !important;
+      height: 700px !important;
+      border-radius: 50% !important;
+      background: radial-gradient(circle, #008852, #164125) !important;
+      filter: blur(150px) !important;
+      pointer-events: none !important;
+      z-index: 0 !important;
+      opacity: 0.6 !important;
+    }
+    
+    /* Добавляем зеленый круг слева по центру */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20::before {
+      content: '' !important;
+      position: absolute !important;
+      top: 25% !important; /* По центру экрана */
+      left: -300px !important;
+      width: 400px !important;
+      height: 400px !important;
+      border-radius: 50% !important;
+      background: radial-gradient(circle, #008852, #164125) !important;
+      filter: blur(100px) !important;
+      pointer-events: none !important;
+      z-index: 0 !important;
+      opacity: 0.5 !important;
+    }
+    
+    /* Адаптация карусели проектов - горизонтальный скролл */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 .overflow-hidden {
+      width: 100% !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+      scroll-snap-type: x mandatory !important;
+      padding: 0 0 16px 0 !important;
+      scrollbar-width: none !important; /* Firefox */
+      -ms-overflow-style: none !important; /* IE and Edge */
+      position: relative !important;
+    }
+    
+    /* Скрываем скроллбар в WebKit браузерах */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 .overflow-hidden::-webkit-scrollbar {
+      display: none !important;
+    }
+    
+    /* Настройка контейнера карусели - показываем карточки в ряд */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel {
+      display: flex !important;
+      flex-direction: row !important;
+      padding-left: 16px !important;
+      gap: 12px !important;
+      transform: none !important;
+      width: auto !important;
+      transition: none !important; /* Отключаем анимацию transform, так как используем нативный скролл */
+      will-change: scroll-position !important; /* Оптимизация для плавной прокрутки */
+    }
+    
+    /* Контейнеры карточек для мобильной версии */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel .min-w-full {
+      min-width: 75% !important; /* Одна карточка занимает 75% экрана, справа видно 1/3 следующей */
+      width: 75% !important;
+      max-width: 75% !important;
+      flex: 0 0 75% !important;
+      scroll-snap-align: start !important; /* Для правильной привязки при прокрутке */
+      padding: 0 !important;
+      scroll-snap-align: start !important;
+      padding: 0 !important;
+    }
+    
+    /* Убираем сетку, оставляем одну карточку */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel .grid {
+      display: block !important;
+      width: 100% !important;
+    }
+    
+    /* Настройка карточки проекта */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel .rounded-\[20px\] {
+      height: 455px !important;
+      width: 100% !important;
+      border-radius: 12px !important;
+      margin: 0 !important;
+      position: relative !important;
+    }
+    
+    /* Добавляем затемнение только снизу карточек */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel .absolute.inset-0 {
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0) 70%) !important;
+      opacity: 1 !important;
+    }
+    
+    /* Настройка внутреннего контента карточки - прибиваем к низу */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel .p-6 {
+      padding: 20px !important;
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-end !important;
+    }
+    
+    /* Настройка заголовков и текста на карточках */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel h3.text-xl {
+      font-size: 16px !important;
+      line-height: 1.3 !important;
+      margin-bottom: 8px !important;
+      text-align: left !important;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+    }
+    
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel p.text-\[\#BFBFBF\] {
+      font-size: 13px !important;
+      line-height: 1.4 !important;
+      margin-bottom: 12px !important;
+      text-align: left !important;
+      display: -webkit-box !important;
+      -webkit-box-orient: vertical !important;
+      -webkit-line-clamp: 3 !important;
+      line-clamp: 3 !important;
+      overflow: hidden !important;
+    }
+    
+    /* Кнопка на карточке - делаем компактнее и позиционируем слева */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel button.bg-white {
+      height: 44px !important;
+      font-size: 14px !important;
+      padding: 0 20px !important;
+      border-radius: 30px !important;
+      font-weight: 500 !important;
+      margin: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      align-self: flex-start !important;
+    }
+    
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel button.bg-white img {
+      width: 20px !important;
+      height: 20px !important;
+    }
+    
+    /* Контейнер для кнопки и текста - устанавливаем расположение слева */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel .flex.justify-between {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      text-align: left !important;
+      gap: 12px !important;
+    }
+    
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 #projectCarousel .flex-1 {
+      flex: none !important;
+      min-width: auto !important;
+      width: 100% !important;
+      text-align: left !important;
+      margin-bottom: 12px !important;
+    }
+    
+    /* Адаптация футера согласно макету */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 {
+      padding: 30px 0 20px 0 !important;
+    }
+  
+    /* Зеленый круг в правом нижнем углу футера - как у других секций */
+    body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20::before {
+      content: '';
+      position: absolute;
+      right: -280px;
+      bottom: -220px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #008852, #164125);
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    /* Основной контейнер футера */
+    body.donate-mobile footer .max-w-\[1920px\] {
+      max-width: 100% !important;
+      padding: 0 16px !important;
+    }
+    
+    /* Главная сетка - убираем границы и делаем вертикальную */
+    body.donate-mobile footer .grid.grid-cols-4 {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0 !important;
+      border: none !important;
+    }
+    
+    /* Убираем все границы между блоками */
+    body.donate-mobile footer .border-r, 
+    body.donate-mobile footer .border-b, 
+    body.donate-mobile footer .border-t {
+      border: none !important;
+    }
+    
+    /* Border-top на всю ширину экрана */
+    body.donate-mobile footer .grid.grid-cols-4::before {
+      content: '' !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      height: 1px !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      width: 100vw !important;
+      margin-left: calc(-50vw + 50%) !important;
+    }
+    
+    /* Отображаем логотип на мобильных */
+    body.donate-mobile footer .grid.grid-cols-4 > div:first-child {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      order: -1 !important; /* Логотип первым */
+    }
+    
+    /* Скрываем стрелку вверх на мобильных */
+    body.donate-mobile footer .grid.grid-cols-4 > div:last-child {
+      display: none !important;
+    }
+    
+    /* Вторая колонка - контактная информация */
+    body.donate-mobile footer .grid.grid-cols-4 > div:nth-child(2) {
+      padding: 24px 0 !important;
+      border-bottom: none !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+    }
+    
+    body.donate-mobile footer .grid.grid-cols-4 > div:nth-child(2) .text-left {
+      width: 100% !important;
+    }
+    
+    /* Заголовок "По вопросам сотрудничества" */
+    body.donate-mobile footer .grid.grid-cols-4 > div:nth-child(2) h3.text-xl {
+      font-size: 20px !important;
+      line-height: 1.3 !important;
+      margin-bottom: 16px !important;
+      color: white !important;
+      font-weight: 400 !important;
+    }
+    
+    /* Контактные данные */
+    body.donate-mobile footer .grid.grid-cols-4 > div:nth-child(2) .space-y-4 {
+      margin-bottom: 20px !important;
+    }
+    
+    body.donate-mobile footer .grid.grid-cols-4 > div:nth-child(2) .text-base {
+      font-size: 16px !important;
+      line-height: 1.4 !important;
+      color: rgba(255, 255, 255, 0.8) !important;
+      margin-bottom: 4px !important;
+    }
+    
+    /* Заголовок "Присоединяйтесь к нам" */
+    body.donate-mobile footer .grid.grid-cols-4 > div:nth-child(2) h4.text-lg {
+      font-size: 18px !important;
+      margin-top: 20px !important;
+      margin-bottom: 12px !important;
+      color: white !important;
+      font-weight: 400 !important;
+    }
+    
+    /* Социальные сети - только иконки без фонов */
+    body.donate-mobile footer .grid.grid-cols-4 > div:nth-child(2) .flex {
+      gap: 16px !important;
+    }
+    
+    body.donate-mobile footer .grid.grid-cols-4 > div:nth-child(2) .flex a {
+      width: auto !important;
+      height: auto !important;
+      background: none !important;
+      border: none !important;
+      border-radius: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    
+    body.donate-mobile footer .grid.grid-cols-4 > div:nth-child(2) .flex a img {
+      width: 40px !important;
+      height: 40px !important;
+    }
+    
+    /* Скрываем навигацию на мобильных */
+    body.donate-mobile footer .grid.grid-cols-4 > div:nth-child(3) {
+      display: none !important;
+    }
+    
+    /* Нижняя часть - логотип BIRCH */
+    body.donate-mobile footer .mt-8.pt-6.text-center {
+      margin-top: 30px !important;
+      padding: 24px 0 0 0 !important;
+      position: relative !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 16px !important;
+    }
+    
+    /* Border-top перед логотипом на всю ширину */
+    body.donate-mobile footer .mt-8.pt-6.text-center::before {
+      content: '' !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      height: 1px !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      width: 100vw !important;
+      margin-left: calc(-50vw + 50%) !important;
+    }
+    
+    /* Логотип BIRCH в нижнюю часть */
+    body.donate-mobile footer .mt-8.pt-6.text-center::after {
+      content: '' !important;
+      width: 140px !important;
+      height: 50px !important;
+      background: url('./img/logoPhone.png') no-repeat left !important;
+      background-size: contain !important;
+      display: block !important;
+      margin-bottom: 16px !important;
+      order: -1 !important;
+      align-self: flex-start !important;
+    }
+  
+    /* Контейнер с текстом копирайта */
+    body.donate-mobile footer .relative.z-10.mt-8.pt-6.text-center {
+      text-align: left !important;
+      position: relative !important;
+    }
+    
+    /* Добавляем зеленый круг в правом нижнем углу футера */
+    body.donate-mobile footer .relative.z-10.mt-8.pt-6.text-center::after {
+      content: '' !important;
+      position: absolute !important;
+      bottom: -200px !important;
+      right: -400px !important;
+      width: 500px !important;
+      height: 500px !important;
+      border-radius: 50% !important;
+      background: radial-gradient(circle, #008852, #164125) !important;
+      filter: blur(100px) !important;
+      pointer-events: none !important;
+      z-index: -1 !important;
+      opacity: 0.5 !important;
+    }
+    
+    /* Текст копирайта - точный селектор */
+    body.donate-mobile footer .relative.z-10.mt-8.pt-6.text-center p.text-\[#DAFFF1\].text-xl.font-normal {
+      font-size: 14px !important;
+      line-height: 1.4 !important;
+      color: rgba(218, 255, 241, 0.8) !important;
+      text-align: left !important;
+      position: relative !important;
+      z-index: 1 !important;
+    }
+  
+    /* Резервный селектор */
+    body.donate-mobile footer p.text-\[#DAFFF1\] {
+      text-align: left !important;
+    }
+}
+
+/* Мобильная адаптация для страницы эмиссий */
+@media screen and (max-width: 768px) {
+  /* Общие стили для страницы эмиссий на мобильных */
+  body.emission-mobile {
+    overflow-x: hidden !important;
+    background-color: black !important;
+  }
+  
+  /* Скрытие десктопного меню и кнопки, показ мобильного меню */
+  body.emission-mobile .desktop-nav,
+  body.emission-mobile .desktop-button {
+    display: none !important;
+  }
+  
+  body.emission-mobile .tablet-menu {
+    display: none !important;
+  }
+  
+  body.emission-mobile .mobile-menu {
+    display: block !important;
+  }
+  
+  /* По умолчанию скрываем меню для планшетов и мобильных */
+  @media screen and (min-width: 769px) {
+    .mobile-menu {
+      display: none !important;
+    }
+    
+    .tablet-menu {
+      display: none !important;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .tablet-menu {
+      display: none !important;
+    }
+    
+    .mobile-menu {
+      display: block !important;
+    }
+  }
+  
+  @media screen and (min-width: 481px) and (max-width: 768px) {
+    .mobile-menu {
+      display: none !important;
+    }
+    
+    .tablet-menu {
+      display: block !important;
+    }
+  }
+  
+  /* Стили для мобильной навигации */
+  body.emission-mobile nav {
+    height: 70px !important;
+    padding: 0 16px !important;
+    border-radius: 50px !important;
+  }
+  
+  body.emission-mobile nav img.h-\[46px\].w-\[144px\] {
+    height: 48px !important;
+    width: 150px !important;
+  }
+  
+  /* Стили для основного контейнера */
+  body.emission-mobile .flex.flex-col.w-full.mx-auto.max-w-\[1920px\] {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  
+  /* Показываем зеленый круг в мобильной версии */
+  body.emission-mobile .mobile-header-circle {
+    display: block !important;
+    opacity: 0.7 !important;
+    top: -50px !important;
+    right: -100px !important;
+    width: 250px !important;
+    height: 250px !important;
+  }
+  #secondCircle {
+    display: block !important;
+    top: 400px !important;
+    width: 450px !important;
+    height: 450px !important;
+    left: -260px !important;
+  }
+  #threeCircle {
+    display: block !important;
+    top: 1400px !important;
+    right: -250px !important;
+    width: 450px !important;
+    height: 450px !important;
+  }
+  #fourCircle {
+    display: block !important;
+    top: 2800px !important;
+    left: 300px !important;
+    width: 400px !important;
+    height: 400px !important;
+  }
+  #percentageIndicator{
+    left: 210px !important;
+  }
+  #map {
+    margin-top: 120px !important;
+  }
+  #urTree{
+    display: none !important;
+  }
+
+  /* Изменяем размер логотипа в хедере для мобильной версии */
+  body.emission-mobile .header-logo {
+    height: 48px !important;
+    width: 150px !important;
+  }
+  
+  /* Убираем отступы у основной секции */
+  body.emission-mobile .relative.z-10.overflow-hidden.py-20.flex-1,
+  body.emission-mobile section.relative.z-10.overflow-hidden.py-20.flex-1 {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* Адаптация размеров шрифта */
+  body.emission-mobile h1 {
+    font-size: 32px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 16px !important;
+  }
+  
+  body.emission-mobile .text-\[84px\] {
+    font-size: 32px !important;
+  }
+  
+  /* Колбы и анимации */
+  body.emission-mobile .cylinder-container {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    transform: scale(0.8) !important;
+  }
+  
+  /* Секция с картой */
+  body.emission-mobile #map {
+    height: 750px !important;
+    width: 100% !important;
+  }
+  
+  /* Секция с метриками */
+  body.emission-mobile .flex.items-start.justify-between {
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+  
+  body.emission-mobile .flex-1.max-w-\[900px\] {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  body.emission-mobile .max-w-\[400px\] {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  /* Информационные блоки */
+  body.emission-mobile .border-b.border-white\/20 {
+    padding-bottom: 16px !important;
+  }
+  
+  /* Карточки с информацией */
+  body.emission-mobile .flex.flex-row.gap-4 {
+    flex-direction: column !important;
+  }
+  
+  /* Изменяем блок с восполнением эмиссии и углеродным следом */
+  body.emission-mobile .flex.gap-24.items-start {
+    gap: 0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+  }
+  
+  /* Кнопки */
+  body.emission-mobile .bg-white.text-\[\#5F6161\].px-6.py-3.rounded-full {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 16px !important;
+  }
+  
+  
+  /* Попапы карты */
+  body.emission-mobile .custom-tree-popup {
+    width: 90% !important;
+    max-width: 250px !important;
+  }
+  
+  /* Зеленые круги - сделаем меньше для мобильных */
+  body.emission-mobile .absolute.w-\[769px\].h-\[769px\].rounded-full.blur-\[600px\] {
+    width: 400px !important;
+    height: 400px !important;
+    opacity: 0.3 !important;
+  }
+  #emissionIcon {
+    flex-direction: row !important;
+    gap: 20px !important;
+  }
+  #textIcon {
+    width: 100% !important;
+  }
+  
+  /* Футер */
+  body.emission-mobile footer {
+    padding: 40px 20px !important;
+  }
+  
+  body.emission-mobile footer .grid.grid-cols-4 {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+  
+  body.emission-mobile footer .border-r {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding-bottom: 20px !important;
+  }
+  
+  /* Лого в футере */
+  body.emission-mobile footer img[src*="footerBirch.png"] {
+    width: 140px !important;
+    height: auto !important;
+  }
+  
+  /* Лого в футере для мобильной версии */
+  @media screen and (max-width: 768px) {
+    footer .grid.grid-cols-4 > div:first-child img[src*="footerBirch.png"] {
+      content: url('../../src/img/logoPhone.png') !important;
+      display: none !important;
+    }
+    
+    /* Лого над копирайтом для мобильной версии */
+    .footer-copyright-logo {
+      content: url('../../src/img/logoPhone.png') !important;
+      width: 140px !important;
+      height: auto !important;
+      background: transparent !important;
+    }
+    #mobileAddIcon{
+      background: transparent !important;
+    }
+    
+    /* Скрываем первую колонку футера на мобильных */
+    footer .grid.grid-cols-4 > div:first-child {
+      display: none !important;
+    }
+  }
+  
+  /* Кнопки социальных сетей */
+  body.emission-mobile footer .flex {
+    justify-content: flex-start !important;
+    gap: 12px !important;
+  }
+  
+  /* Копирайт */
+  body.emission-mobile footer > div > div:last-child {
+    font-size: 12px !important;
+    text-align: center !important;
+    margin-top: 30px !important;
+  }
+  
+  /* Всплывающее меню */
+  body.emission-mobile #mobileMenu {
+    background-color: rgba(0, 0, 0, 0.95) !important;
+  }
+
+#firstText{
+  margin-bottom: 10px !important;
+  font-size: 32px !important;
+}
+#viVisadili {
+  padding-bottom: 16px !important;
+  margin-top: 16px !important;
+}
+#ecvivalent{
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+#firstEcvivalent{
+  font-size: 14px !important;
+}
+#secondEcvivalent{
+  font-size: 18px !important;
+}
+#callToAction{
+  display: flex !important;
+  flex-direction: row !important;
+}
+#callToActionBlock{
+  max-width: 300px !important;
+}
+#callToActionText{
+  font-size: 24px !important;
+}
+#emissionCalculator{
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 16px !important;
+}
+#emissionCalculatorButton{
+  width: 350px;
+  justify-content: center !important;
+}
+#emissionCalculatorText{
+  text-align: center !important;
+  width: 350px;
+}
+
+#shareResultText br {
+  display: none;
+}
+#shareResult{
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: 350px !important;
+  min-width: 350px !important;
+  height: auto !important;
+  gap: 0 !important;
+background: rgba(255, 255, 255, 0.379) !important;
+opacity: 80% !important;
+
+}
+#shareResultText{
+  font-size: 26px !important;
+}
+#shareResultIcons{
+  flex-direction: row !important;
+  gap: 66px !important;
+}
+#imageContainer{
+  display: block !important;
+}
+#allContent{
+  flex-direction: column !important;
+  gap: 0px !important;
+}
+
+#firstCircleEmission{
+    display: block !important;
+    opacity: 0.7 !important;
+    top: -150px !important;
+    right: -200px !important;
+    width: 300px !important;
+    height: 300px !important;
+}
+#secondCircleEmission{
+    display: block !important;
+    top: 400px !important;
+    width: 450px !important;
+    height: 450px !important;
+    left: -360px !important;
+}
+#threeCircleEmission{
+    display: block !important;
+    top: 1100px !important;
+    right: -350px !important;
+    width: 450px !important;
+    height: 450px !important;
+}
+#fourCircleEmission{
+    display: block !important;
+    top: 2000px !important;
+    left: 300px !important;
+    width: 400px !important;
+    height: 400px !important;
+}
+#navForest{
+  height: 50px !important;
+  padding: 0 !important;
+}
+#forestPlantSection{
+  background-image: url('./img/plantForestLogo.png') !important;
+}
+#forestPlantContent{
+  height: 100% !important;
+  align-items: flex-end !important;
+  margin-bottom: 250px !important;
+  display: flex !important;
+}
+#forestLeaderboardSection{
+  margin-top: -20px !important;
+
+}
+#forestLeaderboardSection::after{
+display: none !important;
+}
+#forestRunStroke{
+border-top: 0.5px solid gray !important;
+}
+#forestPlantHeaderLogo{
+  width: 140px !important;
+  height: 140px !important;
+  margin-right: 4px !important;
+}
+#forestPlantHeaderText{
+font-size: 27px !important;
+}
+#forestPlantHeaderText br{
+  display: none !important;
+}
+#forestMainText{
+  width: 100% !important;
+  margin-top: 12px !important;
+}
+#forestMainButton{
+  width: 100% !important;
+  max-width: none !important;
+
+}
+#forestCompensationBadge{
+  width: 320px !important;
+  height: 30px !important;
+}
+#forestCompensationBadgeText{
+  font-size: 14px !important;
+  text-align: left !important;
+}
+#forestSecondText{
+  font-size: 28px !important;
+}
+#forestSecondSpan{
+  font-size: 16px !important;
+}
+#forestSecondSpan br{
+  display: none !important;
+}
+#forestForm{
+  width: 100% !important;
+  max-width: none !important;
+}
+#forestFormButton{
+  width: 100% !important;
+  max-width: none !important;
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 16px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 16px !important;
+}
+#forestMainDiv{
+  padding: 0 !important;
+}
+#forestFormDescription{
+  font-size: 14px !important;
+  margin-bottom: 40px !important;
+}
+#fourCircleForestSection{
+    display: block !important;
+
+}
+#plantForestFooter{
+  padding: 0 !important;
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
+}
+
+/* Более специфичное правило для футера, чтобы переопределить глобальные стили */
+body.forest-mobile #plantForestFooter, 
+body.forest-mobile #plantForestFooter .relative,
+body.forest-mobile #plantForestFooter .overflow-hidden {
+  overflow: hidden !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+}
+
+/* Стили для зеленых кругов в секции проектов Project.html */
+/* Управление видимостью кругов */
+.desktop-circle {
+  display: block;
+}
+
+.mobile-circle {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .desktop-circle {
+    display: none !important;
+  }
+  
+  .mobile-circle {
+    display: block !important;
+  }
+  .mobile-circle-3{
+        top: 200px !important;
+    transform: none !important;
+    left: 250px !important;
+    width: 400px !important;
+    height: 400px !important;
+    filter: blur(100px) !important;
+  }
+  
+  /* Стили для мобильных кругов */
+  .mobile-circle-1 {
+    bottom: 500px !important;
+    left: -250px !important;
+    width: 300px !important;
+    height: 300px !important;
+    filter: blur(100px) !important;
+  }
+  
+  .mobile-circle-2 {
+    top: 900px !important;
+    transform: none !important;
+    left: 250px !important;
+    width: 400px !important;
+    height: 400px !important;
+    filter: blur(100px) !important;
+  }
+}
+
+/* Десктопные стили (по умолчанию и для больших экранов) */
+@media screen and (min-width: 769px) {
+  .project-green-circle-1 {
+    bottom: -700px !important;
+    left: -350px !important;
+    width: 1000px !important;
+    height: 1000px !important;
+    filter: blur(600px) !important;
+  }
+
+  .project-green-circle-2 {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    left: -400px !important;
+    width: 800px !important;
+    height: 800px !important;
+    filter: blur(500px) !important;
+  }
+}
+
+/* Стилизация секции проектов для мобильной версии Project.html - точно как у PlantForest */
+@media screen and (max-width: 768px) {
+  /* Мобильные позиции для зеленых кругов */
+  .project-green-circle-1 {
+    bottom: 500px !important;
+    left: -250px !important;
+    width: 300px !important;
+    height: 300px !important;
+    filter: blur(100px) !important;
+  }
+
+  .project-green-circle-2 {
+    top: 900px !important;
+    transform: none !important;
+    left: 250px !important;
+    width: 400px !important;
+    height: 400px !important;
+    filter: blur(100px) !important;
+  }
+
+  body.project-mobile #projects-container {
+    padding-top: 40px !important;
+    padding-bottom: 0 !important;
+    position: relative !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Скрываем скроллбар для flex контейнера на мобильных */
+  body.project-mobile #projects-container .flex.overflow-x-auto::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  body.project-mobile #projects-container .min-w-full {
+    display: flex !important;
+    grid-template-columns: none !important;
+    gap: 16px !important;
+    padding: 0 16px !important;
+    width: max-content !important;
+    min-width: auto !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE and Edge */
+  }
+
+  /* Скрываем скроллбар в WebKit браузерах */
+  body.project-mobile #projects-container .min-w-full::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  body.project-mobile #projects-container .project-card {
+    width: 300px !important;
+    height: 455px !important;
+    flex-shrink: 0 !important;
+    margin-bottom: 30px !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    scroll-snap-align: start !important;
+
+  }
+
+  body.project-mobile #projects-container .absolute.inset-0 {
+    background: linear-gradient(to bottom, transparent 0%, transparent 60%, rgba(0,0,0,0.8) 100%) !important;
+  }
+
+  body.project-mobile #projects-container .p-6 {
+    padding: 16px !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+  }
+
+  body.project-mobile #projects-container h3.text-xl {
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 8px !important;
+    font-weight: 600 !important;
+    color: white !important;
+  }
+
+  body.project-mobile #projects-container p.text-\[\#BFBFBF\] {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 12px !important;
+    color: #BFBFBF !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  body.project-mobile #projects-container button {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    color: white !important;
+    padding: 16px 32px !important;
+    font-size: 16px !important;
+    border-radius: 20px !important;
+    border: none !important;
+    height: auto !important;
+    width: auto !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  body.project-mobile #projects-container button img {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  body.project-mobile #projects-container .flex.justify-between {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-end !important;
+    gap: 0 !important;
+  }
+
+  body.project-mobile #projects-container .flex-1 {
+    flex: none !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+  }
+}
+
+/* Стилизация секции проектов для мобильной версии PlantForest.html - точно как у Donate */
+body.forest-mobile #forestProjectsSection {
+  padding-top: 40px !important;
+  padding-bottom: 0 !important;
+  position: relative !important;
+  overflow-x: hidden !important;
+  background-color: white !important;
+}
+
+body.forest-mobile #forestProjectsSection .mb-16 {
+  margin-bottom: 20px !important;
+  position: relative !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+body.forest-mobile #forestProjectsSection h2.text-6xl {
+  font-size: 26px !important;
+  line-height: 1.3 !important;
+  margin-bottom: 0 !important;
+  text-align: left !important;
+  opacity: 1 !important;
+  color: #010101 !important;
+}
+
+/* Добавляем стрелочку справа */
+body.forest-mobile #forestProjectsSection #mobileProjectArrow {
+      width: 24px !important;
+      height: 24px !important;
+      background: url('./img/arrowPlantForest.svg') no-repeat center !important;
+      background-size: contain !important;
+      display: block !important;
+      position: absolute !important;
+      right: 0 !important;
+      top: 10px !important;
+      cursor: pointer !important;
+      z-index: 10 !important; /* Чтобы стрелка была кликабельной */
+      border: none !important;
+      padding: 0 !important;
+      background-color: transparent !important;
+}
+
+
+/* Скрываем стрелки навигации на мобильных */
+body.forest-mobile #forestProjectsSection .flex.gap-4 {
+  display: none !important;
+}
+
+/* Адаптация карусели проектов - горизонтальный скролл */
+body.forest-mobile #forestProjectsSection .overflow-hidden {
+  width: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-snap-type: x mandatory !important;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
+  position: relative !important;
+}
+#contentFooterForest{
+  overflow: hidden !important;
+  padding-right: 0 !important;
+
+  
+}
+/* Скрываем скроллбар в WebKit браузерах */
+body.forest-mobile #forestProjectsSection .overflow-hidden::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Настройка контейнера карусели - показываем карточки в ряд */
+body.forest-mobile #forestProjectsSection #projectCarousel {
+  display: flex !important;
+  flex-direction: row !important;
+  padding-left: 16px !important;
+  gap: 12px !important;
+  transform: none !important;
+  width: auto !important;
+  transition: none !important;
+  will-change: scroll-position !important;
+}
+
+/* Контейнеры карточек для мобильной версии */
+body.forest-mobile #forestProjectsSection #projectCarousel .min-w-full {
+  min-width: 75% !important;
+  width: 75% !important;
+  max-width: 75% !important;
+  flex: 0 0 75% !important;
+  scroll-snap-align: start !important;
+  padding: 0 !important;
+}
+
+/* Убираем сетку, оставляем одну карточку */
+body.forest-mobile #forestProjectsSection #projectCarousel .grid {
+  display: block !important;
+  width: 100% !important;
+}
+
+/* Настройка карточки проекта */
+body.forest-mobile #forestProjectsSection #projectCarousel .rounded-\[20px\] {
+  height: 455px !important;
+  width: 100% !important;
+  border-radius: 12px !important;
+  margin: 0 !important;
+  position: relative !important;
+}
+
+/* Добавляем затемнение только снизу карточек */
+body.forest-mobile #forestProjectsSection #projectCarousel .absolute.inset-0 {
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0) 70%) !important;
+  opacity: 1 !important;
+}
+
+/* Настройка внутреннего контента карточки - прибиваем к низу */
+body.forest-mobile #forestProjectsSection #projectCarousel .p-6 {
+  padding: 20px !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+}
+
+/* Настройка заголовков и текста на карточках */
+body.forest-mobile #forestProjectsSection #projectCarousel h3.text-xl {
+  font-size: 16px !important;
+  line-height: 1.3 !important;
+  margin-bottom: 8px !important;
+  text-align: left !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+  color: white !important;
+}
+
+body.forest-mobile #forestProjectsSection #projectCarousel p.text-\[\#BFBFBF\] {
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  margin-bottom: 12px !important;
+  text-align: left !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 3 !important;
+  line-clamp: 3 !important;
+  overflow: hidden !important;
+  color: #BFBFBF !important;
+}
+
+/* Кнопка на карточке - делаем компактнее и позиционируем слева */
+body.forest-mobile #forestProjectsSection #projectCarousel button.bg-white {
+  height: 44px !important;
+  font-size: 14px !important;
+  padding: 0 20px !important;
+  border-radius: 30px !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  align-self: flex-start !important;
+}
+
+body.forest-mobile #forestProjectsSection #projectCarousel button.bg-white img {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* Контейнер для кнопки и текста - устанавливаем расположение слева */
+body.forest-mobile #forestProjectsSection #projectCarousel .flex.justify-between {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  gap: 12px !important;
+}
+
+body.forest-mobile #forestProjectsSection #projectCarousel .flex-1 {
+  flex: none !important;
+  min-width: auto !important;
+  width: 100% !important;
+  text-align: left !important;
+  margin-bottom: 12px !important;
+}
+#footerCopyrightForest{
+  margin-bottom: 20px !important;
+  width: 95% !important;
+}
+}
+
+/* Стили для адаптации ProjectInfo.html - стрелки под хедером */
+@media (max-width: 768px) {
+  /* Уменьшаем стрелки на мобильных устройствах - под хедером */
+  #leftProject, #rightProject {
+    width: 50px !important;
+    height: 50px !important;
+    /* top управляется Tailwind классами в HTML */
+  }
+  #footerLastCont{
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  #footerProjectInfo{
+    margin-top: 0 !important;
+  }
+
+  #leftProject img, #rightProject img {
+    width: 24px !important;
+    height: 24px !important;
+  }
+  
+  /* Адаптивные круги за стрелками для мобильных */
+  #leftBlurCircle {
+    left: -60px !important;
+    top: 120px !important; /* фиксированная позиция для мобильных */
+  }
+  #projectInfoContent{
+    margin-top: 120px !important;
+  }
+  #project-category{
+    font-size: 24px !important;
+  }
+
+  #headerProjectInfo{
+    padding: 0 !important;
+  }
+  #copyrightProjecctInfo{
+    margin-bottom: 12px !important;
+    text-align: left !important;
+  }
+  
+  #rightBlurCircle {
+    right: -260px !important;
+    top: 120px !important; /* фиксированная позиция для мобильных */
+  }
+  
+  /* Увеличиваем размер текста для мобильных */
+  #project-title .font-light {
+    font-size: 24px !important;
+    line-height: 1.1 !important;
+  }
+  
+  #project-description {
+    font-size: 18px !important;
+    line-height: 1.4 !important;
+  }
+}
+
+@media (min-width: 769px) {
+  /* Стили для десктопа - стрелки по центру вертикально */
+  #leftProject, #rightProject {
+    width: 60px !important;
+    height: 60px !important;
+    /* top и transform управляются Tailwind классами в HTML */
+  }
+  
+  #leftProject img, #rightProject img {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  
+  /* Адаптивные круги за стрелками для десктопа */
+  #leftBlurCircle {
+    left: -150px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+  
+  #rightBlurCircle {
+    right: -150px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+}
+
+/* Стили для мобильной адаптации ProjectInfo.html */
+@media (max-width: 768px) {
+  .desktop-nav-arrows {
+    display: none !important;
+  }
+  
+  .mobile-nav-arrows {
+    display: flex !important;
+  }
+  
+  /* Адаптация секции проекта */
+  .project-bg {
+    padding: 0 1rem;
+  }
+  
+  .project-bg .flex-1 .max-w-\[1920px\] {
+    padding: 0 1rem;
+  }
+  
+  .project-bg .text-\[48px\] {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .project-bg .text-\[24px\] {
+    font-size: 1.125rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  .project-bg .max-w-\[820px\] {
+    max-width: 100% !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .desktop-nav-arrows {
+    display: flex !important;
+  }
+  
+  .mobile-nav-arrows {
+    display: none !important;
+  }
+}

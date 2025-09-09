@@ -34,6 +34,7 @@
     
     <!-- CSS -->
     <link href="../../src/output.css" rel="stylesheet">
+    <link href="../../src/custom-bg-fix.css" rel="stylesheet">
     
     <!-- JavaScript -->
     <script src="../../src/main.js" defer></script>
@@ -61,8 +62,8 @@
     <!-- Custom CSS для попапов карты -->
     <style>
       .custom-tree-popup .leaflet-popup-content-wrapper {
-        background: black !important;
-        opacity: 40% !important;
+        background: rgba(0, 0, 0, 0.7) !important;
+        opacity: 1 !important;
         border-radius: 12px !important;
         box-shadow: none !important;
         border: none !important;
@@ -71,9 +72,26 @@
       
       .custom-tree-popup .leaflet-popup-content {
         margin: 0 !important;
-        padding: 0 !important;
+        padding: 12px 20px !important;
         background: transparent !important;
         border-radius: 12px !important;
+        text-align: center !important;
+      }
+      
+      /* Стили для текста в попапах как на скриншоте */
+      .custom-tree-popup .leaflet-popup-content h3 {
+        color: white !important;
+        font-size: 24px !important;
+        font-weight: normal !important;
+        margin-bottom: 5px !important;
+        margin-top: 0 !important;
+      }
+      
+      .custom-tree-popup .leaflet-popup-content p {
+        color: white !important;
+        font-size: 20px !important;
+        font-weight: normal !important;
+        margin: 0 !important;
       }
       
       .custom-tree-popup .leaflet-popup-tip {
@@ -100,7 +118,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
 </head>
-<body class="overflow-x-hidden bg-black">
+<body class="overflow-x-hidden bg-black emission-mobile">
     <div class="flex flex-col w-full mx-auto max-w-[1920px]">
         <section class="relative overflow-hidden">
         <div class="absolute inset-0">
@@ -114,33 +132,62 @@
   <div class="absolute -top-[-600px] -left-96  w-[769px] h-[769px] rounded-full blur-[600px]"
        style="background: radial-gradient(circle, #008852, #164125);"></div>
     </div>
+        <!-- Зеленый круг для мобильной версии в хедере -->
+        <div id="firstCircle" class="mobile-header-circle hidden absolute top-0 right-0 w-[200px] h-[200px] rounded-full blur-[100px] z-0"
+             style="background: radial-gradient(circle, #008852, #164125);"></div>
+        <div id="secondCircle" class="mobile-header-circle hidden absolute top-0 right-0 w-[200px] h-[200px] rounded-full blur-[100px] z-0"
+             style="background: radial-gradient(circle, #008852, #164125);"></div>
+            <div id="threeCircle" class="mobile-header-circle hidden absolute top-0 right-0 w-[200px] h-[200px] rounded-full blur-[100px] z-0"
+             style="background: radial-gradient(circle, #008852, #164125);"></div>
+              <div id="fourCircle" class="mobile-header-circle hidden absolute top-0 right-0 w-[200px] h-[200px] rounded-full blur-[100px] z-0"
+             style="background: radial-gradient(circle, #008852, #164125);"></div>
         <header class="w-full flex justify-center pt-8 px-8" role="banner">
-    <nav class="flex items-center max-w-[1920px] w-full h-[109px] px-8 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
+    <nav class="flex items-center max-w-[1920px] w-full h-[109px] px-8 py-2 z-10 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
       <div class="flex items-center gap-3 flex-shrink-0">
         <img src="../../src/img/mainLogo.png" alt="Birch - логотип компании" class="h-[46px] w-[144px]" />
       </div>
       <div class="flex-1"></div>
       <div class="flex items-center gap-6">
-        <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
+        <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap desktop-nav">
           <li><a href="../../index.html" class="hover:underline">Главная</a></li>
-          <li><a href="./Donate.html" class=" font-bold border-b-2 border-white pb-1" aria-current="page">Донаты</a></li>
+          <li><a href="./Donate.html" class="hover:underline">Донаты</a></li>
           <li><a href="./PlantForest.html" class="hover:underline whitespace-nowrap">B2B&nbsp;квоты</a></li>
           <li><a href="#" class="hover:underline">Партнеры</a></li>
           <li><a href="./Project.html" class="hover:underline">Проекты</a></li>
-          <li><a href="#" class="hover:underline">Контакты</a></li>
+          <li><a href="#" class="font-bold border-white pb-1">Контакты</li>
         </ul>
-        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0" aria-label="Оставить заявку на сотрудничество">
+        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
           Оставить заявку
           <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
             <img src="../../src/img/arrowdown.svg" alt="" class="w-11 h-11" />
           </span>
         </button>
+        <!-- Меню для планшетов -->
+        <img src="../../src/img/headerTable.svg" alt="Меню" class="w-11 h-11 tablet-menu" />
+        <!-- Бургер-меню для мобильных -->
+        <img src="../../src/img/burgerMenu.svg" alt="Меню" class="w-8 h-8 mobile-menu" onclick="toggleMobileMenu()" />
       </div>
     </nav>
+    
+    <!-- Мобильное меню (скрыто по умолчанию) -->
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-black/95 z-50 hidden flex-col items-center justify-center">
+      <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
+      <ul class="flex flex-col gap-8 text-white text-xl text-center">
+        <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Главная</a></li>
+        <li><a href="./Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Донаты</a></li>
+        <li><a href="./PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">B2B квоты</a></li>
+        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
+        <li><a href="./Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
+        <li><a href="#" class="font-bold" onclick="toggleMobileMenu()">Эмиссии</a></li>
+      </ul>
+      <button class="mt-10 bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600" onclick="toggleMobileMenu()">
+        Оставить заявку
+      </button>
+    </div>
   </header>
   
   <!-- Основная секция с личным кабинетом -->
-  <section class="relative overflow-hidden py-20 flex-1">
+  <section class="relative z-10 overflow-hidden py-20 flex-1">
     <div class="max-w-[1920px] mx-auto px-8">
       <div class="flex items-start justify-between h-full gap-16">
         
@@ -193,8 +240,8 @@
               
               <!-- Кнопка поделиться справа -->
               <div class="bg-white rounded-3xl px-6 py-4 flex flex-col items-center justify-center min-w-[353px] h-[215px]">
-                <p class="text-black text-[32px] font-light mb-3">Поделиться <br> результатом</p>
-                <div class="flex gap-6">
+                <p id="textIcon" class="text-black text-[32px] font-light mb-3">Поделиться <br> результатом</p>
+                <div id="emissionIcon" class="flex gap-6">
                   <a href="#" class="w-[55px] h-[55px] rounded-full bg-black flex items-center justify-center hover:bg-gray-800 transition-all">
                     <img src="../../src/img/instagram.svg" alt="Instagram" class="w-[55px] h-[55px]">
                   </a>
@@ -239,13 +286,13 @@
     </div>
   </section>
     <section class="relative overflow-hidden py-20 -mt-32 z-20">
-    <div class="max-w-[1920px] mx-auto px-8">
+    <div id="map" class="max-w-[1920px] mx-auto px-8">
       <div class="w-full h-[920px] relative rounded-2xl overflow-hidden">
         <div id="openstreet-map" class="w-full h-full bg-gray-200 rounded-2xl">
         </div>
         
         <!-- Панель "Ваши деревья" внутри карты слева снизу -->
-        <div class="absolute bottom-[140px] text-center left-6 w-[450px] bg-black/60 backdrop-blur-sm rounded-2xl py-6 flex flex-col gap-4 z-[1000] border border-white/20">
+        <div id="urTree" class="absolute bottom-[140px] text-center left-6 w-[450px] bg-black/60 backdrop-blur-sm rounded-2xl py-6 flex flex-col gap-4 z-[1000] border border-white/20">
           <h3 class="text-white text-[48px] font-medium leading-tight mb-4">
             Ваши деревья
           </h3>
@@ -284,6 +331,52 @@
             <span class="text-lg font-bold text-gray-700">−</span>
           </button>
         </div>
+        
+        <!-- Скрипт только для стилизации попапов на карте, без изменения самой карты -->
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            // Находим все попапы на карте и применяем к ним нужные стили
+            setTimeout(function() {
+              var popups = document.querySelectorAll('.leaflet-popup-content');
+              
+              popups.forEach(function(popup) {
+                // Добавляем класс для стилизации
+                popup.closest('.leaflet-popup').classList.add('custom-tree-popup');
+                
+                // Заменяем содержимое на HTML с нужной структурой
+                var text = popup.textContent.trim();
+                var parts = text.split(',');
+                
+                if (parts.length >= 2) {
+                  var districtName = parts[0].trim();
+                  var treesCount = parts[1].trim();
+                  
+                  popup.innerHTML = '<h3>' + districtName + '</h3><p>' + treesCount + '</p>';
+                }
+              });
+            }, 500);
+            
+            // Добавляем обработчик для динамически добавляемых попапов
+            document.addEventListener('DOMNodeInserted', function(e) {
+              if (e.target.classList && e.target.classList.contains('leaflet-popup')) {
+                e.target.classList.add('custom-tree-popup');
+                
+                var content = e.target.querySelector('.leaflet-popup-content');
+                if (content) {
+                  var text = content.textContent.trim();
+                  var parts = text.split(',');
+                  
+                  if (parts.length >= 2) {
+                    var districtName = parts[0].trim();
+                    var treesCount = parts[1].trim();
+                    
+                    content.innerHTML = '<h3>' + districtName + '</h3><p>' + treesCount + '</p>';
+                  }
+                }
+              }
+            });
+          });
+        </script>
       </div>
     </div>
   </section>

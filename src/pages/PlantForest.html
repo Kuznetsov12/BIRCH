@@ -34,6 +34,7 @@
     
     <!-- CSS -->
     <link href="../../src/output.css" rel="stylesheet">
+    <link href="../../src/custom-bg-fix.css" rel="stylesheet">
     <style>
       .year-text {
         font-size: 30px;
@@ -160,40 +161,228 @@
       }
     }
     </script>
+    
+    <!-- Скрипт для определения мобильной версии -->
+    <script>
+        // Функция для определения мобильного устройства
+        function isMobileDevice() {
+            return (window.innerWidth <= 768) || (window.orientation !== undefined);
+        }
+        
+        // Добавляем класс для мобильной версии при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isMobileDevice()) {
+                document.body.classList.add('forest-mobile');
+            }
+            
+            // Инициализируем карусель и проверяем элементы
+            console.log("DOM готов, проверяем элементы");
+            const projectsSection = document.getElementById('forestProjectsSection');
+            console.log("Секция проектов:", projectsSection);
+            
+            const carousel = document.getElementById('projectCarousel');
+            console.log("Карусель проектов:", carousel);
+            
+            const mobileArrow = document.getElementById('mobileProjectArrow');
+            console.log("Мобильная стрелка:", mobileArrow);
+            
+            // Исправляем пути к изображениям стрелок, если нужно
+            const arrowButtons = document.querySelectorAll('#forestProjectsSection .flex.gap-4 button img');
+            console.log("Кнопки со стрелками:", arrowButtons.length);
+        });
+        
+        // Следим за изменением размера окна
+        window.addEventListener('resize', function() {
+            if (isMobileDevice()) {
+                document.body.classList.add('forest-mobile');
+            } else {
+                document.body.classList.remove('forest-mobile');
+            }
+        });
+        
+        // Функция для прокрутки проектов на мобильном устройстве
+    // Функция для мобильной прокрутки проектов
+    window.scrollMobileProjects = function() {
+      console.log("Mobile arrow clicked");
+      
+      // Ищем секцию проектов для PlantForest.html
+      const projectsContainer = document.querySelector('#forestProjectsSection');
+      const scrollContainer = projectsContainer ? projectsContainer.querySelector('.overflow-hidden') : null;
+      
+      console.log("Projects container found:", projectsContainer);
+      console.log("Scroll container found:", scrollContainer);
+      
+      if (scrollContainer) {
+        const carousel = document.getElementById('projectCarousel');
+        const cards = carousel ? carousel.querySelectorAll('.min-w-full') : [];
+        
+        console.log("Carousel found:", carousel);
+        console.log("Number of cards found:", cards.length);
+        
+        if (cards.length > 0) {
+          // Получаем ширину одной карточки (75% экрана + gap)
+          const cardWidth = cards[0].offsetWidth;
+          const gap = 12; // gap из CSS
+          const scrollDistance = cardWidth + gap;
+          
+          console.log("Card width:", cardWidth);
+          console.log("Scroll distance:", scrollDistance);
+          console.log("Current scroll position:", scrollContainer.scrollLeft);
+          
+          // Прокручиваем контейнер на одну карточку вправо
+          scrollContainer.scrollBy({
+            left: scrollDistance,
+            behavior: 'smooth'
+          });
+          
+          console.log("Scrolling container by:", scrollDistance);
+        }
+      }
+    };
+    
+    // Проверим наличие функции scrollProjectCards и создадим ее, если отсутствует
+    if (typeof scrollProjectCards !== 'function') {
+      window.scrollProjectCards = function(direction) {
+        console.log('Прокрутка в направлении:', direction);
+        
+        // Для мобильных устройств используем scrollMobileProjects
+        if (window.innerWidth <= 767) {
+          scrollMobileProjects();
+          return;
+        }
+        
+        const carousel = document.getElementById('projectCarousel');
+        if (carousel) {
+          const cardWidth = carousel.querySelector('.min-w-full').offsetWidth;
+          const scrollAmount = direction === 'right' ? cardWidth + 12 : -(cardWidth + 12);
+          carousel.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+          });
+        }
+      };
+    }
+        
+        // Функция для прокрутки проектов на десктопе
+        function scrollProjectCards(direction) {
+            console.log("scrollProjectCards вызван:", direction);
+            const carousel = document.getElementById('projectCarousel');
+            console.log("Элемент карусели:", carousel);
+            if (!carousel) {
+                console.error("Карусель не найдена");
+                return;
+            }
+            
+            const minwfull = carousel.querySelector('.min-w-full');
+            console.log("Элемент min-w-full:", minwfull);
+            if (!minwfull) {
+                console.error("Не найден элемент .min-w-full в карусели");
+                // Используем фиксированное значение, если не можем найти элемент
+                const fixedWidth = 450;
+                const scrollAmount = direction === 'right' ? fixedWidth : -fixedWidth;
+                
+                if (carousel.parentElement) {
+                    const currentScroll = carousel.parentElement.scrollLeft;
+                    carousel.parentElement.scrollTo({
+                        left: currentScroll + scrollAmount,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    console.error("У карусели нет родительского элемента для прокрутки");
+                }
+                return;
+            }
+            
+            const cardWidth = minwfull.offsetWidth;
+            console.log("Ширина карточки:", cardWidth);
+            const scrollAmount = direction === 'right' ? cardWidth : -cardWidth;
+            console.log("Прокручиваем на:", scrollAmount);
+            
+            if (carousel.parentElement) {
+                const currentScroll = carousel.parentElement.scrollLeft;
+                carousel.parentElement.scrollTo({
+                    left: currentScroll + scrollAmount,
+                    behavior: 'smooth'
+                });
+            } else {
+                console.error("У карусели нет родительского элемента для прокрутки");
+            }
+        }
+        
+        // Функция для переключения мобильного меню
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu.style.display === 'flex') {
+                mobileMenu.style.opacity = '0';
+                setTimeout(() => {
+                    mobileMenu.style.display = 'none';
+                }, 300);
+            } else {
+                mobileMenu.style.display = 'flex';
+                setTimeout(() => {
+                    mobileMenu.style.opacity = '1';
+                }, 10);
+            }
+        }
+    </script>
 </head>
-<body class="overflow-x-hidden">
+<body class="overflow-x-hidden bg-black emission-mobile">
     <div class="flex flex-col w-full mx-auto max-w-[1920px]">
-<section class="h-screen bg-cover bg-center bg-no-repeat relative flex flex-col" style="background-image: url('../../src/img/forestPlantBg.png'); background-size: cover;">
+<section id="forestPlantSection" class="h-screen max-h-[1200px] bg-cover bg-center bg-no-repeat relative flex flex-col" style="background-image: url('../../src/img/forestPlantBg.png'); background-size: cover;">
+  <!-- Зеленый круг для мобильной версии в хедере -->
+  <div id="threeCircleForestSection" class="mobile-header-circle hidden absolute top-0 right-0 w-[200px] h-[200px] rounded-full blur-[100px] z-0"
+       style="background: radial-gradient(circle, #008852, #164125);"></div>
+        
   <header class="w-full flex justify-center pt-8 px-8" role="banner">
-    <nav class="flex items-center max-w-[1920px] w-full h-[109px] px-8 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
+    <nav id="navForest" class="flex items-center max-w-[1920px] w-full h-[109px] px-8 py-2 z-10 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
       <div class="flex items-center gap-3 flex-shrink-0">
-        <img src="../../src/img/mainLogo.png" alt="Birch - логотип компании" class="h-[46px] w-[144px]" />
+        <img src="../../src/img/mainLogo.png" alt="Birch - логотип компании" class="h-[46px] w-[144px] header-logo" />
       </div>
       <div class="flex-1"></div>
       <div class="flex items-center gap-6">
-        <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
-          <li><a href="../../index.html" class="font-bold border-b-2 border-white pb-1" >Главная</a></li>
+        <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap desktop-nav">
+          <li><a href="../../index.html" class="hover:underline">Главная</a></li>
           <li><a href="./Donate.html" class="hover:underline">Донаты</a></li>
-          <li><span href="./PlantForest.html" class="font-bold border-b-2 border-white pb-1" aria-current="page">B2B&nbsp;квоты</span></li>
+          <li><span class="font-bold border-b-2 border-white pb-1" aria-current="page">B2B&nbsp;квоты</span></li>
           <li><a href="#" class="hover:underline">Партнеры</a></li>
           <li><a href="./Project.html" class="hover:underline">Проекты</a></li>
           <li><a href="#" class="hover:underline">Контакты</a></li>
         </ul>
-        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0" aria-label="Оставить заявку на сотрудничество">
+        <button class="flex items-center bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
           Оставить заявку
           <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
             <img src="../../src/img/arrowdown.svg" alt="" class="w-11 h-11" />
           </span>
         </button>
+        <!-- Меню для планшетов -->
+        <img src="../../src/img/headerTable.svg" alt="Меню" class="w-11 h-11 tablet-menu" />
+        <!-- Бургер-меню для мобильных -->
+        <img src="../../src/img/burgerMenu.svg" alt="Меню" class="w-8 h-8 mobile-menu" onclick="toggleMobileMenu()" />
       </div>
     </nav>
+    
+    <!-- Мобильное меню (скрыто по умолчанию) -->
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-black/95 z-50 hidden flex-col items-center justify-center">
+      <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
+      <ul class="flex flex-col gap-8 text-white text-xl text-center">
+        <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Главная</a></li>
+        <li><a href="./Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Донаты</a></li>
+        <li><a href="./PlantForest.html" class="font-bold" onclick="toggleMobileMenu()">B2B квоты</a></li>
+        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
+        <li><a href="./Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
+        <li><a href="#" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
+      </ul>
+      <button class="mt-10 bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600" onclick="toggleMobileMenu()">
+        Оставить заявку
+      </button>
+    </div>
   </header>
   <div class="flex-1 flex items-center justify-center">
-    <div class="max-w-[1920px] w-full px-8 mx-auto">
+    <div id="forestPlantContent" class="max-w-[1920px] w-full px-8 mx-auto">
       <div class="text-white">
-        <div class="flex items-center mb-6">
-          <img src="../../src/img/lepestki.svg" alt="Birch Logo" class="mr-4" />
-          <h1 class="font-medium text-[48px] leading-tight">
+        <div id="forestPlantHeaderContainer" class="flex items-center mb-6">
+          <img id="forestPlantHeaderLogo" src="../../src/img/lepestki.svg" alt="Birch Logo" class="mr-4" />
+          <h1 id="forestPlantHeaderText" class="font-medium text-[48px] leading-tight">
             <span class="font-medium">Компенсируйте углеродный <br> след — высаживайте леса</span>
           </h1>
         </div>     
@@ -217,14 +406,14 @@
     </div>
   </div>
 </section>
-<section class="leaderboard-section w-full relative bg-black overflow-hidden -mt-60 border-t border-[#2D2D2D]">
+<section id="forestLeaderboardSection" class="leaderboard-section w-full relative bg-black overflow-hidden -mt-60 border-t border-[#2D2D2D]">
 <!-- Зеленые фоновые круги -->
 <div class="absolute top-60 -left-80 w-[769px] h-[769px] rounded-full blur-[600px]"
      style="background: radial-gradient(circle, #008852, #164125);"></div>
 
 
 
-<div class="max-w-full overflow-hidden relative z-10 py-20">
+<div id="forestRunStroke" class="max-w-full overflow-hidden relative z-10 py-20">
   <!-- Бегущая строка с пользователями -->
     <div class="relative overflow-hidden mb-16">
       <div class="flex animate-scroll">
@@ -375,11 +564,11 @@
   <!-- Основной контент -->
   <div class="text-left max-w-[1920px] mx-auto px-8 relative z-10">
     <div class="flex items-center justify-between w-full">
-      <h2 class="text-[84px] leading-[100%] font-light text-white tracking-tighter opacity-20 mb-12 max-w-5xl">
+      <h2 id="forestMainText" class="text-[84px] leading-[100%] font-light text-white tracking-tighter opacity-20 mb-12 max-w-5xl">
 Рейтинг предприятий <br> по высадке деревьев
       </h2>
       
-      <button class="bg-[#23B77F] text-white px-8 py-6 h-[80px] rounded-[6px] font-bold hover:bg-green-600 transition flex items-center justify-center gap-3 text-xl">
+      <button id="forestMainButton" class="bg-[#23B77F] text-white px-8 py-6 h-[80px] rounded-[6px] font-bold hover:bg-green-600 transition flex items-center justify-center gap-3 text-xl">
         <img src="../../src/img/AloneLepestok.svg" alt="">
         Посадить дерево
       </button>
@@ -401,25 +590,25 @@
       </div>
       
       <!-- Правая часть - текст и форма -->
-      <div class="flex-1">
-            <div class="bg-[#3C3C3C] w-[490px] flex items-center justify-center h-[60px] text-center text-white px-4 py-2 rounded text-sm font-medium z-10">
-              <span class="text-2xl uppercase font-normal">Компенсируйте свои выбросы CO₂</span>
+      <div id="forestMainDiv" class="flex-1">
+            <div id="forestCompensationBadge" class="bg-[#3C3C3C] w-[490px] flex items-center justify-center h-[60px] text-center text-white px-4 py-2 rounded text-sm font-medium z-10">
+              <span id="forestCompensationBadgeText" class="text-2xl uppercase font-normal">Компенсируйте свои выбросы CO₂</span>
           </div>
-        <h2 class="text-[84px] font-light text-black mb-8 leading-tight">
+        <h2 id="forestSecondText" class="text-[84px] font-light text-black mb-8 leading-tight">
 Поддерживая реальные <br> леса в Казахстане
         </h2>
         
-        <p class="text-2xl font-light text-[#3C3C3C] mb-12 leading-relaxed">
+        <p id="forestSecondSpan" class="text-2xl font-light text-[#3C3C3C] mb-12 leading-relaxed">
 BIRCH высаживает деревья за ваш вклад — вы получаете <br> прозрачный отчёт, сертификат и карту высадки.
         </p>
         
         <!-- Форма -->
-        <div class="flex gap-14 items-center">
-            <button class="bg-[#23B77F] text-white w-[340px] px-8 py-6 h-[80px] rounded-[6px] font-bold text-lg hover:bg-green-600 transition flex items-center justify-center gap-3 whitespace-nowrap">
+        <div id="forestForm" class="flex gap-14 items-center">
+            <button id="forestFormButton" class="bg-[#23B77F] text-white w-[340px] px-8 py-6 h-[80px] rounded-[6px] font-bold text-lg hover:bg-green-600 transition flex items-center justify-center gap-3 whitespace-nowrap">
               <img src="../../src/img/plusMinus.svg" alt="" class="w-5 h-5" />
               Рассчитать свой след
             </button>
-            <span class="text-[#CCCCCC] text-[16px] font-normal text-start">
+            <span id="forestFormDescription" class="text-[#CCCCCC] text-[16px] font-normal text-start">
                 Введите данные вашей компании — мы рассчитаем <br> ориентировочный углеродный след и подскажем, сколько <br> деревьев можно высадить для полной компенсации.
             </span>
           
@@ -442,7 +631,11 @@ BIRCH высаживает деревья за ваш вклад — вы пол
   <!-- Контент слева -->
   <div class="relative z-10 max-w-[800px] text-white space-y-8 ">
     <h2 class="text-[84px] max-w-[1000px] mb-[50px] font-light leading-[100%] text-white opacity-20">Мы уже 10 лет восстанавливаем <br> природу Казахстана</h2>
-
+        <!-- Блок для мобильной версии (будет показан только на мобильных) -->
+    <div class="birch-mobile-info hidden">
+      <img src="../img/greenStarBgWhite.svg" alt="">
+      <span>И что делает BIRCH</span>
+    </div>
     <div class="space-y-6 max-w-[1000px]">
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
@@ -497,28 +690,27 @@ BIRCH высаживает деревья за ваш вклад — вы пол
       </div>
     </div>
   </section>
-  <footer class="relative overflow-hidden">
-  <div class="max-w-[1920px] bg-white mx-auto py-20 px-8">
+  <section id="forestProjectsSection" class="relative overflow-hidden">
+  <div id="carouselForest" class="max-w-[1920px] z-10 bg-white mx-auto py-20 px-8">
     <div class="relative">
       <!-- Зеленые фоновые круги -->
-      <div class="absolute bottom-[-1300px] -left-[350px] w-[1000px] h-[1000px] rounded-full blur-[600px] opacity-100"
-           style="background: radial-gradient(circle, #008852, #164125);"></div>
-
 
       <!-- Заголовок секции с стрелками -->
       <div class="relative z-10 mb-16 flex justify-between items-center border-b border-[#BFBFBF]">
         <h2 class="text-6xl font-normal mb-12 text-[#010101] opacity-100 leading-tight">
           Наши проекты
         </h2>
+        <!-- Кнопка для мобильной версии -->
+                   <button id="mobileProjectArrow" onclick="scrollMobileProjects()" aria-label="Следующие проекты"></button>
         
         <!-- Стрелки навигации -->
         <div class="flex gap-4">
-          <button class="w-16 h-16 mb-12 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300" onclick="scrollProjectCards('left')">
-            <img src="../../src/img/left.svg" alt="Стрелка влево" class="w-16 h-16">
+          <button class="w-16 h-16 mb-12 opacity-50 rounded-full flex items-center justify-center hover:bg-gray-100 transition-all duration-300" onclick="scrollProjectCards('left')">
+            <img src="../img/left.svg" alt="Стрелка влево" class="w-16 h-16">
           </button>
           
-          <button class="w-16 h-16 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300" onclick="scrollProjectCards('right')">
-            <img src="../../src/img/right.svg" alt="Стрелка вправо" class="w-16 h-16">
+          <button class="w-16 h-16 opacity-50 rounded-full flex items-center justify-center hover:bg-gray-100 transition-all duration-300" onclick="scrollProjectCards('right')">
+            <img src="../img/right.svg" alt="Стрелка вправо" class="w-16 h-16">
           </button>
         </div>
       </div>
@@ -712,8 +904,14 @@ BIRCH высаживает деревья за ваш вклад — вы пол
         </div>
     </div>
   </div>
-    <div class="max-w-[1920px] bg-black mx-auto py-20">
+  <footer id="plantForestFooter" class="relative overflow-hidden">
+    <div id="contentFooterForest" class="max-w-[1920px] bg-black mx-auto py-20 overflow-hidden">
     <div class="relative">
+            <!-- Зеленый круг для футера -->
+            <div id="fourCircleForestSection" class="absolute w-[400px] h-[400px] rounded-full blur-[100px] z-0"
+                 style="background: radial-gradient(circle, #008852, #164125); top: 300px; left: 200px;"></div>
+            <div class="absolute bottom-[-850px] -left-[350px] w-[1000px] h-[1000px] rounded-full blur-[600px] opacity-100"
+           style="background: radial-gradient(circle, #008852, #164125);"></div>
       <!-- Основной контент футера с табличной структурой -->
       <div class="relative z-10 grid grid-cols-4 gap-0 border-b border-t border-white/10">
         
@@ -774,11 +972,12 @@ BIRCH высаживает деревья за ваш вклад — вы пол
       
       <!-- Нижняя часть футера -->
       <div class="relative z-10 mt-8 pt-6 text-center">
-        <p class="text-[#DAFFF1] text-xl font-normal">© 2025 BIRCH. Все права защищены. | Сделано с заботой об экологии.</p>
+        <p id="footerCopyrightForest" class="text-[#DAFFF1] text-xl font-normal">© 2025 BIRCH. Все права защищены. | Сделано с заботой об экологии.</p>
       </div>
     </div>
   </div>
 </footer>
+</section>
     </div>
 </body>
 </html>
