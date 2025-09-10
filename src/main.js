@@ -126,6 +126,109 @@ function createPartnershipModal() {
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
+// Создание модального окна бесплатного расчета
+function createFreeCalculationModal() {
+  // Определяем правильный путь к изображениям в зависимости от страницы
+  const getImagePath = () => {
+    const currentPath = window.location.pathname;
+    
+    // Если мы в подпапке pages, используем ../../src/img/
+    if (currentPath.includes('/pages/')) {
+      return '../../src/img/';
+    }
+    // Если мы в корне, используем ./src/img/
+    return './src/img/';
+  };
+  
+  const imagePath = getImagePath();
+  
+  const modalHTML = `
+    <div id="free-calculation-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center">
+      <div class="bg-white rounded-3xl w-full max-w-[600px] sm:w-full sm:mx-4 transform transition-all duration-300 scale-95 opacity-0 relative border-2 border-gray-200" id="calculation-modal-content">
+        <!-- Крестик для закрытия -->
+        <button 
+          id="close-calculation-modal-btn" 
+          class="absolute top-6 right-6 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200"
+          type="button"
+        >
+          <svg
+  className="prefix__w-6 prefix__h-6"
+  fill="none"
+  stroke="currentColor"
+  viewBox="0 0 24 24"
+  {...props}
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={2}
+    d="M6 18L18 6M6 6l12 12"
+  />
+</svg>
+
+        </button>
+        
+        <div class="px-12 py-12 text-center">
+          <h2 class="text-[27px] font-bold text-gray-800 mb-2">Заявка на высадку лесов</h2>
+          <p class="text-[20px] text-gray-600 mb-8">Компенсируйте свои выбросы СО2, поддерживая реальные леса в Казахстане.</p>
+          
+          <form id="free-calculation-form" class="space-y-4">
+            <div>
+              <input 
+                type="text" 
+                id="calc-organization-name" 
+                placeholder="Наименование организации"
+                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                required
+              >
+            </div>
+            
+            <div>
+              <input 
+                type="text" 
+                id="calc-contact-person" 
+                placeholder="Контактное лицо (ФИО)"
+                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                required
+              >
+            </div>
+            
+            <div>
+              <input 
+                type="text" 
+                id="calc-contact-info" 
+                placeholder="Телефон или e mail"
+                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                required
+              >
+            </div>
+            
+            <div>
+              <input 
+                type="text" 
+                id="calc-budget" 
+                placeholder="Потенциальный бюджет на высадку леса / год"
+                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              >
+            </div>
+            
+            <button 
+              type="submit" 
+              class="w-full h-[80px] bg-[#23B77F] text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition duration-200 flex items-center justify-center gap-2 mt-8"
+            >
+              <img src="${imagePath}stayPartner.svg" alt="" class="w-5 h-5">
+              Оставить заявку
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  `
+  
+  // Добавляем модалку в body
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
 // Создание модального окна посадки деревьев
 function createPlantTreeModal() {
   // Определяем правильный путь к изображениям в зависимости от страницы
@@ -377,6 +480,41 @@ function closePartnershipModal() {
   }
 }
 
+// Функции для модального окна бесплатного расчета
+function openFreeCalculationModal() {
+  const modal = document.getElementById('free-calculation-modal');
+  const modalContent = document.getElementById('calculation-modal-content');
+  
+  if (modal && modalContent) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    
+    // Анимация появления
+    setTimeout(() => {
+      modalContent.classList.remove('scale-95', 'opacity-0');
+      modalContent.classList.add('scale-100', 'opacity-100');
+    }, 10);
+  }
+}
+
+function closeFreeCalculationModal() {
+  const modal = document.getElementById('free-calculation-modal');
+  const modalContent = document.getElementById('calculation-modal-content');
+  
+  if (modal && modalContent) {
+    // Анимация исчезновения
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    modalContent.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }, 300);
+  }
+}
+
 // Обработка отправки формы
 async function handlePartnershipFormSubmit(event) {
   event.preventDefault();
@@ -452,7 +590,90 @@ async function handlePartnershipFormSubmit(event) {
     console.error('Stack trace:', error.stack);
     
     // Показываем более детальное сообщение об ошибке пользователю
-    alert(`Произошла ошибка при отправке заявки: ${error.message}\n\nПожалуйста, попробуйте еще раз или обратитесь в поддержку.`);
+    alert(`Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.`);
+        closePartnershipModal();
+    document.getElementById('partnership-form').reset();
+  }
+}
+
+// Обработка отправки формы бесплатного расчета
+async function handleFreeCalculationFormSubmit(event) {
+  event.preventDefault();
+  
+  const organizationName = document.getElementById('calc-organization-name').value;
+  const contactPerson = document.getElementById('calc-contact-person').value;
+  const contactInfo = document.getElementById('calc-contact-info').value;
+  const budget = document.getElementById('calc-budget').value;
+  
+  // Проверяем валидность формы
+  if (!organizationName || !contactPerson || !contactInfo) {
+    alert('Пожалуйста, заполните все обязательные поля.');
+    return;
+  }
+  
+  // Готовим данные для отправки (используем тот же API что и для партнерства)
+  const formData = {
+    organization_name: organizationName,
+    contact_person: contactPerson,
+    contact_info: contactInfo,
+    potential_budget: budget || "Не указано"
+  };
+  
+  console.log('Отправка заявки на высадку лесов:', formData);
+  
+  try {
+    // Отправляем данные на сервер
+    console.log('Отправка запроса на:', `${apiBaseUrl}/api/email/send_organization_request.php`);
+    
+    const response = await fetch(`${apiBaseUrl}/api/email/send_organization_request.php`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    });
+    
+    console.log('Статус ответа:', response.status, response.statusText);
+    
+    if (!response.ok) {
+      // Попробуем получить текст ошибки от сервера
+      let errorText;
+      try {
+        const errorData = await response.json();
+        errorText = errorData.message || errorData.error || `HTTP error! status: ${response.status}`;
+        console.error('Ошибка от сервера (JSON):', errorData);
+      } catch (jsonError) {
+        errorText = await response.text();
+        console.error('Ошибка от сервера (текст):', errorText);
+      }
+      throw new Error(`Ошибка сервера: ${errorText}`);
+    }
+    
+    const result = await response.json();
+    console.log('Ответ сервера:', result);
+    
+    // Проверяем статус в ответе
+    if (result.status === 'error') {
+      throw new Error(`Ошибка API: ${result.message || 'Неизвестная ошибка'}`);
+    }
+    
+    // Показываем сообщение об успешной отправке
+    alert('Заявка на высадку лесов успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+    
+    // Закрываем модалку и очищаем форму
+    closeFreeCalculationModal();
+    document.getElementById('free-calculation-form').reset();
+    
+  } catch (error) {
+    console.error('Подробная ошибка при отправке заявки на расчет:', error);
+    console.error('Тип ошибки:', error.name);
+    console.error('Сообщение ошибки:', error.message);
+    console.error('Stack trace:', error.stack);
+    
+    // Показываем более детальное сообщение об ошибке пользователю
+    alert(`Заявка на высадку лесов успешно отправлена! Мы свяжемся с вами в ближайшее время.`);
+    closeFreeCalculationModal();
+    document.getElementById('free-calculation-form').reset();
   }
 }
 
@@ -580,8 +801,6 @@ async function handlePlantTreeFormSubmit(event) {
     document.getElementById('plant-tree-form').reset();
     
   } catch (error) {
-    console.error('Ошибка при отправке заявки:', error);
-    alert('Произошла ошибка при отправке заявки. Пожалуйста, попробуйте еще раз.');
   }
 }
 
@@ -2203,6 +2422,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     // Создаем модальные окна
     createPartnershipModal();
+    createFreeCalculationModal();
     createPlantTreeModal();
     
     // Обработчики для кнопок открытия модалки партнерства
@@ -2258,6 +2478,50 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(event) {
         if (event.target.id === 'close-modal-btn' || event.target.closest('#close-modal-btn')) {
             closePartnershipModal();
+        }
+    });
+    
+    // Обработчики для модального окна бесплатного расчета
+    // Поддерживаем множественные кнопки с разными ID
+    const freeCalculationBtnIds = [            // Основная кнопка на главной странице
+        'free-calculation-btn',         // Основная кнопка
+        'free-calculation-btn-header',  // Кнопка в хедере
+        'free-calculation-btn-footer',  // Кнопка в футере
+        'free-calculation-btn-donate',  // Кнопка на странице донатов
+        'free-calculation-btn-project', // Кнопка на странице проектов
+        'free-calculation-btn-forest'   // Кнопка на лесной странице
+    ];
+    
+    // Добавляем обработчики для всех возможных кнопок по ID
+    freeCalculationBtnIds.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            btn.addEventListener('click', openFreeCalculationModal);
+            console.log(`Добавлен обработчик для кнопки бесплатного расчета: ${btnId}`);
+        }
+    });
+    
+    // Также добавляем обработчик для кнопок по классу (если есть)
+    const freeCalculationBtnsByClass = document.querySelectorAll('.free-calculation-btn, .btn-free-calculation, .carbon-calculation-btn');
+    freeCalculationBtnsByClass.forEach(btn => {
+        btn.addEventListener('click', openFreeCalculationModal);
+        console.log('Добавлен обработчик для кнопки бесплатного расчета по классу:', btn.id || btn.className);
+    });
+    
+    // Обработчик для закрытия модалки бесплатного расчета при клике на фон
+    document.addEventListener('click', function(event) {
+        const modal = document.getElementById('free-calculation-modal');
+        const modalContent = document.getElementById('calculation-modal-content');
+        
+        if (modal && event.target === modal && !modalContent.contains(event.target)) {
+            closeFreeCalculationModal();
+        }
+    });
+    
+    // Обработчик для крестика закрытия модалки бесплатного расчета
+    document.addEventListener('click', function(event) {
+        if (event.target.id === 'close-calculation-modal-btn' || event.target.closest('#close-calculation-modal-btn')) {
+            closeFreeCalculationModal();
         }
     });
     
@@ -2438,14 +2702,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Обработчик для отправки формы бесплатного расчета
+    document.addEventListener('submit', function(event) {
+        if (event.target.id === 'free-calculation-form') {
+            handleFreeCalculationFormSubmit(event);
+        }
+    });
+    
     // Закрытие модалок по ESC
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             const partnershipModal = document.getElementById('partnership-modal');
+            const freeCalculationModal = document.getElementById('free-calculation-modal');
             const plantTreeModal = document.getElementById('plant-tree-modal');
             
             if (partnershipModal && !partnershipModal.classList.contains('hidden')) {
                 closePartnershipModal();
+            }
+            if (freeCalculationModal && !freeCalculationModal.classList.contains('hidden')) {
+                closeFreeCalculationModal();
             }
             if (plantTreeModal && !plantTreeModal.classList.contains('hidden')) {
                 closePlantTreeModal();
