@@ -110,9 +110,21 @@ function createPlantTreeModal() {
           class="absolute top-6 right-6 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200"
           type="button"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
+          <svg
+  className="prefix__w-6 prefix__h-6"
+  fill="none"
+  stroke="currentColor"
+  viewBox="0 0 24 24"
+  {...props}
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={2}
+    d="M6 18L18 6M6 6l12 12"
+  />
+</svg>;
+
         </button>
         
         <div class="px-6 sm:px-12 py-8 sm:py-12 text-center">
@@ -1063,7 +1075,14 @@ function findUserTrees(phoneNumber) {
 document.addEventListener('DOMContentLoaded', () => {
   // Проверяем, есть ли контейнер для карты
   if (document.getElementById('openstreet-map')) {
-    initMap();
+    // Для страницы Emission.html используем специальную инициализацию
+    if (window.location.pathname.includes('Emission.html')) {
+      // Карта для Emission.html инициализируется через initializeEmissionPage()
+      // Не вызываем здесь initMap()
+    } else {
+      // Для других страниц используем обычную карту со всеми метками
+      initMap();
+    }
   }
 });
 
@@ -2022,5 +2041,394 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // Инициализация функций для эмиссии
+    initializeEmissionFunctions();
   });
+
+// Функции для работы с API эмиссии
+function initializeEmissionFunctions() {
+    const emissionPhoneInput = document.getElementById('emission-phone-input');
+    const emissionCheckBtn = document.getElementById('emission-check-btn');
+    
+    if (emissionCheckBtn) {
+        emissionCheckBtn.addEventListener('click', handleEmissionCheck);
+    }
+}
+
+async function handleEmissionCheck() {
+    const phoneInput = document.getElementById('emission-phone-input');
+    const phone = phoneInput ? phoneInput.value.trim() : '';
+    
+    if (!phone) {
+        alert('Пожалуйста, введите номер телефона');
+        return;
+    }
+    
+    // Показываем индикатор загрузки
+    const checkBtn = document.getElementById('emission-check-btn');
+    const originalText = checkBtn ? checkBtn.textContent : '';
+    if (checkBtn) {
+        checkBtn.textContent = 'Проверяем...';
+        checkBtn.disabled = true;
+    }
+    
+    try {
+        const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
+        
+        // Проверяем, существует ли пользователь
+        const checkResponse = await fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`);
+        
+        if (checkResponse.ok) {
+            const checkData = await checkResponse.json();
+            console.log('Ответ API для проверки пользователя:', checkData);
+            
+            if (checkData.status === 'success' && checkData.data) {
+                const user = checkData.data;
+                
+                // Пользователь найден - проверяем есть ли у него эмиссия
+                if (user.emission_kg && user.emission_kg > 0) {
+                    // У пользователя есть рассчитанная эмиссия - переходим на Emission.html
+                    localStorage.setItem('userData', JSON.stringify(user));
+                    window.location.href = 'Emission.html';
+                } else {
+                    // Пользователь есть, но нет эмиссии - переходим на EmissionAuth.html для расчета
+                    localStorage.setItem('userData', JSON.stringify(user));
+                    localStorage.setItem('userPhone', phone);
+                    window.location.href = 'EmissionAuth.html';
+                }
+                return;
+            }
+        }
+        
+        // Если дошли сюда - пользователь не найден, просто переходим на EmissionAuth
+        // Пользователь будет создан позже при заполнении формы расчета эмиссии
+        console.log('Пользователь не найден, переходим на EmissionAuth для регистрации');
+        localStorage.setItem('userPhone', phone);
+        localStorage.removeItem('userData');
+        window.location.href = 'EmissionAuth.html';
+    } catch (error) {
+        console.error('Ошибка при проверке пользователя:', error);
+        alert('Произошла ошибка при проверке. Попробуйте еще раз.');
+        
+        // Восстанавливаем кнопку
+        if (checkBtn) {
+            checkBtn.textContent = originalText;
+            checkBtn.disabled = false;
+        }
+    }
+}
+
+// Функция для инициализации страницы Emission.html
+function initializeEmissionPage() {
+    const userData = localStorage.getItem('userData');
+    if (!userData) {
+        window.location.href = 'Donate.html';
+        return;
+    }
+    
+    const user = JSON.parse(userData);
+    
+    // Обновляем данные пользователя на странице
+    updateUserDataOnPage(user);
+    
+    // Инициализируем карту с маркером
+    initializeEmissionMap(user);
+}
+
+function updateUserDataOnPage(user) {
+    // Обновляем имя пользователя
+    const userNameElement = document.querySelector('[data-user-name]');
+    if (userNameElement) {
+        userNameElement.textContent = `${user.name} ${user.surname}`;
+    }
+    
+    // Обновляем количество деревьев
+    const totalTrees = user.plantings ? user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0) : 0;
+    const treesElements = document.querySelectorAll('[data-trees-count]');
+    treesElements.forEach(element => {
+        element.textContent = totalTrees;
+    });
+    
+    // Обновляем эмиссию (конвертируем кг в тонны)
+    const emissionElements = document.querySelectorAll('[data-emission]');
+    if (emissionElements.length > 0 && user.emission_kg) {
+        const emissionTonnes = (parseFloat(user.emission_kg) / 1000).toFixed(1);
+        emissionElements.forEach(element => {
+            element.textContent = emissionTonnes;
+        });
+    }
+}
+
+function initializeEmissionMap(user) {
+    // Проверяем, есть ли уже карта
+    if (window.mapInstance) {
+        return;
+    }
+    
+    // Координаты городов Казахстана
+    const cityCoordinates = {
+        'Алматы': [43.2220, 76.8512],
+        'Астана': [51.1694, 71.4491],
+        'Нур-Султан': [51.1694, 71.4491],
+        'Шымкент': [42.3000, 69.5970],
+        'Караганда': [49.8047, 73.1094],
+        'Актобе': [50.2839, 57.2094],
+        'Тараз': [42.9000, 71.3667],
+        'Павлодар': [52.2856, 76.9574],
+        'Усть-Каменогорск': [49.9783, 82.6283],
+        'Семей': [50.4111, 80.2275],
+        'Атырау': [47.1164, 51.8753],
+        'Костанай': [53.2133, 63.6246],
+        'Кызылорда': [44.8479, 65.5093],
+        'Уральск': [51.2333, 51.3667],
+        'Петропавловск': [54.8833, 69.1500],
+        'Актау': [43.6531, 51.1601],
+        'Темиртау': [50.0500, 72.9667],
+        'Туркестан': [43.3061, 68.2467],
+        'Кокшетау': [53.2833, 69.3833],
+        'Талдыкорган': [45.0167, 78.3833]
+    };
+    
+    // Получаем координаты города пользователя
+    const userCity = user.city;
+    const coordinates = cityCoordinates[userCity] || [43.2220, 76.8512]; // По умолчанию Алматы
+    
+    // Создаем карту
+    const mapElement = document.getElementById('openstreet-map');
+    if (mapElement && typeof L !== 'undefined') {
+        window.mapInstance = L.map('openstreet-map').setView(coordinates, 10);
+        
+        // Добавляем слой карты
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(window.mapInstance);
+        
+        // Считаем общее количество деревьев
+        const totalTrees = user.plantings ? user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0) : 0;
+        
+        // Создаем кастомную иконку дерева
+        const treeIcon = L.icon({
+            iconUrl: '../../src/img/customMarker.svg',
+            iconSize: [50, 50],
+            iconAnchor: [25, 50],
+            popupAnchor: [0, -50]
+        });
+        
+        // Добавляем маркер с кастомной иконкой дерева
+        const marker = L.marker(coordinates, { icon: treeIcon }).addTo(window.mapInstance);
+        
+        // Создаем стильный popup
+        const popupContent = `
+            <div style="
+                background: rgba(0,0,0,0.85);
+                color: white;
+                padding: 16px 20px;
+                border-radius: 14px;
+                text-align: center;
+                border: none;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+                min-width: 220px;
+                font-family: 'PP Neue Montreal', sans-serif;
+            ">
+                <div style="font-size: 20px; font-weight: 600; margin-bottom: 8px; color: white;">${userCity}</div>
+                <div style="font-size: 18px; color: #4ade80; font-weight: 500;">
+                    Мои деревья: <span style="font-weight: 700; font-size: 20px; color: #22c55e;">${totalTrees}</span>
+                </div>
+            </div>
+        `;
+        
+        marker.bindPopup(popupContent, {
+            className: 'custom-popup',
+            closeButton: false,
+            offset: [0, -10]
+        });
+        
+        // Автоматически открываем popup
+        marker.openPopup();
+    }
+}
+
+// Функции для управления зумом карты эмиссии
+function zoomInMap() {
+    if (window.mapInstance) {
+        window.mapInstance.zoomIn();
+    }
+}
+
+function zoomOutMap() {
+    if (window.mapInstance) {
+        window.mapInstance.zoomOut();
+    }
+}
+
+// Экспортируем функции в глобальную область
+window.zoomInMap = zoomInMap;
+window.zoomOutMap = zoomOutMap;
+
+// Проверяем, находимся ли мы на странице Emission.html
+if (window.location.pathname.includes('Emission.html')) {
+    document.addEventListener('DOMContentLoaded', initializeEmissionPage);
+}
+
+// Проверяем, находимся ли мы на странице EmissionAuth.html
+if (window.location.pathname.includes('EmissionAuth.html')) {
+    document.addEventListener('DOMContentLoaded', function() {
+        // Проверяем, есть ли данные пользователя
+        const userData = localStorage.getItem('userData');
+        const userPhone = localStorage.getItem('userPhone');
+        
+        if (userData) {
+            const user = JSON.parse(userData);
+            console.log('Пользователь найден, но без эмиссии:', user);
+            
+            // Обновляем данные на странице
+            updateEmissionAuthData(user);
+            
+            // Если пользователь существует, но нет эмиссии, остаемся на странице для расчета
+            // Предзаполняем форму данными пользователя если они есть
+            if (user.name) {
+                const nameInput = document.querySelector('input[name="name"]');
+                if (nameInput) nameInput.value = user.name;
+            }
+            
+            if (user.surname) {
+                const surnameInput = document.querySelector('input[name="surname"]');
+                if (surnameInput) surnameInput.value = user.surname;
+            }
+            
+            if (user.phone || userPhone) {
+                const phoneInput = document.querySelector('input[name="phone"]');
+                if (phoneInput) phoneInput.value = user.phone || userPhone;
+            }
+            
+            if (user.city) {
+                const cityInput = document.querySelector('input[name="city"]');
+                if (cityInput) cityInput.value = user.city;
+            }
+        } else if (userPhone) {
+            // Только номер телефона - предзаполняем его и показываем "?"
+            updateEmissionAuthData({ phone: userPhone });
+            
+            const phoneInput = document.querySelector('input[name="phone"]');
+            if (phoneInput) phoneInput.value = userPhone;
+        }
+    });
+}
+
+// Функция для обновления данных на странице EmissionAuth.html
+function updateEmissionAuthData(user) {
+    // Обновляем имя пользователя (или показываем "?")
+    const userNameElement = document.querySelector('[data-user-name]');
+    if (userNameElement) {
+        if (user.name && user.surname) {
+            const shortName = `${user.name} ${user.surname.charAt(0)}.`;
+            userNameElement.textContent = shortName;
+        } else {
+            userNameElement.textContent = '?';
+        }
+    }
+    
+    // Обновляем количество деревьев (или показываем "?")
+    const totalTrees = user.plantings ? user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0) : 0;
+    const treesElements = document.querySelectorAll('[data-trees-count]');
+    treesElements.forEach(element => {
+        if (totalTrees > 0) {
+            element.textContent = totalTrees;
+        } else {
+            element.textContent = '?';
+        }
+    });
+    
+    // Карты на EmissionAuth.html нет, поэтому не инициализируем
+}
+
+// Функция для инициализации карты на EmissionAuth.html
+function initializeEmissionAuthMap(user) {
+    // Проверяем, есть ли уже карта
+    if (window.mapInstanceAuth) {
+        return;
+    }
+    
+    // Координаты городов Казахстана
+    const cityCoordinates = {
+        'Алматы': [43.2220, 76.8512],
+        'Астана': [51.1694, 71.4491],
+        'Нур-Султан': [51.1694, 71.4491],
+        'Шымкент': [42.3000, 69.5970],
+        'Караганда': [49.8047, 73.1094],
+        'Актобе': [50.2839, 57.2094],
+        'Тараз': [42.9000, 71.3667],
+        'Павлодар': [52.2856, 76.9574],
+        'Усть-Каменогорск': [49.9783, 82.6283],
+        'Семей': [50.4111, 80.2275],
+        'Атырау': [47.1164, 51.8753],
+        'Костанай': [53.2133, 63.6246],
+        'Кызылорда': [44.8479, 65.5093],
+        'Уральск': [51.2333, 51.3667],
+        'Петропавловск': [54.8833, 69.1500],
+        'Актау': [43.6531, 51.1601],
+        'Темиртау': [50.0500, 72.9667],
+        'Туркестан': [43.3061, 68.2467],
+        'Кокшетау': [53.2833, 69.3833],
+        'Талдыкорган': [45.0167, 78.3833]
+    };
+    
+    // Получаем координаты города пользователя
+    const userCity = user.city;
+    const coordinates = cityCoordinates[userCity] || [43.2220, 76.8512]; // По умолчанию Алматы
+    
+    // Создаем карту (ищем на EmissionAuth.html)
+    const mapElement = document.getElementById('openstreet-map');
+    if (mapElement && typeof L !== 'undefined') {
+        window.mapInstanceAuth = L.map('openstreet-map').setView(coordinates, 10);
+        
+        // Добавляем слой карты
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(window.mapInstanceAuth);
+        
+        // Считаем общее количество деревьев
+        const totalTrees = user.plantings ? user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0) : 0;
+        
+        // Создаем кастомную иконку дерева
+        const treeIcon = L.icon({
+            iconUrl: '../../src/img/customMarker.svg',
+            iconSize: [50, 50],
+            iconAnchor: [25, 50],
+            popupAnchor: [0, -50]
+        });
+        
+        // Добавляем маркер с кастомной иконкой дерева
+        const marker = L.marker(coordinates, { icon: treeIcon }).addTo(window.mapInstanceAuth);
+        
+        // Создаем стильный popup без района, только количество деревьев
+        const popupContent = `
+            <div style="
+                background: rgba(0,0,0,0.8);
+                color: white;
+                padding: 12px 16px;
+                border-radius: 12px;
+                text-align: center;
+                border: none;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                min-width: 200px;
+            ">
+                <div style="font-size: 18px; font-weight: bold; margin-bottom: 8px;">Мои деревья</div>
+                <div style="font-size: 16px; color: #4ade80;">
+                    Посажено деревьев: <span style="font-weight: bold; font-size: 18px;">${totalTrees > 0 ? totalTrees : '?'}</span>
+                </div>
+            </div>
+        `;
+        
+        marker.bindPopup(popupContent, {
+            className: 'custom-popup',
+            closeButton: false,
+            offset: [0, -10]
+        });
+        
+        // Автоматически открываем popup
+        marker.openPopup();
+    }
+}
 

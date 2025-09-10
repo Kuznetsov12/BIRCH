@@ -72,7 +72,6 @@
       
       .custom-tree-popup .leaflet-popup-content {
         margin: 0 !important;
-        padding: 12px 20px !important;
         background: transparent !important;
         border-radius: 12px !important;
         text-align: center !important;
@@ -195,7 +194,7 @@
         <div class="flex-1 max-w-[900px] text-white space-y-0">
           <!-- Имя пользователя -->
            <div class="border-b border-white/20">
-          <h1 class="text-[84px] font-light leading-tight text-white mb-8">
+          <h1 class="text-[84px] font-light leading-tight text-white mb-8" data-user-name>
             Владимир О.
           </h1>
           </div>
@@ -203,7 +202,7 @@
           <!-- Блок 1: Вы высадили -->
           <div class="pb-8 border-b border-white/20 mt-8">
             <p id="emissionTextNumberOne" class="text-[#BFBFBF] text-[24px] font-light mb-2">Вы высадили:</p>
-            <p class="text-white text-[48px] font-light">Вы высадили: 157 🌳</p>
+            <p class="text-white text-[48px] font-light">Вы высадили: <span data-trees-count>157</span> 🌳</p>
           </div>
           
           <!-- Блок 2: Это эквивалентно -->
@@ -223,7 +222,7 @@
               </div>
               <div>
                 <p id="emissionTextNumberFour" class="text-[#BFBFBF] text-left text-[24px] font-light mb-2">Ваш след углеродный след:</p>
-                <p class="text-white text-[48px] font-light">~ 11.7 тонн CO₂ в год</p>
+                <p class="text-white text-[48px] font-light">~ <span data-emission>11.7</span> тонн CO₂ в год</p>
               </div>
             </div>
           </div>
@@ -291,46 +290,6 @@
         <div id="openstreet-map" class="w-full h-full bg-gray-200 rounded-2xl">
         </div>
         
-        <!-- Панель "Ваши деревья" внутри карты слева снизу -->
-        <div id="urTree" class="absolute bottom-[140px] text-center left-6 w-[450px] bg-black/60 backdrop-blur-sm rounded-2xl py-6 flex flex-col gap-4 z-[1000] border border-white/20">
-          <h3 class="text-white text-[48px] font-medium leading-tight mb-4">
-            Ваши деревья
-          </h3>
-          
-          <!-- Список деревьев -->
-          <div class="space-y-3 max-h-[500px] overflow-y-auto">
-            <div class=" py-2 border-t border-white/20">
-              <p class="text-[#DAFFF1] text-[20px] font-medium mb-1">Здесь высажено 10 ваших деревьев</p>
-              <p class="text-white text-[16px]">52.23415434, 76.237758584</p>
-            </div>
-                        <div class=" py-2 border-t border-white/20">
-              <p class="text-[#DAFFF1] text-[20px] font-medium mb-1">Здесь высажено 10 ваших деревьев</p>
-              <p class="text-white text-[16px]">52.23415434, 76.237758584</p>
-            </div>
-                        <div class=" py-2 border-t border-white/20">
-              <p class="text-[#DAFFF1] text-[20px] font-medium mb-1">Здесь высажено 10 ваших деревьев</p>
-              <p class="text-white text-[16px]">52.23415434, 76.237758584</p>
-            </div>
-                        <div class=" py-2 border-t border-white/20">
-              <p class="text-[#DAFFF1] text-[20px] font-medium mb-1">Здесь высажено 10 ваших деревьев</p>
-              <p class="text-white text-[16px]">52.23415434, 76.237758584</p>
-            </div>
-                        <div class=" py-2 border-t border-white/20">
-              <p class="text-[#DAFFF1] text-[20px] font-medium mb-1">Здесь высажено 10 ваших деревьев</p>
-              <p class="text-white text-[16px]">52.23415434, 76.237758584</p>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Элементы управления картой слева сверху -->
-        <div class="absolute top-4 left-4 flex flex-col gap-2 z-[1000]">
-          <button class="w-10 h-10 bg-white rounded shadow-lg flex items-center justify-center hover:bg-gray-50 transition" onclick="zoomInMap()">
-            <span class="text-lg font-bold text-gray-700">+</span>
-          </button>
-          <button class="w-10 h-10 bg-white rounded shadow-lg flex items-center justify-center hover:bg-gray-50 transition" onclick="zoomOutMap()">
-            <span class="text-lg font-bold text-gray-700">−</span>
-          </button>
-        </div>
         
         <!-- Скрипт только для стилизации попапов на карте, без изменения самой карты -->
         <script>

@@ -4269,3 +4269,98 @@ body.forest-mobile #forestProjectsSection #projectCarousel .flex-1 {
   }
 
 }
+
+
+/* Кастомные стили для popup карты эмиссии */
+.leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(0,0,0,0.8) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  background: transparent !important;
+}
+
+.custom-popup .leaflet-popup-tip-container {
+  display: block !important;
+}
+.leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+.leaflet-popup-tip {
+  background: rgba(0,0,0,0.8) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.custom-popup .leaflet-popup-content-wrapper {
+  background: transparent !important;
+}
+.custom-popup .leaflet-popup-tip-container {
+  display: block !important;
+}
+.leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+.leaflet-popup-tip {
+  background: rgba(0,0,0,0.8) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.custom-popup .leaflet-popup-content-wrapper {
+  background: transparent !important;
+}
+.custom-popup .leaflet-popup-tip-container {
+  display: block !important;
+}
+.leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+.leaflet-popup-tip {
+  background: rgba(0,0,0,0.8) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.custom-popup .leaflet-popup-content-wrapper {
+  background: transparent !important;
+}
+.custom-popup .leaflet-popup-tip-container {
+  display: block !important;
+}
