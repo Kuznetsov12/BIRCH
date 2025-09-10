@@ -979,6 +979,26 @@ function initMap() {
   addTreePlantingMarkers();
 }
 
+// Инициализация пустой карты для Donate.html
+function initEmptyMap() {
+  // Координаты Алматы (центр карты)
+  const almaty = [43.2220, 76.8512];
+  
+  // Создаем карту
+  map = L.map('openstreet-map', {
+    zoomControl: false // Отключаем стандартные элементы управления
+  }).setView(almaty, 11);
+  
+  // Добавляем слой OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19,
+    minZoom: 5
+  }).addTo(map);
+
+  // Не добавляем статические маркеры - карта будет пустой до поиска пользователя
+}
+
 // Функция добавления маркеров районов высадки
 function addTreePlantingMarkers() {
   const plantingAreas = [
@@ -1057,18 +1077,105 @@ function zoomOutMap() {
   }
 }
 
-// Функция поиска по номеру телефона (заглушка)
-function findUserTrees(phoneNumber) {
-  // Здесь будет логика поиска деревьев пользователя по номеру телефона
+// Функция поиска деревьев пользователя по номеру телефона
+async function findUserTrees(phoneNumber) {
+  if (!phoneNumber) {
+    alert('Пожалуйста, введите номер телефона');
+    return;
+  }
+  
   console.log('Поиск деревьев для номера:', phoneNumber);
   
-  // Пример: фокусируемся на случайном маркере
-  if (markers.length > 0) {
-    const randomMarker = markers[Math.floor(Math.random() * markers.length)];
-    const latlng = randomMarker.getLatLng();
-    map.setView([latlng.lat, latlng.lng], 15);
-    randomMarker.openPopup();
+  try {
+    const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
+    
+    // Проверяем, существует ли пользователь
+    const checkResponse = await fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phoneNumber)}`);
+    const checkData = await checkResponse.json();
+    
+    console.log('Ответ API для поиска пользователя:', checkData);
+    
+    // Проверяем успешный ответ и наличие данных пользователя
+    if (checkResponse.ok && checkData.status === 'success' && checkData.data) {
+      const user = checkData.data;
+      
+      // Если у пользователя есть посадки, показываем их на карте
+      if (user.plantings && user.plantings.length > 0) {
+        showUserTreesOnMap(user);
+      } else {
+        // Пользователь есть, но нет деревьев - перекидываем на EmissionAuth для расчета эмиссии
+        localStorage.setItem('userData', JSON.stringify(user));
+        localStorage.setItem('userPhone', phoneNumber);
+        window.location.href = 'EmissionAuth.html';
+      }
+    } else {
+      // Пользователь не найден - перекидываем на EmissionAuth для регистрации
+      localStorage.setItem('userPhone', phoneNumber);
+      localStorage.removeItem('userData');
+      window.location.href = 'EmissionAuth.html';
+    }
+  } catch (error) {
+    console.error('Ошибка при поиске пользователя:', error);
+    alert('Произошла ошибка при поиске. Попробуйте еще раз.');
   }
+}
+
+// Функция для показа деревьев пользователя на карте
+function showUserTreesOnMap(user) {
+  // Очищаем существующие маркеры
+  markers.forEach(marker => {
+    map.removeLayer(marker);
+  });
+  markers = [];
+  
+  // Подсчитываем общее количество деревьев
+  const totalTrees = user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0);
+  
+  // Берем координаты из первой посадки или используем дефолтные для города пользователя
+  let coordinates = [43.2220, 76.8512]; // Алматы по умолчанию
+  
+  if (user.plantings[0] && user.plantings[0].latitude && user.plantings[0].longitude) {
+    coordinates = [parseFloat(user.plantings[0].latitude), parseFloat(user.plantings[0].longitude)];
+  }
+  
+  // Создаем кастомную иконку
+  const customIcon = L.icon({
+    iconUrl: '../../src/img/customMarker.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -45]
+  });
+
+  // Создаем маркер для пользователя
+  const marker = L.marker(coordinates, { icon: customIcon }).addTo(map);
+  
+  // Создаем popup с информацией о пользователе
+  const popupContent = `
+    <div class="user-trees-popup">
+      <div class="popup-title">${user.name} ${user.surname}</div>
+      <div class="popup-trees">${totalTrees} деревьев</div>
+      <div class="popup-city">${user.city || 'Алматы'}</div>
+    </div>
+  `;
+  
+  marker.bindPopup(popupContent, {
+    closeButton: false,
+    className: 'custom-user-popup',
+    offset: [0, -10],
+    autoPan: true,
+    closeOnClick: false,
+    autoClose: false,
+    maxWidth: 'none',
+    minWidth: 0
+  });
+
+  // Показываем popup и фокусируемся на маркере
+  marker.openPopup();
+  map.setView(coordinates, 12);
+  
+  markers.push(marker);
+  
+  console.log(`Показаны деревья пользователя: ${user.name} ${user.surname}, ${totalTrees} деревьев`);
 }
 
 // Инициализация карты при загрузке страницы
@@ -1079,6 +1186,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.includes('Emission.html')) {
       // Карта для Emission.html инициализируется через initializeEmissionPage()
       // Не вызываем здесь initMap()
+    } else if (window.location.pathname.includes('Donate.html')) {
+      // Для страницы Donate.html инициализируем пустую карту без маркеров
+      initEmptyMap();
     } else {
       // Для других страниц используем обычную карту со всеми метками
       initMap();
@@ -1088,8 +1198,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Обработчик формы поиска на карте
 document.addEventListener('DOMContentLoaded', () => {
-  const mapSearchButton = document.querySelector('#openstreet-map').parentElement.querySelector('.absolute button');
-  const mapSearchInput = document.querySelector('#openstreet-map').parentElement.querySelector('.absolute input[type="tel"]');
+  // Обработчик для кнопки поиска на карте (новый ID)
+  const mapSearchButton = document.getElementById('map-search-btn');
+  const mapSearchInput = document.getElementById('map-search-input');
   
   if (mapSearchButton && mapSearchInput) {
     mapSearchButton.addEventListener('click', (e) => {
@@ -1104,6 +1215,30 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Enter') {
         e.preventDefault();
         const phoneNumber = mapSearchInput.value.trim();
+        if (phoneNumber) {
+          findUserTrees(phoneNumber);
+        }
+      }
+    });
+  }
+  
+  // Старый обработчик для совместимости с другими страницами
+  const oldMapSearchButton = document.querySelector('#openstreet-map')?.parentElement?.querySelector('.absolute button');
+  const oldMapSearchInput = document.querySelector('#openstreet-map')?.parentElement?.querySelector('.absolute input[type="tel"]');
+  
+  if (oldMapSearchButton && oldMapSearchInput && !mapSearchButton) {
+    oldMapSearchButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      const phoneNumber = oldMapSearchInput.value.trim();
+      if (phoneNumber) {
+        findUserTrees(phoneNumber);
+      }
+    });
+    
+    oldMapSearchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const phoneNumber = oldMapSearchInput.value.trim();
         if (phoneNumber) {
           findUserTrees(phoneNumber);
         }
@@ -2078,30 +2213,29 @@ async function handleEmissionCheck() {
         
         // Проверяем, существует ли пользователь
         const checkResponse = await fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`);
+        const checkData = await checkResponse.json();
         
-        if (checkResponse.ok) {
-            const checkData = await checkResponse.json();
-            console.log('Ответ API для проверки пользователя:', checkData);
+        console.log('Ответ API для проверки пользователя:', checkData);
+        
+        // Проверяем успешный ответ и наличие данных пользователя
+        if (checkResponse.ok && checkData.status === 'success' && checkData.data) {
+            const user = checkData.data;
             
-            if (checkData.status === 'success' && checkData.data) {
-                const user = checkData.data;
-                
-                // Пользователь найден - проверяем есть ли у него эмиссия
-                if (user.emission_kg && user.emission_kg > 0) {
-                    // У пользователя есть рассчитанная эмиссия - переходим на Emission.html
-                    localStorage.setItem('userData', JSON.stringify(user));
-                    window.location.href = 'Emission.html';
-                } else {
-                    // Пользователь есть, но нет эмиссии - переходим на EmissionAuth.html для расчета
-                    localStorage.setItem('userData', JSON.stringify(user));
-                    localStorage.setItem('userPhone', phone);
-                    window.location.href = 'EmissionAuth.html';
-                }
-                return;
+            // Пользователь найден - проверяем есть ли у него эмиссия
+            if (user.emission_kg && user.emission_kg > 0) {
+                // У пользователя есть рассчитанная эмиссия - переходим на Emission.html
+                localStorage.setItem('userData', JSON.stringify(user));
+                window.location.href = 'Emission.html';
+            } else {
+                // Пользователь есть, но нет эмиссии - переходим на EmissionAuth.html для расчета
+                localStorage.setItem('userData', JSON.stringify(user));
+                localStorage.setItem('userPhone', phone);
+                window.location.href = 'EmissionAuth.html';
             }
+            return;
         }
         
-        // Если дошли сюда - пользователь не найден, просто переходим на EmissionAuth
+        // Если дошли сюда - пользователь не найден (404, неуспешный статус или нет данных)
         // Пользователь будет создан позже при заполнении формы расчета эмиссии
         console.log('Пользователь не найден, переходим на EmissionAuth для регистрации');
         localStorage.setItem('userPhone', phone);
