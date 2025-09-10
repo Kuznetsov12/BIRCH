@@ -8,15 +8,30 @@
    - Создаст таблицы: `users`, `plantings`, `homepage_stats`
    - Заполнит тестовыми данными
 
-## Настройка email (PHPMailer)
+## Запуск с Docker
 
-1. **Установка зависимостей:**
+1. **Запуск всего проекта:**
    ```bash
-   cd api
-   composer install
+   docker-compose up -d
    ```
 
-2. **Настройка SMTP в `config/email.php`:**
+2. **Что происходит автоматически:**
+   - Установка PHP расширений (PDO, PDO MySQL)
+   - Установка Composer
+   - Автоматическая установка PHPMailer через Composer
+   - Инициализация базы данных с тестовыми данными
+   - Запуск Apache сервера
+
+3. **Доступ к сервисам:**
+   - **API:** http://localhost:3000
+   - **PHPMyAdmin:** http://localhost:8080
+   - **Фронтенд:** http://localhost:3000 (статические файлы)
+
+## Настройка email (PHPMailer)
+
+**PHPMailer устанавливается автоматически при запуске Docker контейнера.**
+
+1. **Настройка SMTP в `config/email.php`:**
    ```php
    'smtp' => [
        'host' => 'smtp.gmail.com',           // Ваш SMTP сервер
@@ -27,22 +42,42 @@
    ],
    ```
 
-3. **Для Gmail:**
+2. **Для Gmail:**
    - Включите двухфакторную аутентификацию
    - Создайте пароль приложения в настройках Google
    - Используйте пароль приложения вместо основного пароля
 
-4. **Настройка получателей:**
+3. **Настройка получателей:**
    ```php
    'recipients' => [
        'organization_requests' => 'info@birch-project.kz', // Замените на ваш email
    ],
    ```
 
-5. **Для других почтовых провайдеров:**
+4. **Для других почтовых провайдеров:**
    - **Yandex:** `smtp.yandex.ru`, порт 465 (SSL) или 587 (TLS)
    - **Mail.ru:** `smtp.mail.ru`, порт 465 (SSL) или 587 (TLS)
    - **Outlook:** `smtp-mail.outlook.com`, порт 587 (TLS)
+
+## Ручная установка (без Docker)
+
+Если вы не используете Docker, выполните следующие шаги:
+
+1. **Установка Composer зависимостей:**
+   ```bash
+   cd api
+   composer install
+   ```
+
+2. **Настройка веб-сервера:**
+   - Убедитесь, что у вас установлены PHP 7.4+ и MySQL 5.7+
+   - Включите PDO и PDO MySQL расширения
+   - Настройте виртуальный хост на папку проекта
+
+3. **Импорт базы данных:**
+   ```bash
+   mysql -u root -p < api/database_setup.sql
+   ```
 
 ## API Endpoints
 

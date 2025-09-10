@@ -12,3 +12,19 @@ public/dist/
 .DS_Store
 *.tmp
 *.temp
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Documentation
+*.md
+
+# IDE
+.idea/
+
+# OS
+Thumbs.db
+
+# Test files
+test_*.json

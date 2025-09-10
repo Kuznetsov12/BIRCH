@@ -6,8 +6,18 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Подключаем PHPMailer и конфигурацию
-require_once '../vendor/autoload.php';
-$emailConfig = require_once '../config/email.php';
+$autoloadPath = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($autoloadPath)) {
+    http_response_code(500);
+    echo json_encode(array(
+        "status" => "error",
+        "message" => "Composer autoloader not found. Run 'composer install' in the api directory."
+    ));
+    exit;
+}
+
+require_once $autoloadPath;
+$emailConfig = require_once __DIR__ . '/../config/email.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

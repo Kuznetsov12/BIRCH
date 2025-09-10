@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
         'name' => 'birch/api',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => 'f77ceb0e1d4d5c0f81aa22c47a3ee8058eb35686',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'birch/api' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => 'f77ceb0e1d4d5c0f81aa22c47a3ee8058eb35686',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
