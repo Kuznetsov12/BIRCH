@@ -2,6 +2,35 @@
 const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
 console.log('API Base URL:', apiBaseUrl);
 
+// Добавляем CSS стили для кастомного чекбокса
+const customCheckboxStyles = `
+<style>
+.checkbox-container {
+  transition: all 0.2s ease;
+  background-color: #FFFFFF;
+}
+.checkbox-container:hover {
+  border-color: #10B981 !important;
+  background-color: #FFFFFF;
+}
+</style>
+`;
+
+// Добавляем стили в head если их еще нет
+if (!document.querySelector('#custom-checkbox-styles')) {
+  const styleElement = document.createElement('style');
+  styleElement.id = 'custom-checkbox-styles';
+  styleElement.innerHTML = `
+    .checkbox-container {
+      transition: all 0.2s ease;
+    }
+    .checkbox-container:hover {
+      border-color: #10B981 !important;
+    }
+  `;
+  document.head.appendChild(styleElement);
+}
+
 // Функция для переключения мобильного меню
 function toggleMobileMenu() {
   const mobileMenu = document.getElementById('mobileMenu');
@@ -40,6 +69,23 @@ function createPartnershipModal() {
   const imagePath = getImagePath();
   
   const modalHTML = `
+    <style>
+      @media (max-width: 600px) {
+        #carbon-footprint-modal {
+          left: 0 !important;
+          right: 0 !important;
+          width: 100vw !important;
+          padding: 0 !important;
+        }
+        #carbon-modal-content.bg-white {
+          max-width: 100vw !important;
+          width: 100vw !important;
+          border-radius: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+        }
+      }
+    </style>
     <div id="partnership-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center">
       <div class="bg-white rounded-3xl w-full max-w-[600px] sm:w-full sm:mx-4 transform transition-all duration-300 scale-95 opacity-0 relative border-2 border-gray-200" id="modal-content">
         <!-- Крестик для закрытия -->
@@ -754,11 +800,11 @@ async function handlePlantTreeFormSubmit(event) {
   // Собираем данные формы
   const phoneValue = document.getElementById('tree-phone').value;
   const formData = {
-    firstName: document.getElementById('tree-first-name').value,
-    lastName: document.getElementById('tree-last-name').value,
+    name: document.getElementById('tree-first-name').value,
+    surname: document.getElementById('tree-last-name').value,
     phone: phoneValue.startsWith('+7') ? phoneValue : '+7' + phoneValue.replace(/\D/g, ''),
     city: document.getElementById('tree-city').value,
-    treeCount: parseInt(document.getElementById('tree-count').value),
+    trees_quantity: parseInt(document.getElementById('tree-count').value),
     payCash: document.getElementById('pay-cash').checked,
     giftTree: document.getElementById('gift-tree').checked
   };
@@ -766,7 +812,7 @@ async function handlePlantTreeFormSubmit(event) {
   console.log('Данные формы посадки деревьев:', formData);
   
   // Проверяем валидность формы
-  if (!formData.firstName || !formData.lastName || !formData.phone || !formData.city || formData.treeCount <= 0) {
+  if (!formData.name || !formData.surname || !formData.phone || !formData.city || formData.trees_quantity  <= 0) {
     alert('Пожалуйста, заполните все поля и выберите количество деревьев.');
     return;
   }
@@ -2418,12 +2464,588 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Создание модального окна для расчета углеродного следа
+function createCarbonFootprintModal() {
+  // Определяем правильный путь к изображениям в зависимости от страницы
+  const getImagePath = () => {
+    const currentPath = window.location.pathname;
+    
+    // Если мы в подпапке pages, используем ../../src/img/
+    if (currentPath.includes('/pages/')) {
+      return '../../src/img/';
+    }
+    // Если мы в корне, используем ./src/img/
+    return './src/img/';
+  };
+  
+  const imagePath = getImagePath();
+  
+  const modalHTML = `
+    <div id="carbon-footprint-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+      <div class="bg-white rounded-3xl w-full max-w-[800px] max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 relative" id="carbon-modal-content">
+        <!-- Крестик для закрытия -->
+        <button 
+          id="close-carbon-modal-btn" 
+          class="absolute top-6 right-6 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200 z-10 bg-white rounded-full shadow-md"
+          type="button"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+
+        <!-- Заголовок -->
+        <div class="px-8 pt-8 pb-6 text-center">
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">Калькулятор эмиссии CO₂</h2>
+          <p class="text-gray-600 text-sm">Заполните анкету, чтобы узнать свою точную эмиссию CO₂ и рассчитать,<br> сколько деревьев поможет вам полностью её компенсировать.</p>
+        </div>
+
+        <!-- Форма -->
+        <form id="carbon-footprint-form" class="px-8 pb-8 space-y-4">
+          
+          <!-- Потребление электроэнергии в месяц -->
+          <div class="border border-gray-300 rounded-lg p-4">
+            <label for="carbon-electricity" class="block text-sm font-medium text-gray-700 mb-2">Потребление электроэнергии в месяц</label>
+            <input type="number" id="carbon-electricity" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите сколько электроэнергии Вы потребляете в месяц в кВт \ kWh" min="0" step="0.1" required />
+          </div>
+
+          <!-- Источник электроэнергии -->
+          <div class="border border-gray-300 rounded-lg p-4">
+            <label for="carbon-electricity-coefficient" class="block text-sm font-medium text-gray-700 mb-2">Источник электроэнергии</label>
+            <select id="carbon-electricity-coefficient" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
+              <option value="">Выберите, каким типом электроэнергии вы пользуетесь</option>
+              <option value="0.5">Газовая генерация</option>
+              <option value="0.7">Угольная генерация</option>
+              <option value="0.4">Возобновляемые источники</option>
+              <option value="0.3">Сеть РК (централизованная)</option>
+            </select>
+          </div>
+
+          <!-- Пробег на автомобиле в месяц -->
+          <div class="border border-gray-300 rounded-lg p-4">
+            <label for="carbon-car-km" class="block text-sm font-medium text-gray-700 mb-2">Пробег на автомобиле в месяц</label>
+            <input type="number" id="carbon-car-km" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите сколько проезжаете на автомобиле в месяц, в км \ km" min="0" step="1" />
+          </div>
+
+          <!-- Тип топлива автомобиля -->
+          <div class="border border-gray-300 rounded-lg p-4">
+            <label for="carbon-car-coefficient" class="block text-sm font-medium text-gray-700 mb-2">Тип топлива автомобиля</label>
+            <select id="carbon-car-coefficient" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')">
+              <option value="">Выберите тип топлива вашего автомобиля</option>
+              <option value="0.2">Бензин</option>
+              <option value="0.18">Дизель</option>
+              <option value="0.05">Электромобиль</option>
+              <option value="0.15">Гибрид</option>
+            </select>
+          </div>
+
+          <!-- Общественный транспорт в месяц -->
+          <div class="border border-gray-300 rounded-lg p-4">
+            <label for="carbon-public-transport" class="block text-sm font-medium text-gray-700 mb-2">Общественный транспорт в месяц</label>
+            <input type="number" id="carbon-public-transport" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Сколько часов в месяц Вы проводите в общественном транспорте" min="0" step="1" />
+          </div>
+
+          <!-- Авиаперелеты в месяц -->
+          <div class="border border-gray-300 rounded-lg p-4">
+            <label for="carbon-flights" class="block text-sm font-medium text-gray-700 mb-2">Авиаперелеты в месяц</label>
+            <input type="number" id="carbon-flights" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Сколько часов в месяц Вы проводите в полётах" min="0" step="1" />
+          </div>
+
+          <!-- Рацион питания -->
+          <div class="border border-gray-300 rounded-lg p-4">
+            <label for="carbon-diet" class="block text-sm font-medium text-gray-700 mb-2">Рацион питания</label>
+            <select id="carbon-diet" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
+              <option value="">Выберите ваш тип питания</option>
+              <option value="1200">Мясной</option>
+              <option value="900">Смешанный</option>
+              <option value="600">Вегетарианский</option>
+              <option value="400">Веганский</option>
+            </select>
+          </div>
+
+          <!-- Физическая активность -->
+          <div class="border border-gray-300 rounded-lg p-4">
+            <label for="carbon-physical-activity" class="block text-sm font-medium text-gray-700 mb-2">Физическая активность</label>
+            <select id="carbon-physical-activity" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
+              <option value="">Выберите уровень вашей активности</option>
+              <option value="1.2">Малоподвижный</option>
+              <option value="1.4">Лёгкая активность</option>
+              <option value="1.6">Средняя активность</option>
+              <option value="1.8">Высокая активность</option>
+              <option value="2.0">Очень высокая активность</option>
+            </select>
+          </div>
+
+          <!-- Вес -->
+          <div class="border border-gray-300 rounded-lg p-4">
+            <label for="carbon-weight" class="block text-sm font-medium text-gray-700 mb-2">Вес</label>
+            <input type="number" id="carbon-weight" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите Ваш вес в килограммах" min="30" max="200" step="1" required />
+          </div>
+
+          <!-- Сортировка отходов -->
+          <div class="border border-gray-300 rounded-lg p-4">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-gray-700">Сортирую отходы</span>
+              <label class="flex items-center cursor-pointer">
+                <input type="checkbox" id="carbon-waste-sorting" class="sr-only" />
+                <div class="checkbox-container w-8 h-8 border-2 border-gray-300 rounded-md flex items-center justify-center bg-white transition-colors duration-200">
+                  <img src="${imagePath}chekboxOkay.svg" alt="" class="w-5 h-5 hidden checkbox-icon" />
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Введите Имя и номер телефона для сохранения статистики -->
+          <div class="pt-2">
+            <p class="text-sm font-medium text-gray-700 mb-4">Введите Имя и номер телефона для сохранения статистики</p>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div class="border border-gray-300 rounded-lg p-4">
+                <label for="carbon-name" class="block text-sm font-medium text-gray-700 mb-2">Имя</label>
+                <input type="text" id="carbon-name" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите Ваше имя" required />
+              </div>
+              <div class="border border-gray-300 rounded-lg p-4">
+                <label for="carbon-surname" class="block text-sm font-medium text-gray-700 mb-2">Фамилия</label>
+                <input type="text" id="carbon-surname" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите Вашу фамилию" required />
+              </div>
+            </div>
+
+            <div class="border border-gray-300 rounded-lg p-4 mb-4">
+              <label for="carbon-city" class="block text-sm font-medium text-gray-700 mb-2">Город</label>
+              <input type="text" id="carbon-city" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите Ваш город" value="Алматы" />
+            </div>
+
+            <div class="border border-gray-300 rounded-lg p-4">
+              <label for="carbon-phone" class="block text-sm font-medium text-gray-700 mb-2">Телефон</label>
+              <div class="relative">
+                <div class="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
+                  <img src="${imagePath}flagKz.svg" alt="KZ" class="w-8 h-6" />
+                  <span class="text-gray-600 text-lg font-medium">+7</span>
+                </div>
+                <input type="tel" id="carbon-phone" class="w-full pl-24 pr-4 py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="700 000-00-00" required />
+              </div>
+            </div>
+          </div>
+
+          <!-- Кнопка отправки -->
+          <button 
+            type="submit" 
+            class="w-full bg-[#23B77F] text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-green-600 transition-colors duration-200 flex items-center justify-center gap-3 mt-6"
+          >
+            <img src="${imagePath}plusMinus.svg" alt="" class="w-5 h-5" />
+            Рассчитать эмиссию
+          </button>
+        </form>
+      </div>
+    </div>
+  `;
+
+  // Добавляем модальное окно в DOM
+  // Удаляем старое модальное окно если оно существует
+  const existingModal = document.getElementById('carbon-footprint-modal');
+  if (existingModal) {
+    existingModal.remove();
+  }
+  
+  // Создаем новое модальное окно
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+  
+  // Отладка: проверяем что кнопка действительно добавилась
+  setTimeout(() => {
+    const form = document.getElementById('carbon-footprint-form');
+    const submitButton = form ? form.querySelector('button[type="submit"]') : null;
+    console.log('Форма найдена:', !!form);
+    console.log('Кнопка submit найдена:', !!submitButton);
+    if (submitButton) {
+      console.log('Текст кнопки:', submitButton.textContent);
+      console.log('Стили кнопки display:', submitButton.style.display);
+    }
+  }, 100);
+}
+
+// Функция для открытия модального окна расчета углеродного следа
+function openCarbonFootprintModal() {
+  console.log('Открываем модальное окно калькулятора CO2');
+  
+  // Пересоздаем модальное окно для гарантии чистого состояния
+  createCarbonFootprintModal();
+  
+  const modal = document.getElementById('carbon-footprint-modal');
+  const modalContent = document.getElementById('carbon-modal-content');
+  
+  if (modal && modalContent) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    
+    // Анимация появления
+    setTimeout(() => {
+      modalContent.style.transform = 'scale(1)';
+      modalContent.style.opacity = '1';
+    }, 10);
+
+    // Добавляем обработчик для кнопки закрытия
+    const closeBtn = document.getElementById('close-carbon-modal-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeCarbonFootprintModal);
+    }
+
+    // Инициализация кастомного чекбокса
+    const checkbox = document.getElementById('carbon-waste-sorting');
+    const checkboxContainer = modal.querySelector('.checkbox-container');
+    const checkboxIcon = modal.querySelector('.checkbox-icon');
+    
+    if (checkbox && checkboxContainer && checkboxIcon) {
+      // Удаляем старые обработчики
+      checkbox.replaceWith(checkbox.cloneNode(true));
+      const newCheckbox = document.getElementById('carbon-waste-sorting');
+      
+      newCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+          checkboxContainer.classList.add('border-green-500');
+          checkboxContainer.classList.remove('border-gray-300');
+          checkboxIcon.classList.remove('hidden');
+        } else {
+          checkboxContainer.classList.remove('border-green-500');
+          checkboxContainer.classList.add('border-gray-300');
+          checkboxIcon.classList.add('hidden');
+        }
+      });
+    }
+
+    // Инициализация маски телефона
+    const phoneInput = document.getElementById('carbon-phone');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        
+        if (value.length > 0) {
+          if (value.length <= 3) {
+            value = value;
+          } else if (value.length <= 6) {
+            value = value.slice(0, 3) + ' ' + value.slice(3);
+          } else if (value.length <= 8) {
+            value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6);
+          } else {
+            value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6, 8) + '-' + value.slice(8, 10);
+          }
+        }
+        
+        e.target.value = value;
+      });
+
+      phoneInput.addEventListener('keydown', function(e) {
+        // Разрешаем только цифры, backspace, delete, tab, escape, enter
+        if (!((e.keyCode >= 48 && e.keyCode <= 57) || // цифры 0-9
+              (e.keyCode >= 96 && e.keyCode <= 105) || // цифры на numpad
+              e.keyCode === 8 || // backspace
+              e.keyCode === 46 || // delete
+              e.keyCode === 9 || // tab
+              e.keyCode === 27 || // escape
+              e.keyCode === 13 || // enter
+              (e.keyCode === 65 && e.ctrlKey) || // Ctrl+A
+              (e.keyCode === 67 && e.ctrlKey) || // Ctrl+C
+              (e.keyCode === 86 && e.ctrlKey) || // Ctrl+V
+              (e.keyCode === 88 && e.ctrlKey) || // Ctrl+X
+              (e.keyCode >= 37 && e.keyCode <= 40))) { // arrow keys
+          e.preventDefault();
+        }
+      });
+    }
+    
+    // Добавляем обработчик submit для формы
+    const form = document.getElementById('carbon-footprint-form');
+    if (form) {
+      // Удаляем старые обработчики если есть
+      form.replaceWith(form.cloneNode(true));
+      
+      // Получаем новую ссылку на форму после клонирования
+      const newForm = document.getElementById('carbon-footprint-form');
+      if (newForm) {
+        newForm.addEventListener('submit', handleCarbonFootprintFormSubmit);
+        console.log('✅ Обработчик submit добавлен к форме калькулятора');
+        
+        // Также переинициализируем обработчики для полей после клонирования
+        const newPhoneInput = document.getElementById('carbon-phone');
+        if (newPhoneInput) {
+          newPhoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length > 0) {
+              if (value.length <= 3) {
+                value = value;
+              } else if (value.length <= 6) {
+                value = value.slice(0, 3) + ' ' + value.slice(3);
+              } else if (value.length <= 8) {
+                value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6);
+              } else {
+                value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6, 8) + '-' + value.slice(8, 10);
+              }
+            }
+            
+            e.target.value = value;
+          });
+        }
+        
+        // Переинициализируем чекбокс
+        const newCheckbox = document.getElementById('carbon-waste-sorting');
+        const newCheckboxContainer = newForm.querySelector('.checkbox-container');
+        const newCheckboxIcon = newForm.querySelector('.checkbox-icon');
+        
+        if (newCheckbox && newCheckboxContainer && newCheckboxIcon) {
+          newCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+              newCheckboxContainer.classList.add('border-green-500');
+              newCheckboxContainer.classList.remove('border-gray-300');
+              newCheckboxIcon.classList.remove('hidden');
+            } else {
+              newCheckboxContainer.classList.remove('border-green-500');
+              newCheckboxContainer.classList.add('border-gray-300');
+              newCheckboxIcon.classList.add('hidden');
+            }
+          });
+        }
+      }
+    }
+  }
+}
+
+// Функция для закрытия модального окна расчета углеродного следа
+function closeCarbonFootprintModal() {
+  const modal = document.getElementById('carbon-footprint-modal');
+  const modalContent = document.getElementById('carbon-modal-content');
+  
+  if (modal && modalContent) {
+    modalContent.style.transform = 'scale(0.95)';
+    modalContent.style.opacity = '0';
+    
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = 'auto';
+      
+      // Сбрасываем форму
+      const form = document.getElementById('carbon-footprint-form');
+      if (form) {
+        form.reset();
+        
+        // Удаляем результаты если они есть
+        const resultBlocks = form.querySelectorAll('.bg-\\[\\#23B77F\\], [class*="bg-\\[\\#23B77F\\]"]');
+        resultBlocks.forEach(block => block.remove());
+        
+        // Удаляем кнопку посадки деревьев если она есть
+        const actionButton = document.getElementById('plant-trees-action');
+        if (actionButton) {
+          actionButton.remove();
+        }
+        
+        // Показываем кнопку "Рассчитать эмиссию" обратно
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) {
+          submitButton.style.display = 'flex';
+        }
+        
+        // Сбрасываем стоимость
+        const totalCost = document.getElementById('carbon-total-cost');
+        if (totalCost) {
+          totalCost.textContent = 'от 70 000,00-00';
+        }
+      }
+    }, 300);
+  }
+}
+
+// Функция для обработки отправки формы расчета углеродного следа
+async function handleCarbonFootprintFormSubmit(event) {
+  event.preventDefault();
+  console.log('🚀 Форма калькулятора отправлена!');
+  
+  const submitButton = event.target.querySelector('button[type="submit"]');
+  const originalText = submitButton.innerHTML;
+  
+  console.log('📋 Базовый URL API:', apiBaseUrl);
+  
+  try {
+    // Показываем индикатор загрузки
+    submitButton.innerHTML = `
+      <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      Рассчитываем...
+    `;
+    submitButton.disabled = true;
+
+    // Собираем данные формы с проверкой существования элементов
+    const getElementValue = (id, defaultValue = '') => {
+      const element = document.getElementById(id);
+      if (!element) {
+        console.warn(`⚠️ Элемент с ID '${id}' не найден!`);
+        return defaultValue;
+      }
+      return element.value || defaultValue;
+    };
+    
+    const getElementChecked = (id) => {
+      const element = document.getElementById(id);
+      if (!element) {
+        console.warn(`⚠️ Элемент с ID '${id}' не найден!`);
+        return false;
+      }
+      return element.checked;
+    };
+    
+    const phoneValue = getElementValue('carbon-phone');
+    const formattedPhone = phoneValue ? `+7${phoneValue.replace(/\D/g, '')}` : '';
+    
+    console.log('📋 Собираем данные формы...');
+    
+    const formData = {
+      phone: formattedPhone,
+      surname: getElementValue('carbon-surname'),
+      name: getElementValue('carbon-name'),
+      city: getElementValue('carbon-city', 'Алматы'),
+      electricity: parseFloat(getElementValue('carbon-electricity')) || 0,
+      electricity_coefficient: parseFloat(getElementValue('carbon-electricity-coefficient')) || 0.5,
+      car_km: parseFloat(getElementValue('carbon-car-km')) || 0,
+      car_coefficient: parseFloat(getElementValue('carbon-car-coefficient')) || 0.2,
+      public_transport_hours: parseFloat(getElementValue('carbon-public-transport')) || 0,
+      flight_hours: parseFloat(getElementValue('carbon-flights')) || 0,
+      diet_type: parseFloat(getElementValue('carbon-diet')) || 800,
+      physical_activity: parseFloat(getElementValue('carbon-physical-activity')) || 1.2,
+      weight_kg: parseFloat(getElementValue('carbon-weight')) || 70,
+      waste_sorting: getElementChecked('carbon-waste-sorting') ? 0.8 : 1.0
+    };
+
+    console.log('Отправляем данные расчета углеродного следа:', formData);
+
+    // Отправляем запрос на сервер
+    const response = await fetch(`${apiBaseUrl}/api/emission/calculate_with_user.php`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    console.log('📡 Ответ получен, статус:', response.status, response.statusText);
+    console.log('📋 Headers ответа:', Object.fromEntries(response.headers.entries()));
+
+    // Проверяем статус ответа
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ Ошибка HTTP:', response.status, response.statusText);
+      console.error('📄 Тело ошибки:', errorText);
+      throw new Error(`HTTP ${response.status}: ${response.statusText}\nОтвет: ${errorText}`);
+    }
+
+    // Получаем текст ответа для отладки
+    const responseText = await response.text();
+    console.log('📄 Сырой ответ сервера:', responseText);
+
+    // Парсим JSON
+    let result;
+    try {
+      result = JSON.parse(responseText);
+    } catch (parseError) {
+      console.error('❌ Ошибка парсинга JSON:', parseError);
+      console.error('📄 Содержимое ответа:', responseText);
+      throw new Error(`Ошибка парсинга ответа сервера: ${parseError.message}\nОтвет: ${responseText}`);
+    }
+    console.log('Ответ от сервера:', result);
+
+    if (result.status === 'success') {
+      // Показываем результат расчета в красивом блоке
+      const monthlyEmission = result.data.total_emission_kg / 1000; // Переводим в тонны
+      const yearlyEmission = monthlyEmission * 12;
+      
+      // Создаем блок с результатами
+      const resultHTML = `
+        <div class="bg-[#23B77F] text-white p-8 rounded-xl mt-6">
+          <h3 class="text-2xl font-bold mb-6">Ваш результат:</h3>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-4xl font-bold">${monthlyEmission.toFixed(3)}</span>
+              <span class="text-xl">тонн CO2 в месяц</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-4xl font-bold">${yearlyEmission.toFixed(3)}</span>
+              <span class="text-xl">тонн CO2 в год</span>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // Находим форму и добавляем результат
+      const form = document.getElementById('carbon-footprint-form');
+      if (form) {
+        // Скрываем кнопку "Рассчитать эмиссию"
+        submitButton.style.display = 'none';
+        
+        // Добавляем результат
+        form.insertAdjacentHTML('beforeend', resultHTML);
+        
+        // Добавляем кнопку для перехода к посадке деревьев
+        const actionButtonHTML = `
+          <button 
+            type="button" 
+            id="plant-trees-action"
+            class="w-full bg-white text-[#23B77F] py-4 px-6 rounded-lg font-bold text-lg border-2 border-[#23B77F] hover:bg-gray-50 transition-colors duration-200 flex items-center justify-center gap-3 mt-6"
+          >
+            <img src="${document.querySelector('#carbon-footprint-modal img').src.replace('plusMinus.svg', 'aloneLepestok.svg')}" alt="" class="w-5 h-5" />
+            Компенсировать выбросы - посадить деревья
+          </button>
+        `;
+        
+        form.insertAdjacentHTML('beforeend', actionButtonHTML);
+        
+        // Добавляем обработчик для кнопки посадки деревьев
+        document.getElementById('plant-trees-action').addEventListener('click', function() {
+          closeCarbonFootprintModal();
+          setTimeout(() => {
+            openPlantTreeModal();
+          }, 300);
+        });
+      }
+      
+    } else {
+      console.error('Ошибка расчета:', result.message);
+      alert('Произошла ошибка при расчете эмиссии. Попробуйте еще раз.');
+    }
+
+  } catch (error) {
+    console.error('❌ Детальная ошибка при отправке запроса:', error);
+    console.error('Тип ошибки:', error.name);
+    console.error('Сообщение ошибки:', error.message);
+    console.error('Stack trace:', error.stack);
+    
+    // Проверяем тип ошибки
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      console.error('🌐 Ошибка сети: не удается подключиться к серверу');
+      console.error('🔗 Проверьте URL:', `${apiBaseUrl}/api/emission/calculate_with_user.php`);
+      alert(`Ошибка подключения к серверу.\nURL: ${apiBaseUrl}/api/emission/calculate_with_user.php\nПроверьте, что сервер запущен и доступен.`);
+    } else if (error.name === 'SyntaxError') {
+      console.error('📝 Ошибка парсинга JSON: сервер вернул некорректный ответ');
+      alert('Сервер вернул некорректный ответ. Проверьте логи сервера.');
+    } else {
+      console.error('🔍 Неизвестная ошибка:', error);
+      alert(`Произошла неизвестная ошибка: ${error.message}`);
+    }
+  } finally {
+    // Восстанавливаем кнопку
+    submitButton.innerHTML = originalText;
+    submitButton.disabled = false;
+  }
+}
+
 // Инициализация модального окна партнерства
 document.addEventListener('DOMContentLoaded', function() {
     // Создаем модальные окна
     createPartnershipModal();
     createFreeCalculationModal();
     createPlantTreeModal();
+    createCarbonFootprintModal();
     
     // Обработчики для кнопок открытия модалки партнерства
     // Поддерживаем множественные кнопки с разными ID
@@ -2570,6 +3192,70 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Обработчики для модального окна расчета углеродного следа
+    // Поддерживаем множественные кнопки с разными ID
+    const carbonFootprintBtnIds = [
+        'btnMainPageSled',              // Основная кнопка на главной странице
+        'carbon-footprint-btn',         // Основная кнопка
+        'carbon-footprint-btn-header',  // Кнопка в хедере
+        'carbon-footprint-btn-footer',  // Кнопка в футере
+        'carbon-footprint-btn-donate',  // Кнопка на странице донатов
+        'carbon-footprint-btn-project', // Кнопка на странице проектов
+        'carbon-footprint-btn-forest'   // Кнопка на лесной странице
+    ];
+    
+    // Добавляем обработчики для всех возможных кнопок по ID
+    carbonFootprintBtnIds.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            btn.addEventListener('click', openCarbonFootprintModal);
+            console.log(`Добавлен обработчик для кнопки расчета углеродного следа: ${btnId}`);
+        }
+    });
+    
+    // Также добавляем обработчик для кнопок по классу (если есть)
+    const carbonFootprintBtnsByClass = document.querySelectorAll('.carbon-footprint-btn, .btn-carbon-footprint, .carbon-calculation-btn');
+    carbonFootprintBtnsByClass.forEach(btn => {
+        btn.addEventListener('click', openCarbonFootprintModal);
+        console.log('Добавлен обработчик для кнопки расчета углеродного следа по классу:', btn.id || btn.className);
+    });
+    
+    // Обработчик для закрытия модалки расчета углеродного следа при клике на фон
+    document.addEventListener('click', function(event) {
+        const modal = document.getElementById('carbon-footprint-modal');
+        const modalContent = document.getElementById('carbon-modal-content');
+        
+        if (modal && event.target === modal && !modalContent.contains(event.target)) {
+            closeCarbonFootprintModal();
+        }
+    });
+    
+    // Обработчик для крестика закрытия модалки расчета углеродного следа
+    document.addEventListener('click', function(event) {
+        if (event.target.id === 'close-carbon-modal-btn' || event.target.closest('#close-carbon-modal-btn')) {
+            closeCarbonFootprintModal();
+        }
+    });
+    
+    // Обработчик для клавиши Escape - закрытие модалок
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            // Закрываем все модалки
+            if (document.getElementById('carbon-footprint-modal') && !document.getElementById('carbon-footprint-modal').classList.contains('hidden')) {
+                closeCarbonFootprintModal();
+            }
+            if (document.getElementById('partnership-modal') && !document.getElementById('partnership-modal').classList.contains('hidden')) {
+                closePartnershipModal();
+            }
+            if (document.getElementById('free-calculation-modal') && !document.getElementById('free-calculation-modal').classList.contains('hidden')) {
+                closeFreeCalculationModal();
+            }
+            if (document.getElementById('plant-tree-modal') && !document.getElementById('plant-tree-modal').classList.contains('hidden')) {
+                closePlantTreeModal();
+            }
+        }
+    });
+
     // Обработчики для кнопок +/- количества деревьев
     document.addEventListener('click', function(event) {
         if (event.target.id === 'increase-trees' || event.target.closest('#increase-trees')) {
