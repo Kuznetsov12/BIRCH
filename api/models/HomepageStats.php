@@ -103,5 +103,40 @@ class HomepageStats {
 
         return false;
     }
+
+    // Увеличить количество поддерживающих (при регистрации пользователя)
+    function incrementSupports() {
+        $query = "UPDATE " . $this->table_name . " 
+                SET total_supports = total_supports + 1 
+                WHERE id = (SELECT id FROM (SELECT id FROM " . $this->table_name . " ORDER BY id DESC LIMIT 1) as temp)";
+
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute();
+    }
+
+    // Увеличить количество посаженных деревьев
+    function incrementTrees($quantity) {
+        $query = "UPDATE " . $this->table_name . " 
+                SET total_trees_planting = total_trees_planting + :quantity 
+                WHERE id = (SELECT id FROM (SELECT id FROM " . $this->table_name . " ORDER BY id DESC LIMIT 1) as temp)";
+
+        $stmt = $this->conn->prepare($query);
+        $quantity = intval($quantity);
+        $stmt->bindParam(":quantity", $quantity);
+        return $stmt->execute();
+    }
+
+    // Обеспечить существование записи статистики (создать если не существует)
+    function ensureExists() {
+        if (!$this->read()) {
+            // Если записи нет, создаем с нулевыми значениями
+            $this->total_trees_planting = 0;
+            $this->total_supports = 0;
+            $this->company_partners = 0;
+            $this->cleared_co_on_year = 0;
+            return $this->create();
+        }
+        return true;
+    }
 }
 ?>

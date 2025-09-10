@@ -14,37 +14,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 include_once '../config/database.php';
 include_once '../models/User.php';
 include_once '../models/Planting.php';
+include_once '../models/HomepageStats.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
 $user = new User($db);
 $planting = new Planting($db);
+$stats = new HomepageStats($db);
 
 // Получить данные
 $data = json_decode(file_get_contents("php://input"));
 
 // Проверить, что все необходимые данные получены
 if(
-    !empty($data->firstName) &&
-    !empty($data->lastName) &&
+    !empty($data->surname) &&
+    !empty($data->name) &&
     !empty($data->phone) &&
     !empty($data->city) &&
-    !empty($data->treeCount) &&
-    $data->treeCount > 0
+    !empty($data->trees_quantity) &&
+    $data->trees_quantity > 0
 ){
     try {
         // Начинаем транзакцию
         $db->beginTransaction();
         
+        // Обеспечиваем существование записи статистики
+        $stats->ensureExists();
+        
         // Ищем пользователя по номеру телефона
         $user->phone = $data->phone;
         $user_exists = $user->findByPhone();
+        $user_was_created = false;
         
         if(!$user_exists) {
             // Если пользователь не найден, создаем нового
-            $user->surname = $data->lastName;
-            $user->name = $data->firstName;
+            $user->surname = $data->surname;
+            $user->name = $data->name;
             $user->phone = $data->phone;
             $user->city = $data->city;
             $user->emission_kg = 0; // По умолчанию
@@ -54,6 +60,10 @@ if(
             if(!$user_id) {
                 throw new Exception("Unable to create user");
             }
+            
+            $user_was_created = true;
+            // Увеличиваем счетчик поддерживающих при создании нового пользователя
+            $stats->incrementSupports();
         } else {
             // Пользователь найден, используем его ID
             $user_id = $user->id;
@@ -61,11 +71,14 @@ if(
         
         // Создаем посадку
         $planting->user_id = $user_id;
-        $planting->trees_quantity = $data->treeCount;
+        $planting->trees_quantity = $data->trees_quantity;
         $planting->year = date('Y'); // Текущий год с сервера
         $planting->city = $data->city;
         
         if($planting->create()) {
+            // Увеличиваем счетчик посаженных деревьев
+            $stats->incrementTrees($data->trees_quantity);
+            
             // Коммитим транзакцию
             $db->commit();
             
@@ -73,8 +86,13 @@ if(
             echo json_encode(array(
                 "status" => "success",
                 "message" => "Planting was created successfully.",
-                "user_created" => !$user_exists,
-                "user_id" => $user_id
+                "user_created" => $user_was_created,
+                "user_id" => $user_id,
+                "trees_planted" => $data->trees_quantity,
+                "stats_updated" => array(
+                    "trees_counter_increased" => true,
+                    "supports_counter_increased" => $user_was_created
+                )
             ));
         } else {
             throw new Exception("Unable to create planting");

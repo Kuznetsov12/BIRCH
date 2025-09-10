@@ -7,6 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once '../config/database.php';
 include_once '../models/User.php';
+include_once '../models/HomepageStats.php';
 
 // Получить данные
 $data = json_decode(file_get_contents("php://input"));
@@ -64,6 +65,10 @@ if(
         $user = new User($db);
         $user->phone = $data->phone;
         
+        // Инициализация статистики
+        $stats = new HomepageStats($db);
+        $stats->ensureExists();
+        
         $user_action = "";
         
         // Ищем пользователя по номеру телефона
@@ -86,6 +91,9 @@ if(
             if($user_id) {
                 $user->id = $user_id;
                 $user_action = "created";
+                
+                // Увеличиваем счетчик поддерживающих при создании нового пользователя
+                $stats->incrementSupports();
             } else {
                 throw new Exception("Failed to create new user");
             }
