@@ -1,3 +1,7 @@
+// Конфигурация API
+const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
+console.log('API Base URL:', apiBaseUrl);
+
 // Функция для переключения мобильного меню
 function toggleMobileMenu() {
   const mobileMenu = document.getElementById('mobileMenu');
@@ -123,7 +127,7 @@ function createPlantTreeModal() {
     strokeWidth={2}
     d="M6 18L18 6M6 6l12 12"
   />
-</svg>;
+</svg>
 
         </button>
         
@@ -167,13 +171,13 @@ function createPlantTreeModal() {
                 <div class="relative">
                   <div class="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center gap-2 z-10">
                     <img src="./src/img/flagKz.svg" alt="KZ" class="w-6 h-4">
-                    <span class="text-gray-600">+7</span>
+                    <span class="text-gray-600 font-medium">+7</span>
                   </div>
                   <input 
                     type="tel" 
                     id="tree-phone" 
                     placeholder="700 000-00-00"
-                    class="w-full text-black pl-16 sm:pl-20 pr-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base"
+                    class="w-full text-black pl-20 pr-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base"
                     required
                   >
                 </div>
@@ -221,21 +225,21 @@ function createPlantTreeModal() {
             </div>
             
             <!-- Количество деревьев -->
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-3">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-0 gap-3">
               <span class="text-gray-800 text-sm sm:text-base">Введите количество деревьев:</span>
               <div class="flex items-center gap-3">
-                <button type="button" id="decrease-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-full flex items-center justify-center hover:bg-green-600 transition">
+                <button type="button" id="decrease-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-sm flex items-center justify-center hover:bg-green-600 transition">
                   <span class="text-xl font-bold">−</span>
                 </button>
                 <input 
                   type="number" 
                   id="tree-count" 
-                  value="155" 
-                  min="1" 
+                  value="0" 
+                  min="0" 
                   max="1000"
                   class="w-16 text-center text-xl font-bold border-none focus:outline-none text-black"
                 />
-                <button type="button" id="increase-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-full flex items-center justify-center hover:bg-green-600 transition">
+                <button type="button" id="increase-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-sm flex items-center justify-center hover:bg-green-600 transition">
                   <span class="text-xl font-bold">+</span>
                 </button>
               </div>
@@ -244,15 +248,16 @@ function createPlantTreeModal() {
             <!-- Сумма к оплате -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-2 text-lg sm:text-xl">
               <span class="text-gray-800">Сумма к оплате:</span>
-              <span id="total-amount" class="font-bold text-gray-600">310 000 ₸</span>
+              <span id="total-amount" class="font-bold text-gray-600">0 ₸</span>
             </div>
             
             <button 
               type="submit" 
+              id="plant-tree-submit-btn"
               class="w-full h-[80px] bg-[#23B77F] text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition duration-200 flex items-center justify-center gap-2 mt-8"
             >
               <img src="./src/img/aloneLepestok.svg" alt="" class="w-5 h-5">
-              Посадить дерево
+              <span id="submit-btn-text">Посадить дерево</span>
             </button>
           </form>
         </div>
@@ -262,6 +267,41 @@ function createPlantTreeModal() {
   
   // Добавляем модалку в body
   document.body.insertAdjacentHTML('beforeend', modalHTML);
+  
+  // Добавляем маску для телефона
+  const phoneInput = document.getElementById('tree-phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      
+      // Ограничиваем до 10 цифр (после +7)
+      if (value.length > 10) {
+        value = value.slice(0, 10);
+      }
+      
+      // Форматируем номер: 700 000-00-00
+      if (value.length >= 1) {
+        if (value.length <= 3) {
+          value = value;
+        } else if (value.length <= 6) {
+          value = value.slice(0, 3) + ' ' + value.slice(3);
+        } else if (value.length <= 8) {
+          value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6);
+        } else {
+          value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6, 8) + '-' + value.slice(8);
+        }
+      }
+      
+      e.target.value = value;
+    });
+    
+    // Добавляем обработчик для предотвращения ввода не цифр
+    phoneInput.addEventListener('keypress', function(e) {
+      if (!/\d/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab') {
+        e.preventDefault();
+      }
+    });
+  }
 }
 
 // Функция открытия модального окна
@@ -362,16 +402,30 @@ function closePlantTreeModal() {
 function updateTreeCount(change) {
   const countInput = document.getElementById('tree-count');
   const totalAmountSpan = document.getElementById('total-amount');
+  const decreaseBtn = document.getElementById('decrease-trees');
   
   if (countInput && totalAmountSpan) {
-    let currentCount = parseInt(countInput.value) || 155;
+    let currentCount = parseInt(countInput.value) || 0;
     currentCount += change;
     
     // Ограничиваем значения
-    if (currentCount < 1) currentCount = 1;
+    if (currentCount < 0) currentCount = 0;
     if (currentCount > 1000) currentCount = 1000;
     
     countInput.value = currentCount;
+    
+    // Управляем состоянием кнопки уменьшения
+    if (decreaseBtn) {
+      if (currentCount <= 0) {
+        decreaseBtn.disabled = true;
+        decreaseBtn.style.opacity = '0.5';
+        decreaseBtn.style.cursor = 'not-allowed';
+      } else {
+        decreaseBtn.disabled = false;
+        decreaseBtn.style.opacity = '1';
+        decreaseBtn.style.cursor = 'pointer';
+      }
+    }
     
     // Расчет суммы (2000 тенге за дерево)
     const totalAmount = currentCount * 2000;
@@ -380,29 +434,62 @@ function updateTreeCount(change) {
 }
 
 // Обработка отправки формы посадки деревьев
-function handlePlantTreeFormSubmit(event) {
+async function handlePlantTreeFormSubmit(event) {
   event.preventDefault();
   
   // Собираем данные формы
+  const phoneValue = document.getElementById('tree-phone').value;
   const formData = {
     firstName: document.getElementById('tree-first-name').value,
     lastName: document.getElementById('tree-last-name').value,
-    phone: document.getElementById('tree-phone').value,
+    phone: phoneValue.startsWith('+7') ? phoneValue : '+7' + phoneValue.replace(/\D/g, ''),
     city: document.getElementById('tree-city').value,
-    treeCount: document.getElementById('tree-count').value,
+    treeCount: parseInt(document.getElementById('tree-count').value),
     payCash: document.getElementById('pay-cash').checked,
     giftTree: document.getElementById('gift-tree').checked
   };
   
   console.log('Данные формы посадки деревьев:', formData);
   
-  // Здесь можно добавить отправку данных на сервер
-  // Пока просто показываем сообщение
-  alert('Заявка на посадку деревьев успешно отправлена! Мы свяжемся с вами для оплаты.');
+  // Проверяем валидность формы
+  if (!formData.firstName || !formData.lastName || !formData.phone || !formData.city || formData.treeCount <= 0) {
+    alert('Пожалуйста, заполните все поля и выберите количество деревьев.');
+    return;
+  }
   
-  // Закрываем модалку и очищаем форму
-  closePlantTreeModal();
-  document.getElementById('plant-tree-form').reset();
+  try {
+    // Отправляем данные на сервер
+    const response = await fetch(`${apiBaseUrl}/api/plantings/create.php`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    console.log('Ответ сервера:', result);
+    
+    // Если выбрана оплата через Kaspi, перенаправляем на Kaspi
+    if (formData.payCash) {
+      alert('Заявка успешно отправлена! Переходим к оплате через Kaspi.');
+      window.open('https://pay.kaspi.kz/pay/cvir0qwc', '_blank');
+    } else {
+      alert('Заявка на посадку деревьев успешно отправлена! Мы свяжемся с вами для оплаты.');
+    }
+    
+    // Закрываем модалку и очищаем форму
+    closePlantTreeModal();
+    document.getElementById('plant-tree-form').reset();
+    
+  } catch (error) {
+    console.error('Ошибка при отправке заявки:', error);
+    alert('Произошла ошибка при отправке заявки. Пожалуйста, попробуйте еще раз.');
+  }
 }
 
 // Анимация счетчиков
@@ -2065,11 +2152,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Обработчики для модального окна посадки деревьев
-    const plantTreeBtn = document.getElementById('plant-tree-btn');
+    // Поддерживаем множественные кнопки с разными ID
+    const plantTreeBtnIds = [
+        'plant-tree-btn',           // Главная страница
+        'plant-tree-btn-main',      // Главная страница (дубликат)
+        'plant-tree-btn-forest',    // Страница леса
+        'plant-tree-btn-donate',    // Страница донатов
+        'plant-tree-btn-project',   // Страница проектов
+        'plant-tree-btn-header',    // Кнопка в хедере
+        'plant-tree-btn-footer'     // Кнопка в футере
+    ];
     
-    if (plantTreeBtn) {
-        plantTreeBtn.addEventListener('click', openPlantTreeModal);
-    }
+    // Добавляем обработчики для всех возможных кнопок
+    plantTreeBtnIds.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            btn.addEventListener('click', openPlantTreeModal);
+            console.log(`Добавлен обработчик для кнопки: ${btnId}`);
+        }
+    });
+    
+    // Также добавляем обработчик для кнопок по классу (если есть)
+    const plantTreeBtnsByClass = document.querySelectorAll('.plant-tree-btn, .btn-plant-tree');
+    plantTreeBtnsByClass.forEach(btn => {
+        btn.addEventListener('click', openPlantTreeModal);
+        console.log('Добавлен обработчик для кнопки по классу:', btn.id || btn.className);
+    });
     
     // Обработчик для крестика закрытия модалки посадки деревьев
     document.addEventListener('click', function(event) {
@@ -2144,9 +2252,57 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Создаем событие change для совместимости
                 const changeEvent = new Event('change', { bubbles: true });
                 checkbox.dispatchEvent(changeEvent);
+                
+                // Обрабатываем изменения для чекбокса Kaspi
+                if (checkbox.id === 'pay-cash') {
+                    handleKaspiPaymentToggle(checkbox.checked);
+                }
             }
         }
     });
+    
+    // Функция для обработки переключения оплаты через Kaspi
+    function handleKaspiPaymentToggle(isKaspiSelected) {
+        const giftTreeLabel = document.querySelector('label:has(#gift-tree)');
+        const submitButton = document.querySelector('#plant-tree-submit-btn');
+        
+        if (isKaspiSelected) {
+            // Скрываем поле "в подарок"
+            if (giftTreeLabel) {
+                giftTreeLabel.style.display = 'none';
+            }
+            
+            // Изменяем кнопку на лепесток + X + лого Kaspi
+            if (submitButton) {
+                submitButton.className = 'kaspi-button w-full h-[80px] mt-8';
+                submitButton.innerHTML = `
+                    <img src="./src/img/aloneLepestok.svg" class="lepestok-icon" viewBox="0 0 24 24" fill="currentColor">
+
+                    </img>
+                    <div class="separator">Х</div>
+                    <img src="./src/img/kaspi.svg" class="kaspi-logo" viewBox="0 0 24 24" fill="currentColor">
+                    </img>
+                    <div>
+                        <span id="submit-btn-text">Оплатить через Kaspi</span>
+                    </div>
+                `;
+            }
+        } else {
+            // Показываем поле "в подарок"
+            if (giftTreeLabel) {
+                giftTreeLabel.style.display = 'flex';
+            }
+            
+            // Возвращаем обычную кнопку
+            if (submitButton) {
+                submitButton.className = 'w-full h-[80px] bg-[#23B77F] text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition duration-200 flex items-center justify-center gap-2 mt-8';
+                submitButton.innerHTML = `
+                    <img src="./src/img/aloneLepestok.svg" alt="" class="w-5 h-5">
+                    <span id="submit-btn-text">Посадить дерево</span>
+                `;
+            }
+        }
+    }
     
     // Обработка отправки формы посадки деревьев
     document.addEventListener('submit', function(event) {
