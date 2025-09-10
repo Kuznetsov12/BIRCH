@@ -25,6 +25,20 @@ function toggleMobileMenu() {
 
 // Создание модального окна партнерства
 function createPartnershipModal() {
+  // Определяем правильный путь к изображениям в зависимости от страницы
+  const getImagePath = () => {
+    const currentPath = window.location.pathname;
+    
+    // Если мы в подпапке pages, используем ../../src/img/
+    if (currentPath.includes('/pages/')) {
+      return '../../src/img/';
+    }
+    // Если мы в корне, используем ./src/img/
+    return './src/img/';
+  };
+  
+  const imagePath = getImagePath();
+  
   const modalHTML = `
     <div id="partnership-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center">
       <div class="bg-white rounded-3xl w-full max-w-[600px] sm:w-full sm:mx-4 transform transition-all duration-300 scale-95 opacity-0 relative border-2 border-gray-200" id="modal-content">
@@ -86,11 +100,20 @@ function createPartnershipModal() {
               >
             </div>
             
+            <div>
+              <input 
+                type="text" 
+                id="potential-budget" 
+                placeholder="Потенциальный бюджет (необязательно)"
+                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              >
+            </div>
+            
             <button 
               type="submit" 
               class="w-full h-[80px] bg-[#23B77F] text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition duration-200 flex items-center justify-center gap-2 mt-8"
             >
-              <img src="./src/img/stayPartner.svg" alt="" class="w-5 h-5">
+              <img src="${imagePath}stayPartner.svg" alt="" class="w-5 h-5">
               Оставить заявку
             </button>
           </form>
@@ -105,6 +128,20 @@ function createPartnershipModal() {
 
 // Создание модального окна посадки деревьев
 function createPlantTreeModal() {
+  // Определяем правильный путь к изображениям в зависимости от страницы
+  const getImagePath = () => {
+    const currentPath = window.location.pathname;
+    
+    // Если мы в подпапке pages, используем ../../src/img/
+    if (currentPath.includes('/pages/')) {
+      return '../../src/img/';
+    }
+    // Если мы в корне, используем ./src/img/
+    return './src/img/';
+  };
+  
+  const imagePath = getImagePath();
+  
   const modalHTML = `
     <div id="plant-tree-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-2 sm:p-4">
       <div class="bg-white rounded-2xl sm:rounded-3xl w-full max-w-[95vw] sm:max-w-[600px] max-h-[95vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 relative border-2 border-gray-200" id="plant-modal-content">
@@ -170,7 +207,7 @@ function createPlantTreeModal() {
                 <label for="tree-phone" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Телефон</label>
                 <div class="relative">
                   <div class="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center gap-2 z-10">
-                    <img src="./src/img/flagKz.svg" alt="KZ" class="w-6 h-4">
+                    <img src="${imagePath}flagKz.svg" alt="KZ" class="w-6 h-4">
                     <span class="text-gray-600 font-medium">+7</span>
                   </div>
                   <input 
@@ -202,13 +239,13 @@ function createPlantTreeModal() {
             <div class="space-y-3 sm:space-y-4 text-left">
               <label class="flex items-center justify-between cursor-pointer">
                 <div class="flex items-center gap-2 flex-1">
-                  <img src="./src/img/kaspi.svg" alt="Kaspi" class="w-5 h-5">
+                  <img src="${imagePath}kaspi.svg" alt="Kaspi" class="w-5 h-5">
                   <span class="text-gray-800 text-sm sm:text-base">Оплатить с помощью каспи</span>
                 </div>
                 <div class="relative ml-3">
                   <input type="checkbox" id="pay-cash" class="sr-only">
                   <div class="w-6 h-6 border-2 border-gray-300 rounded flex items-center justify-center checkbox-custom">
-                    <img src="./src/img/chekboxOkay.svg" alt="" class="w-4 h-4 hidden checkbox-icon">
+                    <img src="${imagePath}chekboxOkay.svg" alt="" class="w-4 h-4 hidden checkbox-icon">
                   </div>
                 </div>
               </label>
@@ -218,7 +255,7 @@ function createPlantTreeModal() {
                 <div class="relative ml-3">
                   <input type="checkbox" id="gift-tree" class="sr-only">
                   <div class="w-6 h-6 border-2 border-gray-300 rounded flex items-center justify-center checkbox-custom">
-                    <img src="./src/img/chekboxOkay.svg" alt="" class="w-4 h-4 hidden checkbox-icon">
+                    <img src="${imagePath}chekboxOkay.svg" alt="" class="w-4 h-4 hidden checkbox-icon">
                   </div>
                 </div>
               </label>
@@ -256,7 +293,7 @@ function createPlantTreeModal() {
               id="plant-tree-submit-btn"
               class="w-full h-[80px] bg-[#23B77F] text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition duration-200 flex items-center justify-center gap-2 mt-8"
             >
-              <img src="./src/img/aloneLepestok.svg" alt="" class="w-5 h-5">
+              <img src="${imagePath}aloneLepestok.svg" alt="" class="w-5 h-5">
               <span id="submit-btn-text">Посадить дерево</span>
             </button>
           </form>
@@ -341,26 +378,82 @@ function closePartnershipModal() {
 }
 
 // Обработка отправки формы
-function handlePartnershipFormSubmit(event) {
+async function handlePartnershipFormSubmit(event) {
   event.preventDefault();
   
   const companyName = document.getElementById('company-name').value;
   const contactPerson = document.getElementById('contact-person').value;
-  const contactEmail = document.getElementById('contact-email').value;
+  const contactInfo = document.getElementById('contact-email').value;
+  const potentialBudget = document.getElementById('potential-budget').value;
   
-  // Здесь можно добавить отправку данных на сервер
-  console.log('Форма партнерства отправлена:', {
-    companyName,
-    contactPerson,
-    contactEmail
-  });
+  // Проверяем валидность формы
+  if (!companyName || !contactPerson || !contactInfo) {
+    alert('Пожалуйста, заполните все обязательные поля.');
+    return;
+  }
   
-  // Показываем сообщение об успешной отправке
-  alert('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+  // Готовим данные для отправки
+  const formData = {
+    organization_name: companyName,
+    contact_person: contactPerson,
+    contact_info: contactInfo,
+    potential_budget: potentialBudget || "Не указано"
+  };
   
-  // Закрываем модалку и очищаем форму
-  closePartnershipModal();
-  document.getElementById('partnership-form').reset();
+  console.log('Отправка заявки партнерства:', formData);
+  
+  try {
+    // Отправляем данные на сервер
+    console.log('Отправка запроса на:', `${apiBaseUrl}/api/email/send_organization_request.php`);
+    
+    const response = await fetch(`${apiBaseUrl}/api/email/send_organization_request.php`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    });
+    
+    console.log('Статус ответа:', response.status, response.statusText);
+    
+    if (!response.ok) {
+      // Попробуем получить текст ошибки от сервера
+      let errorText;
+      try {
+        const errorData = await response.json();
+        errorText = errorData.message || errorData.error || `HTTP error! status: ${response.status}`;
+        console.error('Ошибка от сервера (JSON):', errorData);
+      } catch (jsonError) {
+        errorText = await response.text();
+        console.error('Ошибка от сервера (текст):', errorText);
+      }
+      throw new Error(`Ошибка сервера: ${errorText}`);
+    }
+    
+    const result = await response.json();
+    console.log('Ответ сервера:', result);
+    
+    // Проверяем статус в ответе
+    if (result.status === 'error') {
+      throw new Error(`Ошибка API: ${result.message || 'Неизвестная ошибка'}`);
+    }
+    
+    // Показываем сообщение об успешной отправке
+    alert('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+    
+    // Закрываем модалку и очищаем форму
+    closePartnershipModal();
+    document.getElementById('partnership-form').reset();
+    
+  } catch (error) {
+    console.error('Подробная ошибка при отправке заявки партнерства:', error);
+    console.error('Тип ошибки:', error.name);
+    console.error('Сообщение ошибки:', error.message);
+    console.error('Stack trace:', error.stack);
+    
+    // Показываем более детальное сообщение об ошибке пользователю
+    alert(`Произошла ошибка при отправке заявки: ${error.message}\n\nПожалуйста, попробуйте еще раз или обратитесь в поддержку.`);
+  }
 }
 
 // Функции для модального окна посадки деревьев
@@ -2112,27 +2205,44 @@ document.addEventListener('DOMContentLoaded', function() {
     createPartnershipModal();
     createPlantTreeModal();
     
-    // Обработчики для кнопок открытия модалки
-    const openModalBtn = document.getElementById('open-partnership-modal');
-    const openModalMobileBtn = document.getElementById('open-partnership-modal-mobile');
-    const becomePartnerBtn = document.getElementById('btnMainPageDealBirch');
+    // Обработчики для кнопок открытия модалки партнерства
+    // Поддерживаем множественные кнопки с разными ID
+    const partnershipBtnIds = [
+        'open-partnership-modal',        // Основная кнопка
+        'open-partnership-modal-mobile', // Мобильная кнопка
+        'btnMainPageDealBirch',         // Кнопка на главной странице
+        'partnership-btn-header',        // Кнопка в хедере
+        'partnership-btn-footer',        // Кнопка в футере
+        'partnership-btn-donate',        // Кнопка на странице донатов
+        'partnership-btn-project',       // Кнопка на странице проектов
+        'partnership-btn-forest'         // Кнопка на лесной странице
+    ];
     
-    if (openModalBtn) {
-        openModalBtn.addEventListener('click', openPartnershipModal);
-    }
+    // Добавляем обработчики для всех возможных кнопок по ID
+    partnershipBtnIds.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            if (btnId === 'open-partnership-modal-mobile') {
+                // Специальная обработка для мобильной кнопки
+                btn.addEventListener('click', function() {
+                    toggleMobileMenu(); // Закрываем мобильное меню
+                    setTimeout(() => {
+                        openPartnershipModal(); // Открываем модалку после закрытия меню
+                    }, 300);
+                });
+            } else {
+                btn.addEventListener('click', openPartnershipModal);
+            }
+            console.log(`Добавлен обработчик для кнопки партнерства: ${btnId}`);
+        }
+    });
     
-    if (openModalMobileBtn) {
-        openModalMobileBtn.addEventListener('click', function() {
-            toggleMobileMenu(); // Закрываем мобильное меню
-            setTimeout(() => {
-                openPartnershipModal(); // Открываем модалку после закрытия меню
-            }, 300);
-        });
-    }
-    
-    if (becomePartnerBtn) {
-        becomePartnerBtn.addEventListener('click', openPartnershipModal);
-    }
+    // Также добавляем обработчик для кнопок по классу (если есть)
+    const partnershipBtnsByClass = document.querySelectorAll('.partnership-btn, .btn-partnership, .become-partner-btn');
+    partnershipBtnsByClass.forEach(btn => {
+        btn.addEventListener('click', openPartnershipModal);
+        console.log('Добавлен обработчик для кнопки партнерства по классу:', btn.id || btn.className);
+    });
     
     // Обработчик для закрытия модалки при клике на фон
     document.addEventListener('click', function(event) {
@@ -2263,6 +2373,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Функция для обработки переключения оплаты через Kaspi
     function handleKaspiPaymentToggle(isKaspiSelected) {
+        // Определяем правильный путь к изображениям
+        const getImagePath = () => {
+            const currentPath = window.location.pathname;
+            if (currentPath.includes('/pages/')) {
+                return '../../src/img/';
+            }
+            return './src/img/';
+        };
+        
+        const imagePath = getImagePath();
         const giftTreeLabel = document.querySelector('label:has(#gift-tree)');
         const submitButton = document.querySelector('#plant-tree-submit-btn');
         
@@ -2276,11 +2396,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (submitButton) {
                 submitButton.className = 'kaspi-button w-full h-[80px] mt-8';
                 submitButton.innerHTML = `
-                    <img src="./src/img/aloneLepestok.svg" class="lepestok-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <img src="${imagePath}aloneLepestok.svg" class="lepestok-icon" viewBox="0 0 24 24" fill="currentColor">
 
                     </img>
                     <div class="separator">Х</div>
-                    <img src="./src/img/kaspi.svg" class="kaspi-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <img src="${imagePath}kaspi.svg" class="kaspi-logo" viewBox="0 0 24 24" fill="currentColor">
                     </img>
                     <div>
                         <span id="submit-btn-text">Оплатить через Kaspi</span>
@@ -2297,7 +2417,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (submitButton) {
                 submitButton.className = 'w-full h-[80px] bg-[#23B77F] text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition duration-200 flex items-center justify-center gap-2 mt-8';
                 submitButton.innerHTML = `
-                    <img src="./src/img/aloneLepestok.svg" alt="" class="w-5 h-5">
+                    <img src="${imagePath}aloneLepestok.svg" alt="" class="w-5 h-5">
                     <span id="submit-btn-text">Посадить дерево</span>
                 `;
             }
