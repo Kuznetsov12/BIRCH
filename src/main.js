@@ -1,3 +1,7 @@
+// Конфигурация API
+const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
+console.log('API Base URL:', apiBaseUrl);
+
 // Функция для переключения мобильного меню
 function toggleMobileMenu() {
   const mobileMenu = document.getElementById('mobileMenu');
@@ -16,6 +20,475 @@ function toggleMobileMenu() {
       mobileMenu.style.opacity = '1';
     }, 10);
     document.body.style.overflow = 'hidden'; // Запрещаем прокрутку страницы когда меню открыто
+  }
+}
+
+// Создание модального окна партнерства
+function createPartnershipModal() {
+  const modalHTML = `
+    <div id="partnership-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center">
+      <div class="bg-white rounded-3xl w-full max-w-[600px] sm:w-full sm:mx-4 transform transition-all duration-300 scale-95 opacity-0 relative border-2 border-gray-200" id="modal-content">
+        <!-- Крестик для закрытия -->
+        <button 
+          id="close-modal-btn" 
+          class="absolute top-6 right-6 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200"
+          type="button"
+        >
+          <svg
+  className="prefix__w-6 prefix__h-6"
+  fill="none"
+  stroke="currentColor"
+  viewBox="0 0 24 24"
+  {...props}
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={2}
+    d="M6 18L18 6M6 6l12 12"
+  />
+</svg>
+
+        </button>
+        
+        <div class="px-12 py-12 text-center">
+          <h2 class="text-[27px] font-bold text-gray-800 mb-2">Хотите стать нашим партнёром?</h2>
+          <p class="text-[20px] text-gray-600 mb-8">Партнёрство, которое работает на репутацию и планету</p>
+          
+          <form id="partnership-form" class="space-y-4">
+            <div>
+              <input 
+                type="text" 
+                id="company-name" 
+                placeholder="Наименование организации"
+                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                required
+              >
+            </div>
+            
+            <div>
+              <input 
+                type="text" 
+                id="contact-person" 
+                placeholder="Контактное лицо (ФИО)"
+                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                required
+              >
+            </div>
+            
+            <div>
+              <input 
+                type="email" 
+                id="contact-email" 
+                placeholder="Телефон или e-mail"
+                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                required
+              >
+            </div>
+            
+            <button 
+              type="submit" 
+              class="w-full h-[80px] bg-[#23B77F] text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition duration-200 flex items-center justify-center gap-2 mt-8"
+            >
+              <img src="./src/img/stayPartner.svg" alt="" class="w-5 h-5">
+              Оставить заявку
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  `
+  
+  // Добавляем модалку в body
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+// Создание модального окна посадки деревьев
+function createPlantTreeModal() {
+  const modalHTML = `
+    <div id="plant-tree-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-2 sm:p-4">
+      <div class="bg-white rounded-2xl sm:rounded-3xl w-full max-w-[95vw] sm:max-w-[600px] max-h-[95vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 relative border-2 border-gray-200" id="plant-modal-content">
+        <!-- Крестик для закрытия -->
+        <button 
+          id="close-plant-modal-btn" 
+          class="absolute top-6 right-6 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200"
+          type="button"
+        >
+          <svg
+  className="prefix__w-6 prefix__h-6"
+  fill="none"
+  stroke="currentColor"
+  viewBox="0 0 24 24"
+  {...props}
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={2}
+    d="M6 18L18 6M6 6l12 12"
+  />
+</svg>
+
+        </button>
+        
+        <div class="px-6 sm:px-12 py-8 sm:py-12 text-center">
+          <h2 class="text-2xl sm:text-[27px] font-bold text-gray-800 mb-2">Высадка деревьев</h2>
+          <p class="text-lg sm:text-[20px] text-gray-600 mb-6 sm:mb-8">Внесите вклад в спасение нашей экологии и очистите свой углеродный след</p>
+          
+          <form id="plant-tree-form" class="space-y-4 sm:space-y-6">
+            <!-- Имя и Фамилия в ряд -->
+            <div class="flex flex-col sm:flex-row gap-4">
+              <div class="flex-1">
+                <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                  <label for="tree-first-name" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Имя</label>
+                  <input 
+                    type="text" 
+                    id="tree-first-name" 
+                    placeholder="Введите Ваше имя"
+                    class="w-full text-black px-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base"
+                    required
+                  >
+                </div>
+              </div>
+              <div class="flex-1">
+                <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                  <label for="tree-last-name" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Фамилия</label>
+                  <input 
+                    type="text" 
+                    id="tree-last-name" 
+                    placeholder="Введите Вашу фамилию"
+                    class="w-full text-black px-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            
+            <!-- Телефон с флагом -->
+            <div>
+              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                <label for="tree-phone" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Телефон</label>
+                <div class="relative">
+                  <div class="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center gap-2 z-10">
+                    <img src="./src/img/flagKz.svg" alt="KZ" class="w-6 h-4">
+                    <span class="text-gray-600 font-medium">+7</span>
+                  </div>
+                  <input 
+                    type="tel" 
+                    id="tree-phone" 
+                    placeholder="700 000-00-00"
+                    class="w-full text-black pl-20 pr-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            
+            <!-- Город -->
+            <div>
+              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                <label for="tree-city" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Город</label>
+                <input 
+                  type="text" 
+                  id="tree-city" 
+                  placeholder="Введите город"
+                  class="w-full text-black px-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base"
+                  required
+                >
+              </div>
+            </div>
+            
+            <!-- Чекбоксы -->
+            <div class="space-y-3 sm:space-y-4 text-left">
+              <label class="flex items-center justify-between cursor-pointer">
+                <div class="flex items-center gap-2 flex-1">
+                  <img src="./src/img/kaspi.svg" alt="Kaspi" class="w-5 h-5">
+                  <span class="text-gray-800 text-sm sm:text-base">Оплатить с помощью каспи</span>
+                </div>
+                <div class="relative ml-3">
+                  <input type="checkbox" id="pay-cash" class="sr-only">
+                  <div class="w-6 h-6 border-2 border-gray-300 rounded flex items-center justify-center checkbox-custom">
+                    <img src="./src/img/chekboxOkay.svg" alt="" class="w-4 h-4 hidden checkbox-icon">
+                  </div>
+                </div>
+              </label>
+              
+              <label class="flex items-center justify-between cursor-pointer">
+                <span class="text-gray-800 flex-1 text-sm sm:text-base">Высадить деревья в подарок</span>
+                <div class="relative ml-3">
+                  <input type="checkbox" id="gift-tree" class="sr-only">
+                  <div class="w-6 h-6 border-2 border-gray-300 rounded flex items-center justify-center checkbox-custom">
+                    <img src="./src/img/chekboxOkay.svg" alt="" class="w-4 h-4 hidden checkbox-icon">
+                  </div>
+                </div>
+              </label>
+            </div>
+            
+            <!-- Количество деревьев -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-0 gap-3">
+              <span class="text-gray-800 text-sm sm:text-base">Введите количество деревьев:</span>
+              <div class="flex items-center gap-3">
+                <button type="button" id="decrease-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-sm flex items-center justify-center hover:bg-green-600 transition">
+                  <span class="text-xl font-bold">−</span>
+                </button>
+                <input 
+                  type="number" 
+                  id="tree-count" 
+                  value="0" 
+                  min="0" 
+                  max="1000"
+                  class="w-16 text-center text-xl font-bold border-none focus:outline-none text-black"
+                />
+                <button type="button" id="increase-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-sm flex items-center justify-center hover:bg-green-600 transition">
+                  <span class="text-xl font-bold">+</span>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Сумма к оплате -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-2 text-lg sm:text-xl">
+              <span class="text-gray-800">Сумма к оплате:</span>
+              <span id="total-amount" class="font-bold text-gray-600">0 ₸</span>
+            </div>
+            
+            <button 
+              type="submit" 
+              id="plant-tree-submit-btn"
+              class="w-full h-[80px] bg-[#23B77F] text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition duration-200 flex items-center justify-center gap-2 mt-8"
+            >
+              <img src="./src/img/aloneLepestok.svg" alt="" class="w-5 h-5">
+              <span id="submit-btn-text">Посадить дерево</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // Добавляем модалку в body
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+  
+  // Добавляем маску для телефона
+  const phoneInput = document.getElementById('tree-phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      
+      // Ограничиваем до 10 цифр (после +7)
+      if (value.length > 10) {
+        value = value.slice(0, 10);
+      }
+      
+      // Форматируем номер: 700 000-00-00
+      if (value.length >= 1) {
+        if (value.length <= 3) {
+          value = value;
+        } else if (value.length <= 6) {
+          value = value.slice(0, 3) + ' ' + value.slice(3);
+        } else if (value.length <= 8) {
+          value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6);
+        } else {
+          value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6, 8) + '-' + value.slice(8);
+        }
+      }
+      
+      e.target.value = value;
+    });
+    
+    // Добавляем обработчик для предотвращения ввода не цифр
+    phoneInput.addEventListener('keypress', function(e) {
+      if (!/\d/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab') {
+        e.preventDefault();
+      }
+    });
+  }
+}
+
+// Функция открытия модального окна
+function openPartnershipModal() {
+  const modal = document.getElementById('partnership-modal');
+  const modalContent = document.getElementById('modal-content');
+  
+  if (modal && modalContent) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    
+    // Анимация появления
+    setTimeout(() => {
+      modalContent.classList.remove('scale-95', 'opacity-0');
+      modalContent.classList.add('scale-100', 'opacity-100');
+    }, 10);
+  }
+}
+
+// Функция закрытия модального окна
+function closePartnershipModal() {
+  const modal = document.getElementById('partnership-modal');
+  const modalContent = document.getElementById('modal-content');
+  
+  if (modal && modalContent) {
+    // Анимация исчезновения
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    modalContent.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }, 300);
+  }
+}
+
+// Обработка отправки формы
+function handlePartnershipFormSubmit(event) {
+  event.preventDefault();
+  
+  const companyName = document.getElementById('company-name').value;
+  const contactPerson = document.getElementById('contact-person').value;
+  const contactEmail = document.getElementById('contact-email').value;
+  
+  // Здесь можно добавить отправку данных на сервер
+  console.log('Форма партнерства отправлена:', {
+    companyName,
+    contactPerson,
+    contactEmail
+  });
+  
+  // Показываем сообщение об успешной отправке
+  alert('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+  
+  // Закрываем модалку и очищаем форму
+  closePartnershipModal();
+  document.getElementById('partnership-form').reset();
+}
+
+// Функции для модального окна посадки деревьев
+function openPlantTreeModal() {
+  const modal = document.getElementById('plant-tree-modal');
+  const modalContent = document.getElementById('plant-modal-content');
+  
+  if (modal && modalContent) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    
+    // Анимация появления
+    setTimeout(() => {
+      modalContent.classList.remove('scale-95', 'opacity-0');
+      modalContent.classList.add('scale-100', 'opacity-100');
+    }, 10);
+  }
+}
+
+function closePlantTreeModal() {
+  const modal = document.getElementById('plant-tree-modal');
+  const modalContent = document.getElementById('plant-modal-content');
+  
+  if (modal && modalContent) {
+    // Анимация скрытия
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    modalContent.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }, 300);
+  }
+}
+
+// Функция для управления количеством деревьев и расчета суммы
+function updateTreeCount(change) {
+  const countInput = document.getElementById('tree-count');
+  const totalAmountSpan = document.getElementById('total-amount');
+  const decreaseBtn = document.getElementById('decrease-trees');
+  
+  if (countInput && totalAmountSpan) {
+    let currentCount = parseInt(countInput.value) || 0;
+    currentCount += change;
+    
+    // Ограничиваем значения
+    if (currentCount < 0) currentCount = 0;
+    if (currentCount > 1000) currentCount = 1000;
+    
+    countInput.value = currentCount;
+    
+    // Управляем состоянием кнопки уменьшения
+    if (decreaseBtn) {
+      if (currentCount <= 0) {
+        decreaseBtn.disabled = true;
+        decreaseBtn.style.opacity = '0.5';
+        decreaseBtn.style.cursor = 'not-allowed';
+      } else {
+        decreaseBtn.disabled = false;
+        decreaseBtn.style.opacity = '1';
+        decreaseBtn.style.cursor = 'pointer';
+      }
+    }
+    
+    // Расчет суммы (2000 тенге за дерево)
+    const totalAmount = currentCount * 2000;
+    totalAmountSpan.textContent = totalAmount.toLocaleString('ru-RU') + ' ₸';
+  }
+}
+
+// Обработка отправки формы посадки деревьев
+async function handlePlantTreeFormSubmit(event) {
+  event.preventDefault();
+  
+  // Собираем данные формы
+  const phoneValue = document.getElementById('tree-phone').value;
+  const formData = {
+    firstName: document.getElementById('tree-first-name').value,
+    lastName: document.getElementById('tree-last-name').value,
+    phone: phoneValue.startsWith('+7') ? phoneValue : '+7' + phoneValue.replace(/\D/g, ''),
+    city: document.getElementById('tree-city').value,
+    treeCount: parseInt(document.getElementById('tree-count').value),
+    payCash: document.getElementById('pay-cash').checked,
+    giftTree: document.getElementById('gift-tree').checked
+  };
+  
+  console.log('Данные формы посадки деревьев:', formData);
+  
+  // Проверяем валидность формы
+  if (!formData.firstName || !formData.lastName || !formData.phone || !formData.city || formData.treeCount <= 0) {
+    alert('Пожалуйста, заполните все поля и выберите количество деревьев.');
+    return;
+  }
+  
+  try {
+    // Отправляем данные на сервер
+    const response = await fetch(`${apiBaseUrl}/api/plantings/create.php`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    console.log('Ответ сервера:', result);
+    
+    // Если выбрана оплата через Kaspi, перенаправляем на Kaspi
+    if (formData.payCash) {
+      alert('Заявка успешно отправлена! Переходим к оплате через Kaspi.');
+      window.open('https://pay.kaspi.kz/pay/cvir0qwc', '_blank');
+    } else {
+      alert('Заявка на посадку деревьев успешно отправлена! Мы свяжемся с вами для оплаты.');
+    }
+    
+    // Закрываем модалку и очищаем форму
+    closePlantTreeModal();
+    document.getElementById('plant-tree-form').reset();
+    
+  } catch (error) {
+    console.error('Ошибка при отправке заявки:', error);
+    alert('Произошла ошибка при отправке заявки. Пожалуйста, попробуйте еще раз.');
   }
 }
 
@@ -593,6 +1066,26 @@ function initMap() {
   addTreePlantingMarkers();
 }
 
+// Инициализация пустой карты для Donate.html
+function initEmptyMap() {
+  // Координаты Алматы (центр карты)
+  const almaty = [43.2220, 76.8512];
+  
+  // Создаем карту
+  map = L.map('openstreet-map', {
+    zoomControl: false // Отключаем стандартные элементы управления
+  }).setView(almaty, 11);
+  
+  // Добавляем слой OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19,
+    minZoom: 5
+  }).addTo(map);
+
+  // Не добавляем статические маркеры - карта будет пустой до поиска пользователя
+}
+
 // Функция добавления маркеров районов высадки
 function addTreePlantingMarkers() {
   const plantingAreas = [
@@ -620,7 +1113,7 @@ function addTreePlantingMarkers() {
     // Создаем стильный popup с белым полупрозрачным фоном как на скриншоте
     const popupContent = `
       <div style="
-        background: black/80 !important;
+        background: rgba(0,0,0,0.8) !important;
         color: white !important;
         padding: 12px 16px !important;
         border-radius: 12px !important;
@@ -671,32 +1164,130 @@ function zoomOutMap() {
   }
 }
 
-// Функция поиска по номеру телефона (заглушка)
-function findUserTrees(phoneNumber) {
-  // Здесь будет логика поиска деревьев пользователя по номеру телефона
+// Функция поиска деревьев пользователя по номеру телефона
+async function findUserTrees(phoneNumber) {
+  if (!phoneNumber) {
+    alert('Пожалуйста, введите номер телефона');
+    return;
+  }
+  
   console.log('Поиск деревьев для номера:', phoneNumber);
   
-  // Пример: фокусируемся на случайном маркере
-  if (markers.length > 0) {
-    const randomMarker = markers[Math.floor(Math.random() * markers.length)];
-    const latlng = randomMarker.getLatLng();
-    map.setView([latlng.lat, latlng.lng], 15);
-    randomMarker.openPopup();
+  try {
+    const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
+    
+    // Проверяем, существует ли пользователь
+    const checkResponse = await fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phoneNumber)}`);
+    const checkData = await checkResponse.json();
+    
+    console.log('Ответ API для поиска пользователя:', checkData);
+    
+    // Проверяем успешный ответ и наличие данных пользователя
+    if (checkResponse.ok && checkData.status === 'success' && checkData.data) {
+      const user = checkData.data;
+      
+      // Если у пользователя есть посадки, показываем их на карте
+      if (user.plantings && user.plantings.length > 0) {
+        showUserTreesOnMap(user);
+      } else {
+        // Пользователь есть, но нет деревьев - перекидываем на EmissionAuth для расчета эмиссии
+        localStorage.setItem('userData', JSON.stringify(user));
+        localStorage.setItem('userPhone', phoneNumber);
+        window.location.href = 'EmissionAuth.html';
+      }
+    } else {
+      // Пользователь не найден - перекидываем на EmissionAuth для регистрации
+      localStorage.setItem('userPhone', phoneNumber);
+      localStorage.removeItem('userData');
+      window.location.href = 'EmissionAuth.html';
+    }
+  } catch (error) {
+    console.error('Ошибка при поиске пользователя:', error);
+    alert('Произошла ошибка при поиске. Попробуйте еще раз.');
   }
+}
+
+// Функция для показа деревьев пользователя на карте
+function showUserTreesOnMap(user) {
+  // Очищаем существующие маркеры
+  markers.forEach(marker => {
+    map.removeLayer(marker);
+  });
+  markers = [];
+  
+  // Подсчитываем общее количество деревьев
+  const totalTrees = user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0);
+  
+  // Берем координаты из первой посадки или используем дефолтные для города пользователя
+  let coordinates = [43.2220, 76.8512]; // Алматы по умолчанию
+  
+  if (user.plantings[0] && user.plantings[0].latitude && user.plantings[0].longitude) {
+    coordinates = [parseFloat(user.plantings[0].latitude), parseFloat(user.plantings[0].longitude)];
+  }
+  
+  // Создаем кастомную иконку
+  const customIcon = L.icon({
+    iconUrl: '../../src/img/customMarker.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -45]
+  });
+
+  // Создаем маркер для пользователя
+  const marker = L.marker(coordinates, { icon: customIcon }).addTo(map);
+  
+  // Создаем popup с информацией о пользователе
+  const popupContent = `
+    <div class="user-trees-popup">
+      <div class="popup-title">${user.name} ${user.surname}</div>
+      <div class="popup-trees">${totalTrees} деревьев</div>
+      <div class="popup-city">${user.city || 'Алматы'}</div>
+    </div>
+  `;
+  
+  marker.bindPopup(popupContent, {
+    closeButton: false,
+    className: 'custom-user-popup',
+    offset: [0, -10],
+    autoPan: true,
+    closeOnClick: false,
+    autoClose: false,
+    maxWidth: 'none',
+    minWidth: 0
+  });
+
+  // Показываем popup и фокусируемся на маркере
+  marker.openPopup();
+  map.setView(coordinates, 12);
+  
+  markers.push(marker);
+  
+  console.log(`Показаны деревья пользователя: ${user.name} ${user.surname}, ${totalTrees} деревьев`);
 }
 
 // Инициализация карты при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
   // Проверяем, есть ли контейнер для карты
   if (document.getElementById('openstreet-map')) {
-    initMap();
+    // Для страницы Emission.html используем специальную инициализацию
+    if (window.location.pathname.includes('Emission.html')) {
+      // Карта для Emission.html инициализируется через initializeEmissionPage()
+      // Не вызываем здесь initMap()
+    } else if (window.location.pathname.includes('Donate.html')) {
+      // Для страницы Donate.html инициализируем пустую карту без маркеров
+      initEmptyMap();
+    } else {
+      // Для других страниц используем обычную карту со всеми метками
+      initMap();
+    }
   }
 });
 
 // Обработчик формы поиска на карте
 document.addEventListener('DOMContentLoaded', () => {
-  const mapSearchButton = document.querySelector('#openstreet-map').parentElement.querySelector('.absolute button');
-  const mapSearchInput = document.querySelector('#openstreet-map').parentElement.querySelector('.absolute input[type="tel"]');
+  // Обработчик для кнопки поиска на карте (новый ID)
+  const mapSearchButton = document.getElementById('map-search-btn');
+  const mapSearchInput = document.getElementById('map-search-input');
   
   if (mapSearchButton && mapSearchInput) {
     mapSearchButton.addEventListener('click', (e) => {
@@ -711,6 +1302,30 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Enter') {
         e.preventDefault();
         const phoneNumber = mapSearchInput.value.trim();
+        if (phoneNumber) {
+          findUserTrees(phoneNumber);
+        }
+      }
+    });
+  }
+  
+  // Старый обработчик для совместимости с другими страницами
+  const oldMapSearchButton = document.querySelector('#openstreet-map')?.parentElement?.querySelector('.absolute button');
+  const oldMapSearchInput = document.querySelector('#openstreet-map')?.parentElement?.querySelector('.absolute input[type="tel"]');
+  
+  if (oldMapSearchButton && oldMapSearchInput && !mapSearchButton) {
+    oldMapSearchButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      const phoneNumber = oldMapSearchInput.value.trim();
+      if (phoneNumber) {
+        findUserTrees(phoneNumber);
+      }
+    });
+    
+    oldMapSearchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const phoneNumber = oldMapSearchInput.value.trim();
         if (phoneNumber) {
           findUserTrees(phoneNumber);
         }
@@ -1321,3 +1936,789 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 250);
     });
 });
+
+// === Код для динамической бегущей строки ===
+
+// Получаем API URL из переменных окружения или используем fallback
+const getApiConfig = () => {
+    // Используем переменные из .env файла через глобальные переменные или fallback
+    return {
+        apiBaseUrl: window.VITE_API_BASE_URL || 'http://localhost:3000',
+        isDebug: window.VITE_APP_DEBUG === 'true' || false
+    };
+};
+
+// Функция для загрузки пользователей из API
+async function loadUsersForMarquee() {
+    const config = getApiConfig();
+    
+    try {
+        if (config.isDebug) {
+            console.log('Загружаем данные пользователей из API...');
+        }
+        
+        const apiUrl = `${config.apiBaseUrl}/api/users/read.php`;
+        console.log('Запрос к API:', apiUrl);
+        
+        const response = await fetch(apiUrl);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (config.isDebug) {
+            console.log('Получены данные из API:', data);
+        }
+        
+        if (data.status === 'success' && data.data && data.data.length > 0) {
+            console.log(`Загружено ${data.data.length} пользователей`);
+            generateMarqueeContent(data.data);
+        } else {
+            console.warn('API вернул пустые данные, используем статичные данные');
+            // Оставляем статичные данные если API вернул пустой результат
+        }
+    } catch (error) {
+        console.warn('Ошибка загрузки пользователей:', error.message);
+        console.log('Используем статичные данные как fallback');
+        // Оставляем статичные данные при ошибке
+    }
+}
+
+// Функция для генерации контента бегущей строки
+function generateMarqueeContent(users) {
+    // Проверяем какая страница открыта и какой контейнер использовать
+    const mainMarqueeContainer = document.getElementById('dynamic-marquee');
+    const forestMarqueeContainer = document.getElementById('forest-dynamic-marquee');
+    
+    let marqueeContainer = null;
+    let isForestPage = false;
+    
+    if (forestMarqueeContainer) {
+        marqueeContainer = forestMarqueeContainer;
+        isForestPage = true;
+    } else if (mainMarqueeContainer) {
+        marqueeContainer = mainMarqueeContainer;
+        isForestPage = false;
+    }
+    
+    if (!marqueeContainer) {
+        console.warn('Контейнер бегущей строки не найден');
+        return;
+    }
+    
+    // Очищаем контейнер
+    marqueeContainer.innerHTML = '';
+    
+    // Функция для создания карточки пользователя
+    function createUserCard(user) {
+        // Считаем общее количество деревьев
+        const totalTrees = user.plantings.reduce((sum, planting) => sum + planting.trees_quantity, 0);
+        
+        // Формируем короткое имя (Имя + первая буква фамилии)
+        const shortName = `${user.name} ${user.surname.charAt(0)}.`;
+        
+        if (isForestPage) {
+            // Формат для лесной страницы (карточки с деревьями)
+            return `
+                <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+                    <div class="text-left">
+                        <div class="text-6xl font-normal text-white flex items-center gap-2">
+                            ${totalTrees}
+                            <span class="text-6xl">🌳</span>
+                        </div>
+                        <div class="text-lg text-gray-300 mt-1">${shortName}</div>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Формат для главной страницы (простые карточки)
+            return `
+                <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+                    <div class="text-left">
+                        <div class="text-6xl font-normal text-white flex items-center gap-2">
+                            ${totalTrees}
+                            <span class="text-6xl">🌳</span>
+                        </div>
+                        <div class="text-lg text-gray-300 mt-1">${shortName}</div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+    
+    // Фильтруем пользователей у которых есть посадки
+    const usersWithPlantings = users.filter(user => user.plantings && user.plantings.length > 0);
+    
+    if (usersWithPlantings.length === 0) {
+        console.warn('Нет пользователей с посадками, оставляем статичные данные');
+        return;
+    }
+    
+    // Создаем карточки для пользователей
+    let content = '';
+    usersWithPlantings.forEach(user => {
+        content += createUserCard(user);
+    });
+    
+    // Дублируем контент для бесконечной прокрутки (минимум 2 раза)
+    const duplicatedContent = content + content + content;
+    
+    // Если пользователей мало, дублируем еще раз для плавной анимации
+    if (usersWithPlantings.length < 8) {
+        marqueeContainer.innerHTML = duplicatedContent + content;
+    } else {
+        marqueeContainer.innerHTML = duplicatedContent;
+    }
+    
+    console.log(`Динамическая бегущая строка обновлена с данными из API (${isForestPage ? 'лесная' : 'главная'} страница)`);
+}
+
+// Инициализация загрузки пользователей для главной страницы
+document.addEventListener('DOMContentLoaded', function() {
+    // Проверяем, что мы на главной странице
+    const isMainPage = window.location.pathname === '/' || 
+                      window.location.pathname.includes('index.html') || 
+                      window.location.pathname === '';
+    
+    if (isMainPage && document.getElementById('dynamic-marquee')) {
+        console.log('Инициализируем загрузку пользователей для бегущей строки главной страницы...');
+        
+        // Загружаем пользователей сразу
+        loadUsersForMarquee();
+        
+        // Обновляем данные каждые 5 минут
+        setInterval(loadUsersForMarquee, 5 * 60 * 1000);
+    }
+    
+    // Проверяем, что мы на странице PlantForest
+    const isForestPage = window.location.pathname.includes('PlantForest.html');
+    
+    if (isForestPage && document.getElementById('forest-dynamic-marquee')) {
+        console.log('Инициализируем загрузку пользователей для бегущей строки лесной страницы...');
+        
+        // Загружаем пользователей сразу
+        loadUsersForMarquee();
+        
+        // Обновляем данные каждые 5 минут
+        setInterval(loadUsersForMarquee, 5 * 60 * 1000);
+    }
+});
+
+// Инициализация модального окна партнерства
+document.addEventListener('DOMContentLoaded', function() {
+    // Создаем модальные окна
+    createPartnershipModal();
+    createPlantTreeModal();
+    
+    // Обработчики для кнопок открытия модалки
+    const openModalBtn = document.getElementById('open-partnership-modal');
+    const openModalMobileBtn = document.getElementById('open-partnership-modal-mobile');
+    const becomePartnerBtn = document.getElementById('btnMainPageDealBirch');
+    
+    if (openModalBtn) {
+        openModalBtn.addEventListener('click', openPartnershipModal);
+    }
+    
+    if (openModalMobileBtn) {
+        openModalMobileBtn.addEventListener('click', function() {
+            toggleMobileMenu(); // Закрываем мобильное меню
+            setTimeout(() => {
+                openPartnershipModal(); // Открываем модалку после закрытия меню
+            }, 300);
+        });
+    }
+    
+    if (becomePartnerBtn) {
+        becomePartnerBtn.addEventListener('click', openPartnershipModal);
+    }
+    
+    // Обработчик для закрытия модалки при клике на фон
+    document.addEventListener('click', function(event) {
+        const modal = document.getElementById('partnership-modal');
+        const modalContent = document.getElementById('modal-content');
+        
+        if (modal && event.target === modal && !modalContent.contains(event.target)) {
+            closePartnershipModal();
+        }
+    });
+    
+    // Обработчик для крестика закрытия модалки
+    document.addEventListener('click', function(event) {
+        if (event.target.id === 'close-modal-btn' || event.target.closest('#close-modal-btn')) {
+            closePartnershipModal();
+        }
+    });
+    
+    // Обработчики для модального окна посадки деревьев
+    // Поддерживаем множественные кнопки с разными ID
+    const plantTreeBtnIds = [
+        'plant-tree-btn',           // Главная страница
+        'plant-tree-btn-main',      // Главная страница (дубликат)
+        'plant-tree-btn-forest',    // Страница леса
+        'plant-tree-btn-donate',    // Страница донатов
+        'plant-tree-btn-project',   // Страница проектов
+        'plant-tree-btn-header',    // Кнопка в хедере
+        'plant-tree-btn-footer'     // Кнопка в футере
+    ];
+    
+    // Добавляем обработчики для всех возможных кнопок
+    plantTreeBtnIds.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            btn.addEventListener('click', openPlantTreeModal);
+            console.log(`Добавлен обработчик для кнопки: ${btnId}`);
+        }
+    });
+    
+    // Также добавляем обработчик для кнопок по классу (если есть)
+    const plantTreeBtnsByClass = document.querySelectorAll('.plant-tree-btn, .btn-plant-tree');
+    plantTreeBtnsByClass.forEach(btn => {
+        btn.addEventListener('click', openPlantTreeModal);
+        console.log('Добавлен обработчик для кнопки по классу:', btn.id || btn.className);
+    });
+    
+    // Обработчик для крестика закрытия модалки посадки деревьев
+    document.addEventListener('click', function(event) {
+        if (event.target.id === 'close-plant-modal-btn' || event.target.closest('#close-plant-modal-btn')) {
+            closePlantTreeModal();
+        }
+    });
+    
+    // Обработчик для закрытия модалки посадки деревьев при клике на фон
+    document.addEventListener('click', function(event) {
+        const modal = document.getElementById('plant-tree-modal');
+        const modalContent = document.getElementById('plant-modal-content');
+        
+        if (modal && event.target === modal && !modalContent.contains(event.target)) {
+            closePlantTreeModal();
+        }
+    });
+    
+    // Обработчики для кнопок +/- количества деревьев
+    document.addEventListener('click', function(event) {
+        if (event.target.id === 'increase-trees' || event.target.closest('#increase-trees')) {
+            updateTreeCount(1);
+        }
+        if (event.target.id === 'decrease-trees' || event.target.closest('#decrease-trees')) {
+            updateTreeCount(-1);
+        }
+    });
+    
+    // Обработчик для ручного ввода количества деревьев
+    document.addEventListener('input', function(event) {
+        if (event.target.id === 'tree-count') {
+            const countInput = event.target;
+            const totalAmountSpan = document.getElementById('total-amount');
+            
+            let currentCount = parseInt(countInput.value) || 1;
+            if (currentCount < 1) currentCount = 1;
+            if (currentCount > 1000) currentCount = 1000;
+            
+            countInput.value = currentCount;
+            
+            const totalAmount = currentCount * 2000;
+            if (totalAmountSpan) {
+                totalAmountSpan.textContent = totalAmount.toLocaleString('ru-RU') + ' ₸';
+            }
+        }
+    });
+    
+    // Обработчики для чекбоксов
+    document.addEventListener('click', function(event) {
+        const target = event.target;
+        
+        // Если клик по кастомному чекбоксу или его содержимому
+        if (target.closest('.checkbox-custom')) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const label = target.closest('label');
+            const checkbox = label.querySelector('input[type="checkbox"]');
+            const checkIcon = label.querySelector('.checkbox-icon');
+            
+            if (checkbox && checkIcon) {
+                // Переключаем состояние
+                checkbox.checked = !checkbox.checked;
+                
+                // Обновляем визуальное отображение
+                if (checkbox.checked) {
+                    checkIcon.classList.remove('hidden');
+                } else {
+                    checkIcon.classList.add('hidden');
+                }
+                
+                // Создаем событие change для совместимости
+                const changeEvent = new Event('change', { bubbles: true });
+                checkbox.dispatchEvent(changeEvent);
+                
+                // Обрабатываем изменения для чекбокса Kaspi
+                if (checkbox.id === 'pay-cash') {
+                    handleKaspiPaymentToggle(checkbox.checked);
+                }
+            }
+        }
+    });
+    
+    // Функция для обработки переключения оплаты через Kaspi
+    function handleKaspiPaymentToggle(isKaspiSelected) {
+        const giftTreeLabel = document.querySelector('label:has(#gift-tree)');
+        const submitButton = document.querySelector('#plant-tree-submit-btn');
+        
+        if (isKaspiSelected) {
+            // Скрываем поле "в подарок"
+            if (giftTreeLabel) {
+                giftTreeLabel.style.display = 'none';
+            }
+            
+            // Изменяем кнопку на лепесток + X + лого Kaspi
+            if (submitButton) {
+                submitButton.className = 'kaspi-button w-full h-[80px] mt-8';
+                submitButton.innerHTML = `
+                    <img src="./src/img/aloneLepestok.svg" class="lepestok-icon" viewBox="0 0 24 24" fill="currentColor">
+
+                    </img>
+                    <div class="separator">Х</div>
+                    <img src="./src/img/kaspi.svg" class="kaspi-logo" viewBox="0 0 24 24" fill="currentColor">
+                    </img>
+                    <div>
+                        <span id="submit-btn-text">Оплатить через Kaspi</span>
+                    </div>
+                `;
+            }
+        } else {
+            // Показываем поле "в подарок"
+            if (giftTreeLabel) {
+                giftTreeLabel.style.display = 'flex';
+            }
+            
+            // Возвращаем обычную кнопку
+            if (submitButton) {
+                submitButton.className = 'w-full h-[80px] bg-[#23B77F] text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition duration-200 flex items-center justify-center gap-2 mt-8';
+                submitButton.innerHTML = `
+                    <img src="./src/img/aloneLepestok.svg" alt="" class="w-5 h-5">
+                    <span id="submit-btn-text">Посадить дерево</span>
+                `;
+            }
+        }
+    }
+    
+    // Обработка отправки формы посадки деревьев
+    document.addEventListener('submit', function(event) {
+        if (event.target.id === 'plant-tree-form') {
+            handlePlantTreeFormSubmit(event);
+        }
+    });
+    
+    // Обработчик для отправки формы
+    document.addEventListener('submit', function(event) {
+        if (event.target.id === 'partnership-form') {
+            handlePartnershipFormSubmit(event);
+        }
+    });
+    
+    // Закрытие модалок по ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const partnershipModal = document.getElementById('partnership-modal');
+            const plantTreeModal = document.getElementById('plant-tree-modal');
+            
+            if (partnershipModal && !partnershipModal.classList.contains('hidden')) {
+                closePartnershipModal();
+            }
+            if (plantTreeModal && !plantTreeModal.classList.contains('hidden')) {
+                closePlantTreeModal();
+            }
+        }
+    });
+
+    // Инициализация функций для эмиссии
+    initializeEmissionFunctions();
+  });
+
+// Функции для работы с API эмиссии
+function initializeEmissionFunctions() {
+    const emissionPhoneInput = document.getElementById('emission-phone-input');
+    const emissionCheckBtn = document.getElementById('emission-check-btn');
+    
+    if (emissionCheckBtn) {
+        emissionCheckBtn.addEventListener('click', handleEmissionCheck);
+    }
+}
+
+async function handleEmissionCheck() {
+    const phoneInput = document.getElementById('emission-phone-input');
+    const phone = phoneInput ? phoneInput.value.trim() : '';
+    
+    if (!phone) {
+        alert('Пожалуйста, введите номер телефона');
+        return;
+    }
+    
+    // Показываем индикатор загрузки
+    const checkBtn = document.getElementById('emission-check-btn');
+    const originalText = checkBtn ? checkBtn.textContent : '';
+    if (checkBtn) {
+        checkBtn.textContent = 'Проверяем...';
+        checkBtn.disabled = true;
+    }
+    
+    try {
+        const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
+        
+        // Проверяем, существует ли пользователь
+        const checkResponse = await fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`);
+        const checkData = await checkResponse.json();
+        
+        console.log('Ответ API для проверки пользователя:', checkData);
+        
+        // Проверяем успешный ответ и наличие данных пользователя
+        if (checkResponse.ok && checkData.status === 'success' && checkData.data) {
+            const user = checkData.data;
+            
+            // Пользователь найден - проверяем есть ли у него эмиссия
+            if (user.emission_kg && user.emission_kg > 0) {
+                // У пользователя есть рассчитанная эмиссия - переходим на Emission.html
+                localStorage.setItem('userData', JSON.stringify(user));
+                window.location.href = 'Emission.html';
+            } else {
+                // Пользователь есть, но нет эмиссии - переходим на EmissionAuth.html для расчета
+                localStorage.setItem('userData', JSON.stringify(user));
+                localStorage.setItem('userPhone', phone);
+                window.location.href = 'EmissionAuth.html';
+            }
+            return;
+        }
+        
+        // Если дошли сюда - пользователь не найден (404, неуспешный статус или нет данных)
+        // Пользователь будет создан позже при заполнении формы расчета эмиссии
+        console.log('Пользователь не найден, переходим на EmissionAuth для регистрации');
+        localStorage.setItem('userPhone', phone);
+        localStorage.removeItem('userData');
+        window.location.href = 'EmissionAuth.html';
+    } catch (error) {
+        console.error('Ошибка при проверке пользователя:', error);
+        alert('Произошла ошибка при проверке. Попробуйте еще раз.');
+        
+        // Восстанавливаем кнопку
+        if (checkBtn) {
+            checkBtn.textContent = originalText;
+            checkBtn.disabled = false;
+        }
+    }
+}
+
+// Функция для инициализации страницы Emission.html
+function initializeEmissionPage() {
+    const userData = localStorage.getItem('userData');
+    if (!userData) {
+        window.location.href = 'Donate.html';
+        return;
+    }
+    
+    const user = JSON.parse(userData);
+    
+    // Обновляем данные пользователя на странице
+    updateUserDataOnPage(user);
+    
+    // Инициализируем карту с маркером
+    initializeEmissionMap(user);
+}
+
+function updateUserDataOnPage(user) {
+    // Обновляем имя пользователя
+    const userNameElement = document.querySelector('[data-user-name]');
+    if (userNameElement) {
+        userNameElement.textContent = `${user.name} ${user.surname}`;
+    }
+    
+    // Обновляем количество деревьев
+    const totalTrees = user.plantings ? user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0) : 0;
+    const treesElements = document.querySelectorAll('[data-trees-count]');
+    treesElements.forEach(element => {
+        element.textContent = totalTrees;
+    });
+    
+    // Обновляем эмиссию (конвертируем кг в тонны)
+    const emissionElements = document.querySelectorAll('[data-emission]');
+    if (emissionElements.length > 0 && user.emission_kg) {
+        const emissionTonnes = (parseFloat(user.emission_kg) / 1000).toFixed(1);
+        emissionElements.forEach(element => {
+            element.textContent = emissionTonnes;
+        });
+    }
+}
+
+function initializeEmissionMap(user) {
+    // Проверяем, есть ли уже карта
+    if (window.mapInstance) {
+        return;
+    }
+    
+    // Координаты городов Казахстана
+    const cityCoordinates = {
+        'Алматы': [43.2220, 76.8512],
+        'Астана': [51.1694, 71.4491],
+        'Нур-Султан': [51.1694, 71.4491],
+        'Шымкент': [42.3000, 69.5970],
+        'Караганда': [49.8047, 73.1094],
+        'Актобе': [50.2839, 57.2094],
+        'Тараз': [42.9000, 71.3667],
+        'Павлодар': [52.2856, 76.9574],
+        'Усть-Каменогорск': [49.9783, 82.6283],
+        'Семей': [50.4111, 80.2275],
+        'Атырау': [47.1164, 51.8753],
+        'Костанай': [53.2133, 63.6246],
+        'Кызылорда': [44.8479, 65.5093],
+        'Уральск': [51.2333, 51.3667],
+        'Петропавловск': [54.8833, 69.1500],
+        'Актау': [43.6531, 51.1601],
+        'Темиртау': [50.0500, 72.9667],
+        'Туркестан': [43.3061, 68.2467],
+        'Кокшетау': [53.2833, 69.3833],
+        'Талдыкорган': [45.0167, 78.3833]
+    };
+    
+    // Получаем координаты города пользователя
+    const userCity = user.city;
+    const coordinates = cityCoordinates[userCity] || [43.2220, 76.8512]; // По умолчанию Алматы
+    
+    // Создаем карту
+    const mapElement = document.getElementById('openstreet-map');
+    if (mapElement && typeof L !== 'undefined') {
+        window.mapInstance = L.map('openstreet-map').setView(coordinates, 10);
+        
+        // Добавляем слой карты
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(window.mapInstance);
+        
+        // Считаем общее количество деревьев
+        const totalTrees = user.plantings ? user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0) : 0;
+        
+        // Создаем кастомную иконку дерева
+        const treeIcon = L.icon({
+            iconUrl: '../../src/img/customMarker.svg',
+            iconSize: [50, 50],
+            iconAnchor: [25, 50],
+            popupAnchor: [0, -50]
+        });
+        
+        // Добавляем маркер с кастомной иконкой дерева
+        const marker = L.marker(coordinates, { icon: treeIcon }).addTo(window.mapInstance);
+        
+        // Создаем стильный popup
+        const popupContent = `
+            <div style="
+                background: rgba(0,0,0,0.85);
+                color: white;
+                padding: 16px 20px;
+                border-radius: 14px;
+                text-align: center;
+                border: none;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+                min-width: 220px;
+                font-family: 'PP Neue Montreal', sans-serif;
+            ">
+                <div style="font-size: 20px; font-weight: 600; margin-bottom: 8px; color: white;">${userCity}</div>
+                <div style="font-size: 18px; color: #4ade80; font-weight: 500;">
+                    Мои деревья: <span style="font-weight: 700; font-size: 20px; color: #22c55e;">${totalTrees}</span>
+                </div>
+            </div>
+        `;
+        
+        marker.bindPopup(popupContent, {
+            className: 'custom-popup',
+            closeButton: false,
+            offset: [0, -10]
+        });
+        
+        // Автоматически открываем popup
+        marker.openPopup();
+    }
+}
+
+// Функции для управления зумом карты эмиссии
+function zoomInMap() {
+    if (window.mapInstance) {
+        window.mapInstance.zoomIn();
+    }
+}
+
+function zoomOutMap() {
+    if (window.mapInstance) {
+        window.mapInstance.zoomOut();
+    }
+}
+
+// Экспортируем функции в глобальную область
+window.zoomInMap = zoomInMap;
+window.zoomOutMap = zoomOutMap;
+
+// Проверяем, находимся ли мы на странице Emission.html
+if (window.location.pathname.includes('Emission.html')) {
+    document.addEventListener('DOMContentLoaded', initializeEmissionPage);
+}
+
+// Проверяем, находимся ли мы на странице EmissionAuth.html
+if (window.location.pathname.includes('EmissionAuth.html')) {
+    document.addEventListener('DOMContentLoaded', function() {
+        // Проверяем, есть ли данные пользователя
+        const userData = localStorage.getItem('userData');
+        const userPhone = localStorage.getItem('userPhone');
+        
+        if (userData) {
+            const user = JSON.parse(userData);
+            console.log('Пользователь найден, но без эмиссии:', user);
+            
+            // Обновляем данные на странице
+            updateEmissionAuthData(user);
+            
+            // Если пользователь существует, но нет эмиссии, остаемся на странице для расчета
+            // Предзаполняем форму данными пользователя если они есть
+            if (user.name) {
+                const nameInput = document.querySelector('input[name="name"]');
+                if (nameInput) nameInput.value = user.name;
+            }
+            
+            if (user.surname) {
+                const surnameInput = document.querySelector('input[name="surname"]');
+                if (surnameInput) surnameInput.value = user.surname;
+            }
+            
+            if (user.phone || userPhone) {
+                const phoneInput = document.querySelector('input[name="phone"]');
+                if (phoneInput) phoneInput.value = user.phone || userPhone;
+            }
+            
+            if (user.city) {
+                const cityInput = document.querySelector('input[name="city"]');
+                if (cityInput) cityInput.value = user.city;
+            }
+        } else if (userPhone) {
+            // Только номер телефона - предзаполняем его и показываем "?"
+            updateEmissionAuthData({ phone: userPhone });
+            
+            const phoneInput = document.querySelector('input[name="phone"]');
+            if (phoneInput) phoneInput.value = userPhone;
+        }
+    });
+}
+
+// Функция для обновления данных на странице EmissionAuth.html
+function updateEmissionAuthData(user) {
+    // Обновляем имя пользователя (или показываем "?")
+    const userNameElement = document.querySelector('[data-user-name]');
+    if (userNameElement) {
+        if (user.name && user.surname) {
+            const shortName = `${user.name} ${user.surname.charAt(0)}.`;
+            userNameElement.textContent = shortName;
+        } else {
+            userNameElement.textContent = '?';
+        }
+    }
+    
+    // Обновляем количество деревьев (или показываем "?")
+    const totalTrees = user.plantings ? user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0) : 0;
+    const treesElements = document.querySelectorAll('[data-trees-count]');
+    treesElements.forEach(element => {
+        if (totalTrees > 0) {
+            element.textContent = totalTrees;
+        } else {
+            element.textContent = '?';
+        }
+    });
+    
+    // Карты на EmissionAuth.html нет, поэтому не инициализируем
+}
+
+// Функция для инициализации карты на EmissionAuth.html
+function initializeEmissionAuthMap(user) {
+    // Проверяем, есть ли уже карта
+    if (window.mapInstanceAuth) {
+        return;
+    }
+    
+    // Координаты городов Казахстана
+    const cityCoordinates = {
+        'Алматы': [43.2220, 76.8512],
+        'Астана': [51.1694, 71.4491],
+        'Нур-Султан': [51.1694, 71.4491],
+        'Шымкент': [42.3000, 69.5970],
+        'Караганда': [49.8047, 73.1094],
+        'Актобе': [50.2839, 57.2094],
+        'Тараз': [42.9000, 71.3667],
+        'Павлодар': [52.2856, 76.9574],
+        'Усть-Каменогорск': [49.9783, 82.6283],
+        'Семей': [50.4111, 80.2275],
+        'Атырау': [47.1164, 51.8753],
+        'Костанай': [53.2133, 63.6246],
+        'Кызылорда': [44.8479, 65.5093],
+        'Уральск': [51.2333, 51.3667],
+        'Петропавловск': [54.8833, 69.1500],
+        'Актау': [43.6531, 51.1601],
+        'Темиртау': [50.0500, 72.9667],
+        'Туркестан': [43.3061, 68.2467],
+        'Кокшетау': [53.2833, 69.3833],
+        'Талдыкорган': [45.0167, 78.3833]
+    };
+    
+    // Получаем координаты города пользователя
+    const userCity = user.city;
+    const coordinates = cityCoordinates[userCity] || [43.2220, 76.8512]; // По умолчанию Алматы
+    
+    // Создаем карту (ищем на EmissionAuth.html)
+    const mapElement = document.getElementById('openstreet-map');
+    if (mapElement && typeof L !== 'undefined') {
+        window.mapInstanceAuth = L.map('openstreet-map').setView(coordinates, 10);
+        
+        // Добавляем слой карты
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(window.mapInstanceAuth);
+        
+        // Считаем общее количество деревьев
+        const totalTrees = user.plantings ? user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0) : 0;
+        
+        // Создаем кастомную иконку дерева
+        const treeIcon = L.icon({
+            iconUrl: '../../src/img/customMarker.svg',
+            iconSize: [50, 50],
+            iconAnchor: [25, 50],
+            popupAnchor: [0, -50]
+        });
+        
+        // Добавляем маркер с кастомной иконкой дерева
+        const marker = L.marker(coordinates, { icon: treeIcon }).addTo(window.mapInstanceAuth);
+        
+        // Создаем стильный popup без района, только количество деревьев
+        const popupContent = `
+            <div style="
+                background: rgba(0,0,0,0.8);
+                color: white;
+                padding: 12px 16px;
+                border-radius: 12px;
+                text-align: center;
+                border: none;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                min-width: 200px;
+            ">
+                <div style="font-size: 18px; font-weight: bold; margin-bottom: 8px;">Мои деревья</div>
+                <div style="font-size: 16px; color: #4ade80;">
+                    Посажено деревьев: <span style="font-weight: bold; font-size: 18px;">${totalTrees > 0 ? totalTrees : '?'}</span>
+                </div>
+            </div>
+        `;
+        
+        marker.bindPopup(popupContent, {
+            className: 'custom-popup',
+            closeButton: false,
+            offset: [0, -10]
+        });
+        
+        // Автоматически открываем popup
+        marker.openPopup();
+    }
+}
+

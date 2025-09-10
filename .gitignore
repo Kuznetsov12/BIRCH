@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .osp
+
+.env
+src/vite-env.d.ts

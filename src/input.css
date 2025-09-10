@@ -64,6 +64,9 @@ body {
   margin: 0 auto;
   min-height: 100vh;
 }
+button {
+  outline: none;
+}
 
 h1 {
   line-height: 1.1;
@@ -95,10 +98,6 @@ h1 {
 
 .read-the-docs {
   color: #888;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
@@ -256,10 +255,6 @@ h1 {
 
 .read-the-docs {
   color: #888;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
@@ -422,9 +417,24 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   
   /* Главная секция - текст и кнопки друг под другом */
   .flex.items-end.justify-between {
+    display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 20px !important;
+  }
+  #projectCarouselMainContainer #projectCarousel .p-6{
+        padding: 20px !important;
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-end !important;
+  }
+  #projectCarouselMainContainer #projectCarousel .flex.justify-between{
+
+    display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  text-align: left !important;
   }
   
   .text-\[24px\] {
@@ -634,11 +644,16 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     position: relative !important;
     padding-bottom: 300px !important;
   }
+  #mainPageFirstContent{
+    height: 100% !important;
+    display: flex !important;
+    align-items: end !important;
+  }
   
   /* Контент слева - увеличиваем текст */
   section.relative.bg-black.overflow-hidden .max-w-\[800px\] {
     max-width: 95% !important;
-    margin-bottom: 50px !important;
+    margin-bottom: 0 !important;
     z-index: 10 !important;
     position: relative !important;
   }
@@ -695,7 +710,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     position: absolute !important;
     width: 600px !important;
     height: 600px !important;
-    bottom: -300px !important;
+    bottom: -350px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
     top: auto !important;
@@ -1069,12 +1084,12 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
 
   /* Добавляем стили для структуры логотипов - 3 ряда по 4 */
   section.relative.bg-black.overflow-hidden.py-20 .py-10.max-w-\[1920px\].mb-20 {
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
   
   /* Текстовый блок под логотипами - оставляем все стили текста и кнопки */
@@ -1083,7 +1098,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     align-items: center !important;
     text-align: center !important;
     margin-bottom: 0 !important;
-    margin-top: 40px !important;
+    margin-top: 0 !important;
     overflow: hidden !important;
   }
 
@@ -1208,6 +1223,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   
   /* Главная секция - все элементы в столбик */
   .flex.items-end.justify-between {
+    display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 16px !important;
@@ -1237,6 +1253,9 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   .grid-cols-4 {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 0 !important;
+  }
+  #fullstackinformationMain{
+    margin-top: 140px !important;
   }
   
   /* Правильные бордеры для статистики 2x2 */
@@ -1628,7 +1647,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   /* Секция компенсации углеродного следа - мобильная версия */
   section.w-full.max-h-\[1200px\].bg-white {
     min-height: auto !important;
-    height: calc(100vh + 50px) !important; /* Увеличиваем высоту секции */
+    height: calc(100vh - 70px) !important; /* Увеличиваем высоту секции */
     background-image: url('./img/phoneForest.png') !important;
     background-size: cover !important;
     background-position: center bottom !important;
@@ -2019,7 +2038,6 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   
   /* Настройка внутреннего контента карточки - прибиваем к низу */
   section.relative.bg-black.overflow-hidden.py-20:last-of-type #projectCarousel .p-6 {
-    padding: 20px !important;
     height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
@@ -2050,7 +2068,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     padding: 12px 16px !important;
     border-radius: 30px !important;
     font-weight: 600 !important;
-    margin: 0 !important;
+    margin-top: 20px !important;
     flex-shrink: 0 !important;
     display: flex !important;
     align-items: center !important;
@@ -2578,6 +2596,9 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
       margin-bottom: 15px !important;
       text-align: left !important;
     }
+        body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 h2.text-black.text-\[84px\] sub{
+          display: none !important;
+        }
     
     /* Текст описания */
     body.donate-mobile section.relative.bg-white.overflow-hidden.-mt-\[79px\].z-20 p.text-\[\#3C3C3C\] {
@@ -2995,6 +3016,9 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     body.donate-mobile footer .border-t {
       border: none !important;
     }
+    #borderNoneFooterPlant::before{
+      display: none !important;
+    }
     
     /* Border-top на всю ширину экрана */
     body.donate-mobile footer .grid.grid-cols-4::before {
@@ -3222,7 +3246,6 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   /* Стили для мобильной навигации */
   body.emission-mobile nav {
     height: 70px !important;
-    padding: 0 16px !important;
     border-radius: 50px !important;
   }
   
@@ -3373,9 +3396,29 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   #emissionIcon {
     flex-direction: row !important;
     gap: 20px !important;
+    justify-content: center !important;
+  }
+  #emissionFullCompens{
+    font-size: 18px !important;
+  }
+  #emissionFullCompensValue{
+    font-size: 18px !important;
+  }
+  #emissionTextNumberFour{
+    font-size: 18px !important;
+  }
+  #emissionTextNumberThree{
+    font-size: 18px !important;
+  }
+  #emissionTextNumberTwo{
+    font-size: 18px !important;
+  }
+  #emissionTextNumberOne{
+    font-size: 18px !important;
   }
   #textIcon {
     width: 100% !important;
+    text-align: center !important;
   }
   
   /* Футер */
@@ -3808,9 +3851,7 @@ body.forest-mobile #plantForestFooter .overflow-hidden {
   }
 
   body.project-mobile #projects-container button {
-    background: rgba(255, 255, 255, 0.2) !important;
     backdrop-filter: blur(10px) !important;
-    color: white !important;
     padding: 16px 32px !important;
     font-size: 16px !important;
     border-radius: 20px !important;
@@ -4148,6 +4189,74 @@ body.forest-mobile #forestProjectsSection #projectCarousel .flex-1 {
   .project-bg .max-w-\[820px\] {
     max-width: 100% !important;
   }
+    #btnMainPageSled{
+    flex-direction: row !important;
+    display: flex !important;
+    font-size: 16px !important;
+    gap: 16px !important;
+    align-items: center !important;
+  }
+    #btnMainPageSled img{
+      width: 28px !important;
+      height: 28px !important;
+  }
+  #btnMainPageDealBirch{
+    display: flex !important;
+    flex-direction: row !important;
+    font-size: 16px !important;
+    gap: 16px !important;
+    align-items: center !important;
+  }
+}
+
+/* Стили для кастомных чекбоксов в модальном окне посадки деревьев */
+.checkbox-custom {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkbox-custom:hover {
+  border-color: #23B77F;
+}
+
+/* Скрываем стандартный чекбокс */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Стили для маски телефона */
+#tree-phone {
+  font-family: monospace;
+}
+
+/* Стили для floating labels в модальном окне посадки деревьев */
+.focus-within\:border-green-500:focus-within {
+  border-color: #23B77F !important;
+}
+
+/* Улучшение отображения лейблов */
+.floating-label {
+  transition: all 0.2s ease;
+}
+
+/* Обеспечиваем правильное отображение лейблов поверх бордера */
+.floating-label::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: white;
+  z-index: 1;
 }
 
 @media (min-width: 769px) {
@@ -4158,4 +4267,100 @@ body.forest-mobile #forestProjectsSection #projectCarousel .flex-1 {
   .mobile-nav-arrows {
     display: none !important;
   }
+
+}
+
+
+/* Кастомные стили для popup карты эмиссии */
+.leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(0,0,0,0.8) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  background: transparent !important;
+}
+
+.custom-popup .leaflet-popup-tip-container {
+  display: block !important;
+}
+.leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+.leaflet-popup-tip {
+  background: rgba(0,0,0,0.8) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.custom-popup .leaflet-popup-content-wrapper {
+  background: transparent !important;
+}
+.custom-popup .leaflet-popup-tip-container {
+  display: block !important;
+}
+.leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+.leaflet-popup-tip {
+  background: rgba(0,0,0,0.8) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.custom-popup .leaflet-popup-content-wrapper {
+  background: transparent !important;
+}
+.custom-popup .leaflet-popup-tip-container {
+  display: block !important;
+}
+.leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+.leaflet-popup-tip {
+  background: rgba(0,0,0,0.8) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.custom-popup .leaflet-popup-content-wrapper {
+  background: transparent !important;
+}
+.custom-popup .leaflet-popup-tip-container {
+  display: block !important;
 }

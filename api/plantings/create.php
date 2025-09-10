@@ -1,9 +1,15 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+// Обработка preflight OPTIONS запроса
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 include_once '../config/database.php';
 include_once '../models/User.php';
@@ -20,11 +26,12 @@ $data = json_decode(file_get_contents("php://input"));
 
 // Проверить, что все необходимые данные получены
 if(
-    !empty($data->surname) &&
-    !empty($data->name) &&
+    !empty($data->firstName) &&
+    !empty($data->lastName) &&
     !empty($data->phone) &&
     !empty($data->city) &&
-    !empty($data->trees_quantity)
+    !empty($data->treeCount) &&
+    $data->treeCount > 0
 ){
     try {
         // Начинаем транзакцию
@@ -36,8 +43,8 @@ if(
         
         if(!$user_exists) {
             // Если пользователь не найден, создаем нового
-            $user->surname = $data->surname;
-            $user->name = $data->name;
+            $user->surname = $data->lastName;
+            $user->name = $data->firstName;
             $user->phone = $data->phone;
             $user->city = $data->city;
             $user->emission_kg = 0; // По умолчанию
@@ -54,7 +61,7 @@ if(
         
         // Создаем посадку
         $planting->user_id = $user_id;
-        $planting->trees_quantity = $data->trees_quantity;
+        $planting->trees_quantity = $data->treeCount;
         $planting->year = date('Y'); // Текущий год с сервера
         $planting->city = $data->city;
         

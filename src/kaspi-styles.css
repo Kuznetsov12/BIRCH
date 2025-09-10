@@ -1,0 +1,50 @@
+/* Стили для кнопки с лепестком и Kaspi логотипом */
+.kaspi-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #23B77F;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 200, 81, 0.3);
+  width: 100%;
+}
+
+.kaspi-button:hover {
+  background: linear-gradient(135deg, #00A843 0%, #008A36 100%);
+  box-shadow: 0 6px 20px rgba(0, 200, 81, 0.4);
+  transform: translateY(-2px);
+}
+
+.kaspi-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 200, 81, 0.3);
+}
+
+.kaspi-button .lepestok-icon {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+.kaspi-button .kaspi-logo {
+  width: 24px;
+  height: 24px;
+  fill: white;
+}
+
+/* Стили для скрытого поля подарка */
+.gift-field.hidden {
+  display: none !important;
+}
+
+.gift-field {
+  transition: all 0.3s ease;
+}

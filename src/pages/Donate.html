@@ -35,6 +35,7 @@
     <!-- CSS -->
     <link href="../../src/output.css" rel="stylesheet">
     <link href="../../src/custom-bg-fix.css" rel="stylesheet">
+    <link href="../../src/user-popup.css" rel="stylesheet">
     
     <!-- JavaScript -->
     <script src="../../src/main.js" defer></script>
@@ -373,7 +374,7 @@
           </p>
 
           <!-- Кнопка с иконкой plusMinus -->
-          <a href="./Emission.html" class="bg-[#23B77F] text-white px-8 py-6 h-[85px] rounded-md font-semibold hover:bg-green-600 transition flex items-center justify-center gap-3 w-[400px] text-[18px] no-underline">
+          <a href="./EmissionAuth.html" class="bg-[#23B77F] text-white px-8 py-6 h-[85px] rounded-md font-semibold hover:bg-green-600 transition flex items-center justify-center gap-3 w-[400px] text-[18px] no-underline">
             <img src="../../src/img/plusMinus.svg" alt="" class="w-6 h-6">
             Рассчитать эмиссию
           </a>
@@ -389,7 +390,7 @@
         <!-- Текстовый блок слева (65%) -->
         <div class="w-[60%] pr-16">
           <h2 class="text-black text-[84px] font-light leading-[100%] mb-8">
-            Узнайте вашу эмиссию CO<sub class="text-[60px]">₂</sub>
+            Узнайте вашу эмиссию CO₂
           </h2>
           
           <p class="text-[#3C3C3C] text-[24px] font-light leading-relaxed mb-8">
@@ -404,11 +405,12 @@
           <!-- Форма с полем ввода и кнопкой -->
           <div class="flex items-center gap-16">
             <input 
+              id="emission-phone-input"
               type="tel" 
               placeholder="Введите номер телефона" 
-              class="flex-1 h-[85px] max-w-[340px] px-6 border-b border-[#000000] opacity-20 text-[18px] text-black font-normal placeholder:[#CCCCCC] "
+              class="flex-1 text-black h-[85px] max-w-[340px] px-6 border-b border-[#000000] text-[18px] font-normal placeholder:[#CCCCCC] "
             >
-            <button class="bg-[#23B77F] w-[340px] text-white px-8 py-4 h-[85px] rounded-md font-semibold hover:bg-green-600 transition flex items-center justify-center gap-3 min-w-[250px] text-[18px]">
+            <button id="emission-check-btn" class="bg-[#23B77F] w-[340px] text-white px-8 py-4 h-[85px] rounded-md font-semibold hover:bg-green-600 transition flex items-center justify-center gap-3 min-w-[250px] text-[18px]">
               <img src="../../src/img/findLoop.svg" alt="" class="w-5 h-5">
               Найти мой прогресс
             </button>
@@ -440,11 +442,12 @@
           <!-- Форма поиска -->
           <div class="space-y-3">
             <input 
+              id="map-search-input"
               type="tel" 
               placeholder="Введите номер телефона" 
               class="w-full h-[85px] px-4 bg-white border-none rounded-lg text-[20px] text-black font-normal placeholder:text-[#474747] placeholder:text-center focus:outline-none focus:ring-2 focus:ring-[#23B77F]"
             >
-            <button class="bg-[#23B77F] text-white w-full h-[85px] rounded-lg font-bold hover:bg-green-600 transition flex items-center justify-center gap-2 text-[20px]">
+            <button id="map-search-btn" class="bg-[#23B77F] text-white w-full h-[85px] rounded-lg font-bold hover:bg-green-600 transition flex items-center justify-center gap-2 text-[20px]">
               <img src="../../src/img/findLoop.svg" alt="" class="w-4 h-4">
               Найти мои деревья
             </button>
