@@ -35,6 +35,12 @@ if(!empty($phone)) {
             array_push($plantings, $planting_item);
         }
         
+        // Вычисляем общее количество деревьев
+        $total_trees = 0;
+        foreach ($plantings as $planting) {
+            $total_trees += $planting['trees_quantity'];
+        }
+        
         // Формируем ответ
         $user_item = array(
             "id" => $user->id,
@@ -46,6 +52,19 @@ if(!empty($phone)) {
             "created_at" => $user->created_at,
             "plantings" => $plantings
         );
+        
+        // Добавляем дополнительные расчёты если у пользователя есть деревья
+        if ($total_trees > 0) {
+            $user_item["total_trees"] = $total_trees; // общее количество деревьев
+            $user_item["total_investment"] = $total_trees * 2000; // общая сумма инвестиций
+        }
+        
+        // Добавляем расчёты по эмиссии если у пользователя есть эмиссия
+        if ($user->emission_kg > 0) {
+            $emission_tons = round(floatval($user->emission_kg) / 1000, 3); // эмиссия в тоннах
+            $user_item["emission_tons"] = $emission_tons;
+            $user_item["emission_cleared_percent"] = round($emission_tons / 0.025, 2); // процент очищенной эмиссии
+        }
         
         http_response_code(200);
         echo json_encode(array(

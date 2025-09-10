@@ -25,14 +25,13 @@ CREATE TABLE plantings (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Вставка тестовых данных
-INSERT INTO users (surname, name, phone, city, emission_kg) VALUES
-('Иванов', 'Алексей', '+77771234567', 'Алматы', 1250.5),
-('Петрова', 'Мария', '+77712345678', 'Астана', 980.3),
-('Сидоров', 'Дмитрий', '+77723456789', 'Шымкент', 1450.8);
-
-INSERT INTO plantings (user_id, trees_quantity, year, city) VALUES
-(1, 50, 2024, 'Алматы'),
-(1, 25, 2023, 'Астана'),
-(2, 100, 2024, 'Шымкент'),
-(3, 75, 2024, 'Караганда');
+-- Таблица статистики главной страницы
+CREATE TABLE homepage_stats (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    total_trees_planting INT NOT NULL DEFAULT 0 COMMENT 'Общее количество посаженных деревьев',
+    total_supports INT NOT NULL DEFAULT 0 COMMENT 'Общее количество поддержавших',
+    company_partners INT NOT NULL DEFAULT 0 COMMENT 'Количество компаний-партнеров',
+    cleared_co_on_year INT NOT NULL DEFAULT 0 COMMENT 'Очищено CO2 за год',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

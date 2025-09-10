@@ -3,7 +3,10 @@
 ## Настройка базы данных
 
 1. Измените настройки подключения в `config/database.php`
-2. Импортируйте `database_setup.sql` для создания структуры БД
+2. Импортируйте `database_setup.sql` для создания полной структуры БД
+   - Создаст базу данных `birch_db`
+   - Создаст таблицы: `users`, `plantings`, `homepage_stats`
+   - Заполнит тестовыми данными
 
 ## Настройка email (PHPMailer)
 
@@ -93,6 +96,10 @@
     "city": "Алматы",
     "emission_kg": 1250.5,
     "created_at": "2024-12-03 10:00:00",
+    "total_trees": 75,
+    "total_investment": 150000,
+    "emission_tons": 1.251,
+    "emission_cleared_percent": 50020.0,
     "plantings": [
       {
         "id": 1,
@@ -100,11 +107,24 @@
         "year": 2024,
         "city": "Алматы",
         "created_at": "2024-12-03 10:30:00"
+      },
+      {
+        "id": 2,
+        "trees_quantity": 25,
+        "year": 2023,
+        "city": "Астана",
+        "created_at": "2024-12-03 10:35:00"
       }
     ]
   }
 }
 ```
+
+**Дополнительные поля (только при наличии данных):**
+- `total_trees` - общее количество посаженных деревьев (только если есть посадки)
+- `total_investment` - общая сумма инвестиций в тенге (только если есть посадки: total_trees × 2000)
+- `emission_tons` - значение эмиссии в тоннах (только если emission_kg > 0: emission_kg ÷ 1000)
+- `emission_cleared_percent` - процент очищенной эмиссии (только если emission_kg > 0: emission_tons ÷ 0.025)
 
 **Ответ при ошибке (пользователь не найден):**
 ```json
@@ -348,7 +368,115 @@
 }
 ```
 
-### 7. Отправка заявки от организации
+### 7. Получение статистики главной страницы
+
+**URL:** `GET /api/stats/read.php`
+
+**Описание:** Получает текущие значения статистики для отображения на главной странице.
+
+**Ответ при успехе:**
+```json
+{
+  "status": "success",
+  "data": {
+    "total_trees_planting": 15000,
+    "total_supports": 2500,
+    "company_partners": 45,
+    "cleared_co_on_year": 180000,
+    "last_updated": "2025-09-10 14:30:25"
+  }
+}
+```
+
+**Ответ при первом запросе (создание начальных данных):**
+```json
+{
+  "status": "success",
+  "data": {
+    "total_trees_planting": 0,
+    "total_supports": 0,
+    "company_partners": 0,
+    "cleared_co_on_year": 0,
+    "last_updated": "2025-09-10 14:30:25"
+  },
+  "message": "Initial stats created"
+}
+```
+
+**Ответ при ошибке:**
+```json
+{
+  "status": "error",
+  "message": "Database error: Connection failed"
+}
+```
+
+### 8. Обновление статистики главной страницы
+
+**URL:** `POST /api/stats/update.php`
+
+**Описание:** Обновляет значения статистики для главной страницы. Если запись не существует, создает новую.
+
+**Тело запроса:**
+```json
+{
+  "total_trees_planting": 15000,
+  "total_supports": 2500,
+  "company_partners": 45,
+  "cleared_co_on_year": 180000
+}
+```
+
+**Обязательные поля:**
+- `total_trees_planting` (число) - общее количество посаженных деревьев
+- `total_supports` (число) - общее количество поддержавших проект
+- `company_partners` (число) - количество компаний-партнеров
+- `cleared_co_on_year` (число) - количество очищенного CO2 за год (в кг)
+
+**Ответ при обновлении существующей записи:**
+```json
+{
+  "status": "success",
+  "message": "Homepage stats updated successfully",
+  "data": {
+    "total_trees_planting": 15000,
+    "total_supports": 2500,
+    "company_partners": 45,
+    "cleared_co_on_year": 180000
+  }
+}
+```
+
+**Ответ при создании новой записи:**
+```json
+{
+  "status": "success",
+  "message": "Homepage stats created successfully",
+  "data": {
+    "id": 1,
+    "total_trees_planting": 15000,
+    "total_supports": 2500,
+    "company_partners": 45,
+    "cleared_co_on_year": 180000
+  }
+}
+```
+
+**Ответ при ошибке (неполные данные):**
+```json
+{
+  "status": "error",
+  "message": "Unable to update homepage stats. Data is incomplete.",
+  "required_fields": [
+    "total_trees_planting",
+    "total_supports",
+    "company_partners",
+    "cleared_co_on_year"
+  ]
+}
+```
+
+### 9. Отправка заявки от организации
 
 **URL:** `POST /api/email/send_organization_request.php`
 
@@ -389,6 +517,66 @@
 ```
 
 ## Примеры использования с fetch
+
+### Получение статистики главной страницы
+```javascript
+fetch('/api/stats/read.php')
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 'success') {
+      console.log('Статистика главной страницы:');
+      console.log('Посажено деревьев:', data.data.total_trees_planting);
+      console.log('Поддержали проект:', data.data.total_supports);
+      console.log('Компаний-партнеров:', data.data.company_partners);
+      console.log('Очищено CO2 за год:', data.data.cleared_co_on_year, 'кг');
+      console.log('Последнее обновление:', data.data.last_updated);
+      
+      // Обновление элементов на странице
+      document.getElementById('trees-count').textContent = data.data.total_trees_planting.toLocaleString();
+      document.getElementById('supports-count').textContent = data.data.total_supports.toLocaleString();
+      document.getElementById('partners-count').textContent = data.data.company_partners;
+      document.getElementById('co2-cleared').textContent = data.data.cleared_co_on_year.toLocaleString();
+    }
+  })
+  .catch(error => console.error('Error:', error));
+```
+
+### Обновление статистики главной страницы
+```javascript
+const statsData = {
+  total_trees_planting: 15000,
+  total_supports: 2500,
+  company_partners: 45,
+  cleared_co_on_year: 180000
+};
+
+fetch('/api/stats/update.php', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(statsData)
+})
+.then(response => response.json())
+.then(data => {
+  if (data.status === 'success') {
+    console.log('Статистика обновлена успешно');
+    console.log('Обновленные данные:', data.data);
+    
+    // Показать уведомление об успешном обновлении
+    alert('Статистика главной страницы обновлена успешно!');
+    
+    // Обновить отображение на странице
+    location.reload(); // или обновить конкретные элементы
+  } else {
+    console.error('Ошибка обновления:', data.message);
+    if (data.required_fields) {
+      console.log('Обязательные поля:', data.required_fields);
+    }
+  }
+})
+.catch(error => console.error('Error:', error));
+```
 
 ### Отправка заявки от организации
 ```javascript
@@ -550,6 +738,28 @@ fetch(`/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`)
     if (data.status === 'success') {
       console.log('User found:', data.data);
       console.log('User plantings:', data.data.plantings);
+      
+      // Отображение данных о деревьях если есть посадки
+      if (data.data.total_trees) {
+        console.log('Общее количество деревьев:', data.data.total_trees);
+        console.log('Общая сумма инвестиций:', data.data.total_investment, 'тенге');
+        
+        // Обновление элементов интерфейса
+        document.getElementById('user-trees').textContent = data.data.total_trees;
+        document.getElementById('user-investment').textContent = data.data.total_investment.toLocaleString() + ' ₸';
+      }
+      
+      // Отображение данных об эмиссии если есть эмиссия
+      if (data.data.emission_kg > 0) {
+        console.log('Эмиссия CO2:', data.data.emission_tons, 'тонн');
+        console.log('Эмиссия CO2:', data.data.emission_kg, 'кг');
+        console.log('Процент очищенной эмиссии:', data.data.emission_cleared_percent, '%');
+        
+        // Обновление элементов интерфейса
+        document.getElementById('user-emission-tons').textContent = data.data.emission_tons + ' т';
+        document.getElementById('user-emission-kg').textContent = data.data.emission_kg + ' кг';
+        document.getElementById('user-emission-percent').textContent = data.data.emission_cleared_percent + '%';
+      }
     } else {
       console.log('User not found:', data.message);
     }
@@ -597,7 +807,8 @@ api/
 │   └── email.php            # Конфигурация email (PHPMailer)
 ├── models/
 │   ├── User.php             # Модель пользователя
-│   └── Planting.php         # Модель посадки
+│   ├── Planting.php         # Модель посадки
+│   └── HomepageStats.php    # Модель статистики главной страницы
 ├── users/
 │   ├── read.php             # Получение всех пользователей
 │   └── get_by_phone.php     # Получение пользователя по телефону
@@ -607,12 +818,14 @@ api/
 │   ├── calculate.php             # Расчет эмиссии CO2
 │   ├── calculate_with_user.php   # Расчет эмиссии с автоматической регистрацией/обновлением пользователя
 │   └── update_user.php           # Расчет эмиссии и обновление пользователя
+├── stats/
+│   ├── read.php             # Получение статистики главной страницы
+│   └── update.php           # Обновление статистики главной страницы
 ├── email/
 │   └── send_organization_request.php  # Отправка заявки от организации (PHPMailer)
 ├── vendor/                  # Composer зависимости (PHPMailer)
 ├── composer.json            # Composer конфигурация
-├── database_setup.sql       # SQL для создания БД
-└── migration_add_user_fields.sql  # Миграция для обновления БД
+└── database_setup.sql       # SQL для создания полной структуры БД
 ```
 
 ## Требования

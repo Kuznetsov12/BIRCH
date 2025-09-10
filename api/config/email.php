@@ -6,7 +6,7 @@ return [
     'smtp' => [
         'host' => 'smtp.gmail.com',                    // SMTP сервер
         'username' => 'birch.eco.info@gmail.com',          // Ваш email
-        'password' => 'ЗАМЕНИТЕ_НА_ВАШ_ПАРОЛЬ_ПРИЛОЖЕНИЯ',             // Пароль приложения Gmail (16 символов)
+        'password' => 'grps rajf kljc ghoz',             // Пароль приложения Gmail (16 символов)
         'port' => 587,                                 // Порт SMTP
         'encryption' => 'tls',                         // Тип шифрования (tls/ssl)
     ],
@@ -19,7 +19,8 @@ return [
     
     // Получатели писем
     'recipients' => [
-        'organization_requests' => 'vladimir.o@birch.green',  // Заявки от организаций
+        'organization_requests' => 'duckn1ght04@gmail.com',  // Заявки от организаций 
+        // TODO: Поменять почту на vladimir.o@birch.green
     ],
     
     // Дополнительные настройки

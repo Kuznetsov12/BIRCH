@@ -3,7 +3,6 @@ services:
   web:
     image: php:8.1-apache
     container_name: birch_web
-    restart: always
     ports:
       - "3000:80"
     volumes:
@@ -26,7 +25,6 @@ services:
   mysql:
     image: mysql:8.0
     container_name: birch_mysql
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: birch_db
@@ -37,7 +35,6 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./api/database_setup.sql:/docker-entrypoint-initdb.d/database_setup.sql
-      - ./api/migration_add_user_fields.sql:/docker-entrypoint-initdb.d/migration_add_user_fields.sql
     networks:
       - birch_network
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -45,7 +42,6 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: birch_phpmyadmin
-    restart: always
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
