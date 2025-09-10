@@ -64,6 +64,9 @@ body {
   margin: 0 auto;
   min-height: 100vh;
 }
+button {
+  outline: none;
+}
 
 h1 {
   line-height: 1.1;
@@ -95,10 +98,6 @@ h1 {
 
 .read-the-docs {
   color: #888;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
@@ -256,10 +255,6 @@ h1 {
 
 .read-the-docs {
   color: #888;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
@@ -4212,6 +4207,56 @@ body.forest-mobile #forestProjectsSection #projectCarousel .flex-1 {
     gap: 16px !important;
     align-items: center !important;
   }
+}
+
+/* Стили для кастомных чекбоксов в модальном окне посадки деревьев */
+.checkbox-custom {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkbox-custom:hover {
+  border-color: #23B77F;
+}
+
+/* Скрываем стандартный чекбокс */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Стили для маски телефона */
+#tree-phone {
+  font-family: monospace;
+}
+
+/* Стили для floating labels в модальном окне посадки деревьев */
+.focus-within\:border-green-500:focus-within {
+  border-color: #23B77F !important;
+}
+
+/* Улучшение отображения лейблов */
+.floating-label {
+  transition: all 0.2s ease;
+}
+
+/* Обеспечиваем правильное отображение лейблов поверх бордера */
+.floating-label::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: white;
+  z-index: 1;
 }
 
 @media (min-width: 769px) {
