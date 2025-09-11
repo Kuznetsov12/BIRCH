@@ -218,7 +218,7 @@
             <div class="flex gap-24 items-start">
               <div>
                 <p id="emissionTextNumberThree" class="text-[#BFBFBF] text-[24px] font-light mb-2">Ваше восполнение эмиссии:</p>
-                <p class="text-white text-[48px] font-light">67%</p>
+                <p data-emission-percent class="text-white text-[48px]  font-light">?%</p>
               </div>
               <div>
                 <p id="emissionTextNumberFour" class="text-[#BFBFBF] text-left text-[24px] font-light mb-2">Ваш след углеродный след:</p>
@@ -274,7 +274,7 @@
             </div>
             <!-- Процент справа от картинки с бордером на границе -->
             <div id="percentageIndicator" class="absolute" style="top: calc(950px * 0.33); left: 250px; transform: translateY(-40px);">
-              <span id="percentageText" class="text-white text-[70px] font-light leading-none">67%</span>
+              <span data-emission-percent id="percentageText" class="text-white text-[70px] font-light leading-none">?%</span>
             </div>
             
             <!-- Бордер отдельно, точно на границе цветной части -->
@@ -410,6 +410,34 @@
   </footer>
         </section>
     </div>
-    
+    <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.pathname.includes('Emission.html') && typeof initializeEmissionPage === 'function') {
+      initializeEmissionPage();
+    }
+  });
+</script>
+    <style>
+      /* Mobile: move percentage indicator under the image and hide border */
+      @media (max-width: 640px) {
+        #percentageIndicator {
+          position: static !important;
+          left: auto !important;
+          top: auto !important;
+          margin-top: 32px !important;
+          display: block !important;
+          text-align: left !important;
+          height: 40px !important;
+          width: 300px !important;
+        }
+        #percentageText {
+          display: inline-block;
+          font-size: 24px !important;
+        }
+        #borderIndicator {
+          display: none !important;
+        }
+      }
+    </style>
 </body>
 </html>

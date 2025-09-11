@@ -1752,36 +1752,76 @@ function setActiveNavigation() {
 
 // Функция для динамического обновления эмиссии
 function updateEmissionPercentage(percentage) {
-  // Ограничиваем процент от 0 до 100
-  const percent = Math.max(0, Math.min(100, percentage));
-  
-  // Получаем элементы
+  // Нормализация значения и подготовка
+  let p = Number(percentage);
+  if (isNaN(p)) p = 0;
+  const isOver = p > 100;
+  const displayPercent = isOver ? '100+' : (p < 0 ? '0' : String(p));
+  const percent = isOver ? 100 : (p < 0 ? 0 : p);
+
+  // Получаем элементы (не трогаем их горизонтальное позиционирование)
   const grayImage = document.getElementById('grayImage');
   const colorImage = document.getElementById('colorImage');
   const percentageText = document.getElementById('percentageText');
   const percentageIndicator = document.getElementById('percentageIndicator');
-  
+  const borderIndicator = document.getElementById('borderIndicator');
+
   if (!grayImage || !colorImage || !percentageText || !percentageIndicator) {
     console.warn('Emission elements not found');
     return;
   }
-  
-  // Рассчитываем позиции
-  const imageHeight = 950; // высота картинки
+
+  // Высота контейнера (если доступна) — используем её, иначе fallback на 950
+  const imageContainer = document.getElementById('imageContainer') || grayImage.parentElement;
+  const rect = imageContainer ? imageContainer.getBoundingClientRect() : null;
+  const imageHeight = rect && rect.height ? rect.height : 950;
+
   const grayPercentage = 100 - percent; // процент серой части сверху
-  
-  // Обновляем clip-path для серой части (сверху)
-  grayImage.style.clipPath = `polygon(0 0, 100% 0, 100% ${grayPercentage}%, 0 ${grayPercentage}%)`;
-  
-  // Обновляем clip-path для цветной части (снизу)
-  colorImage.style.clipPath = `polygon(0 ${grayPercentage}%, 100% ${grayPercentage}%, 100% 100%, 0 100%)`;
-  
-  // Обновляем текст процента
-  percentageText.textContent = `${percent}%`;
-  
-  // Обновляем позицию индикатора процента (на границе между серой и цветной частями)
-  const topPosition = (imageHeight * grayPercentage / 100) - 60;
-  percentageIndicator.style.top = `${topPosition}px`;
+
+  // Обновляем clip-path в зависимости от процента
+  if (isOver) {
+    // Полностью закрашиваем картинку
+    grayImage.style.clipPath = 'polygon(0 0, 100% 0, 100% 0, 0 0)';
+    colorImage.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
+  } else {
+    grayImage.style.clipPath = 'polygon(0 0, 100% 0, 100% ' + grayPercentage + '%, 0 ' + grayPercentage + '%)';
+    colorImage.style.clipPath = 'polygon(0 ' + grayPercentage + '%, 100% ' + grayPercentage + '%, 100% 100%, 0 100%)';
+  }
+
+  // Обновляем текст процента — если больше 100%, показываем сообщение-поздравление
+  if (isOver) {
+    const overMessage = 'Отлично! Вы превысили максимальную цель — так держать!';
+    percentageText.textContent = overMessage;
+  } else {
+    percentageText.textContent = displayPercent + '%';
+  }
+
+  // Двигаем процент и бордер только по вертикали (top) — вычисляем позицию границы внутри контейнера
+  // Если превысили 100% — ставим границу чуть выше низа, чтобы текст явно был виден
+  const boundaryY = isOver ? Math.round(imageHeight * 0.97) : imageHeight * (grayPercentage / 100);
+  // Смещение индикатора: ставим процент чуть выше границы, бордер чуть ниже
+  const indicatorOffset = 40; // px — насколько визуально поднять процент над границей
+  const borderOffset = 8; // px — насколько бордер ниже границы
+
+  const topForPercentage = Math.max(0, Math.min(imageHeight - 20, Math.round(boundaryY - indicatorOffset)));
+  // Если сообщение-поздравление (isOver), немного поднимем большой индикатор на десктопе
+  let adjustedTopForPercentage = topForPercentage;
+  if (isOver) {
+    const raisePx = 150; // на сколько пикселей поднять текст вверх на десктопе (можно подправить)
+    adjustedTopForPercentage = Math.max(0, topForPercentage - raisePx);
+  }
+  percentageIndicator.style.top = adjustedTopForPercentage + 'px';
+
+  if (borderIndicator) {
+    const topForBorder = Math.max(0, Math.min(imageHeight - 4, Math.round(boundaryY + borderOffset)));
+    // Скрываем бордер, если показываем поздравление (чтобы не мешал тексту)
+    if (isOver) {
+      borderIndicator.style.display = 'none';
+    } else {
+      borderIndicator.style.display = '';
+      borderIndicator.style.top = topForBorder + 'px';
+    }
+  }
 }
 
 // Пример использования: вызываем функцию при загрузке страницы
@@ -1789,12 +1829,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Проверяем, находимся ли мы на странице EmissionAuth
   const isEmissionAuthPage = window.location.pathname.includes('EmissionAuth.html');
   
-  if (!isEmissionAuthPage) {
-    // Устанавливаем начальное значение (67%) только если НЕ на странице EmissionAuth
-    setTimeout(() => {
-      updateEmissionPercentage(67);
-    }, 100);
-  }
+  // Ничего не делаем тут — процент придёт из userData/API через initializeEmissionPage
   // Для страницы EmissionAuth оставляем статичное отображение "? %" и закрашенность на 33%
 });
 
@@ -3492,19 +3527,61 @@ async function handleEmissionCheck() {
 
 // Функция для инициализации страницы Emission.html
 function initializeEmissionPage() {
-    const userData = localStorage.getItem('userData');
-    if (!userData) {
-        window.location.href = 'Donate.html';
-        return;
+  const userData = localStorage.getItem('userData');
+  if (!userData) {
+    window.location.href = 'Donate.html';
+    return;
+  }
+
+  let user = JSON.parse(userData);
+
+  // Если нет процента эмиссии — пробуем догрузить из API по номеру телефона
+  if (typeof user.emission_cleared_percent === 'undefined') {
+    const phone = user.phone || localStorage.getItem('userPhone');
+    if (phone) {
+      const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
+      fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success' && data.data) {
+            localStorage.setItem('userData', JSON.stringify(data.data));
+            // Перезапускаем инициализацию с новыми данными
+            initializeEmissionPage();
+          }
+        })
+        .catch(err => {
+          console.error('Ошибка автозагрузки данных пользователя:', err);
+        });
+      return;
     }
-    
-    const user = JSON.parse(userData);
-    
-    // Обновляем данные пользователя на странице
-    updateUserDataOnPage(user);
-    
-    // Инициализируем карту с маркером
-    initializeEmissionMap(user);
+  }
+
+  // Обновляем данные пользователя на странице
+  updateUserDataOnPage(user);
+
+  // Динамически выводим процент очищенной эмиссии, если есть
+  if (typeof user.emission_cleared_percent !== 'undefined') {
+    // Выводим в консоль для отладки
+    console.log('emission_cleared_percent из API:', user.emission_cleared_percent);
+    // Обновляем визуализацию процента
+    updateEmissionPercentage(user.emission_cleared_percent);
+    // Если есть элементы с data-emission-percent, обновим их
+    const percentElements = document.querySelectorAll('[data-emission-percent]');
+    const numericDisplay = user.emission_cleared_percent > 100 ? (user.emission_cleared_percent + '%') : (user.emission_cleared_percent + '%');
+    const overMessage = 'Отлично! Вы превысили максимальную цель — так держать!';
+    percentElements.forEach(el => {
+      // Большой индикатор рядом с картинкой имеет id="percentageText" — там оставляем сообщение
+      if (el.id === 'percentageText') {
+        el.textContent = (user.emission_cleared_percent > 100) ? overMessage : numericDisplay;
+      } else {
+        // Все остальные (левый блок) показывают числовой процент
+        el.textContent = numericDisplay;
+      }
+    });
+  }
+
+  // Инициализируем карту с маркером
+  initializeEmissionMap(user);
 }
 
 function updateUserDataOnPage(user) {
