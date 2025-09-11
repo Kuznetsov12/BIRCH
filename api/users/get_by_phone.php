@@ -62,8 +62,11 @@ if(!empty($phone)) {
         // Добавляем расчёты по эмиссии если у пользователя есть эмиссия
         if ($user->emission_kg > 0) {
             $emission_tons = round(floatval($user->emission_kg) / 1000, 3); // эмиссия в тоннах
+            $trees_need = ceil($emission_tons / 0.025); // деревьев необходимых для компенсации
             $user_item["emission_tons"] = $emission_tons;
-            $user_item["emission_cleared_percent"] = round($emission_tons / 0.025, 2); // процент очищенной эмиссии
+            $user_item["trees_need"] = $trees_need;
+            $user_item["price_need"] = $trees_need * 2000; // деревьев посажено
+            $user_item["emission_cleared_percent"] = round($total_trees * 100 / $trees_need, 2); // процент очищенной эмиссии
         }
         
         http_response_code(200);
