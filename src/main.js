@@ -872,20 +872,49 @@ function animateCounter(element, target, duration = 2000) {
   requestAnimationFrame(updateCounter);
 }
 
-// Запускаем анимацию при загрузке страницы
+// Функция: загрузить статистику с API и обновить счетчики
+async function fetchAndRenderStats() {
+  const counters = Array.from(document.querySelectorAll('.counter'));
+  try {
+    const res = await fetch(`${apiBaseUrl}/api/stats/read.php`);
+    if (!res.ok) throw new Error('Network response was not ok');
+    const json = await res.json();
+    if (json && json.status === 'success' && json.data) {
+      const d = json.data;
+      // Ожидаемый порядок: деревья, люди, партнёры, тонн CO2
+      const values = [d.total_trees_planting, d.total_supports, d.company_partners, d.cleared_co_on_year];
+      values.forEach((val, idx) => {
+        if (typeof val !== 'undefined' && counters[idx]) {
+          counters[idx].setAttribute('data-target', Number(val));
+        }
+      });
+      // Запускаем анимацию для обновлённых значений
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target')) || 0;
+        animateCounter(counter, target);
+      });
+      return;
+    }
+    throw new Error('API returned error or unexpected payload');
+  } catch (err) {
+    // fallback: используем статические data-target из HTML
+    console.warn('Не удалось загрузить статистику с API, fallback к data-target:', err);
+    counters.forEach(counter => {
+      const target = parseInt(counter.getAttribute('data-target')) || 0;
+      animateCounter(counter, target);
+    });
+  }
+}
+
+// Запускаем получение статистики при загрузке страницы
 window.addEventListener('load', () => {
-  const counters = document.querySelectorAll('.counter');
-  
-  counters.forEach(counter => {
-    const target = parseInt(counter.getAttribute('data-target'));
-    animateCounter(counter, target);
-  });
-  
+  fetchAndRenderStats();
+
   // Добавляем обработчик для стрелки прокрутки проектов на странице Donate
   if (document.querySelector('body.donate-mobile')) {
     const projectHeaderArrow = document.querySelector('body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 .mb-16::after');
     const headerProjectsSection = document.querySelector('body.donate-mobile footer.relative.bg-black.overflow-hidden.py-20 .mb-16');
-    
+
     if (headerProjectsSection) {
       headerProjectsSection.addEventListener('click', function(e) {
         // Проверяем, что клик был по стрелке (или примерно в той области)
