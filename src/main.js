@@ -3635,6 +3635,63 @@ function updateUserDataOnPage(user) {
             element.textContent = emissionTonnes;
         });
     }
+
+  // Обновляем дополнительные поля: emission_tons и total_investment
+  try {
+    const emissionTonsElements = document.querySelectorAll('[data-emission-tons]');
+    if (emissionTonsElements.length > 0 && typeof user.emission_tons !== 'undefined' && user.emission_tons !== null) {
+      // показываем с одним знаком после запятой если число дробное
+      const val = parseFloat(user.emission_tons);
+      const formatted = (Math.abs(val - Math.round(val)) > 0.05) ? val.toFixed(1) : Math.round(val).toString();
+      emissionTonsElements.forEach(el => el.textContent = `~ ${formatted} тонн CO₂ очищено в год`);
+    }
+
+    const investElements = document.querySelectorAll('[data-total-investment]');
+    if (investElements.length > 0 && typeof user.total_investment !== 'undefined' && user.total_investment !== null) {
+      const nf = new Intl.NumberFormat('ru-RU');
+      const formatted = nf.format(Number(user.total_investment));
+      investElements.forEach(el => el.textContent = `~ ${formatted} ₸ инвестировано в озеленение`);
+    }
+  } catch (err) {
+    console.error('Ошибка при обновлении emission_tons / total_investment:', err);
+  }
+
+  // Обновляем блок "Для полной компенсации" если есть данные от API
+  try {
+    const compensElem = document.getElementById('emissionFullCompensValue');
+    if (compensElem) {
+      // Берём значения напрямую из user, ожидаемое название полей: trees_need, price_need, emission_tons
+      const treesNeed = (typeof user.trees_need !== 'undefined' && user.trees_need !== null) ? Number(user.trees_need) : null;
+      const priceNeed = (typeof user.price_need !== 'undefined' && user.price_need !== null) ? Number(user.price_need) : null;
+      const emissionTons = (typeof user.emission_tons !== 'undefined' && user.emission_tons !== null) ? parseFloat(user.emission_tons) : null;
+
+      // Форматирование чисел для отображения
+      const nf = new Intl.NumberFormat('ru-RU');
+
+      // Формируем строки с fallback на прежний статический контент
+      const treesStr = treesNeed !== null ? `~ ${nf.format(treesNeed)} деревьев` : '';
+      const priceStr = priceNeed !== null ? `~ ${nf.format(priceNeed)} ₸` : '';
+
+      // Цена за тонну — если есть emissionTons и priceNeed
+      let perTonStr = '';
+      if (priceNeed !== null && emissionTons) {
+        const perTon = Math.round(priceNeed / emissionTons);
+        perTonStr = `~ ${nf.format(perTon)} ₸ за тонну CO₂`;
+      }
+
+      // Собираем финальный HTML (переносы через <br>) — показываем только имеющиеся строки
+      const parts = [];
+      if (treesStr) parts.push(treesStr);
+      if (priceStr) parts.push(priceStr);
+      if (perTonStr) parts.push(perTonStr);
+
+      if (parts.length > 0) {
+        compensElem.innerHTML = parts.join(' <br> ');
+      }
+    }
+  } catch (err) {
+    console.error('Ошибка при обновлении блока полной компенсации:', err);
+  }
 }
 
 function initializeEmissionMap(user) {
