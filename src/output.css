@@ -4633,6 +4633,9 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     .tablet-menu {
       display: block !important;
     }
+    #textemissionoff {
+      display: none !important;
+    }
   }
   body.emission-mobile nav {
     height: 70px !important;
