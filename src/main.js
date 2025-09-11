@@ -1143,9 +1143,8 @@ function renderProjects(projects) {
     container.style.opacity = '1';
   }, 300);
 }
-
-// Make functions global for onclick handlers
 window.switchCategory = switchCategory;
+// Make functions global for onclick handlers (single export kept after definition)
 
 // Ограничение ввода возраста до 100
 document.addEventListener('DOMContentLoaded', () => {
@@ -2113,8 +2112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Загружаем стартапы по умолчанию используя старую логику
         renderProjects(projectsData.startups.projects);
         
-        // Делаем функцию switchCategory глобальной
-        window.switchCategory = switchCategory;
+      // Делаем функцию switchCategory глобальной (export оставлен единожды после определения выше)
     }
     
     // Инициализация страницы ProjectInfo.html
@@ -2171,7 +2169,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Делаем функции глобальными для использования в HTML
-window.switchCategory = switchCategory;
 window.openProjectInfo = openProjectInfo;
 
 // Модальное окно для просмотра проекта
