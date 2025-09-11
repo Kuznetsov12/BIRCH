@@ -51,6 +51,7 @@ function toggleMobileMenu() {
     document.body.style.overflow = 'hidden'; // Запрещаем прокрутку страницы когда меню открыто
   }
 }
+window.scrollMobileProjects = scrollMobileProjects;
 
 // Экспортируем функцию в глобальную область для использования в inline onclick в HTML
 window.toggleMobileMenu = toggleMobileMenu;
