@@ -55,6 +55,8 @@ window.scrollMobileProjects = scrollMobileProjects;
 
 // Экспортируем функцию в глобальную область для использования в inline onclick в HTML
 window.toggleMobileMenu = toggleMobileMenu;
+window.scrollTeamCards = scrollTeamCards;
+window.scrollProjectCards = scrollProjectCards;
 
 // Создание модального окна партнерства
 function createPartnershipModal() {
@@ -1564,9 +1566,7 @@ async function findUserTrees(phoneNumber) {
   
   console.log('Поиск деревьев для номера:', phoneNumber);
   
-  try {
-    const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
-    
+  try { 
     // Проверяем, существует ли пользователь
     const checkResponse = await fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phoneNumber)}`);
     const checkData = await checkResponse.json();
@@ -2337,7 +2337,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const getApiConfig = () => {
     // Используем переменные из .env файла через глобальные переменные или fallback
     return {
-        apiBaseUrl: window.VITE_API_BASE_URL || 'http://localhost:3000',
+        apiBaseUrl: window.VITE_API_BASE_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
         isDebug: window.VITE_APP_DEBUG === 'true' || false
     };
 };
@@ -3568,7 +3568,6 @@ async function handleEmissionCheck() {
     }
     
     try {
-        const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
         
         // Проверяем, существует ли пользователь
         const checkResponse = await fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`);
@@ -3626,7 +3625,6 @@ function initializeEmissionPage() {
   if (typeof user.emission_cleared_percent === 'undefined') {
     const phone = user.phone || localStorage.getItem('userPhone');
     if (phone) {
-      const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
       fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`)
         .then(res => res.json())
         .then(data => {
@@ -3910,29 +3908,47 @@ if (window.location.pathname.includes('EmissionAuth.html')) {
 
 // Функция для обновления данных на странице EmissionAuth.html
 function updateEmissionAuthData(user) {
-    // Обновляем имя пользователя (или показываем "?")
-    const userNameElement = document.querySelector('[data-user-name]');
-    if (userNameElement) {
-        if (user.name && user.surname) {
-            const shortName = `${user.name} ${user.surname.charAt(0)}.`;
-            userNameElement.textContent = shortName;
-        } else {
-            userNameElement.textContent = '?';
-        }
+  // Обновляем имя пользователя.
+  // Если передан объект с phone, но нет name/surname — это случай "пользователь не найден".
+  const userNameElement = document.querySelector('[data-user-name]');
+  if (userNameElement) {
+    if (user.name && user.surname) {
+      const shortName = `${user.name} ${user.surname.charAt(0)}.`;
+      userNameElement.textContent = shortName;
+    } else if (user.phone && !user.name && !user.surname) {
+      // Пользователь не найден — показываем дружелюбное сообщение
+      userNameElement.textContent = 'Мы Вас не нашли :(';
+    } else {
+      userNameElement.textContent = '?';
     }
+  }
+
+  // Обновляем количество деревьев.
+  const totalTrees = user.plantings ? user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0) : 0;
+  const treesElements = document.querySelectorAll('[data-trees-count]');
+  treesElements.forEach(element => {
+    if (totalTrees > 0) {
+      element.textContent = totalTrees;
+    } else if (user.phone && !user.name && !user.surname) {
+      // Пользователь не найден — показываем понятный текст вместо знака вопроса
+      element.textContent = 'Перепроверьте номер телефона. Если данных нет, вы можете рассчитать свою эмиссию или внести вклад в высадку деревьев и стать частью нашего сообщества.';
+    } else {
+      element.textContent = '?';
+    }
+  });
     
-    // Обновляем количество деревьев (или показываем "?")
-    const totalTrees = user.plantings ? user.plantings.reduce((sum, planting) => sum + parseInt(planting.trees_quantity), 0) : 0;
-    const treesElements = document.querySelectorAll('[data-trees-count]');
-    treesElements.forEach(element => {
-        if (totalTrees > 0) {
-            element.textContent = totalTrees;
-        } else {
-            element.textContent = '?';
-        }
-    });
-    
-    // Карты на EmissionAuth.html нет, поэтому не инициализируем
+  // Показ/скрытие блоков в зависимости от наличия данных
+  const viVisadiliBlock = document.getElementById('viVisadili');
+  const notFoundBlock = document.getElementById('notFoundMessage');
+  if (user.phone && !user.name && !user.surname) {
+    if (viVisadiliBlock) viVisadiliBlock.classList.add('hidden');
+    if (notFoundBlock) notFoundBlock.classList.remove('hidden');
+  } else {
+    if (viVisadiliBlock) viVisadiliBlock.classList.remove('hidden');
+    if (notFoundBlock) notFoundBlock.classList.add('hidden');
+  }
+
+  // Карты на EmissionAuth.html нет, поэтому не инициализируем
 }
 
 // Функция для инициализации карты на EmissionAuth.html

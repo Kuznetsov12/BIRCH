@@ -174,15 +174,20 @@
         <div class="flex-1 max-w-[900px] text-white space-y-0">
           <!-- Имя пользователя -->
            <div class="border-b border-white/20">
-          <h1 id="firstText" class="text-[84px] font-light leading-tight text-white mb-8" data-user-name>
-            ?
+          <h1 id="firstText" class="text-[84px] font-light leading-tight text-[#DAFFF1] mb-8" data-user-name>
+            Мы Вас не нашли :(
           </h1>
           </div>
           
           <!-- Блок 1: Вы высадили -->
           <div id="viVisadili" class="pb-8 border-b border-white/20 mt-8">
             <p class="text-[#BFBFBF] text-[24px] font-light mb-2">Вы высадили:</p>
-            <p class="text-white text-[48px] font-light">Вы высадили: <span data-trees-count>0</span> 🌳</p>
+            <p class="text-white text-[48px] font-light">Вы высадили: <span data-trees-count>Нет данных</span> 🌳</p>
+          </div>
+
+          <!-- Сообщение, показываемое когда пользователь не найден (по умолчанию скрыто) -->
+          <div id="notFoundMessage" class="hidden pb-8 border-b border-white/20 mt-8">
+            <p class="text-[#BFBFBF] text-[24px] font-light">Перепроверьте номер телефона. Если данных нет, вы можете <br> рассчитать свою эмиссию или внести вклад в высадку деревьев и <br> стать частью нашего сообщества. 🌳</p>
           </div>
           
           
@@ -250,7 +255,7 @@
             </div>
             <!-- Процент справа от картинки с бордером на границе -->
             <div id="percentageIndicator" class="absolute" style="top: calc(800px * 0.33); left: 250px; transform: translateY(-40px);">
-              <span id="percentageText" class="text-white text-[74px] font-medium leading-none">? %</span>
+              <span id="percentageText" class="text-white text-[74px] font-medium leading-none">B1&?%</span>
             </div>
             
             <!-- Бордер отдельно, точно на границе цветной части -->

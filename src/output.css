@@ -366,6 +366,9 @@
   .-bottom-30 {
     bottom: calc(var(--spacing) * -30);
   }
+  .-bottom-70 {
+    bottom: calc(var(--spacing) * -70);
+  }
   .-bottom-\[-250px\] {
     bottom: calc(-250px * -1);
   }
@@ -434,9 +437,6 @@
   }
   .left-\[910px\] {
     left: 910px;
-  }
-  .-z-1 {
-    z-index: calc(1 * -1);
   }
   .-z-10 {
     z-index: calc(10 * -1);
@@ -1382,9 +1382,6 @@
     --tw-gradient-position: to bottom in oklab;
     background-image: linear-gradient(var(--tw-gradient-stops));
   }
-  .bg-none {
-    background-image: none;
-  }
   .from-gray-200 {
     --tw-gradient-from: var(--color-gray-200);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
@@ -1578,6 +1575,9 @@
     font-size: var(--text-xs);
     line-height: var(--tw-leading, var(--text-xs--line-height));
   }
+  .text-\[8px\] {
+    font-size: 8px;
+  }
   .text-\[16px\] {
     font-size: 16px;
   }
@@ -1592,6 +1592,9 @@
   }
   .text-\[27px\] {
     font-size: 27px;
+  }
+  .text-\[28px\] {
+    font-size: 28px;
   }
   .text-\[32px\] {
     font-size: 32px;
@@ -1700,6 +1703,12 @@
   .text-\[\#FFFFFF\] {
     color: #FFFFFF;
   }
+  .text-\[BFBFBF\] {
+    color: BFBFBF;
+  }
+  .text-\[DAFFF1\] {
+    color: DAFFF1;
+  }
   .text-black {
     color: var(--color-black);
   }
@@ -1792,10 +1801,6 @@
   .shadow-sm {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-  .blur {
-    --tw-blur: blur(8px);
-    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .blur-\[100px\] {
     --tw-blur: blur(100px);
@@ -3574,7 +3579,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     justify-content: center !important;
     flex-direction: row !important;
   }
-  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 {
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-70.-right-35 {
     position: relative !important;
     width: 100% !important;
     display: flex !important;
@@ -3585,18 +3590,19 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     right: 0 !important;
     overflow: visible !important;
   }
-  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 img {
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-70.-right-35 img {
     width: 600px !important;
     height: auto !important;
     max-width: none !important;
     position: relative !important;
-    top: -250px !important;
+    top: -300px !important;
+    right: -30px !important;
     transform: translateX(-10%) !important;
   }
 }
 @media (max-width: 1366px) {
   @media (min-width: 768px) and (max-width: 1366px) {
-    section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 {
+    section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-70.-right-35 {
       position: relative !important;
       bottom: auto !important;
       right: auto !important;
@@ -3606,7 +3612,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
       z-index: 5 !important;
       overflow: hidden !important;
     }
-    section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 img {
+    section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-70.-right-35 img {
       width: 700px !important;
       height: auto !important;
       transform: translateX(-10%) !important;

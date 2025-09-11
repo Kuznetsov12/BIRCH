@@ -1835,7 +1835,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   }
   
   /* Центрирование блока с руками */
-  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 {
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-70.-right-35 {
     position: relative !important;
     width: 100% !important;
     display: flex !important;
@@ -1848,12 +1848,13 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   }
   
   /* Изображение рук - размер для мобильных */
-  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 img {
+  section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-70.-right-35 img {
     width: 600px !important;
     height: auto !important;
     max-width: none !important;
     position: relative !important;
-    top: -250px !important;
+    top: -300px !important;
+    right: -30px !important;
     transform: translateX(-10%) !important; /* Небольшое смещение для лучшего выравнивания */
   }
 }
@@ -1862,7 +1863,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
 @media (max-width: 1366px) {
   /* Картинка с руками для планшета - фиксируем позицию вниз */
   @media (min-width: 768px) and (max-width: 1366px) {
-    section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 {
+    section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-70.-right-35 {
       position: relative !important;
       bottom: auto !important;
       right: auto !important;
@@ -1873,7 +1874,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
       overflow: hidden !important;
     }
     
-    section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-30.-right-35 img {
+    section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-70.-right-35 img {
       width: 700px !important;
       height: auto !important;
           transform: translateX(-10%) !important;
