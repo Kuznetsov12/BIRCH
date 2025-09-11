@@ -1,6 +1,6 @@
 // Конфигурация API
-const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
-console.log('API Base URL:', apiBaseUrl);
+  const apiBaseUrl = import.meta.env?.VITE_API_BASE_URL ?? window.VITE_API_BASE_URL ?? 'http://localhost:5000';
+  console.log('API Base URL resolved →', apiBaseUrl);
 
 // Добавляем CSS стили для кастомного чекбокса
 const customCheckboxStyles = `
@@ -1028,30 +1028,48 @@ const projectsData = {
 
 let currentCategory = 'technology';
 
+// Unified switchCategory: works both on main/project pages.
 function switchCategory(category) {
   if (currentCategory === category) return;
-  
   currentCategory = category;
+
   const data = projectsData[category];
-  
-  // Update hero background only
+
+  // update hero background if present
   const heroSection = document.getElementById('hero-section');
-  heroSection.style.backgroundImage = `url('${data.background}')`;
-  
-  // Update category buttons
-  document.querySelectorAll('.category-btn').forEach(btn => {
-    btn.classList.remove('active');
-    btn.classList.add('bg-white/10', 'backdrop-blur-md', 'text-white');
-    btn.classList.remove('bg-white', 'text-black', 'border-gray-300');
-  });
-  
-  const activeBtn = document.getElementById(`btn-${category}`);
-  activeBtn.classList.add('active');
-  activeBtn.classList.remove('bg-white/10', 'backdrop-blur-md', 'text-white');
-  activeBtn.classList.add('bg-white', 'text-black', 'border-gray-300');
-  
-  // Update projects
-  renderProjects(data.projects);
+  if (data && heroSection) heroSection.style.backgroundImage = `url('${data.background}')`;
+
+  // Update category buttons (generic safe approach)
+  const buttons = document.querySelectorAll('.category-btn');
+  if (buttons && buttons.length) {
+    buttons.forEach(btn => {
+      btn.classList.remove('active', 'bg-white', 'text-black');
+      btn.classList.add('bg-white/10', 'backdrop-blur-md', 'text-white');
+    });
+    const activeBtn = document.getElementById(`btn-${category}`);
+    if (activeBtn) {
+      activeBtn.classList.add('active', 'bg-white', 'text-black');
+      activeBtn.classList.remove('bg-white/10', 'backdrop-blur-md', 'text-white');
+    }
+  } else {
+    // Fallback to older class manipulation if buttons node list not found
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.classList.remove('active');
+      btn.classList.add('bg-white/10', 'backdrop-blur-md', 'text-white');
+      btn.classList.remove('bg-white', 'text-black', 'border-gray-300');
+    });
+    const active = document.getElementById(`btn-${category}`);
+    if (active) {
+      active.classList.add('active');
+      active.classList.remove('bg-white/10', 'backdrop-blur-md', 'text-white');
+      active.classList.add('bg-white', 'text-black', 'border-gray-300');
+    }
+  }
+
+  // Update projects if we have project data and renderer
+  if (data && typeof renderProjects === 'function') {
+    renderProjects(data.projects);
+  }
 }
 
 function renderProjects(projects) {
@@ -1337,13 +1355,7 @@ function scrollProjectCards(direction) {
     carousel.style.transform = `translateX(-${translateX}%)`;
 }
 
-// Функция для прокрутки наверх
-function scrollToTop() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-}
+// Функция для прокрутки наверх — реализация ниже в файле (с назначением в window.scrollToTop)
 
 // Простая функция для скролла мобильных проектов
 function scrollMobileProjects() {
@@ -1538,18 +1550,7 @@ function addTreePlantingMarkers() {
   });
 }
 
-// Функции управления картой
-function zoomInMap() {
-  if (map) {
-    map.zoomIn();
-  }
-}
-
-function zoomOutMap() {
-  if (map) {
-    map.zoomOut();
-  }
-}
+// Функции управления картой — реализация ниже использует window.mapInstance
 
 // Функция поиска деревьев пользователя по номеру телефона
 async function findUserTrees(phoneNumber) {
@@ -2068,38 +2069,8 @@ function nextProject() {
 
 // ===== PROJECT PAGE FUNCTIONALITY =====
 
-// Функция переключения категорий на странице Project.html  
-function switchCategory(category) {
-    const buttons = document.querySelectorAll('.category-btn');
-    const container = document.getElementById('projects-container');
-    
-    if (!container) return; // Не на странице Project
-    
-    // Обновляем активную кнопку
-    buttons.forEach(btn => {
-        btn.classList.remove('active', 'bg-white', 'text-black');
-        btn.classList.add('bg-white/10', 'backdrop-blur-md', 'text-white');
-    });
-    
-    const activeBtn = document.getElementById(`btn-${category}`);
-    if (activeBtn) {
-        activeBtn.classList.add('active', 'bg-white', 'text-black');
-        activeBtn.classList.remove('bg-white/10', 'backdrop-blur-md', 'text-white');
-    }
-    
-    // Используем старые данные проектов из projectsData
-    const data = projectsData[category];
-    if (data) {
-        // Обновляем фон героя
-        const heroSection = document.getElementById('hero-section');
-        if (heroSection) {
-            heroSection.style.backgroundImage = `url('${data.background}')`;
-        }
-        
-        // Рендерим проекты с старой функцией
-        renderProjects(data.projects);
-    }
-}
+// Для страницы Project.html используется единая реализация `switchCategory` выше.
+// Здесь не нужно повторно объявлять функцию — смотрите unified implementation earlier in the file.
 
 // Функция генерации HTML для карточек проектов
 function generateProjectCards(projectList) {
