@@ -2574,8 +2574,8 @@ function createCarbonFootprintModal() {
           </div>
 
           <!-- Источник электроэнергии -->
+          <label for="carbon-electricity-coefficient" class="block text-sm font-medium text-gray-700 mb-2">Источник электроэнергии</label>
           <div class="border border-gray-300 rounded-lg p-4">
-            <label for="carbon-electricity-coefficient" class="block text-sm font-medium text-gray-700 mb-2">Источник электроэнергии</label>
             <select id="carbon-electricity-coefficient" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
               <option value="">Выберите, каким типом электроэнергии вы пользуетесь</option>
               <option value="0.5">Газовая генерация</option>
@@ -2592,8 +2592,8 @@ function createCarbonFootprintModal() {
           </div>
 
           <!-- Тип топлива автомобиля -->
+          <label for="carbon-car-coefficient" class="block text-sm font-medium text-gray-700 mb-2">Тип топлива автомобиля</label>
           <div class="border border-gray-300 rounded-lg p-4">
-            <label for="carbon-car-coefficient" class="block text-sm font-medium text-gray-700 mb-2">Тип топлива автомобиля</label>
             <select id="carbon-car-coefficient" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')">
               <option value="">Выберите тип топлива вашего автомобиля</option>
               <option value="0.2">Бензин</option>
@@ -2616,8 +2616,8 @@ function createCarbonFootprintModal() {
           </div>
 
           <!-- Рацион питания -->
+          <label for="carbon-diet" class="block text-sm font-medium text-gray-700 mb-2">Рацион питания</label>
           <div class="border border-gray-300 rounded-lg p-4">
-            <label for="carbon-diet" class="block text-sm font-medium text-gray-700 mb-2">Рацион питания</label>
             <select id="carbon-diet" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
               <option value="">Выберите ваш тип питания</option>
               <option value="1200">Мясной</option>
@@ -2628,8 +2628,8 @@ function createCarbonFootprintModal() {
           </div>
 
           <!-- Физическая активность -->
+          <label for="carbon-physical-activity" class="block text-sm font-medium text-gray-700 mb-2">Физическая активность</label>
           <div class="border border-gray-300 rounded-lg p-4">
-            <label for="carbon-physical-activity" class="block text-sm font-medium text-gray-700 mb-2">Физическая активность</label>
             <select id="carbon-physical-activity" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
               <option value="">Выберите уровень вашей активности</option>
               <option value="1.2">Малоподвижный</option>
@@ -3490,6 +3490,92 @@ function initializeEmissionFunctions() {
     if (emissionCheckBtn) {
         emissionCheckBtn.addEventListener('click', handleEmissionCheck);
     }
+
+  // Добавляем обработчики для кнопок шаринга на страницах Emission / EmissionAuth
+  try {
+    // Emission: контейнер с иконками имеет id 'emissionIcon'
+    const emissionIconContainer = document.getElementById('emissionIcon');
+    if (emissionIconContainer) {
+      emissionIconContainer.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Приходимся на страницу Emission.html, userData должен быть в localStorage
+        const userData = localStorage.getItem('userData');
+        const user = userData ? JSON.parse(userData) : null;
+        const phone = user && user.phone ? user.phone : localStorage.getItem('userPhone');
+        if (!phone) {
+          alert('Не удалось получить номер телефона для шаринга.');
+          return;
+        }
+        const shareUrl = generateShareLink(phone, 'emission');
+        copyAndOpenShare(shareUrl);
+      });
+    }
+
+    // EmissionAuth: контейнер с иконками в элементе с id 'shareResultIcons'
+    const shareResultIcons = document.getElementById('shareResultIcons');
+    if (shareResultIcons) {
+      shareResultIcons.addEventListener('click', function(e) {
+        e.preventDefault();
+        const userData = localStorage.getItem('userData');
+        const user = userData ? JSON.parse(userData) : null;
+        const phone = user && user.phone ? user.phone : localStorage.getItem('userPhone');
+        if (!phone) {
+          alert('Не удалось получить номер телефона для шаринга.');
+          return;
+        }
+        // Для EmissionAuth делаем более приватную версию
+        const shareUrl = generateShareLink(phone, 'auth');
+        copyAndOpenShare(shareUrl);
+      });
+    }
+  } catch (err) {
+    console.error('Ошибка при инициализации шаринга:', err);
+  }
+}
+
+// Генерируем относительную ссылку на страницу шаринга (Share.html должна лежать в той же папке)
+function generateShareLink(phone, type) {
+  const params = new URLSearchParams({ phone: phone, type: type });
+  // Открываем Share.html в той же папке, где находятся Emission*.html
+  return `Share.html?${params.toString()}`;
+}
+
+// Копируем ссылку в буфер обмена и открываем в новой вкладке
+function copyAndOpenShare(url) {
+  // Формируем абсолютный URL для корректной работы после деплоя
+  try {
+    const loc = window.location;
+    // Путь до текущей директории (пример: /pages)
+    const pathParts = loc.pathname.split('/');
+    pathParts.pop(); // убрать файл
+    const baseDir = pathParts.join('/') || '/';
+    const full = loc.origin + (baseDir.endsWith('/') ? baseDir : baseDir + '/') + url;
+
+    // Копируем и открываем
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(full).then(() => {
+        window.open(full, '_blank');
+        alert('Ссылка скопирована в буфер и открыта в новой вкладке.');
+      }).catch(err => {
+        console.error('Не удалось скопировать ссылку:', err);
+        window.open(full, '_blank');
+      });
+    } else {
+      // fallback
+      const temp = document.createElement('input');
+      document.body.appendChild(temp);
+      temp.value = full;
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      window.open(full, '_blank');
+      alert('Ссылка скопирована в буфер и открыта в новой вкладке.');
+    }
+  } catch (err) {
+    console.error('Ошибка при формировании/копировании ссылки:', err);
+    // fallback простой открытие
+    window.open(url, '_blank');
+  }
 }
 
 async function handleEmissionCheck() {

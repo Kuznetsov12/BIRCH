@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="" lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Сертификат BIRCH</title>
+  <link href="../../src/output.css" rel="stylesheet">
+  <style>
+    /* Фон страницы чёрный, чтобы при деплое было ровно как в макете */
+    body { background: #000000; color: #fff; font-family: Inter, system-ui, -apple-system, 'PP Neue Montreal', sans-serif; position:relative; overflow-x:hidden }
+    /* Уже более узкий контейнер как в макете */
+  .container { margin: 48px auto; padding: 28px; background: transparent; border-radius: 12px; position:relative; z-index:3; overflow:hidden }
+    .header { display:flex; justify-content:space-between; align-items:center }
+    .title { font-size: 28px; font-weight:300; color: rgba(255,255,255,0.9) }
+    .big { font-size: 48px; font-weight:300; line-height:1; }
+    .muted { color: #BFBFBF }
+
+    /* Информационные блоки — вертикальные, высокий padding и тонкая граница снизу */
+    .info-block { width:100%; padding: 28px 6px; border-bottom: 1px solid rgba(255,255,255,0.06); display:block; }
+    .info-title { color: #BFBFBF; font-size: 16px; margin-bottom: 8px; }
+    .info-value { font-size: 40px; font-weight:300; color: #E8FFF5; }
+
+    /* Ряд из двух блоков (процент и углеродный след) */
+    .two-row { display:flex; gap:24px; margin-top:6px; }
+    .two-row .info-block { flex:1; padding: 28px 12px; }
+
+    /* Картинка дерева снизу */
+    #giantTree { width:100%; max-height: 360px; object-fit:cover; margin-top: 18px; }
+
+    /* Декоративные круги */
+    .decor-circle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.95;
+      pointer-events: none;
+      filter: blur(200px);
+    }
+    .circle-bottom-leftPhone{
+        display: none;
+    }
+    /* Круги внутри сертификата */
+    .circle-top-right { width: 360px; height: 360px; right: -60px; top: -60px; background: radial-gradient(circle, #008852, #164125); }
+    .circle-bottom-left { width: 360px; height: 360px; left: -60px; bottom: -60px; background: radial-gradient(circle, #008852, #164125); }
+
+    /* Картинка дерева будет внизу и немного смещена вправо (обрезана) */
+  .tree-wrap { position: absolute; right: -120px; bottom: -40px; z-index:2; pointer-events:none }
+  .tree-wrap img { display:block; width:760px; max-width:none; height:auto }
+
+    /* Адаптив */
+    @media (max-width: 640px) {
+      body { background: #000000 !important; } 
+      .container {margin: 0; padding: 12px; }
+      .big { font-size: 42px; }
+      .info-value { font-size: 34px; }
+      .two-row { flex-direction: column; }
+      .info-block { padding: 18px 6px; }
+      /* Меньше круги и меньше смещение дерева на телефоне */
+      .circle-top-right, .circle-bottom-left { width: 220px; height: 220px; right: -30px; left: -30px; top: -20px; bottom: -20px }
+      .tree-wrap { right: -30px; bottom: -10px }
+      .tree-wrap img { width: 520px }
+      #treeContainerOkay{
+        margin-top: 50px !important;
+      }
+      .circle-bottom-leftPhone{
+        display: block;
+        width: 350px; 
+        height: 350px; 
+        left: -220px; 
+        bottom: -20px; 
+        filter: blur(200px);
+        background: radial-gradient(circle, #008852, #164125);
+      }
+    }
+  </style>
+</head>
+<body class="bg-black">
+  <div class="container">
+    <div class="header">
+      <div>
+        <div class="title">Сертификат BIRCH</div>
+        <div class="muted">Данные пользователя</div>
+      </div>
+      <div id="logo"><img src="../../src/img/lepestki.svg" alt="lepestki" style="height:48px"></div>
+    </div>
+
+    <div id="content" style="margin-top:24px">
+      <div id="cert" style="display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+          <div>
+            <div id="userName" class="big">Загрузка...</div>
+            <div class="muted" id="userPhone">—</div>
+          </div>
+        </div>
+
+        <div id="blocks" style="display:flex;flex-wrap:wrap;gap:12px;">
+          <!-- заполнится скриптом -->
+        </div>
+
+        <div style="margin-top:16px;color:#BFBFBF;font-size:14px">Каждое дерево поглощает ~25 кг CO₂ в год — наш вклад реально работает!</div>
+
+        <div id="treeContainerOkay" style="position:relative; height:200px; margin-top:6px;">
+          <div class="tree-wrap">
+            <img id="giantTree" src="../../src/img/giantTree.png" alt="tree">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="decor-circle -z-10 circle-top-right"></div>
+      <div class="decor-circle -z-10 circle-bottom-left"></div>
+      <div class="decor-circle -z-10 circle-bottom-leftPhone"></div>
+  </div>
+
+  <script>
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      const phone = params.get('phone');
+      const type = params.get('type') || 'emission';
+      const content = document.getElementById('content');
+
+      if (!phone) {
+        content.innerHTML = '<p class="muted">Параметр phone обязателен в ссылке.</p>';
+        return;
+      }
+
+      const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
+      fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`)
+        .then(r=>r.json())
+        .then(data=>{
+          if (data.status !== 'success' || !data.data) {
+            content.innerHTML = '<p class="muted">Пользователь не найден.</p>';
+            return;
+          }
+
+          const u = data.data;
+
+          // наполняем шапку
+          document.getElementById('userName').textContent = u.name ? (u.name + ' ' + (u.surname || '')) : 'Пользователь';
+          document.getElementById('userPhone').textContent = u.phone || '';
+
+          const blocks = document.getElementById('blocks');
+          blocks.innerHTML = '';
+
+          function makeBlockElem(title, value) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'info-block';
+            const t = document.createElement('div'); t.className = 'info-title'; t.textContent = title;
+            const v = document.createElement('div'); v.className = 'info-value'; v.textContent = value;
+            wrapper.appendChild(t);
+            wrapper.appendChild(v);
+            return wrapper;
+          }
+
+          // вертикальные блоки
+          blocks.appendChild(makeBlockElem('Я высадил ', `${u.total_trees + "   🌳" || 0}`));
+          blocks.appendChild(makeBlockElem('Я очищаю', `${u.emission_tons !== undefined ? u.emission_tons : '?'} тонн CO₂ в год`));
+
+          if (type === 'emission') {
+            blocks.appendChild(makeBlockElem('Для полной компенсации', `~ ${u.trees_need || '?'} деревьев`));
+            const invest = u.price_need ? new Intl.NumberFormat('ru-RU').format(u.price_need) + ' ₸' : (u.total_investment ? new Intl.NumberFormat('ru-RU').format(u.total_investment) + ' ₸' : '?');
+            blocks.appendChild(makeBlockElem('Инвестировано в озеленение', invest));
+
+            // пара: Восполнение эмиссии и Углеродный след в одной строке
+            const two = document.createElement('div');
+            two.className = 'two-row';
+            two.appendChild(makeBlockElem('Восполнение эмиссии', typeof u.emission_cleared_percent !== 'undefined' ? (u.emission_cleared_percent + '%') : '?'));
+            two.appendChild(makeBlockElem('Углеродный след', `${u.emission_tons !== undefined ? '~ ' + u.emission_tons + ' тонн CO₂ в год' : '?'}`));
+            blocks.appendChild(two);
+          }
+
+          // подвал: подпись/промо текст уже есть в верстке
+        })
+        .catch(err=>{
+          content.innerHTML = '<p class="muted">Ошибка при загрузке данных.</p>';
+          console.error(err);
+        });
+
+    })();
+  </script>
+</body>
+</html>
