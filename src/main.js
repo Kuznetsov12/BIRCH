@@ -52,6 +52,9 @@ function toggleMobileMenu() {
   }
 }
 
+// Экспортируем функцию в глобальную область для использования в inline onclick в HTML
+window.toggleMobileMenu = toggleMobileMenu;
+
 // Создание модального окна партнерства
 function createPartnershipModal() {
   // Определяем правильный путь к изображениям в зависимости от страницы

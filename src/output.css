@@ -591,6 +591,9 @@
   .hidden {
     display: none;
   }
+  .inline {
+    display: inline;
+  }
   .h-3 {
     height: calc(var(--spacing) * 3);
   }
