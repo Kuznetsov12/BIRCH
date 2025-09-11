@@ -182,16 +182,9 @@
           <!-- Блок 1: Вы высадили -->
           <div id="viVisadili" class="pb-8 border-b border-white/20 mt-8">
             <p class="text-[#BFBFBF] text-[24px] font-light mb-2">Вы высадили:</p>
-            <p class="text-white text-[48px] font-light">Вы высадили: <span data-trees-count>?</span> 🌳</p>
+            <p class="text-white text-[48px] font-light">Вы высадили: <span data-trees-count>0</span> 🌳</p>
           </div>
           
-          <!-- Блок 2: Это эквивалентно -->
-          <div id="ecvivalent" class="py-8 border-b border-white/20">
-            <p id="firstEcvivalent" class="text-[#BFBFBF] text-[24px] font-light mb-2">Это эквивалентно:</p>
-            <div class="space-y-2">
-              <p id="secondEcvivalent" class="text-white leading-[130%] text-[48px] font-light">~ 7 - 11 тонн CO₂ очищено в год <br> ~ 314000₸ инвестировано в озеленение</p>
-            </div>
-          </div>
           
           <!-- Блок 4: Призыв к действию -->
           <div class="py-8 border-white/20">
@@ -204,7 +197,7 @@
 
             <div id="emissionCalculator" class="flex items-center gap-12 mt-6">
               <button id="emissionCalculatorButton" class="bg-[#4ADE80] text-white font-bold text-[20px] h-[85px] px-8 py-4 rounded-[6px] hover:bg-green-400 transition-all duration-300 flex items-center gap-3">
-                <span class="flex items-center gap-2">
+                <span id="btnMainPageSled" class="flex items-center gap-2">
                     <img src="../img/plusMinus.svg" alt="">
                   Рассчитать эмиссию
                 </span>
