@@ -26,8 +26,8 @@
     <meta name="twitter:image" content="../../src/img/mainPageFirst.png">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="../../src/img/mainLogo.png">
-    <link rel="apple-touch-icon" href="../../src/img/mainLogo.png">
+    <link rel="icon" type="image/png" href="../../src/img/newheadmainlogo.png">
+    <link rel="apple-touch-icon" href="../../src/img/newheadmainlogo.png">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://birch.ru/emission">
@@ -130,10 +130,11 @@
       <div class="flex items-center gap-6">
         <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
           <li><a href="../../index.html" class="hover:underline">Главная</a></li>
-          <li><a href="./Donate.html" class=" font-bold border-b-2 border-white pb-1" aria-current="page">Донаты</a></li>
-          <li><a href="./PlantForest.html" class="hover:underline whitespace-nowrap">B2B&nbsp;квоты</a></li>
-          <li><a href="../../index.html" class="hover:underline">Партнеры</a></li>
+          <li><a href="./Donate.html" class="font-bold pb-1">Взносы</a></li>
+          <li><a href="./PlantForest.html" class="hover:underline whitespace-nowrap">Оффсет СО2</a></li>
+          <li><a href="../../index.html" class="hover:underline">Партнёры</a></li>
           <li><a href="./Project.html" class="hover:underline">Проекты</a></li>
+          <li><a href="./EmissionAuth.html" class="font-bold pb-1" aria-current="page">Эмиссии</a></li>
           <li><a href="#emissionAuthFooterAddNavi" class="hover:underline">Контакты</a></li>
         </ul>
         <button class="flex items-center partnership-btn bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
@@ -145,7 +146,9 @@
         <!-- Меню для планшетов -->
         <img src="../../src/img/headerTable.svg" alt="Меню" class="w-11 h-11 tablet-menu" />
         <!-- Бургер-меню для мобильных -->
-        <img src="../../src/img/burgerMenu.svg" alt="Меню" class="w-8 h-8 mobile-menu" onclick="toggleMobileMenu()" />
+        <div onclick="toggleMobileMenu()" class="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 mobile-menu" aria-hidden="true">
+          <img src="../../src/img/burgerMenu.svg" alt="Меню" class="w-5 h-5 rounded-none" />
+        </div>
       </div>
     </nav>
     <!-- Мобильное меню (скрыто по умолчанию) -->
@@ -153,11 +156,11 @@
       <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
       <ul class="flex flex-col gap-8 text-white text-xl text-center">
         <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Главная</a></li>
-        <li><a href="./Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Донаты</a></li>
-        <li><a href="./PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">B2B квоты</a></li>
+        <li><a href="./Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Взносы</a></li>
+        <li><a href="./PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Оффсет СО2</a></li>
         <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
         <li><a href="./Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
-        <li><a href="./EmissionAuth.html" class="font-bold" onclick="toggleMobileMenu()">Эмиссии</a></li>
+  <li><a href="./EmissionAuth.html" class="font-bold" aria-current="page" onclick="toggleMobileMenu()">Эмиссии</a></li>
       </ul>
       <button class="mt-10 partnership-btn bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600" onclick="toggleMobileMenu()">
         Оставить заявку
@@ -283,22 +286,21 @@
             <h3 class="text-xl font-normal text-white mb-6">По вопросам сотрудничества<br>и партнёрства</h3>
             
             <div class="space-y-4 text-white/80">
-              <p class="text-base">Казахстан, г. Алматы, ул. Зелёная, 21</p>
-              <p class="text-base">+7(700)800 77 77</p>
-              <p class="text-base">info@birch.green</p>
+              <p class="text-base">Казахстан, г. Астана</p>
+              <p class="text-base">vladimir.o@birch.green</p>
             </div>
             
             <h4 class="text-lg font-normal text-white mt-8 mb-4">Присоединяйтесь к нам</h4>
             <div class="flex">
-              <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
-                <img src="../../src/img/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
-              </a>
-              <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
-                <img src="../../src/img/tg.svg" alt="Telegram" class="w-8 h-8">
-              </a>
-              <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
-                <img src="../../src/img/vk.svg" alt="VK" class="w-8 h-8">
-              </a>
+                 <div class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
+                   <img src="../../src/img/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
+                 </div>
+                 <div class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
+                   <img src="../../src/img/tg.svg" alt="Telegram" class="w-8 h-8">
+                 </div>
+                  <div onclick="window.open('https://www.instagram.com/birch.green/')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
+                    <img src="../../src/img/insta.svg" alt="Instagram" class="w-8 h-8">
+                  </div>
             </div>
           </div>
         </div>
@@ -310,8 +312,8 @@
             
             <nav class="space-y-4">
               <a href="../../index.html" class="block text-white/80 hover:text-white transition-all text-base">Главная</a>
-              <a href="./donate.html" class="block text-white/80 hover:text-white transition-all text-base">Донаты</a>
-              <a href="./PlantForest.html" class="block text-white/80 hover:text-white transition-all text-base">B2B квоты</a>
+              <a href="./donate.html" class="block text-white/80 hover:text-white transition-all text-base">Взносы</a>
+              <a href="./PlantForest.html" class="block text-white/80 hover:text-white transition-all text-base">Оффсет СО2</a>
               <a href="../../index.html" class="block text-white/80 hover:text-white transition-all text-base">Партнеры</a>
               <a href="./Project.html" class="block text-white/80 hover:text-white transition-all text-base">Проекты</a>
               <a href="#emissionAuthFooterAddNavi" class="block text-white/80 hover:text-white transition-all text-base">Контакты</a>

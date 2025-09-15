@@ -199,9 +199,9 @@
       <div class="flex-1"></div>
       <div class="flex items-center gap-6">
         <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
-          <li><a href="#" class="font-bold transition-all" aria-current="page" style="padding-bottom: 4px; font-weight: 700; border-bottom: 2px solid white;">Главная</a></li>
-          <li><a href="./src/pages/Donate.html" class="hover:underline">Донаты</a></li>
-          <li><a href="./src/pages/PlantForest.html" class="hover:underline whitespace-nowrap">B2B&nbsp;квоты</a></li>
+          <li><a href="#" class="font-bold transition-all" aria-current="page">Главная</a></li>
+          <li><a href="./src/pages/Donate.html" class="hover:underline">Взносы</a></li>
+          <li><a href="./src/pages/PlantForest.html" class="hover:underline whitespace-nowrap">Оффсет СО2</a></li>
           <li><a href="#partnersMainPage" class="hover:underline">Партнеры</a></li>
           <li><a href="./src/pages/Project.html" class="hover:underline">Проекты</a></li>
           <li><a href="#footerMainPageFirst" class="hover:underline">Контакты</a></li>
@@ -215,7 +215,9 @@
         <!-- Меню для планшетов -->
         <img src="./src/img/headerTable.svg" alt="Меню" class="w-11 h-11 tablet-menu" />
         <!-- Бургер-меню для мобильных -->
-        <img src="./src/img/burgerMenu.svg" alt="Меню" class="w-8 h-8 mobile-menu" onclick="toggleMobileMenu()" />
+        <div onclick="toggleMobileMenu()" class="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 mobile-menu" aria-hidden="true">
+          <img src="./src/img/burgerMenu.svg" alt="Меню" class="w-8 h-8 rounded-none" />
+        </div>
       </div>
     </nav>
     
@@ -223,9 +225,9 @@
     <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-black/95 z-50 hidden flex-col items-center justify-center">
       <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
       <ul class="flex flex-col gap-8 text-white text-xl text-center">
-        <li><a href="#" class="font-bold" onclick="toggleMobileMenu()">Главная</a></li>
-        <li><a href="./src/pages/Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Донаты</a></li>
-        <li><a href="./src/pages/PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">B2B квоты</a></li>
+  <li><a href="#" class="font-bold" aria-current="page" onclick="toggleMobileMenu()">Главная</a></li>
+        <li><a href="./src/pages/Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Взносы</a></li>
+        <li><a href="./src/pages/PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Оффсет СО2</a></li>
         <li><a href="#partnersMainPage" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
         <li><a href="./src/pages/Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
         <li><a href="#footerMainPageFirst" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
@@ -297,7 +299,7 @@
 </section>
 
 <!-- Секция "Твоя роль в экологии" -->
-<section class="w-full bg-white min-h-[700px] flex flex-col relative overflow-visible">
+<section class="w-full bg-white min-h-[700px] relative overflow-visible">
   <!-- Основное дерево для планшетов - прибито к верху по центру -->
   <div class="w-full flex justify-center absolute top-0 z-10">
     <img src="./src/img/adaptivTree.png" alt="" class="w-[600px] h-auto object-contain">
@@ -525,7 +527,7 @@
       
       <!-- Правая часть - текст и форма -->
       <div class="flex-1">
-            <div class="bg-[#3C3C3C] w-[250px] flex items-center justify-center h-[60px] text-center text-white px-4 py-2 rounded text-sm font-medium z-10">
+            <div id="fourco2tonn" class="bg-[#3C3C3C] w-[250px] flex items-center justify-center h-[60px] text-center text-white px-4 py-2 rounded text-sm font-medium z-10">
               <span class="text-2xl font-medium">4–12 ТОНН CO₂</span>
           </div>
         <h2 class="text-[84px] font-light text-black mb-8 leading-tight">
@@ -544,7 +546,7 @@
             min="1"
             max="100"
             placeholder="Введите ваш возраст" 
-            class="flex-1 h-[80px] text-center max-w-[340px] px-8 py-6 border-b text-[#CCCCCC] border-gray-300 text-xl font-medium focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            class="flex-1 hidden h-[80px] text-center max-w-[340px] px-8 py-6 border-b text-[#CCCCCC] border-gray-300 text-xl font-medium focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
             aria-label="Введите ваш возраст для расчета углеродного следа"
           />
           
@@ -612,9 +614,9 @@
   <div class="absolute bottom-0 right-0 z-10 w-[1100px] h-[1100px] -mb-[680px] -mr-[280px]">
     <svg viewBox="0 0 1000 1000" class="w-full h-full" id="yearWheel">
       <!-- Внешние декоративные окружности - увеличиваем размеры -->
-      <circle cx="500" cy="500" r="480" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>  
-      <circle cx="500" cy="500" r="320" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>
-      <circle cx="500" cy="500" r="200" class="stroke-white/10 bg-white/10 fill-none" stroke-width="5"/>
+      <circle cx="500" cy="500" r="480" class="stroke-white/10 bg-white/10  fill-none" stroke-width="3"/>  
+      <circle cx="500" cy="500" r="320" class="stroke-white/10 bg-white/10 fill-none" stroke-width="3"/>
+      <circle cx="500" cy="500" r="200" class="stroke-white/10 bg-white/10 fill-none" stroke-width="3"/>
 
       <!-- Круговая картинка с годами между первой и второй линиями -->
       <g id="yearsImageGroup" class="rotating-years">
@@ -748,7 +750,7 @@
 
         <!-- Логотипы партнеров в кругах -->
         <div class="py-10 max-w-[1920px] mb-20">
-          <div class="grid grid-cols-6 gap-16 items-center justify-center opacity-40">
+          <div class="grid grid-cols-6 gap-16 items-center justify-center">
             <!-- Первый ряд -->
             <div class="w-[150px] h-[150px] rounded-full flex items-center justify-center">
               <img src="./src/img/ValorCarbon.png" alt="Valor Carbon" class="w-36 h-36 object-contain" />
@@ -1172,35 +1174,34 @@
                 <h3 class="text-xl font-normal text-white mb-6">По вопросам сотрудничества<br>и партнёрства</h3>
                 
                 <div class="space-y-4 text-white/80">
-                  <p class="text-base">Казахстан, г. Алматы, ул. Зелёная, 21</p>
-                  <p class="text-base">+7(700)800 77 77</p>
-                  <p class="text-base">info@birch.green</p>
+                  <p class="text-base">Казахстан, г. Астана</p>
+                  <p class="text-base">vladimir.o@birch.green</p>
                 </div>
                 
                 <h4 class="text-lg font-normal text-white mt-8 mb-4">Присоединяйтесь к нам</h4>
                 <div class="flex">
-                  <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
+                  <div class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
                     <img src="./src/img/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
-                  </a>
-                  <a href="#" class="w-10 h-10 rounded-full  flex items-center justify-center hover:bg-white/20 transition-all">
+                  </div>
+                  <div class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
                     <img src="./src/img/tg.svg" alt="Telegram" class="w-8 h-8">
-                  </a>
-                  <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
-                    <img src="./src/img/vk.svg" alt="VK" class="w-8 h-8">
-                  </a>
+                  </div>
+                  <div onclick="window.open('https://www.instagram.com/birch.green/')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
+                    <img src="./src/img/insta.svg" alt="Instagram" class="w-8 h-8">
+                  </div>
                 </div>
               </div>
             </div>
             
             <!-- Третья колонка - Навигация -->
-            <div class="border-r border-white/10 p-8 flex items-center justify-center">
+            <div class="p-8 flex items-center justify-center">
               <div class="text-left">
                 <h3 class="text-xl font-normal text-white mb-6">Навигация<br>по сайту</h3>
                 
                 <nav class="space-y-4">
-                  <a href="#top" class="block text-white hover:text-white transition-all text-base font-extrabold border-b-2 border-white pb-1" onclick="scrollToTop()" style="border-bottom: 2px solid white; padding-bottom: 4px; font-weight: 800;">Главная</a>
-                  <a href="./src/pages/Donate.html" class="block text-white/80 hover:text-white transition-all text-base">Донаты</a>
-                  <a href="./src/pages/PlantForest.html" class="block text-white/80 hover:text-white transition-all text-base">B2B квоты</a>
+                  <a href="#top" class="block text-white hover:text-white transition-all text-base font-extrabold" onclick="scrollToTop()" style="font-weight: 800;" aria-current="page">Главная</a>
+                  <a href="./src/pages/Donate.html" class="block text-white/80 hover:text-white transition-all text-base">Взносы</a>
+                  <a href="./src/pages/PlantForest.html" class="block text-white/80 hover:text-white transition-all text-base">Оффсет СО2</a>
                   <a href="#partnersMainPage" class="block text-white/80 hover:text-white transition-all text-base">Партнеры</a>
                   <a href="./src/pages/Project.html" class="block text-white/80 hover:text-white transition-all text-base">Проекты</a>
                   <a href="#footerMainPageFirst" class="block text-white/80 hover:text-white transition-all text-base">Контакты</a>

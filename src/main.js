@@ -2413,32 +2413,32 @@ function generateMarqueeContent(users) {
         // Формируем короткое имя (Имя + первая буква фамилии)
         const shortName = `${user.name} ${user.surname.charAt(0)}.`;
         
-        if (isForestPage) {
+    if (isForestPage) {
             // Формат для лесной страницы (карточки с деревьями)
-            return `
-                <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-                    <div class="text-left">
-                        <div class="text-6xl font-normal text-white flex items-center gap-2">
-                            ${totalTrees}
-                            <span class="text-6xl">🌳</span>
-                        </div>
-                        <div class="text-lg text-gray-300 mt-1">${shortName}</div>
-                    </div>
-                </div>
-            `;
+      return `
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              ${totalTrees}
+              <img src="../../src/img/treeForRunStroke.svg" alt="tree" class="w-8 h-8" />
+            </div>
+            <div class="text-lg text-gray-300 mt-1">${shortName}</div>
+          </div>
+        </div>
+      `;
         } else {
             // Формат для главной страницы (простые карточки)
-            return `
-                <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
-                    <div class="text-left">
-                        <div class="text-6xl font-normal text-white flex items-center gap-2">
-                            ${totalTrees}
-                            <span class="text-6xl">🌳</span>
-                        </div>
-                        <div class="text-lg text-gray-300 mt-1">${shortName}</div>
-                    </div>
-                </div>
-            `;
+      return `
+        <div class="flex items-center px-12 py-6 border-r border-gray-400/30 min-w-fit">
+          <div class="text-left">
+            <div class="text-6xl font-normal text-white flex items-center gap-2">
+              ${totalTrees}
+              <img src="./src/img/treeForRunStroke.svg" alt="tree" class="w-8 h-8" />
+            </div>
+            <div class="text-lg text-gray-300 mt-1">${shortName}</div>
+          </div>
+        </div>
+      `;
         }
     }
     

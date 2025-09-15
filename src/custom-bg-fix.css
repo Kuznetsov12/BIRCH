@@ -3,6 +3,18 @@ body.overflow-x-hidden.bg-black {
   background-color: black !important;
 }
 
+
+/* Ensure the burger icon inside the mobile menu wrapper stays square while wrapper can be rounded */
+.mobile-menu img,
+.mobile-menu > img {
+  border-radius: 0 !important;
+  display: block;
+}
+
+.mobile-menu {
+  cursor: pointer;
+}
+
 /* Основные стили для растягивания фона на всю ширину экрана (только для десктопа) */
 @media (min-width: 1200px) {
   
@@ -114,3 +126,230 @@ body.overflow-x-hidden.bg-black {
   }
   
 }
+
+/* Навигация: убираем стандартное подчеркивание и реализуем тонкую нижнюю линию */
+nav a {
+  text-decoration: none !important;
+  position: relative;
+  padding-bottom: 10px; /* место для линии */
+}
+
+/* Ховер: белая тонкая линия */
+nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  height: 2px;
+  background: transparent;
+  transition: background-color 160ms ease, transform 160ms ease;
+  transform-origin: center;
+  transform: scaleX(0);
+}
+
+nav a:hover::after {
+  background: rgba(255,255,255,0.9);
+  transform: scaleX(1);
+}
+
+/* Активная страница: цвет линии DAFFF1 и более заметный */
+nav a.active, nav a[aria-current='page'] {
+  color: #DAFFF1 !important;
+}
+
+nav a.active::after, nav a[aria-current='page']::after {
+  background: #DAFFF1 !important;
+  transform: scaleX(1);
+}
+
+/* Глобальная поддержка для всех ссылок, помеченных aria-current="page".
+   Иногда активная ссылка находится вне <nav> (мобильное меню или разные шаблоны),
+   поэтому добавим универсальные правила, чтобы подчерк была видна везде. */
+a[aria-current='page'] {
+  position: relative !important;
+  padding-bottom: 10px !important; /* резерв для линии */
+  font-weight: 700 !important;
+  color: #DAFFF1 !important;
+  border-bottom: none !important;
+}
+
+a[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  height: 2px;
+  background: #DAFFF1 !important;
+  transform-origin: center;
+  transform: scaleX(1);
+}
+
+/* Mobile menu: make active item bold like on главная */
+#mobileMenu a[aria-current='page'] {
+  font-weight: 700 !important;
+  color: #DAFFF1 !important;
+}
+
+/* Desktop menu: enforce bold active link for desktop navigation lists */
+.desktop-nav a[aria-current='page'],
+nav[role="navigation"] .desktop-nav a[aria-current='page'],
+nav[role="navigation"] a[aria-current='page'] {
+  font-weight: 800 !important; /* extra bold to be visually prominent */
+  color: #DAFFF1 !important;
+}
+
+/* Footer navigation should visually match header navigation */
+footer .desktop-nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+footer .desktop-nav a {
+  color: #DAFFF1 !important;
+  text-decoration: none !important;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+footer .desktop-nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  height: 2px;
+  background: transparent;
+  transform-origin: center;
+  transform: scaleX(0);
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+
+footer .desktop-nav a:hover::after,
+footer .desktop-nav a[aria-current='page']::after {
+  background: #DAFFF1 !important;
+  transform: scaleX(1);
+}
+
+/* Keep footer borders blue-tinted */
+footer .border-white,
+footer .border-white\/20,
+footer .border-white\/10 {
+  border-color: rgba(218, 255, 241, 0.12) !important;
+}
+
+/* Уменьшаем визуальное изменение при фокусе (кнопки и т.д.) */
+nav a:focus {
+  outline: none;
+}
+
+/* --- header-specific fixes --- */
+/* Убираем реальный border-bottom у ссылок внутри основного header навигации
+   — большинство страниц раньше ставили классы border-b-2 border-white,
+   это приводило к двойной линии. Пусть линия рисуется только через ::after */
+nav[role="navigation"] a,
+nav[role="navigation"] a[aria-current='page'] {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* Активная ссылка в header: всегда жирная и голубая (DAFFF1) */
+nav[role="navigation"] a[aria-current='page'] {
+  font-weight: 700 !important;
+  color: #DAFFF1 !important;
+}
+
+/* Если где-то осталась классная реализация border через span — тоже перекроем */
+nav[role="navigation"] span[aria-current='page'] {
+  font-weight: 700 !important;
+  color: #DAFFF1 !important;
+  border-bottom: none !important;
+}
+
+/* --- footer-specific theme overrides --- */
+/* Make footer text and links blue-tinted and replace white borders with blue variants */
+footer,
+footer * {
+  color: #DAFFF1 !important;
+}
+
+/* Override Tailwind-like border-white utility inside footer */
+footer .border-white,
+footer .border-white\/10,
+footer .border-white\/20,
+footer .border-white\/30 {
+  /* soft blue for borders, keep low opacity to match existing design */
+  border-color: rgba(218, 255, 241, 0.12) !important;
+}
+
+/* Buttons/controls in footer that used border-white/20 */
+footer .border-white\/20,
+footer .border-\[3px\] {
+  border-color: rgba(218, 255, 241, 0.12) !important;
+}
+
+/* Ensure links keep hover behaviour but with white-on-hover preserved where desired */
+footer a:hover::after {
+  background: rgba(255,255,255,0.9);
+  transform: scaleX(1);
+}
+
+/* Footer: unified underline for hover and active (aria-current) */
+footer a {
+  position: relative;
+  padding-bottom: 8px; /* space for underline */
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+footer a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  height: 2px;
+  background: transparent;
+  transform-origin: center;
+  transform: scaleX(0);
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+
+/* Only hover shows underline in footer; active (aria-current) will NOT get underline here */
+footer a:hover::after {
+  background: #DAFFF1 !important;
+  transform: scaleX(1);
+}
+
+/* Active footer link: make it slightly bolder on desktop only (no underline) */
+@media (min-width: 1024px) {
+  footer a[aria-current='page'] {
+    font-weight: 700 !important;
+    color: #DAFFF1 !important;
+  }
+}
+
+/* Progressive enhancement: when parent container supports :has, tint its border when it contains an active or hovered link */
+@supports(selector(:has(*))) {
+  footer :has(a[aria-current='page']) {
+    /* increase contrast of borders around the column */
+    --footer-border-color: rgba(218,255,241,0.18);
+  }
+  footer :has(a:hover) {
+    --footer-border-color: rgba(218,255,241,0.12);
+  }
+  /* Apply the variable to common border utilities inside footer */
+  footer .border-r,
+  footer .border-b,
+  footer .border-t {
+    border-color: var(--footer-border-color, rgba(218,255,241,0.12)) !important;
+  }
+}
+
