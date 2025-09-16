@@ -274,10 +274,6 @@ nav[role="navigation"] span[aria-current='page'] {
 
 /* --- footer-specific theme overrides --- */
 /* Make footer text and links blue-tinted and replace white borders with blue variants */
-footer,
-footer * {
-  color: #DAFFF1 !important;
-}
 
 /* Override Tailwind-like border-white utility inside footer */
 footer .border-white,

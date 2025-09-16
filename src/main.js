@@ -363,7 +363,7 @@ function createPlantTreeModal() {
                 <div class="relative">
                   <div class="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center gap-2 z-10">
                     <img src="${imagePath}flagKz.svg" alt="KZ" class="w-6 h-4">
-                    <span class="text-gray-600 font-medium">+7</span>
+                    <span class="text-black font-medium">+7</span>
                   </div>
                   <input 
                     type="tel" 
@@ -440,7 +440,7 @@ function createPlantTreeModal() {
             <!-- Сумма к оплате -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-2 text-lg sm:text-xl">
               <span class="text-gray-800">Сумма к оплате:</span>
-              <span id="total-amount" class="font-bold text-gray-600">0 ₸</span>
+              <span id="total-amount" class="font-bold text-black">0 ₸</span>
             </div>
             
             <button 
