@@ -1674,6 +1674,127 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// ----------------- Phone mask / normalization helpers -----------------
+/**
+ * Нормализует телефон в формат +7XXXXXXXXXX
+ * Принимает любую строку, возвращает string или empty string если недостаточно цифр
+ */
+function normalizePhoneForBackend(input) {
+  if (!input) return '';
+  let digits = ('' + input).replace(/\D/g, '');
+  // Убираем ведущие плюсы/пробелы уже удалены
+  if (digits.length === 11 && digits[0] === '8') {
+    digits = '7' + digits.slice(1);
+  }
+  if (digits.length === 10) {
+    digits = '7' + digits;
+  }
+  // Ожидаем 11 цифр (7 + 10 цифр)
+  if (digits.length === 11 && digits[0] === '7') {
+    return '+' + digits;
+  }
+  return '';
+}
+
+/**
+ * Форматирует строку цифр в маску +7 XXX XXX-XX-XX для отображения
+ */
+function formatPhoneForDisplay(value) {
+  if (value == null) return '';
+  let digits = ('' + value).replace(/\D/g, '');
+  // Удаляем ведущую 8 и заменяем на 7 для отображения
+  if (digits.startsWith('8')) digits = '7' + digits.slice(1);
+  // Если пользователь ввёл без кода, не добавляем лишнего
+  // Строим частями
+  let out = '';
+  if (digits.length === 0) return out;
+  // ensure leading 7 for display (but don't force if user types other country code) - prefer showing +7
+  if (digits[0] !== '7') {
+    // If first digit isn't 7 but length>0, still show as +"digits"
+    return '+' + digits;
+  }
+  out = '+7';
+  if (digits.length > 1) {
+    out += ' ' + digits.slice(1, Math.min(4, digits.length));
+  }
+  if (digits.length >= 4) {
+    out += ' ' + digits.slice(4, Math.min(7, digits.length));
+  }
+  if (digits.length >= 7) {
+    out += '-' + digits.slice(7, Math.min(9, digits.length));
+  }
+  if (digits.length >= 9) {
+    out += '-' + digits.slice(9, Math.min(11, digits.length));
+  }
+  return out;
+}
+
+/**
+ * Привязываем маску к input элементу (отображение только). Value сохраняется для сервера отдельно.
+ */
+function attachPhoneMask(inputElement) {
+  if (!inputElement) return;
+  // При вводе форматируем отображение, сохраняя позицию каретки по количеству цифр слева
+  inputElement.addEventListener('input', function(e) {
+    const rawValue = inputElement.value;
+    const selectionStart = inputElement.selectionStart || 0;
+
+    // digits to the left of caret
+    const leftPart = rawValue.slice(0, selectionStart);
+    const digitsLeft = (leftPart.match(/\d/g) || []).length;
+
+    // Собираем все цифры из ввода
+    let digits = (rawValue.match(/\d/g) || []).join('');
+    // Если пользователь ввёл 10 цифр (без кода), добавляем ведущую 7 для отображения
+    if (digits.length === 10 && digits[0] !== '7') {
+      digits = '7' + digits;
+    }
+
+    // Форматируем для отображения
+    const formatted = formatPhoneForDisplay(digits);
+
+    // Найдём позиции цифр в отформатированной строке
+    const digitPositions = [];
+    for (let i = 0; i < formatted.length; i++) {
+      if (/\d/.test(formatted[i])) digitPositions.push(i);
+    }
+
+    // Определяем новую позицию каретки: после digitsLeft-й цифры
+    let newPos = formatted.length;
+    if (digitsLeft === 0) {
+      // если слева нет цифр, поместим каретку после префикса +7 и пробела если он есть
+      const idx = formatted.indexOf(' ');
+      newPos = idx >= 0 ? idx + 1 : formatted.length;
+    } else if (digitPositions.length >= digitsLeft) {
+      // позиция после той цифры
+      const posIndex = digitsLeft - 1;
+      newPos = digitPositions[posIndex] + 1;
+    } else {
+      newPos = formatted.length;
+    }
+
+    inputElement.value = formatted;
+    // Устанавливаем новую позицию каретки (без ошибок)
+    try {
+      inputElement.setSelectionRange(newPos, newPos);
+    } catch (err) {
+      // fallback: в конец
+      inputElement.setSelectionRange(inputElement.value.length, inputElement.value.length);
+    }
+  });
+
+  // При вставке тоже форматируем и корректируем каретку
+  inputElement.addEventListener('paste', function(e) {
+    setTimeout(() => {
+      const raw = inputElement.value;
+      let digits = (raw.match(/\d/g) || []).join('');
+      if (digits.length === 10 && digits[0] !== '7') digits = '7' + digits;
+      inputElement.value = formatPhoneForDisplay(digits);
+      inputElement.setSelectionRange(inputElement.value.length, inputElement.value.length);
+    }, 10);
+  });
+}
+
 // Обработчик формы поиска на карте
 document.addEventListener('DOMContentLoaded', () => {
   // Обработчик для кнопки поиска на карте (новый ID)
@@ -1683,22 +1804,64 @@ document.addEventListener('DOMContentLoaded', () => {
   if (mapSearchButton && mapSearchInput) {
     mapSearchButton.addEventListener('click', (e) => {
       e.preventDefault();
-      const phoneNumber = mapSearchInput.value.trim();
-      if (phoneNumber) {
-        findUserTrees(phoneNumber);
+      const raw = mapSearchInput.value.trim();
+      const normalized = normalizePhoneForBackend(raw);
+      if (normalized) {
+        findUserTrees(normalized);
+      } else {
+        alert('Введите номер в формате +7XXXXXXXXXX');
       }
     });
     
     mapSearchInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
-        const phoneNumber = mapSearchInput.value.trim();
-        if (phoneNumber) {
-          findUserTrees(phoneNumber);
+        const raw = mapSearchInput.value.trim();
+        const normalized = normalizePhoneForBackend(raw);
+        if (normalized) {
+          findUserTrees(normalized);
+        } else {
+          alert('Введите номер в формате +7XXXXXXXXXX');
         }
       }
     });
   }
+
+  // Attach masks to inputs if present
+  try {
+    const emissionPhone = document.getElementById('emission-phone-input');
+    const mapPhone = document.getElementById('map-search-input');
+    attachPhoneMask(emissionPhone);
+    attachPhoneMask(mapPhone);
+  // Ensure prefix +7 for empty fields
+  ensurePrefix(emissionPhone);
+  ensurePrefix(mapPhone);
+  } catch (err) {
+    console.warn('Не удалось привязать маску телефона:', err);
+  }
+
+  // Установим префикс +7 если поле пустое и поддерживаем его на фокусе/блуре
+  function ensurePrefix(inputEl) {
+    if (!inputEl) return;
+    // Если пусто, поставить +7 
+    if (!inputEl.value || inputEl.value.trim() === '') {
+      inputEl.value = '+7 ';
+    }
+    // На фокусе — если стерли, вернуть префикс
+    inputEl.addEventListener('focus', () => {
+      if (!inputEl.value || inputEl.value.trim() === '') inputEl.value = '+7 ';
+      // поставить каретку в конец
+      setTimeout(() => {
+        inputEl.setSelectionRange(inputEl.value.length, inputEl.value.length);
+      }, 0);
+    });
+    // На blur — если осталось только +7, оставить его (пользователь просил всегда отображать +7)
+    inputEl.addEventListener('blur', () => {
+      if (!inputEl.value || inputEl.value.trim() === '') inputEl.value = '+7 ';
+    });
+  }
+
+  
   
   // Старый обработчик для совместимости с другими страницами
   const oldMapSearchButton = document.querySelector('#openstreet-map')?.parentElement?.querySelector('.absolute button');
@@ -3551,13 +3714,14 @@ function copyAndOpenShare(url) {
 }
 
 async function handleEmissionCheck() {
-    const phoneInput = document.getElementById('emission-phone-input');
-    const phone = phoneInput ? phoneInput.value.trim() : '';
+  const phoneInput = document.getElementById('emission-phone-input');
+  const rawPhone = phoneInput ? phoneInput.value.trim() : '';
+  const phone = normalizePhoneForBackend(rawPhone);
     
-    if (!phone) {
-        alert('Пожалуйста, введите номер телефона');
-        return;
-    }
+  if (!phone) {
+    alert('Пожалуйста, введите корректный номер в формате +7XXXXXXXXXX');
+    return;
+  }
     
     // Показываем индикатор загрузки
     const checkBtn = document.getElementById('emission-check-btn');
@@ -3570,7 +3734,7 @@ async function handleEmissionCheck() {
     try {
         
         // Проверяем, существует ли пользователь
-        const checkResponse = await fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`);
+  const checkResponse = await fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`);
         const checkData = await checkResponse.json();
         
         console.log('Ответ API для проверки пользователя:', checkData);
@@ -3596,7 +3760,7 @@ async function handleEmissionCheck() {
         // Если дошли сюда - пользователь не найден (404, неуспешный статус или нет данных)
         // Пользователь будет создан позже при заполнении формы расчета эмиссии
         console.log('Пользователь не найден, переходим на EmissionAuth для регистрации');
-        localStorage.setItem('userPhone', phone);
+  localStorage.setItem('userPhone', phone);
         localStorage.removeItem('userData');
         window.location.href = 'EmissionAuth.html';
     } catch (error) {
