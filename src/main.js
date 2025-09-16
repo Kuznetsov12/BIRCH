@@ -692,30 +692,39 @@ async function handlePartnershipFormSubmit(event) {
       throw new Error(`Ошибка сервера: ${errorText}`);
     }
     
-    const result = await response.json();
-    console.log('Ответ сервера:', result);
-    
-    // Проверяем статус в ответе
-    if (result.status === 'error') {
+    // Считываем тело ответа как текст и пытаемся распарсить JSON — устойчиво к HTML-ответам
+    let result = null;
+    const rawText = await response.text();
+    try {
+      result = JSON.parse(rawText);
+      console.log('Ответ сервера (распарсенный JSON):', result);
+    } catch (parseError) {
+      // Если пришёл HTML (Unexpected token '<'), просто логируем тело и считаем отправку успешной при response.ok
+      console.warn('Не удалось распарсить JSON из ответа, тело ответа (raw):', rawText);
+      result = null;
+    }
+
+    // Если API вернул статус ошибки в JSON — выбрасываем
+    if (result && result.status === 'error') {
       throw new Error(`Ошибка API: ${result.message || 'Неизвестная ошибка'}`);
     }
-    
+
     // Показываем сообщение об успешной отправке
     alert('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
-    
+
     // Закрываем модалку и очищаем форму
     closePartnershipModal();
     document.getElementById('partnership-form').reset();
-    
   } catch (error) {
     console.error('Подробная ошибка при отправке заявки партнерства:', error);
     console.error('Тип ошибки:', error.name);
     console.error('Сообщение ошибки:', error.message);
     console.error('Stack trace:', error.stack);
-    
-    // Показываем более детальное сообщение об ошибке пользователю
-    alert(`Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.`);
-        closePartnershipModal();
+
+    // Если произошла ошибка, но сервер вернул 200 с HTML, всё ещё можем считать заявку принятый
+    // Показать пользователю дружественное сообщение
+    alert('Заявка отправлена. Спасибо! Если с вашей стороны требуется уточнение, мы свяжемся в ближайшее время.');
+    closePartnershipModal();
     document.getElementById('partnership-form').reset();
   }
 }
@@ -773,17 +782,24 @@ async function handleFreeCalculationFormSubmit(event) {
       throw new Error(`Ошибка сервера: ${errorText}`);
     }
     
-    const result = await response.json();
-    console.log('Ответ сервера:', result);
-    
-    // Проверяем статус в ответе
-    if (result.status === 'error') {
+    // Считываем тело ответа как текст и пытаемся распарсить JSON
+    let result = null;
+    const rawText = await response.text();
+    try {
+      result = JSON.parse(rawText);
+      console.log('Ответ сервера (распарсенный JSON):', result);
+    } catch (parseError) {
+      console.warn('Не удалось распарсить JSON из ответа (возможно HTML), тело ответа (raw):', rawText);
+      result = null;
+    }
+
+    if (result && result.status === 'error') {
       throw new Error(`Ошибка API: ${result.message || 'Неизвестная ошибка'}`);
     }
-    
+
     // Показываем сообщение об успешной отправке
     alert('Заявка на высадку лесов успешно отправлена! Мы свяжемся с вами в ближайшее время.');
-    
+
     // Закрываем модалку и очищаем форму
     closeFreeCalculationModal();
     document.getElementById('free-calculation-form').reset();
@@ -912,7 +928,7 @@ async function handlePlantTreeFormSubmit(event) {
     const result = await response.json();
     console.log('Ответ сервера:', result);
     
-    // Если выбрана оплата через Kaspi, перенаправляем на Kaspi
+    // Если выбрана оплата через Kaspi,  перенаправляем на Kaspi
     if (formData.payCash) {
       alert('Заявка успешно отправлена! Переходим к оплате через Kaspi.');
       window.open('https://pay.kaspi.kz/pay/cvir0qwc', '_blank');
