@@ -1,5 +1,5 @@
 // Конфигурация API
-  const apiBaseUrl = import.meta.env?.VITE_API_BASE_URL ?? window.VITE_API_BASE_URL ?? 'http://birch.green';
+  const apiBaseUrl = import.meta.env?.VITE_API_BASE_URL ?? window.VITE_API_BASE_URL ?? 'https://birch.green';
   console.log('API Base URL resolved →', apiBaseUrl);
 
 // Добавляем CSS стили для кастомного чекбокса
