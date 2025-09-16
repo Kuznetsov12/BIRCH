@@ -76,23 +76,22 @@ function createPartnershipModal() {
   
   const modalHTML = `
     <style>
-      @media (max-width: 600px) {
-        #carbon-footprint-modal {
-          left: 0 !important;
-          right: 0 !important;
+      @media (max-width: 768px) {
+        /* fullscreen partnership modal on mobile */
+        #partnership-modal { padding: 0 !important; align-items: flex-start !important; }
+        #modal-content {
           width: 100vw !important;
-          padding: 0 !important;
-        }
-        #carbon-modal-content.bg-white {
-          max-width: 100vw !important;
-          width: 100vw !important;
+          height: 100vh !important;
+          max-width: none !important;
+          max-height: none !important;
           border-radius: 0 !important;
-          padding-left: 0 !important;
-          padding-right: 0 !important;
+          padding: 0 !important;
+          overflow: auto !important;
         }
+        #modal-content .modal-inner { padding: 16px !important; }
       }
     </style>
-    <div id="partnership-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center">
+    <div id="partnership-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-2 sm:p-4">
       <div class="bg-white rounded-3xl w-full max-w-[600px] sm:w-full sm:mx-4 transform transition-all duration-300 scale-95 opacity-0 relative border-2 border-gray-200" id="modal-content">
         <!-- Крестик для закрытия -->
         <button 
@@ -117,48 +116,56 @@ function createPartnershipModal() {
 
         </button>
         
-        <div class="px-12 py-12 text-center">
+        <div class="modal-inner px-12 py-12 text-center">
           <h2 class="text-[27px] font-bold text-gray-800 mb-2">Хотите стать нашим партнёром?</h2>
           <p class="text-[20px] text-gray-600 mb-8">Партнёрство, которое работает на репутацию и планету</p>
           
           <form id="partnership-form" class="space-y-4">
             <div>
-              <input 
-                type="text" 
-                id="company-name" 
-                placeholder="Наименование организации"
-                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                required
-              >
+              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                <label for="company-name" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Наименование организации</label>
+                <input 
+                  type="text" 
+                  id="company-name" 
+                  class="w-full text-black px-4 py-4 border-none rounded-lg focus:outline-none text-sm"
+                  required
+                >
+              </div>
             </div>
-            
+
             <div>
-              <input 
-                type="text" 
-                id="contact-person" 
-                placeholder="Контактное лицо (ФИО)"
-                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                required
-              >
+              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                <label for="contact-person" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Контактное лицо (ФИО)</label>
+                <input 
+                  type="text" 
+                  id="contact-person" 
+                  class="w-full text-black px-4 py-4 border-none rounded-lg focus:outline-none text-sm"
+                  required
+                >
+              </div>
             </div>
-            
+
             <div>
-              <input 
-                type="email" 
-                id="contact-email" 
-                placeholder="Телефон или e-mail"
-                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                required
-              >
+              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                <label for="contact-email" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Телефон или e-mail</label>
+                <input 
+                  type="email" 
+                  id="contact-email" 
+                  class="w-full text-black px-4 py-4 border-none rounded-lg focus:outline-none text-sm"
+                  required
+                >
+              </div>
             </div>
-            
+
             <div>
-              <input 
-                type="text" 
-                id="potential-budget" 
-                placeholder="Потенциальный бюджет (необязательно)"
-                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              >
+              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                <label for="potential-budget" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Потенциальный бюджет (необязательно)</label>
+                <input 
+                  type="text" 
+                  id="potential-budget" 
+                  class="w-full text-black px-4 py-4 border-none rounded-lg focus:outline-none text-sm"
+                >
+              </div>
             </div>
             
             <button 
@@ -195,7 +202,22 @@ function createFreeCalculationModal() {
   const imagePath = getImagePath();
   
   const modalHTML = `
-    <div id="free-calculation-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center">
+    <style>
+      @media (max-width: 768px) {
+        #free-calculation-modal { padding: 0 !important; align-items: flex-start !important; }
+        #calculation-modal-content {
+          width: 100vw !important;
+          height: 100vh !important;
+          max-width: none !important;
+          max-height: none !important;
+          border-radius: 0 !important;
+          padding: 0 !important;
+          overflow: auto !important;
+        }
+        #calculation-modal-content .modal-inner { padding: 16px !important; }
+      }
+    </style>
+    <div id="free-calculation-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-2 sm:p-4">
       <div class="bg-white rounded-3xl w-full max-w-[600px] sm:w-full sm:mx-4 transform transition-all duration-300 scale-95 opacity-0 relative border-2 border-gray-200" id="calculation-modal-content">
         <!-- Крестик для закрытия -->
         <button 
@@ -220,48 +242,56 @@ function createFreeCalculationModal() {
 
         </button>
         
-        <div class="px-12 py-12 text-center">
+  <div class="modal-inner px-12 py-12 text-center">
           <h2 class="text-[27px] font-bold text-gray-800 mb-2">Заявка на высадку лесов</h2>
           <p class="text-[20px] text-gray-600 mb-8">Компенсируйте свои выбросы СО2, поддерживая реальные леса в Казахстане.</p>
           
           <form id="free-calculation-form" class="space-y-4">
             <div>
-              <input 
-                type="text" 
-                id="calc-organization-name" 
-                placeholder="Наименование организации"
-                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                required
-              >
+              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                <label for="calc-organization-name" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Наименование организации</label>
+                <input 
+                  type="text" 
+                  id="calc-organization-name" 
+                  class="w-full text-black px-4 py-4 border-none rounded-lg focus:outline-none text-sm"
+                  required
+                >
+              </div>
             </div>
-            
+
             <div>
-              <input 
-                type="text" 
-                id="calc-contact-person" 
-                placeholder="Контактное лицо (ФИО)"
-                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                required
-              >
+              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                <label for="calc-contact-person" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Контактное лицо (ФИО)</label>
+                <input 
+                  type="text" 
+                  id="calc-contact-person" 
+                  class="w-full text-black px-4 py-4 border-none rounded-lg focus:outline-none text-sm"
+                  required
+                >
+              </div>
             </div>
-            
+
             <div>
-              <input 
-                type="text" 
-                id="calc-contact-info" 
-                placeholder="Телефон или e mail"
-                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                required
-              >
+              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                <label for="calc-contact-info" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Телефон или e mail</label>
+                <input 
+                  type="text" 
+                  id="calc-contact-info" 
+                  class="w-full text-black px-4 py-4 border-none rounded-lg focus:outline-none text-sm"
+                  required
+                >
+              </div>
             </div>
-            
+
             <div>
-              <input 
-                type="text" 
-                id="calc-budget" 
-                placeholder="Потенциальный бюджет на высадку леса / год"
-                class="w-full text-black px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              >
+              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
+                <label for="calc-budget" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Потенциальный бюджет на высадку леса / год</label>
+                <input 
+                  type="text" 
+                  id="calc-budget" 
+                  class="w-full text-black px-4 py-4 border-none rounded-lg focus:outline-none text-sm"
+                >
+              </div>
             </div>
             
             <button 
@@ -299,6 +329,47 @@ function createPlantTreeModal() {
   
   const modalHTML = `
     <div id="plant-tree-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-2 sm:p-4">
+      <style>
+        @media (max-width: 768px) {
+          /* make modal fullscreen on phones */
+          #plant-tree-modal { padding: 0 !important; align-items: flex-start !important; }
+          #plant-modal-content {
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: none !important;
+            max-height: none !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            overflow: auto !important;
+          }
+          /* inner content padding */
+          #plant-modal-content .modal-inner { padding: 20px !important; }
+          /* phone prefix transformed to inline-flex (no absolute positioning) */
+          #plant-modal-content .phone-prefix { display: inline-flex !important; align-items: center !important; gap: 8px !important; }
+          #plant-modal-content .phone-prefix img { width: 22px !important; height: 16px !important; }
+          /* match font-size/line-height with input for perfect baseline alignment */
+          #plant-modal-content .phone-prefix span { font-size: 18px !important; font-weight: 700 !important; line-height: 1.2 !important; }
+          /* input sizing and vertical alignment for phone */
+          #plant-modal-content input#tree-phone { padding-left: 12px !important; padding-top: 12px !important; padding-bottom: 10px !important; font-size: 18px !important; line-height: 1.2 !important; }
+          /* increase input sizes for readability */
+          #plant-modal-content input[type="text"],
+          #plant-modal-content input[type="tel"],
+          #plant-modal-content input[type="number"] { padding-top: 14px !important; padding-bottom: 14px !important; font-size: 16px !important; }
+          /* force count and total into one row on mobile */
+          #plant-modal-content .count-row, #plant-modal-content .total-row { flex-direction: row !important; align-items: center !important; }
+          #plant-modal-content .count-row .items-center { gap: 1px !important; }
+          /* slightly smaller +/- buttons to avoid wrapping */
+          #plant-modal-content #decrease-trees, #plant-modal-content #increase-trees { width: 40px !important; height: 40px !important; }
+          #plant-modal-content #decrease-trees span, #plant-modal-content #increase-trees span { font-size: 18px !important; }
+          /* prevent text wrapping inside count and total rows */
+          #plant-modal-content .count-row, #plant-modal-content .total-row { white-space: nowrap !important; }
+          /* make total amount text larger */
+          #plant-modal-content #total-amount { font-size: 20px !important; font-weight: 700 !important; }
+          /* move close button slightly inward */
+          #close-plant-modal-btn { top: 12px !important; right: 12px !important; }
+        }
+      </style>
+
       <div class="bg-white rounded-2xl sm:rounded-3xl w-full max-w-[95vw] sm:max-w-[600px] max-h-[95vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 relative border-2 border-gray-200" id="plant-modal-content">
         <!-- Крестик для закрытия -->
         <button 
@@ -323,7 +394,7 @@ function createPlantTreeModal() {
 
         </button>
         
-        <div class="px-6 sm:px-12 py-8 sm:py-12 text-center">
+  <div class="modal-inner px-6 sm:px-12 py-8 sm:py-12 text-center">
           <h2 class="text-2xl sm:text-[27px] font-bold text-gray-800 mb-2">Высадка деревьев</h2>
           <p class="text-lg sm:text-[20px] text-gray-600 mb-6 sm:mb-8">Внесите вклад в спасение нашей экологии и очистите свой углеродный след</p>
           
@@ -360,8 +431,8 @@ function createPlantTreeModal() {
             <div>
               <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
                 <label for="tree-phone" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Телефон</label>
-                <div class="relative">
-                  <div class="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center gap-2 z-10">
+                <div class="flex items-center gap-3">
+                  <div class="phone-prefix inline-flex items-center gap-2 flex-shrink-0">
                     <img src="${imagePath}flagKz.svg" alt="KZ" class="w-6 h-4">
                     <span class="text-black font-medium">+7</span>
                   </div>
@@ -369,7 +440,7 @@ function createPlantTreeModal() {
                     type="tel" 
                     id="tree-phone" 
                     placeholder="700 000-00-00"
-                    class="w-full text-black pl-20 pr-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base"
+                    class="flex-1 text-black pl-4 pr-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base"
                     required
                   >
                 </div>
@@ -417,8 +488,8 @@ function createPlantTreeModal() {
             </div>
             
             <!-- Количество деревьев -->
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-0 gap-3">
-              <span class="text-gray-800 text-sm sm:text-base">Введите количество деревьев:</span>
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-0 gap-3 count-row">
+              <span class="text-gray-800 text-sm sm:text-base">Введите кол-во деревьев:</span>
               <div class="flex items-center gap-3">
                 <button type="button" id="decrease-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-sm flex items-center justify-center hover:bg-green-600 transition">
                   <span class="text-xl font-bold">−</span>
@@ -438,7 +509,7 @@ function createPlantTreeModal() {
             </div>
             
             <!-- Сумма к оплате -->
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-2 text-lg sm:text-xl">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-2 text-lg sm:text-xl total-row">
               <span class="text-gray-800">Сумма к оплате:</span>
               <span id="total-amount" class="font-bold text-black">0 ₸</span>
             </div>
@@ -2703,126 +2774,154 @@ function createCarbonFootprintModal() {
         <form id="carbon-footprint-form" class="px-8 pb-8 space-y-4">
           
           <!-- Потребление электроэнергии в месяц -->
-          <div class="border border-gray-300 rounded-lg p-4">
-            <label for="carbon-electricity" class="block text-sm font-medium text-gray-700 mb-2">Потребление электроэнергии в месяц</label>
-            <input type="number" id="carbon-electricity" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите сколько электроэнергии Вы потребляете в месяц в кВт \ kWh" min="0" step="0.1" required />
+          <div class="relative carbon-field">
+            <div class="border border-gray-300 rounded-lg p-3">
+              <input type="number" id="carbon-electricity" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Потребление электроэнергии в месяц" min="0" step="0.1" required />
+            </div>
+            <label for="carbon-electricity" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Потребление электроэнергии в месяц</label>
           </div>
 
           <!-- Источник электроэнергии -->
-          <label for="carbon-electricity-coefficient" class="block text-sm font-medium text-gray-700 mb-2">Источник электроэнергии</label>
-          <div class="border border-gray-300 rounded-lg p-4">
-            <select id="carbon-electricity-coefficient" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
-              <option value="">Выберите, каким типом электроэнергии вы пользуетесь</option>
-              <option value="0.5">Газовая генерация</option>
-              <option value="0.7">Угольная генерация</option>
-              <option value="0.4">Возобновляемые источники</option>
-              <option value="0.3">Сеть РК (централизованная)</option>
-            </select>
+          <div class="relative carbon-field">
+            <div class="border border-gray-300 rounded-lg p-3">
+              <select id="carbon-electricity-coefficient" class="w-full py-2 bg-transparent text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
+                <option value="">Выберите, каким типом электроэнергии вы пользуетесь</option>
+                <option value="0.5">Газовая генерация</option>
+                <option value="0.7">Угольная генерация</option>
+                <option value="0.4">Возобновляемые источники</option>
+                <option value="0.3">Сеть РК (централизованная)</option>
+              </select>
+            </div>
+            <label for="carbon-electricity-coefficient" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Источник электроэнергии</label>
           </div>
 
           <!-- Пробег на автомобиле в месяц -->
-          <div class="border border-gray-300 rounded-lg p-4">
-            <label for="carbon-car-km" class="block text-sm font-medium text-gray-700 mb-2">Пробег на автомобиле в месяц</label>
-            <input type="number" id="carbon-car-km" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите сколько проезжаете на автомобиле в месяц, в км \ km" min="0" step="1" />
+          <div class="relative carbon-field">
+            <div class="border border-gray-300 rounded-lg p-3">
+              <input type="number" id="carbon-car-km" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Пробег на автомобиле в месяц" min="0" step="1" />
+            </div>
+            <label for="carbon-car-km" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Пробег на автомобиле в месяц</label>
           </div>
 
           <!-- Тип топлива автомобиля -->
-          <label for="carbon-car-coefficient" class="block text-sm font-medium text-gray-700 mb-2">Тип топлива автомобиля</label>
-          <div class="border border-gray-300 rounded-lg p-4">
-            <select id="carbon-car-coefficient" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')">
-              <option value="">Выберите тип топлива вашего автомобиля</option>
-              <option value="0.2">Бензин</option>
-              <option value="0.18">Дизель</option>
-              <option value="0.05">Электромобиль</option>
-              <option value="0.15">Гибрид</option>
-            </select>
+          <div class="relative carbon-field">
+            <div class="border border-gray-300 rounded-lg p-3">
+              <select id="carbon-car-coefficient" class="w-full py-2 bg-transparent text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')">
+                <option value="">Выберите тип топлива вашего автомобиля</option>
+                <option value="0.2">Бензин</option>
+                <option value="0.18">Дизель</option>
+                <option value="0.05">Электромобиль</option>
+                <option value="0.15">Гибрид</option>
+              </select>
+            </div>
+            <label for="carbon-car-coefficient" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Тип топлива автомобиля</label>
           </div>
 
           <!-- Общественный транспорт в месяц -->
-          <div class="border border-gray-300 rounded-lg p-4">
-            <label for="carbon-public-transport" class="block text-sm font-medium text-gray-700 mb-2">Общественный транспорт в месяц</label>
-            <input type="number" id="carbon-public-transport" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Сколько часов в месяц Вы проводите в общественном транспорте" min="0" step="1" />
+          <div class="relative carbon-field">
+            <div class="border border-gray-300 rounded-lg p-3">
+              <input type="number" id="carbon-public-transport" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Общественный транспорт в месяц" min="0" step="1" />
+            </div>
+            <label for="carbon-public-transport" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Общественный транспорт в месяц</label>
           </div>
 
           <!-- Авиаперелеты в месяц -->
-          <div class="border border-gray-300 rounded-lg p-4">
-            <label for="carbon-flights" class="block text-sm font-medium text-gray-700 mb-2">Авиаперелеты в месяц</label>
-            <input type="number" id="carbon-flights" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Сколько часов в месяц Вы проводите в полётах" min="0" step="1" />
+          <div class="relative carbon-field">
+            <div class="border border-gray-300 rounded-lg p-3">
+              <input type="number" id="carbon-flights" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Авиаперелеты в месяц" min="0" step="1" />
+            </div>
+            <label for="carbon-flights" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Авиаперелеты в месяц</label>
           </div>
 
           <!-- Рацион питания -->
-          <label for="carbon-diet" class="block text-sm font-medium text-gray-700 mb-2">Рацион питания</label>
-          <div class="border border-gray-300 rounded-lg p-4">
-            <select id="carbon-diet" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
-              <option value="">Выберите ваш тип питания</option>
-              <option value="1200">Мясной</option>
-              <option value="900">Смешанный</option>
-              <option value="600">Вегетарианский</option>
-              <option value="400">Веганский</option>
-            </select>
+          <div class="relative carbon-field">
+            <div class="border border-gray-300 rounded-lg p-3">
+              <select id="carbon-diet" class="w-full py-2 bg-transparent text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
+                <option value="">Выберите ваш тип питания</option>
+                <option value="1200">Мясной</option>
+                <option value="900">Смешанный</option>
+                <option value="600">Вегетарианский</option>
+                <option value="400">Веганский</option>
+              </select>
+            </div>
+            <label for="carbon-diet" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Рацион питания</label>
           </div>
 
           <!-- Физическая активность -->
-          <label for="carbon-physical-activity" class="block text-sm font-medium text-gray-700 mb-2">Физическая активность</label>
-          <div class="border border-gray-300 rounded-lg p-4">
-            <select id="carbon-physical-activity" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
-              <option value="">Выберите уровень вашей активности</option>
-              <option value="1.2">Малоподвижный</option>
-              <option value="1.4">Лёгкая активность</option>
-              <option value="1.6">Средняя активность</option>
-              <option value="1.8">Высокая активность</option>
-              <option value="2.0">Очень высокая активность</option>
-            </select>
+          <div class="relative carbon-field">
+            <div class="border border-gray-300 rounded-lg p-3">
+              <select id="carbon-physical-activity" class="w-full py-2 bg-transparent text-gray-900 appearance-none bg-no-repeat bg-right pr-8" style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 5\"><path fill=\"%23666\" d=\"M2 0L0 2h4zm0 5L0 3h4z\"/></svg>')" required>
+                <option value="">Выберите уровень вашей активности</option>
+                <option value="1.2">Малоподвижный</option>
+                <option value="1.4">Лёгкая активность</option>
+                <option value="1.6">Средняя активность</option>
+                <option value="1.8">Высокая активность</option>
+                <option value="2.0">Очень высокая активность</option>
+              </select>
+            </div>
+            <label for="carbon-physical-activity" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Физическая активность</label>
           </div>
 
           <!-- Вес -->
-          <div class="border border-gray-300 rounded-lg p-4">
-            <label for="carbon-weight" class="block text-sm font-medium text-gray-700 mb-2">Вес</label>
-            <input type="number" id="carbon-weight" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите Ваш вес в килограммах" min="30" max="200" step="1" required />
+          <div class="relative carbon-field">
+            <div class="border border-gray-300 rounded-lg p-3">
+              <input type="number" id="carbon-weight" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Вес" min="30" max="200" step="1" required />
+            </div>
+            <label for="carbon-weight" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Вес</label>
           </div>
 
           <!-- Сортировка отходов -->
-          <div class="border border-gray-300 rounded-lg p-4">
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-medium text-gray-700">Сортирую отходы</span>
-              <label class="flex items-center cursor-pointer">
-                <input type="checkbox" id="carbon-waste-sorting" class="sr-only" />
-                <div class="checkbox-container w-8 h-8 border-2 border-gray-300 rounded-md flex items-center justify-center bg-white transition-colors duration-200">
-                  <img src="${imagePath}chekboxOkay.svg" alt="" class="w-5 h-5 hidden checkbox-icon" />
-                </div>
-              </label>
+          <div class="relative carbon-field">
+            <div class="border border-gray-300 rounded-lg p-3">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-700">Сортирую отходы</span>
+                <label class="flex items-center cursor-pointer">
+                  <input type="checkbox" id="carbon-waste-sorting" class="sr-only" />
+                  <div class="checkbox-container w-8 h-8 border-2 border-gray-300 rounded-md flex items-center justify-center bg-white transition-colors duration-200">
+                    <img src="${imagePath}chekboxOkay.svg" alt="" class="w-5 h-5 hidden checkbox-icon" />
+                  </div>
+                </label>
+              </div>
             </div>
           </div>
 
           <!-- Введите Имя и номер телефона для сохранения статистики -->
           <div class="pt-2">
-            <p class="text-sm font-medium text-gray-700 mb-4">Введите Имя и номер телефона для сохранения статистики</p>
+            <p class="text-sm font-medium text-gray-700 mb-4 carbon-contact-heading">Введите Имя и номер телефона для сохранения статистики</p>
             
-            <div class="grid grid-cols-2 gap-4 mb-4">
-              <div class="border border-gray-300 rounded-lg p-4">
-                <label for="carbon-name" class="block text-sm font-medium text-gray-700 mb-2">Имя</label>
-                <input type="text" id="carbon-name" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите Ваше имя" required />
-              </div>
-              <div class="border border-gray-300 rounded-lg p-4">
-                <label for="carbon-surname" class="block text-sm font-medium text-gray-700 mb-2">Фамилия</label>
-                <input type="text" id="carbon-surname" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите Вашу фамилию" required />
-              </div>
-            </div>
-
-            <div class="border border-gray-300 rounded-lg p-4 mb-4">
-              <label for="carbon-city" class="block text-sm font-medium text-gray-700 mb-2">Город</label>
-              <input type="text" id="carbon-city" class="w-full py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="Введите Ваш город" value="Алматы" />
-            </div>
-
-            <div class="border border-gray-300 rounded-lg p-4">
-              <label for="carbon-phone" class="block text-sm font-medium text-gray-700 mb-2">Телефон</label>
-              <div class="relative">
-                <div class="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
-                  <img src="${imagePath}flagKz.svg" alt="KZ" class="w-8 h-6" />
-                  <span class="text-gray-600 text-lg font-medium">+7</span>
+              <div class="grid grid-cols-1 gap-4 mb-4 carbon-name-row">
+              <div class="relative carbon-field">
+                <div class="border border-gray-300 rounded-lg p-3">
+                  <input type="text" id="carbon-name" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Имя" required />
                 </div>
-                <input type="tel" id="carbon-phone" class="w-full pl-24 pr-4 py-2 border-0 rounded-md focus:outline-none focus:ring-0 bg-white text-gray-900 placeholder-gray-500" placeholder="700 000-00-00" required />
+                <label for="carbon-name" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Имя</label>
               </div>
+              <div class="relative carbon-field">
+                <div class="border border-gray-300 rounded-lg p-3">
+                  <input type="text" id="carbon-surname" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Фамилия" required />
+                </div>
+                <label for="carbon-surname" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Фамилия</label>
+              </div>
+            </div>
+
+            <div class="relative carbon-field">
+              <div class="border border-gray-300 rounded-lg p-3 mb-4">
+                <input type="text" id="carbon-city" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Город" value="Алматы" />
+              </div>
+              <label for="carbon-city" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Город</label>
+            </div>
+
+            <div class="relative carbon-field">
+              <div class="border border-gray-300 rounded-lg p-3">
+                <div class="relative">
+                  <div class="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
+                    <img src="${imagePath}flagKz.svg" alt="KZ" class="w-8 h-6" />
+                    <span class="text-gray-600 text-lg font-medium">+7</span>
+                  </div>
+                  <input type="tel" id="carbon-phone" class="w-full pl-24 pr-4 py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="700 000-00-00" required />
+                </div>
+              </div>
+              <label for="carbon-phone" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Телефон</label>
             </div>
           </div>
 
@@ -2952,45 +3051,71 @@ function openCarbonFootprintModal() {
       });
     }
     
-    // Добавляем обработчик submit для формы
+    // Добавляем обработчик submit для формы и переинициализируем элементы после клонирования
     const form = document.getElementById('carbon-footprint-form');
     if (form) {
-      // Удаляем старые обработчики если есть
-      form.replaceWith(form.cloneNode(true));
-      
-      // Получаем новую ссылку на форму после клонирования
+      // Клонируем форму, чтобы удалить старые слушатели
+      const cloned = form.cloneNode(true);
+      form.parentNode.replaceChild(cloned, form);
+
       const newForm = document.getElementById('carbon-footprint-form');
       if (newForm) {
         newForm.addEventListener('submit', handleCarbonFootprintFormSubmit);
         console.log('✅ Обработчик submit добавлен к форме калькулятора');
-        
-        // Также переинициализируем обработчики для полей после клонирования
+
+        // Переинициализируем маску телефона
         const newPhoneInput = document.getElementById('carbon-phone');
         if (newPhoneInput) {
-          newPhoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            
-            if (value.length > 0) {
-              if (value.length <= 3) {
-                value = value;
-              } else if (value.length <= 6) {
-                value = value.slice(0, 3) + ' ' + value.slice(3);
-              } else if (value.length <= 8) {
-                value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6);
+          const phoneMaskHandler = (e) => {
+            const input = e.target;
+            const prev = input.value;
+            let digits = prev.replace(/\D/g, '');
+
+            // Ограничиваем до 10 цифр (без префикса +7)
+            digits = digits.slice(0, 10);
+
+            let formatted = '';
+            if (digits.length > 0) {
+              if (digits.length <= 3) {
+                formatted = digits;
+              } else if (digits.length <= 6) {
+                formatted = digits.slice(0, 3) + ' ' + digits.slice(3);
+              } else if (digits.length <= 8) {
+                formatted = digits.slice(0, 3) + ' ' + digits.slice(3, 6) + '-' + digits.slice(6);
               } else {
-                value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6, 8) + '-' + value.slice(8, 10);
+                formatted = digits.slice(0, 3) + ' ' + digits.slice(3, 6) + '-' + digits.slice(6, 8) + '-' + digits.slice(8, 10);
               }
             }
-            
-            e.target.value = value;
+
+            input.value = formatted;
+          };
+
+          // Набор событий для маски
+          newPhoneInput.addEventListener('input', phoneMaskHandler);
+          newPhoneInput.addEventListener('keydown', function(e) {
+            // Разрешаем только цифры, backspace, delete, tab, escape, enter и стрелки
+            if (!((e.keyCode >= 48 && e.keyCode <= 57) ||
+                  (e.keyCode >= 96 && e.keyCode <= 105) ||
+                  e.keyCode === 8 ||
+                  e.keyCode === 46 ||
+                  e.keyCode === 9 ||
+                  e.keyCode === 27 ||
+                  e.keyCode === 13 ||
+                  (e.keyCode === 65 && e.ctrlKey) ||
+                  (e.keyCode === 67 && e.ctrlKey) ||
+                  (e.keyCode === 86 && e.ctrlKey) ||
+                  (e.keyCode === 88 && e.ctrlKey) ||
+                  (e.keyCode >= 37 && e.keyCode <= 40))) {
+              e.preventDefault();
+            }
           });
         }
-        
+
         // Переинициализируем чекбокс
         const newCheckbox = document.getElementById('carbon-waste-sorting');
         const newCheckboxContainer = newForm.querySelector('.checkbox-container');
         const newCheckboxIcon = newForm.querySelector('.checkbox-icon');
-        
+
         if (newCheckbox && newCheckboxContainer && newCheckboxIcon) {
           newCheckbox.addEventListener('change', function() {
             if (this.checked) {

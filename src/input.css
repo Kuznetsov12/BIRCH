@@ -3351,10 +3351,16 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   
   /* Секция с картой */
   body.emission-mobile #map {
-    height: 750px !important;
+    height: 450px !important;
     width: 100% !important;
   }
+  #textemissionoff{
+    display: block !important;
+  }
   
+  #emissionMobShareResult{
+    flex-direction: column !important;
+  }
   /* Секция с метриками */
   body.emission-mobile .flex.items-start.justify-between {
     flex-direction: column !important;
@@ -4336,6 +4342,45 @@ body.forest-mobile #forestProjectsSection #projectCarousel .flex-1 {
 }
 .custom-popup .leaflet-popup-tip-container {
   display: block !important;
+}
+
+/* Carbon modal: fullscreen on small screens */
+@media (max-width: 767px) {
+  /* make the overlay center to top and remove outer padding */
+  #carbon-footprint-modal {
+    align-items: flex-start !important;
+    padding: 0 !important;
+  }
+
+  /* modal content should occupy full screen area with internal scroll */
+  #carbon-modal-content {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding-top: 12px !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+  }
+
+  /* ensure inside paddings are slightly reduced on mobile */
+  #carbon-modal-content .px-8 {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* make inputs slightly shorter vertically */
+  .carbon-field > .border,
+  .carbon-field > div.border {
+    padding: 8px !important;
+  }
 }
 .leaflet-popup-content-wrapper {
   background: transparent !important;

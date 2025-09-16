@@ -10,6 +10,8 @@
     body { background: #000000; color: #fff; font-family: Inter, system-ui, -apple-system, 'PP Neue Montreal', sans-serif; position:relative; overflow-x:hidden }
     /* Уже более узкий контейнер как в макете */
   .container { margin: 48px auto; padding: 28px; background: transparent; border-radius: 12px; position:relative; z-index:3; overflow:hidden }
+    /* Растягиваем контейнер по высоте экрана аккуратно */
+    .container { min-height: calc(100vh - 96px); display:flex; flex-direction:column; }
     .header { display:flex; justify-content:space-between; align-items:center }
     .title { font-size: 28px; font-weight:300; color: rgba(255,255,255,0.9) }
     .big { font-size: 48px; font-weight:300; line-height:1; }
@@ -17,8 +19,8 @@
 
     /* Информационные блоки — вертикальные, высокий padding и тонкая граница снизу */
     .info-block { width:100%; padding: 28px 6px; border-bottom: 1px solid rgba(255,255,255,0.06); display:block; }
-    .info-title { color: #BFBFBF; font-size: 16px; margin-bottom: 8px; }
-    .info-value { font-size: 40px; font-weight:300; color: #E8FFF5; }
+  .info-title { color: #BFBFBF; font-size: 16px; margin-bottom: 12px; display:block; line-height:1.2; white-space: normal; word-spacing: 0.22em; letter-spacing: 0.01em; overflow-wrap: anywhere; font-variant-ligatures: none; -webkit-font-feature-settings: "liga" 0; font-feature-settings: "liga" 0; }
+  .info-value { font-size: 40px; font-weight:300; color: #E8FFF5; margin-top: 6px; line-height:1.08; white-space: normal; word-spacing: 0.08em; letter-spacing: 0.01em; overflow-wrap: anywhere; font-variant-ligatures: none; -webkit-font-feature-settings: "liga" 0; font-feature-settings: "liga" 0; }
 
     /* Ряд из двух блоков (процент и углеродный след) */
     .two-row { display:flex; gap:24px; margin-top:6px; }
@@ -90,6 +92,12 @@
           <div>
             <div id="userName" class="big">Загрузка...</div>
             <div class="muted" id="userPhone">—</div>
+            <!-- Кнопки скачивания - располагаются прямо под номером -->
+            <div id="download-controls" style="margin-top:12px; display:flex; gap:8px; align-items:center;">
+              <button id="download-png" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.12);padding:8px 12px;border-radius:8px;cursor:pointer">Скачать PNG</button>
+              <button id="download-pdf" style="background:#23B77F;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer">Скачать PDF</button>
+              <span id="downloadStatus" style="color:#f3b0b0;font-size:13px;margin-left:8px;display:none"></span>
+            </div>
           </div>
         </div>
 
@@ -153,7 +161,8 @@
           }
 
           // вертикальные блоки
-          blocks.appendChild(makeBlockElem('Я высадил ', `${u.total_trees + "   🌳" || 0}`));
+          const totalTreesText = (typeof u.total_trees !== 'undefined' && u.total_trees !== null) ? (u.total_trees + '   🌳') : '0 🌳';
+          blocks.appendChild(makeBlockElem('Я высадил ', totalTreesText));
           blocks.appendChild(makeBlockElem('Я очищаю', `${u.emission_tons !== undefined ? u.emission_tons : '?'} тонн CO₂ в год`));
 
           if (type === 'emission') {
@@ -177,6 +186,309 @@
         });
 
     })();
+  </script>
+  <!-- Скрипты для экспорта -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    async function waitImages(root) {
+      await Promise.all(Array.from(root.querySelectorAll('img')).map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(res => { img.onload = img.onerror = res; });
+      }));
+    }
+
+    async function downloadPNG() {
+      const status = document.getElementById('downloadStatus');
+      try {
+        status.style.display = 'none';
+        const cert = document.getElementById('cert');
+  await waitImages(cert);
+  // создаём клон сертификата для рендера с паддингом, чтобы не трогать оригинал
+  const clone = cert.cloneNode(true);
+  // убрать id чтобы не было дублирования в документе
+  clone.id = 'cert-export-clone';
+  // небольшой фикс: добавить отступ между именем и телефоном в клоне
+  const clonedUserPhone = clone.querySelector('#userPhone');
+  if (clonedUserPhone) clonedUserPhone.style.marginTop = '8px';
+  // скрываем внутриигровые контролы в клоне
+  const controls = clone.querySelector('#download-controls');
+  if (controls) controls.style.display = 'none';
+  // устанавливаем паддинги и фон для экспорта
+  clone.style.boxSizing = 'border-box';
+  clone.style.padding = '28px';
+  clone.style.background = '#000';
+  // подготовим клон: позиционируем вне экрана и задаём ширину/минимальную высоту до вставки
+  clone.style.position = 'fixed';
+  clone.style.left = '-9999px';
+  clone.style.top = '0';
+  // ширина клона равна ширине оригинального сертификата
+  clone.style.width = cert.offsetWidth + 'px';
+  // minHeight — минимум из контента и высоты окна (с запасом), чтобы сертификат растягивался корректно
+  clone.style.minHeight = Math.max(cert.scrollHeight, window.innerHeight - 96) + 'px';
+  clone.style.boxShadow = 'none';
+  // создаём wrapper — в него положим клон и клоны декоративных кружков, чтобы сохранить их в экспорте
+  const wrapper = document.createElement('div');
+  wrapper.id = 'cert-export-wrapper';
+  wrapper.style.position = 'fixed'; wrapper.style.left = '-9999px'; wrapper.style.top = '0';
+  wrapper.style.width = clone.style.width;
+  wrapper.style.minHeight = clone.style.minHeight;
+  wrapper.style.background = '#000';
+  wrapper.style.overflow = 'hidden';
+  // клонируем и добавляем декоративные кружки (они находятся в контейнере рядом с cert)
+  Array.from(document.querySelectorAll('.decor-circle')).forEach(el => {
+    const d = el.cloneNode(true);
+    // сохранить позиционирование
+    d.style.position = el.style.position || 'absolute';
+    wrapper.appendChild(d);
+  });
+  // переставим дерево из абсолютного .tree-wrap в отдельный блок, чтобы оно не накладывался на текст
+  const originalTreeWrap = clone.querySelector('.tree-wrap');
+  let exportTreeBlock = null;
+  if (originalTreeWrap) {
+    const img = originalTreeWrap.querySelector('img');
+    if (img) {
+      exportTreeBlock = document.createElement('div');
+      exportTreeBlock.style.width = '100%';
+      exportTreeBlock.style.marginTop = '32px';
+      exportTreeBlock.style.display = 'block';
+      exportTreeBlock.style.textAlign = 'center';
+      const exportImg = img.cloneNode(true);
+      exportImg.style.width = '100%';
+      exportImg.style.maxWidth = '760px';
+      exportImg.style.objectFit = 'contain';
+      exportImg.style.display = 'block';
+      exportTreeBlock.appendChild(exportImg);
+    }
+    // удалим абсолютный блок из клона, он может перекрывать контент
+    originalTreeWrap.remove();
+  }
+  wrapper.appendChild(clone);
+  if (exportTreeBlock) wrapper.appendChild(exportTreeBlock);
+  // Принудительно восстановим отступы между информационными блоками в клоне
+  Array.from(clone.querySelectorAll('.info-block')).forEach(b => { b.style.padding = b.style.padding || '28px 6px'; b.style.marginBottom = '6px'; });
+  Array.from(clone.querySelectorAll('.info-title')).forEach(t => { t.style.marginBottom = t.style.marginBottom || '8px'; });
+  Array.from(clone.querySelectorAll('.info-value')).forEach(v => { v.style.marginTop = v.style.marginTop || '6px'; });
+  document.body.appendChild(wrapper);
+  // попытка подправить размеры блока с деревом и убрать нижний паддинг у клона
+  const treeContainer = clone.querySelector('#treeContainerOkay');
+  if (treeContainer) {
+    treeContainer.style.height = 'auto';
+    treeContainer.style.overflow = 'hidden';
+  }
+  const giant = clone.querySelector('#giantTree');
+  if (giant) { giant.style.maxHeight = 'none'; giant.style.width = '100%'; giant.style.objectFit = 'cover'; }
+  // разместим дерево под контентом в клоне (не абсолютно), чтобы оно не заходило на текст
+  const treeWrap = clone.querySelector('.tree-wrap');
+  if (treeWrap) {
+    treeWrap.style.position = 'relative';
+    treeWrap.style.bottom = '0';
+    treeWrap.style.right = '0';
+    treeWrap.style.marginTop = '12px';
+  }
+  // добавим паддинг снизу, чтобы дерево поместилось и не обрезалось
+  clone.style.paddingBottom = '80px';
+
+  try {
+  const canvas = await html2canvas(wrapper, {useCORS:true, scale:2, backgroundColor: '#000'});
+    // если остаётся черная полоса внизу — обрежем чисто-черные строки
+    function trimCanvasBottom(srcCanvas) {
+      try {
+        const ctx = srcCanvas.getContext('2d');
+        const w = srcCanvas.width, h = srcCanvas.height;
+        const img = ctx.getImageData(0,0,w,h).data;
+        const threshold = 28; // повысим чувствительность — темные градиенты тоже считаются не-пустыми
+        let newH = h;
+        outer: for (let y = h - 1; y >= 0; y--) {
+          // проверяем каждые 2 пикселя по ширине для точности
+          for (let x = 0; x < w; x += 2) {
+            const i = (y * w + x) * 4;
+            const r = img[i], g = img[i+1], b = img[i+2], a = img[i+3];
+            // если пиксель достаточно яркий или не прозрачный — считаем, что полоса закончилась
+            if (a > 20 && (r > threshold || g > threshold || b > threshold)) {
+              break outer;
+            }
+          }
+          newH = y;
+        }
+        if (newH < h - 2) {
+          const out = document.createElement('canvas');
+          out.width = w; out.height = newH;
+          out.getContext('2d').drawImage(srcCanvas, 0, 0, w, newH, 0, 0, w, newH);
+          return out;
+        }
+        return srcCanvas;
+      } catch (e) {
+        return srcCanvas; // если чтение данных невозможно — не трогаем
+      }
+    }
+
+  const finalCanvas = trimCanvasBottom(canvas);
+    const url = finalCanvas.toDataURL('image/png');
+  const a = document.createElement('a'); a.href = url; a.download = 'birch_certificate.png'; document.body.appendChild(a); a.click(); a.remove();
+  } finally {
+    // удалить клон
+  wrapper.remove();
+  }
+      } catch (err) {
+        const status = document.getElementById('downloadStatus');
+        status.style.display = 'inline';
+        status.textContent = 'Ошибка при подготовке PNG: ' + (err && err.message ? err.message : 'Unknown');
+      }
+    }
+
+    async function downloadPDF() {
+      const status = document.getElementById('downloadStatus');
+      try {
+        status.style.display = 'none';
+        const cert = document.getElementById('cert');
+  await waitImages(cert);
+  // рендерим клон с паддингом
+  const clone = cert.cloneNode(true);
+  clone.id = 'cert-export-clone';
+  const controls = clone.querySelector('#download-controls');
+  if (controls) controls.style.display = 'none';
+  // margin между именем и телефоном
+  const clonedUserPhone = clone.querySelector('#userPhone');
+  if (clonedUserPhone) clonedUserPhone.style.marginTop = '8px';
+  clone.style.boxSizing = 'border-box';
+  clone.style.padding = '28px';
+  clone.style.background = '#000';
+  clone.style.position = 'fixed';
+  clone.style.left = '-9999px';
+  clone.style.top = '0';
+  clone.style.width = cert.offsetWidth + 'px';
+  clone.style.minHeight = Math.max(cert.scrollHeight, window.innerHeight - 96) + 'px';
+  clone.style.boxShadow = 'none';
+  const wrapper = document.createElement('div');
+  wrapper.id = 'cert-export-wrapper';
+  wrapper.style.position = 'fixed'; wrapper.style.left = '-9999px'; wrapper.style.top = '0';
+  wrapper.style.width = clone.style.width || cert.offsetWidth + 'px';
+  wrapper.style.minHeight = clone.style.minHeight || Math.max(cert.scrollHeight, window.innerHeight - 96) + 'px';
+  wrapper.style.background = '#000';
+  wrapper.style.overflow = 'hidden';
+  Array.from(document.querySelectorAll('.decor-circle')).forEach(el => { wrapper.appendChild(el.cloneNode(true)); });
+  wrapper.appendChild(clone);
+  // переставим дерево из absolute .tree-wrap в отдельный блок
+  const originalTreeWrap2 = clone.querySelector('.tree-wrap');
+  let exportTreeBlock2 = null;
+  if (originalTreeWrap2) {
+    const img2 = originalTreeWrap2.querySelector('img');
+    if (img2) {
+      exportTreeBlock2 = document.createElement('div');
+      exportTreeBlock2.style.width = '100%';
+      exportTreeBlock2.style.marginTop = '32px';
+      exportTreeBlock2.style.display = 'block';
+      exportTreeBlock2.style.textAlign = 'center';
+      const exportImg2 = img2.cloneNode(true);
+      exportImg2.style.width = '100%';
+      exportImg2.style.maxWidth = '760px';
+      exportImg2.style.objectFit = 'contain';
+      exportImg2.style.display = 'block';
+      exportTreeBlock2.appendChild(exportImg2);
+    }
+    originalTreeWrap2.remove();
+  }
+  wrapper.appendChild(clone);
+  if (exportTreeBlock2) wrapper.appendChild(exportTreeBlock2);
+  Array.from(clone.querySelectorAll('.info-block')).forEach(b => { b.style.padding = b.style.padding || '28px 6px'; b.style.marginBottom = '6px'; });
+  Array.from(clone.querySelectorAll('.info-title')).forEach(t => { t.style.marginBottom = t.style.marginBottom || '8px'; });
+  Array.from(clone.querySelectorAll('.info-value')).forEach(v => { v.style.marginTop = v.style.marginTop || '6px'; });
+  document.body.appendChild(wrapper);
+  // попытка подправить размеры блока с деревом, чтобы не оставалось пустой полосы
+  const treeContainer = clone.querySelector('#treeContainerOkay');
+  if (treeContainer) treeContainer.style.height = 'auto';
+  const giant = clone.querySelector('#giantTree');
+  if (giant) { giant.style.maxHeight = 'none'; giant.style.width = '100%'; giant.style.objectFit = 'cover'; }
+  // разместим дерево под контентом (избегаем абсолютного позиционирования в экспорте)
+  const treeWrap = clone.querySelector('.tree-wrap');
+  if (treeWrap) {
+    treeWrap.style.position = 'relative';
+    treeWrap.style.bottom = '0';
+    treeWrap.style.right = '0';
+    treeWrap.style.marginTop = '12px';
+  }
+  // достаточно паддинга снизу
+  clone.style.paddingBottom = '80px';
+
+  try {
+  const canvas = await html2canvas(wrapper, {useCORS:true, scale:2, backgroundColor: '#000'});
+    // функция обрезки пустой черной нижней области (если потребуется)
+    function trimCanvasBottom(srcCanvas) {
+      try {
+        const ctx = srcCanvas.getContext('2d');
+        const w = srcCanvas.width, h = srcCanvas.height;
+        const img = ctx.getImageData(0,0,w,h).data;
+        const threshold = 12;
+        let newH = h;
+        outer: for (let y = h - 1; y >= 0; y--) {
+          for (let x = 0; x < w; x += 8) {
+            const i = (y * w + x) * 4;
+            const r = img[i], g = img[i+1], b = img[i+2], a = img[i+3];
+            if (a > 10 && (r > threshold || g > threshold || b > threshold)) {
+              break outer;
+            }
+          }
+          newH = y;
+        }
+        if (newH < h - 2) {
+          const out = document.createElement('canvas');
+          out.width = w; out.height = newH;
+          out.getContext('2d').drawImage(srcCanvas, 0, 0, w, newH, 0, 0, w, newH);
+          return out;
+        }
+        return srcCanvas;
+      } catch (e) { return srcCanvas; }
+    }
+
+    const finalCanvas = trimCanvasBottom(canvas);
+    const imgData = finalCanvas.toDataURL('image/jpeg', 1.0);
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({unit:'pt', format:'a4', orientation:'portrait'});
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = pdfWidth;
+        const imgHeight = (finalCanvas.height * imgWidth) / finalCanvas.width;
+        if (imgHeight <= pdfHeight) {
+          pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+        } else {
+          // разбиваем по страницам
+          const pageCanvas = document.createElement('canvas');
+          const ctx = pageCanvas.getContext('2d');
+          const scale = imgWidth / canvas.width;
+          const srcCanvas = finalCanvas;
+          const srcW = srcCanvas.width;
+          const scale2 = imgWidth / srcW;
+          const pageHeightPx = Math.floor(pdfHeight / scale2);
+          pageCanvas.width = srcW;
+          pageCanvas.height = pageHeightPx;
+          let y = 0; let page = 0;
+          while (y < srcCanvas.height) {
+            ctx.clearRect(0,0,pageCanvas.width,pageCanvas.height);
+            ctx.drawImage(srcCanvas, 0, y, srcW, pageCanvas.height, 0, 0, srcW, pageCanvas.height);
+            const pageData = pageCanvas.toDataURL('image/jpeg', 1.0);
+            if (page === 0) pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, pageCanvas.height * scale2);
+            else { pdf.addPage(); pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, pageCanvas.height * scale2); }
+            y += pageCanvas.height; page++;
+          }
+        }
+        pdf.save('birch_certificate.pdf');
+  } finally {
+    // удалить клон
+    wrapper.remove();
+  }
+      } catch (err) {
+        status.style.display = 'inline';
+        status.textContent = 'Ошибка при подготовке PDF: ' + (err && err.message ? err.message : 'Unknown');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      const png = document.getElementById('download-png');
+      const pdf = document.getElementById('download-pdf');
+      if (png) png.addEventListener('click', function(){ png.disabled=true; png.textContent='Готовим...'; downloadPNG().finally(()=>{ png.disabled=false; png.textContent='Скачать PNG'; }); });
+      if (pdf) pdf.addEventListener('click', function(){ pdf.disabled=true; pdf.textContent='Готовим...'; downloadPDF().finally(()=>{ pdf.disabled=false; pdf.textContent='Скачать PDF'; }); });
+    });
   </script>
 </body>
 </html>
