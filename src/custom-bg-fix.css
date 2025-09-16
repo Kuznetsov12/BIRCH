@@ -3,6 +3,27 @@ body.overflow-x-hidden.bg-black {
   background-color: black !important;
 }
 
+/* Fix: make vertical footer nav links fit text width exactly */
+footer nav.space-y-4 a {
+  /* Ensure vertical stacking (column) — links are block-level in markup, keep it that way */
+  display: block !important;
+  width: auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Disable the ::after based underline for this vertical list and use native text-decoration */
+footer nav.space-y-4 a::after {
+  display: none !important;
+}
+
+footer nav.space-y-4 a:hover {
+  text-decoration: underline !important;
+  text-decoration-color: #DAFFF1 !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 6px !important;
+}
+
 
 /* Ensure the burger icon inside the mobile menu wrapper stays square while wrapper can be rounded */
 .mobile-menu img,
@@ -215,7 +236,10 @@ footer .desktop-nav a {
   color: #DAFFF1 !important;
   text-decoration: none !important;
   position: relative;
+  display: inline-block; /* ensure underline width equals text width */
   padding-bottom: 10px;
+  padding-left: 0 !important; /* remove horizontal padding so underline doesn't extend */
+  padding-right: 0 !important;
 }
 
 footer .desktop-nav a::after {
@@ -348,4 +372,121 @@ footer a:hover::after {
     border-color: var(--footer-border-color, rgba(218,255,241,0.12)) !important;
   }
 }
+
+/* Ensure the footer's third column keeps a right border (vertical separator) */
+footer .grid.grid-cols-4 > div:nth-child(3) {
+  border-right: 1px solid var(--footer-border-color, rgba(218,255,241,0.12)) !important;
+}
+
+
+/* ProjectInfo: larger nav arrows on desktop and remove hover border/background */
+@media (min-width: 1024px) {
+  /* Force larger circular buttons (override tailwind w-16 h-16) */
+  .nav-arrow {
+    width: 88px !important;
+    height: 88px !important;
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+  }
+
+  /* Bigger icon inside the button */
+  .nav-arrow img {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  /* Remove any visible border / background / glow on hover for desktop
+     keep a subtle scale to indicate interactivity but no bordered highlight */
+  .nav-arrow:hover {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    transform: scale(1.03) !important;
+  }
+
+  /* Also ensure active/loading states don't inject a border or bright bg */
+  .nav-arrow.active,
+  .nav-arrow.loading,
+  .nav-arrow:active {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Ensure hover/bg/border suppressed on all viewports (phones included) and
+   establish guaranteed desktop size with a mobile override. Placed after
+   previous rules so it wins when necessary. */
+.nav-arrow {
+  /* default (desktop) size */
+  width: 88px !important;
+  height: 88px !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.nav-arrow img {
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.nav-arrow:hover,
+.nav-arrow:active,
+.nav-arrow.active,
+.nav-arrow.loading {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: scale(1.03) !important;
+}
+
+/* Mobile override: keep them reasonably sized on phones/tablets */
+@media (max-width: 1023px) {
+  .nav-arrow {
+    width: 64px !important;
+    height: 64px !important;
+  }
+  .nav-arrow img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  /* On touch devices hover is less important, but ensure no background appears */
+  .nav-arrow:hover {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+}
+
+/* ID-specific overrides: input.css sets #leftProject img / #rightProject img to 30px
+   using ID selectors; to reliably increase them on desktop we must target the same
+   IDs with !important. */
+@media (min-width: 1024px) {
+  #leftProject, #rightProject {
+    width: 88px !important;
+    height: 88px !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  #leftProject img, #rightProject img {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  /* Also ensure hover/active states on the IDs don't introduce bg/border */
+  #leftProject:hover, #rightProject:hover,
+  #leftProject:active, #rightProject:active,
+  #leftProject.active, #rightProject.active {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    transform: scale(1.03) !important;
+  }
+}
+
+
 

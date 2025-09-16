@@ -1905,8 +1905,9 @@ document.addEventListener('DOMContentLoaded', () => {
     attachPhoneMask(emissionPhone);
     attachPhoneMask(mapPhone);
   // Ensure prefix +7 for empty fields
-  ensurePrefix(emissionPhone);
-  ensurePrefix(mapPhone);
+  // NOTE: отключаем автоматическую подстановку префикса, чтобы placeholder оставался видимым
+  // ensurePrefix(emissionPhone);
+  // ensurePrefix(mapPhone);
   } catch (err) {
     console.warn('Не удалось привязать маску телефона:', err);
   }

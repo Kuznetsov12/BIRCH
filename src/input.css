@@ -4099,7 +4099,7 @@ body.forest-mobile #forestProjectsSection #projectCarousel .flex-1 {
 @media (max-width: 768px) {
   /* Уменьшаем стрелки на мобильных устройствах - под хедером */
   #leftProject, #rightProject {
-    width: 50px !important;
+    width: 20px !important;
     height: 50px !important;
     /* top управляется Tailwind классами в HTML */
   }
@@ -4130,6 +4130,7 @@ body.forest-mobile #forestProjectsSection #projectCarousel .flex-1 {
 
   #headerProjectInfo{
     padding: 0 !important;
+    margin-top: 4px !important;
   }
   #copyrightProjecctInfo{
     margin-bottom: 12px !important;

@@ -1526,6 +1526,9 @@
   .pl-4 {
     padding-left: calc(var(--spacing) * 4);
   }
+  .pl-16 {
+    padding-left: calc(var(--spacing) * 16);
+  }
   .pl-24 {
     padding-left: calc(var(--spacing) * 24);
   }
@@ -5373,7 +5376,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
 }
 @media (max-width: 768px) {
   #leftProject, #rightProject {
-    width: 50px !important;
+    width: 20px !important;
     height: 50px !important;
   }
   #footerLastCont {
@@ -5398,6 +5401,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   }
   #headerProjectInfo {
     padding: 0 !important;
+    margin-top: 4px !important;
   }
   #copyrightProjecctInfo {
     margin-bottom: 12px !important;
