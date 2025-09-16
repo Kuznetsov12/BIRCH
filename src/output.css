@@ -1710,6 +1710,9 @@
   .text-\[\#FFFFFF\] {
     color: #FFFFFF;
   }
+  .text-\[23B77F\] {
+    color: 23B77F;
+  }
   .text-black {
     color: var(--color-black);
   }
