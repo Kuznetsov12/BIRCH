@@ -348,13 +348,13 @@ function createPlantTreeModal() {
           #plant-modal-content .phone-prefix { display: inline-flex !important; align-items: center !important; gap: 8px !important; }
           #plant-modal-content .phone-prefix img { width: 22px !important; height: 16px !important; }
           /* match font-size/line-height with input for perfect baseline alignment */
-          #plant-modal-content .phone-prefix span { font-size: 18px !important; font-weight: 700 !important; line-height: 1.2 !important; }
+          #plant-modal-content .phone-prefix span { font-size: 18px !important; font-weight: 500 !important; line-height: 1.2 !important; }
           /* input sizing and vertical alignment for phone */
           #plant-modal-content input#tree-phone { padding-left: 12px !important; padding-top: 12px !important; padding-bottom: 10px !important; font-size: 18px !important; line-height: 1.2 !important; }
           /* increase input sizes for readability */
           #plant-modal-content input[type="text"],
           #plant-modal-content input[type="tel"],
-          #plant-modal-content input[type="number"] { padding-top: 14px !important; padding-bottom: 14px !important; font-size: 16px !important; }
+          #plant-modal-content input[type="number"] { padding-top: 14px !important; padding-bottom: 14px !important; font-size: 20px !important; }
           /* force count and total into one row on mobile */
           #plant-modal-content .count-row, #plant-modal-content .total-row { flex-direction: row !important; align-items: center !important; }
           #plant-modal-content .count-row .items-center { gap: 1px !important; }
@@ -367,6 +367,7 @@ function createPlantTreeModal() {
           #plant-modal-content #total-amount { font-size: 20px !important; font-weight: 700 !important; }
           /* move close button slightly inward */
           #close-plant-modal-btn { top: 12px !important; right: 12px !important; }
+          #totalsumpay { font-size: 18px !important; }
         }
       </style>
 
@@ -395,15 +396,15 @@ function createPlantTreeModal() {
         </button>
         
   <div class="modal-inner px-6 sm:px-12 py-8 sm:py-12 text-center">
-          <h2 class="text-2xl sm:text-[27px] font-bold text-gray-800 mb-2">Высадка деревьев</h2>
-          <p class="text-lg sm:text-[20px] text-gray-600 mb-6 sm:mb-8">Внесите вклад в спасение нашей экологии и очистите свой углеродный след</p>
+          <h2 class="text-2xl sm:text-[27px] font-bold text-black mb-2">Высадка деревьев</h2>
+          <p class="text-lg sm:text-[20px] text-[#3C3C3C] mb-6 sm:mb-8">Внесите вклад в спасение нашей экологии и очистите свой углеродный след</p>
           
           <form id="plant-tree-form" class="space-y-4 sm:space-y-6">
             <!-- Имя и Фамилия в ряд -->
             <div class="flex flex-col sm:flex-row gap-4">
               <div class="flex-1">
-                <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
-                  <label for="tree-first-name" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Имя</label>
+                <div class="relative border border-[#666666] rounded-lg focus-within:border-green-500">
+                  <label for="tree-first-name" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-[#666666] bg-white">Имя</label>
                   <input 
                     type="text" 
                     id="tree-first-name" 
@@ -414,8 +415,8 @@ function createPlantTreeModal() {
                 </div>
               </div>
               <div class="flex-1">
-                <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
-                  <label for="tree-last-name" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Фамилия</label>
+                <div class="relative border border-[#666666] rounded-lg focus-within:border-green-500">
+                  <label for="tree-last-name" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-[#666666] bg-white">Фамилия</label>
                   <input 
                     type="text" 
                     id="tree-last-name" 
@@ -429,12 +430,12 @@ function createPlantTreeModal() {
             
             <!-- Телефон с флагом -->
             <div>
-              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
-                <label for="tree-phone" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Телефон</label>
+              <div class="relative border border-[#666666] rounded-lg focus-within:border-green-500">
+                <label for="tree-phone" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-[#666666] bg-white">Телефон</label>
                 <div class="flex items-center gap-3">
                   <div class="phone-prefix inline-flex items-center gap-2 flex-shrink-0">
                     <img src="${imagePath}flagKz.svg" alt="KZ" class="w-6 h-4">
-                    <span class="text-black font-medium">+7</span>
+                    <span class="text-[#666666] font-normal">+7</span>
                   </div>
                   <input 
                     type="tel" 
@@ -449,8 +450,8 @@ function createPlantTreeModal() {
             
             <!-- Город -->
             <div>
-              <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500">
-                <label for="tree-city" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-gray-700 bg-white">Город</label>
+              <div class="relative border border-[#666666] rounded-lg focus-within:border-green-500">
+                <label for="tree-city" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-[#666666] bg-white">Город</label>
                 <input 
                   type="text" 
                   id="tree-city" 
@@ -466,21 +467,21 @@ function createPlantTreeModal() {
               <label class="flex items-center justify-between cursor-pointer">
                 <div class="flex items-center gap-2 flex-1">
                   <img src="${imagePath}kaspi.svg" alt="Kaspi" class="w-5 h-5">
-                  <span class="text-gray-800 text-sm sm:text-base">Оплатить с помощью каспи</span>
+                  <span class="text-[#666666] text-sm sm:text-base">Оплатить с помощью каспи</span>
                 </div>
                 <div class="relative ml-3">
                   <input type="checkbox" id="pay-cash" class="sr-only">
-                  <div class="w-6 h-6 border-2 border-gray-300 rounded flex items-center justify-center checkbox-custom">
+                  <div class="w-6 h-6 border-1 border-[#666666] rounded flex items-center justify-center checkbox-custom">
                     <img src="${imagePath}chekboxOkay.svg" alt="" class="w-4 h-4 hidden checkbox-icon">
                   </div>
                 </div>
               </label>
               
               <label class="flex items-center justify-between cursor-pointer">
-                <span class="text-gray-800 flex-1 text-sm sm:text-base">Высадить деревья в подарок</span>
+                <span class="text-[#666666] flex-1 text-sm sm:text-base">Высадить деревья в подарок</span>
                 <div class="relative ml-3">
                   <input type="checkbox" id="gift-tree" class="sr-only">
-                  <div class="w-6 h-6 border-2 border-gray-300 rounded flex items-center justify-center checkbox-custom">
+                  <div class="w-6 h-6 border-1 border-[#666666] rounded flex items-center justify-center checkbox-custom">
                     <img src="${imagePath}chekboxOkay.svg" alt="" class="w-4 h-4 hidden checkbox-icon">
                   </div>
                 </div>
@@ -489,7 +490,7 @@ function createPlantTreeModal() {
             
             <!-- Количество деревьев -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-0 gap-3 count-row">
-              <span class="text-gray-800 text-sm sm:text-base">Введите кол-во деревьев:</span>
+              <span class="text-[#666666] text-sm sm:text-base">Введите кол-во деревьев:</span>
               <div class="flex items-center gap-3">
                 <button type="button" id="decrease-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-sm flex items-center justify-center hover:bg-green-600 transition">
                   <span class="text-xl font-bold">−</span>
@@ -500,7 +501,7 @@ function createPlantTreeModal() {
                   value="0" 
                   min="0" 
                   max="1000"
-                  class="w-16 text-center text-xl font-bold border-none focus:outline-none text-black"
+                  class="w-16 text-center text-3xl font-medium border-none focus:outline-none text-[#999999]"
                 />
                 <button type="button" id="increase-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-sm flex items-center justify-center hover:bg-green-600 transition">
                   <span class="text-xl font-bold">+</span>
@@ -510,8 +511,8 @@ function createPlantTreeModal() {
             
             <!-- Сумма к оплате -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-2 text-lg sm:text-xl total-row">
-              <span class="text-gray-800">Сумма к оплате:</span>
-              <span id="total-amount" class="font-bold text-black">0 ₸</span>
+              <span id="totalsumpay" class="text-[#666666] text-lg">Сумма к оплате:</span>
+              <span id="total-amount" class="font-bold text-[#999999]">0 ₸</span>
             </div>
             
             <button 
@@ -2754,6 +2755,33 @@ function createCarbonFootprintModal() {
   const modalHTML = `
     <div id="carbon-footprint-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
       <div class="bg-white rounded-3xl w-full max-w-[800px] max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 relative" id="carbon-modal-content">
+        <style>
+          /* Scoped styles for carbon modal injected via main.js */
+          #carbon-modal-content { font-family: 'PP Neue Montreal', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
+          #carbon-modal-content .floating-label { color: #666666; background: #ffffff; padding: 0 6px; }
+          #carbon-modal-content input, #carbon-modal-content select, #carbon-modal-content .carbon-contact-heading, #carbon-modal-content p { color: #666666; }
+          #carbon-modal-content input::placeholder { color: #666666; opacity: 1; }
+          /* Hints under fields (hidden — we keep only floating labels inside inputs) */
+          #carbon-modal-content .field-hint { display: none !important; }
+          /* Numeric values / compact results (if any) should use softer #999 */
+          #carbon-modal-content .numeric-muted, #carbon-modal-content #carbon-result { color: #999999; }
+          /* Phone prefix weight */
+          #carbon-modal-content .phone-prefix-span { font-weight: 400; color: #666666; }
+          /* Truncate long selected/placeholder text inside inputs/selects */
+          #carbon-modal-content input, #carbon-modal-content select {
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;
+          }
+          /* When input/select focused, remove browser outline/blue glow */
+          #carbon-modal-content input:focus, #carbon-modal-content select:focus {
+            outline: none !important; box-shadow: none !important;
+          }
+          /* Truncate hints on small screens with ellipsis */
+          @media (max-width: 768px) {
+            #carbon-modal-content .field-hint {
+              white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; max-width: 100%;
+            }
+          }
+        </style>
         <!-- Крестик для закрытия -->
         <button 
           id="close-carbon-modal-btn" 
@@ -2778,6 +2806,7 @@ function createCarbonFootprintModal() {
           <div class="relative carbon-field">
             <div class="border border-gray-300 rounded-lg p-3">
               <input type="number" id="carbon-electricity" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Потребление электроэнергии в месяц" min="0" step="0.1" required />
+              <div class="field-hint">Введите сколько электроэнергии Вы потребляете в месяц в кВт·ч</div>
             </div>
             <label for="carbon-electricity" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Потребление электроэнергии в месяц</label>
           </div>
@@ -2792,6 +2821,7 @@ function createCarbonFootprintModal() {
                 <option value="0.4">Возобновляемые источники</option>
                 <option value="0.3">Сеть РК (централизованная)</option>
               </select>
+              <div class="field-hint">Выберите, каким типом электроэнергии вы пользуетесь</div>
             </div>
             <label for="carbon-electricity-coefficient" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Источник электроэнергии</label>
           </div>
@@ -2800,6 +2830,7 @@ function createCarbonFootprintModal() {
           <div class="relative carbon-field">
             <div class="border border-gray-300 rounded-lg p-3">
               <input type="number" id="carbon-car-km" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Пробег на автомобиле в месяц" min="0" step="1" />
+              <div class="field-hint">Введите сколько проезжаете на автомобиле в месяц в км</div>
             </div>
             <label for="carbon-car-km" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Пробег на автомобиле в месяц</label>
           </div>
@@ -2814,6 +2845,7 @@ function createCarbonFootprintModal() {
                 <option value="0.05">Электромобиль</option>
                 <option value="0.15">Гибрид</option>
               </select>
+              <div class="field-hint">Выберите тип топлива вашего автомобиля</div>
             </div>
             <label for="carbon-car-coefficient" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Тип топлива автомобиля</label>
           </div>
@@ -2822,6 +2854,7 @@ function createCarbonFootprintModal() {
           <div class="relative carbon-field">
             <div class="border border-gray-300 rounded-lg p-3">
               <input type="number" id="carbon-public-transport" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Общественный транспорт в месяц" min="0" step="1" />
+              <div class="field-hint">Сколько часов в месяц Вы проводите в общественном транспорте</div>
             </div>
             <label for="carbon-public-transport" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Общественный транспорт в месяц</label>
           </div>
@@ -2830,6 +2863,7 @@ function createCarbonFootprintModal() {
           <div class="relative carbon-field">
             <div class="border border-gray-300 rounded-lg p-3">
               <input type="number" id="carbon-flights" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Авиаперелеты в месяц" min="0" step="1" />
+              <div class="field-hint">Сколько часов в месяц Вы проводите в полётах</div>
             </div>
             <label for="carbon-flights" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Авиаперелеты в месяц</label>
           </div>
@@ -2844,6 +2878,7 @@ function createCarbonFootprintModal() {
                 <option value="600">Вегетарианский</option>
                 <option value="400">Веганский</option>
               </select>
+              <div class="field-hint">Выберите ваш тип питания</div>
             </div>
             <label for="carbon-diet" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Рацион питания</label>
           </div>
@@ -2859,6 +2894,7 @@ function createCarbonFootprintModal() {
                 <option value="1.8">Высокая активность</option>
                 <option value="2.0">Очень высокая активность</option>
               </select>
+              <div class="field-hint">Выберите уровень вашей активности</div>
             </div>
             <label for="carbon-physical-activity" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Физическая активность</label>
           </div>
@@ -2867,6 +2903,7 @@ function createCarbonFootprintModal() {
           <div class="relative carbon-field">
             <div class="border border-gray-300 rounded-lg p-3">
               <input type="number" id="carbon-weight" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Вес" min="30" max="200" step="1" required />
+              <div class="field-hint">Введите Ваш вес в килограммах</div>
             </div>
             <label for="carbon-weight" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Вес</label>
           </div>
@@ -2917,7 +2954,7 @@ function createCarbonFootprintModal() {
                 <div class="relative">
                   <div class="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
                     <img src="${imagePath}flagKz.svg" alt="KZ" class="w-8 h-6" />
-                    <span class="text-gray-600 text-lg font-medium">+7</span>
+                    <span class="text-gray-600 text-lg font-normal phone-prefix-span">+7</span>
                   </div>
                   <input type="tel" id="carbon-phone" class="w-full pl-24 pr-4 py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="700 000-00-00" required />
                 </div>

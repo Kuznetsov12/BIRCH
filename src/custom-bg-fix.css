@@ -489,4 +489,16 @@ footer .grid.grid-cols-4 > div:nth-child(3) {
 }
 
 
+/* Styles for the "Посадить дерево" modal: font, colors, weights */
+/* Use PP Neue Montreal if available, otherwise fall back to system sans */
+@font-face {
+  font-family: 'PP Neue Montreal';
+  /* No src provided — local files not included in repo. Browsers will use local() if installed */
+  src: local('PP Neue Montreal'), local('PPNeueMontreal');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 
