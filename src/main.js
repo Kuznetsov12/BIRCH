@@ -1,5 +1,5 @@
 // Конфигурация API
-  const apiBaseUrl = import.meta.env?.VITE_API_BASE_URL ?? window.VITE_API_BASE_URL ?? 'http://localhost:5000';
+  const apiBaseUrl = import.meta.env?.VITE_API_BASE_URL ?? window.VITE_API_BASE_URL ?? 'http://birch.green';
   console.log('API Base URL resolved →', apiBaseUrl);
 
 // Добавляем CSS стили для кастомного чекбокса
@@ -2589,7 +2589,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const getApiConfig = () => {
     // Используем переменные из .env файла через глобальные переменные или fallback
     return {
-        apiBaseUrl: window.VITE_API_BASE_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
+        apiBaseUrl: window.VITE_API_BASE_URL || import.meta.env.VITE_API_BASE_URL || 'https://birch.green',
         isDebug: window.VITE_APP_DEBUG === 'true' || false
     };
 };
