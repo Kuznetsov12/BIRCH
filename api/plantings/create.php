@@ -25,6 +25,8 @@ $stats = new HomepageStats($db);
 
 // Получить данные
 $data = json_decode(file_get_contents("php://input"));
+// DEBUG: лог входящих данных для локальной отладки
+@file_put_contents(__DIR__ . '/logs/plantings_create_incoming_' . date('Ymd') . '.log', date(DATE_ATOM) . " RAW: " . file_get_contents('php://input') . "\n", FILE_APPEND);
 
 // Проверить, что все необходимые данные получены
 if(
@@ -94,6 +96,7 @@ if(
                     "supports_counter_increased" => $user_was_created
                 )
             ));
+            @file_put_contents(__DIR__ . '/logs/plantings_create_success_' . date('Ymd') . '.log', date(DATE_ATOM) . " CREATED user_id:" . $user_id . " trees:" . $data->trees_quantity . "\n", FILE_APPEND);
         } else {
             throw new Exception("Unable to create planting");
         }
@@ -103,10 +106,12 @@ if(
         $db->rollback();
         
         http_response_code(503);
+        $errMsg = $e->getMessage();
         echo json_encode(array(
             "status" => "error",
-            "message" => $e->getMessage()
+            "message" => $errMsg
         ));
+        @file_put_contents(__DIR__ . '/logs/plantings_create_error_' . date('Ymd') . '.log', date(DATE_ATOM) . " ERROR: " . $errMsg . "\n", FILE_APPEND);
     }
     
 } else {

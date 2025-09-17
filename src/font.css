@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'PP Neue Montreal';
+    src: url("./fonts/ppneuemontreal-thin.otf");
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'PP Neue Montreal';
+    src: url("./fonts/ppneuemontreal-book.otf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'PP Neue Montreal';
+    src: url("./fonts/ppneuemontreal-medium.otf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'PP Neue Montreal';
+    src: url("./fonts/ppneuemontreal-bold.otf");
+    font-weight: 700;
+}

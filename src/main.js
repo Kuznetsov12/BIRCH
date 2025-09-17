@@ -354,7 +354,8 @@ function createPlantTreeModal() {
           /* increase input sizes for readability */
           #plant-modal-content input[type="text"],
           #plant-modal-content input[type="tel"],
-          #plant-modal-content input[type="number"] { padding-top: 14px !important; padding-bottom: 14px !important; font-size: 20px !important; }
+          #plant-modal-content input[type="number"] { padding-top: 14px !important; padding-bottom: 14px !important; font-size: 18px !important; font-weight: 400 !important; }
+          #tree-count { font-size: 28px !important; font-weight: 400 !important; padding: 0 !important; }
           /* force count and total into one row on mobile */
           #plant-modal-content .count-row, #plant-modal-content .total-row { flex-direction: row !important; align-items: center !important; }
           #plant-modal-content .count-row .items-center { gap: 1px !important; }
@@ -364,10 +365,15 @@ function createPlantTreeModal() {
           /* prevent text wrapping inside count and total rows */
           #plant-modal-content .count-row, #plant-modal-content .total-row { white-space: nowrap !important; }
           /* make total amount text larger */
-          #plant-modal-content #total-amount { font-size: 20px !important; font-weight: 700 !important; }
+          #plant-modal-content #total-amount { font-size: 28px !important; font-weight: 400 !important; }
           /* move close button slightly inward */
           #close-plant-modal-btn { top: 12px !important; right: 12px !important; }
-          #totalsumpay { font-size: 18px !important; }
+          #totalsumpay { font-weight: PPNeueMontreal !important; font-size: 20px !important; }
+          #countertreeaddNew { font-size: 20px !important;}
+          #giftTreeNewAdd { font-size: 20px !important;}
+          #kaspiPayAddNew { font-size: 20px !important;}
+          #textNewAddDesc { font-size: 20px !important;}
+          #zagolAddNewDesc { font-size: 24px !important;}
         }
       </style>
 
@@ -396,8 +402,8 @@ function createPlantTreeModal() {
         </button>
         
   <div class="modal-inner px-6 sm:px-12 py-8 sm:py-12 text-center">
-          <h2 class="text-2xl sm:text-[27px] font-bold text-black mb-2">Высадка деревьев</h2>
-          <p class="text-lg sm:text-[20px] text-[#3C3C3C] mb-6 sm:mb-8">Внесите вклад в спасение нашей экологии и очистите свой углеродный след</p>
+          <h2 id="zagolAddNewDesc" class="text-2xl sm:text-[27px] font-bold text-black mb-2">Высадка деревьев</h2>
+          <p id="textNewAddDesc" class="text-xl sm:text-[20px] text-[#3C3C3C] mb-6 sm:mb-8">Внесите вклад в спасение нашей экологии и очистите свой углеродный след</p>
           
           <form id="plant-tree-form" class="space-y-4 sm:space-y-6">
             <!-- Имя и Фамилия в ряд -->
@@ -461,13 +467,25 @@ function createPlantTreeModal() {
                 >
               </div>
             </div>
+
+            <!-- Выбор вида дерева (select) -> размещён под полем города и перед чекбоксами -->
+            <div class="text-left">
+              <label for="tree-type-select" class="block mb-2 text-[#666666]">Выберите вид дерева</label>
+              <div class="relative">
+                <select id="tree-type-select" class="w-full text-[#666666] py-3 px-4 border outline-0 border-[#666666] rounded-lg appearance-none bg-white bg-no-repeat bg-right" style="background-image: url('${imagePath}arrowdown.svg'); background-position: right 12px center; background-size: 18px;">
+                  <option value="" disabled selected>Выберите дерево для высадки</option>
+                  <option value="spruce">Ель тянь-шаньская — Стоимость: 18 000₸</option>
+                  <option value="apple">Яблоня Сиверса — Стоимость: 3 000₸</option>
+                </select>
+              </div>
+            </div>
             
             <!-- Чекбоксы -->
             <div class="space-y-3 sm:space-y-4 text-left">
               <label class="flex items-center justify-between cursor-pointer">
                 <div class="flex items-center gap-2 flex-1">
                   <img src="${imagePath}kaspi.svg" alt="Kaspi" class="w-5 h-5">
-                  <span class="text-[#666666] text-sm sm:text-base">Оплатить с помощью каспи</span>
+                  <span id="kaspiPayAddNew" class="text-[#666666] text-xl sm:text-xl">Оплатить с помощью каспи</span>
                 </div>
                 <div class="relative ml-3">
                   <input type="checkbox" id="pay-cash" class="sr-only">
@@ -478,7 +496,7 @@ function createPlantTreeModal() {
               </label>
               
               <label class="flex items-center justify-between cursor-pointer">
-                <span class="text-[#666666] flex-1 text-sm sm:text-base">Высадить деревья в подарок</span>
+                <span id="giftTreeNewAdd" style="sm:font-size: 16px !important" class="text-[#666666] flex-1 text-xl sm:text-xl">Высадить деревья в подарок</span>
                 <div class="relative ml-3">
                   <input type="checkbox" id="gift-tree" class="sr-only">
                   <div class="w-6 h-6 border-1 border-[#666666] rounded flex items-center justify-center checkbox-custom">
@@ -486,11 +504,47 @@ function createPlantTreeModal() {
                   </div>
                 </div>
               </label>
+
+              <!-- Поля получателя (скрыты по умолчанию) -->
+              <div id="gift-recipient-fields" class="hidden space-y-3 mt-2">
+                <div class="flex flex-col sm:flex-row gap-4">
+                  <div class="flex-1">
+                    <div class="relative border border-[#666666] rounded-lg focus-within:border-green-500">
+                      <label for="gift-first-name" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-[#666666] bg-white">Имя</label>
+                      <input type="text" id="gift-first-name" placeholder="Введите имя" class="w-full text-black px-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base">
+                    </div>
+                  </div>
+                  <div class="flex-1">
+                    <div class="relative border border-[#666666] rounded-lg focus-within:border-green-500">
+                      <label for="gift-last-name" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-[#666666] bg-white">Фамилия</label>
+                      <input type="text" id="gift-last-name" placeholder="Введите фамилию" class="w-full text-black px-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base">
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="relative border border-[#666666] rounded-lg focus-within:border-green-500">
+                    <label for="gift-phone" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-[#666666] bg-white">Телефон</label>
+                    <div class="flex items-center gap-3">
+                      <div class="phone-prefix inline-flex items-center gap-2 flex-shrink-0">
+                        <img src="${imagePath}flagKz.svg" alt="KZ" class="w-6 h-4">
+                        <span class="text-[#666666] font-normal">+7</span>
+                      </div>
+                      <input type="tel" id="gift-phone" placeholder="700 000-00-00" class="flex-1 text-black pl-4 pr-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base">
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="relative border border-[#666666] rounded-lg focus-within:border-green-500">
+                    <label for="gift-city" class="floating-label absolute -top-2 left-3 px-1 text-xs font-medium text-[#666666] bg-white">Город</label>
+                    <input type="text" id="gift-city" placeholder="Введите город" class="w-full text-black px-4 py-3 sm:py-4 border-none rounded-lg focus:outline-none text-sm sm:text-base">
+                  </div>
+                </div>
+              </div>
             </div>
             
             <!-- Количество деревьев -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-0 gap-3 count-row">
-              <span class="text-[#666666] text-sm sm:text-base">Введите кол-во деревьев:</span>
+              <span id="countertreeaddNew" class="text-[#666666] sm:text-xl text-xl">Введите кол-во деревьев:</span>
               <div class="flex items-center gap-3">
                 <button type="button" id="decrease-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-sm flex items-center justify-center hover:bg-green-600 transition">
                   <span class="text-xl font-bold">−</span>
@@ -498,10 +552,10 @@ function createPlantTreeModal() {
                 <input 
                   type="number" 
                   id="tree-count" 
-                  value="0" 
-                  min="0" 
+                  value="1" 
+                  min="1" 
                   max="1000"
-                  class="w-16 text-center text-3xl font-medium border-none focus:outline-none text-[#999999]"
+                  class="w-16 text-center text-3xl font-normal border-none focus:outline-none text-[#999999]"
                 />
                 <button type="button" id="increase-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-sm flex items-center justify-center hover:bg-green-600 transition">
                   <span class="text-xl font-bold">+</span>
@@ -511,8 +565,8 @@ function createPlantTreeModal() {
             
             <!-- Сумма к оплате -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-2 text-lg sm:text-xl total-row">
-              <span id="totalsumpay" class="text-[#666666] text-lg">Сумма к оплате:</span>
-              <span id="total-amount" class="font-bold text-[#999999]">0 ₸</span>
+              <span id="totalsumpay" class="text-[#666666] text-xl font-light">Сумма к оплате:</span>
+              <span id="total-amount" class="font-normal text-[#999999] sm:text-lg md:text-xl">0 ₸</span>
             </div>
             
             <button 
@@ -566,6 +620,142 @@ function createPlantTreeModal() {
       }
     });
   }
+
+  // Логика для полей подарка и выбора вида дерева
+  const giftCheckbox = document.getElementById('gift-tree');
+  const giftFields = document.getElementById('gift-recipient-fields');
+  const giftPhone = document.getElementById('gift-phone');
+  const giftCity = document.getElementById('gift-city');
+  const treeCountInput = document.getElementById('tree-count');
+  const totalAmountEl = document.getElementById('total-amount');
+  const treeTypeSpruce = document.getElementById('tree-type-spruce');
+  const treeTypeApple = document.getElementById('tree-type-apple');
+
+  // Цены (обновлено: ель 18 000, яблоня 3 000)
+  const PRICES = { spruce: 18000, apple: 3000 };
+
+// expose for other scripts and provide a safe getter
+window.PRICES = window.PRICES || PRICES;
+
+// Safe unit price getter — tolerant to missing PRICES variable or missing keys
+window.getUnitPrice = function(type) {
+  try {
+    if (!type) return 3000;
+    if (typeof PRICES !== 'undefined' && PRICES && PRICES[type]) return PRICES[type];
+    if (window.PRICES && window.PRICES[type]) return window.PRICES[type];
+    return 3000;
+  } catch (e) {
+    // fallback default
+    return 3000;
+  }
+};
+
+  function recalcTotal() {
+  const count = parseInt(treeCountInput.value || '0', 10);
+  const select = document.getElementById('tree-type-select');
+  const type = select && select.value ? select.value : (treeTypeSpruce && treeTypeSpruce.checked ? 'spruce' : 'apple');
+  const price = getUnitPrice(type) || 0;
+    const total = count * price;
+    totalAmountEl.textContent = total.toLocaleString('ru-RU') + ' ₸';
+    // Обновить текст кнопки при выборе подарка
+    const submitBtnText = document.getElementById('submit-btn-text');
+    if (submitBtnText) {
+      submitBtnText.textContent = giftCheckbox && giftCheckbox.checked ? 'Подарить деревья' : 'Посадить дерево';
+    }
+  }
+
+  // Показываем/скрываем поля получателя
+  if (giftCheckbox && giftFields) {
+    giftCheckbox.addEventListener('change', function() {
+      if (giftCheckbox.checked) {
+        giftFields.classList.remove('hidden');
+        giftFields.classList.add('block');
+      } else {
+        giftFields.classList.remove('block');
+        giftFields.classList.add('hidden');
+      }
+      recalcTotal();
+    });
+  }
+
+  // Маска для телефона получателя
+  if (giftPhone) {
+    giftPhone.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 10) value = value.slice(0, 10);
+      if (value.length >= 1) {
+        if (value.length <= 3) {
+          value = value;
+        } else if (value.length <= 6) {
+          value = value.slice(0, 3) + ' ' + value.slice(3);
+        } else if (value.length <= 8) {
+          value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6);
+        } else {
+          value = value.slice(0, 3) + ' ' + value.slice(3, 6) + '-' + value.slice(6, 8) + '-' + value.slice(8);
+        }
+      }
+      e.target.value = value;
+    });
+  }
+
+  // Пересчет при кликах +/- и смене типа
+  const decBtn = document.getElementById('decrease-trees');
+  const incBtn = document.getElementById('increase-trees');
+  if (decBtn && incBtn && treeCountInput) {
+    decBtn.addEventListener('click', function() {
+      let v = parseInt(treeCountInput.value || '1', 10);
+      v = Math.max(1, v - 1);
+      treeCountInput.value = v;
+      recalcTotal();
+    });
+    incBtn.addEventListener('click', function() {
+      let v = parseInt(treeCountInput.value || '0', 10);
+      v = Math.min(1000, v + 1);
+      treeCountInput.value = v;
+      recalcTotal();
+    });
+    treeCountInput.addEventListener('input', recalcTotal);
+  }
+
+  if (treeTypeSpruce) treeTypeSpruce.addEventListener('change', recalcTotal);
+  if (treeTypeApple) treeTypeApple.addEventListener('change', recalcTotal);
+
+  // Инициалный пересчет
+  recalcTotal();
+
+  // Слушаем select выбора вида дерева
+  const treeTypeSelect = document.getElementById('tree-type-select');
+  if (treeTypeSelect) {
+    treeTypeSelect.addEventListener('change', function(){
+      // если пользователь сменил тип дерева — пересчитаем сумму
+      recalcTotal();
+    });
+  }
+
+  // Убедимся, что элементы суммы используют наш шрифт (высокая специфичность)
+  (function enforceTotalFont(){
+    const styleId = 'plant-total-font-fix';
+    if (document.getElementById(styleId)) return;
+    const s = document.createElement('style');
+    s.id = styleId;
+    s.innerHTML = `#plant-modal-content #totalsumpay, #plant-modal-content #total-amount
+    #plant-modal-content .tree-card 
+    #plant-modal-content .tree-card.active { border-color: #23B77F; }
+    `;
+    document.head.appendChild(s);
+  })();
+
+  // Подключаем шрифт PP Neue Montreal только для модалки (inline @font-face)
+  (function injectModalFont(){
+    const fontStyleId = 'pp-neue-modal-font';
+    if (document.getElementById(fontStyleId)) return;
+    const style = document.createElement('style');
+    style.id = fontStyleId;
+    style.innerHTML = `@font-face { font-family: 'PP Neue Montreal'; src: local('PP Neue Montreal'), local('PPNeueMontreal'), url('./src/fonts/PPNeueMontreal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; }
+      #plant-modal-content, #plant-modal-content * { font-family: 'PP Neue Montreal' !important; }
+    `;
+    document.head.appendChild(style);
+  })();
 }
 
 // Функция открытия модального окна
@@ -881,8 +1071,10 @@ function updateTreeCount(change) {
       }
     }
     
-    // Расчет суммы (2000 тенге за дерево)
-    const totalAmount = currentCount * 2000;
+  // Расчет суммы (используем PRICES по выбранному типу)
+  const selectedTypeLocal = document.querySelector('input[name="tree-type"]:checked') ? document.querySelector('input[name="tree-type"]:checked').value : 'apple';
+  const unitPriceLocal = getUnitPrice(selectedTypeLocal) || 3000;
+  const totalAmount = currentCount * unitPriceLocal;
     totalAmountSpan.textContent = totalAmount.toLocaleString('ru-RU') + ' ₸';
   }
 }
@@ -893,54 +1085,253 @@ async function handlePlantTreeFormSubmit(event) {
   
   // Собираем данные формы
   const phoneValue = document.getElementById('tree-phone').value;
+  // определяем вид дерева (берём из select)
+  const treeSelectEl = document.getElementById('tree-type-select');
+  const selectedType = treeSelectEl && treeSelectEl.value ? treeSelectEl.value : 'apple';
+  const countVal = parseInt(document.getElementById('tree-count').value) || 0;
+  const unitPrice = getUnitPrice(selectedType) || 3000;
+  const totalSum = unitPrice * countVal;
+
   const formData = {
     name: document.getElementById('tree-first-name').value,
     surname: document.getElementById('tree-last-name').value,
     phone: phoneValue.startsWith('+7') ? phoneValue : '+7' + phoneValue.replace(/\D/g, ''),
     city: document.getElementById('tree-city').value,
-    trees_quantity: parseInt(document.getElementById('tree-count').value),
+    trees_quantity: countVal,
+  tree_type: selectedType,
+  unit_price: unitPrice,
+    total_sum: totalSum,
     payCash: document.getElementById('pay-cash').checked,
-    giftTree: document.getElementById('gift-tree').checked
+    giftTree: document.getElementById('gift-tree').checked,
+    // recipient fields (если подарок)
+    recipient: {
+      name: document.getElementById('gift-first-name') ? document.getElementById('gift-first-name').value : '',
+      surname: document.getElementById('gift-last-name') ? document.getElementById('gift-last-name').value : '',
+      phone: document.getElementById('gift-phone') ? (document.getElementById('gift-phone').value.startsWith('+7') ? document.getElementById('gift-phone').value : '+7' + document.getElementById('gift-phone').value.replace(/\D/g, '')) : '',
+      city: document.getElementById('gift-city') ? document.getElementById('gift-city').value : ''
+    }
   };
   
   console.log('Данные формы посадки деревьев:', formData);
   
   // Проверяем валидность формы
-  if (!formData.name || !formData.surname || !formData.phone || !formData.city || formData.trees_quantity  <= 0) {
+  if (!formData.name || !formData.surname || !formData.phone || !formData.city || formData.trees_quantity  < 1) {
     alert('Пожалуйста, заполните все поля и выберите количество деревьев.');
     return;
   }
   
   try {
-    // Отправляем данные на сервер
-    const response = await fetch(`${apiBaseUrl}/api/plantings/create.php`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
-    });
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const result = await response.json();
-    console.log('Ответ сервера:', result);
-    
-    // Если выбрана оплата через Kaspi,  перенаправляем на Kaspi
-    if (formData.payCash) {
+  if (formData.payCash) {
+      // Отправляем данные на сервер и перенаправляем на Kaspi
+      const response = await fetch(`${apiBaseUrl}/api/plantings/create.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+      });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       alert('Заявка успешно отправлена! Переходим к оплате через Kaspi.');
       window.open('https://pay.kaspi.kz/pay/cvir0qwc', '_blank');
-    } else {
-      alert('Заявка на посадку деревьев успешно отправлена! Мы свяжемся с вами для оплаты.');
+      closePlantTreeModal();
+      document.getElementById('plant-tree-form').reset();
+      return;
     }
-    
-    // Закрываем модалку и очищаем форму
+
+  // Если Kaspi НЕ выбран — передаём работу в startTipTopPayment (с учётом того, что
+  // widget.start должен быть вызван в контексте пользовательского жеста)
+  await startTipTopPayment(formData);
+
+  } catch (error) {
+    console.error(error);
+    alert('Произошла ошибка. Попробуйте позже.');
+  }
+}
+
+// Обёртка для запуска TipTop из пользовательского жеста
+async function startTipTopPayment(formData) {
+  // Если Kaspi выбран — ничего не делаем здесь
+  if (formData.payCash) return;
+
+  const submitBtn = document.getElementById('plant-tree-submit-btn');
+
+  // Diagnostic: log tiptop availability
+  console.log('TipTop availability:', !!window.tiptop, window.tiptop && window.tiptop.Widget ? 'Widget fn present' : 'Widget missing');
+  // Если виджет доступен — регистрируем обработчик клика на кнопку для вызова widget.start
+  if (window.tiptop && typeof window.tiptop.Widget === 'function') {
+    const invokeWidget = async (e) => {
+      // Блокируем дефолтный submit, если был
+      if (e && e.preventDefault) e.preventDefault();
+      submitBtn.disabled = true;
+      try {
+        // Дополнительная валидация: убедиться, что город указан (сервер требует его).
+        // Вид дерева определяем гибко: formData -> select -> radio -> default 'apple'.
+        const treeSelect = document.getElementById('tree-type-select');
+        if (!formData.city || formData.city.trim() === '') {
+          alert('Пожалуйста, укажите город перед оплатой.');
+          console.warn('Payment aborted: city missing in formData', formData);
+          submitBtn.disabled = false;
+          return;
+        }
+        // initialize widget
+        const widget = new tiptop.Widget();
+        const selectedType = (formData && formData.tree_type) || (treeSelect && treeSelect.value) || (document.querySelector('input[name="tree-type"]:checked') ? document.querySelector('input[name="tree-type"]:checked').value : null) || 'apple';
+  const unit = getUnitPrice(selectedType) || (formData && Number(formData.unit_price)) || 3000;
+
+        const intentParams = {
+          publicTerminalId: (window.TIPTOP_PUBLIC_ID || ''), // set window.TIPTOP_PUBLIC_ID from server or meta for production
+          description: `Посадка деревьев: ${formData.trees_quantity}`,
+          paymentSchema: 'Dual',
+          currency: 'KZT',
+          amount: Number(formData.trees_quantity) * Number(unit),
+          externalId: 'plant_' + Date.now(),
+          paymentMethodSequence: ['Card','GooglePay'],
+          userInfo: {
+            accountId: null,
+            firstName: formData.name,
+            lastName: formData.surname,
+            phone: formData.phone,
+            email: ''
+          },
+          metadata: { treesCount: Number(formData.trees_quantity) }
+        };
+        // Добавляем дополнительные метаданные чтобы сервер мог корректно обработать подарок и тип дерева
+        intentParams.metadata.tree_type = selectedType;
+        intentParams.metadata.unit_price = Number(unit);
+        intentParams.metadata.gift = !!formData.giftTree;
+        if (formData.giftTree && formData.recipient && formData.recipient.phone) {
+          intentParams.metadata.recipient_phone = formData.recipient.phone;
+        }
+
+  console.log('Payment unit (KZT) being charged per tree:', unit, 'trees:', formData.trees_quantity, 'total:', intentParams.amount);
+  const widgetResult = await widget.start(intentParams);
+        console.log('TipTop widget result:', widgetResult);
+
+        // Попытка зарегистрировать посадку сразу с клиента (используем данные из intentParams/widgetResult)
+        try {
+          // Если это подарок — регистрируем посадку на получателя
+          // Prefer explicit treesCount metadata or original formData quantity. Avoid deriving by dividing amount by a hardcoded 3000.
+          const recipientInfo = (formData && formData.giftTree && formData.recipient && formData.recipient.phone) ? formData.recipient : null;
+          const resolvedTreesCount = (intentParams.metadata && intentParams.metadata.treesCount) ? Number(intentParams.metadata.treesCount) : (formData && formData.trees_quantity ? Number(formData.trees_quantity) : Math.round((intentParams.amount || 0) / (intentParams.metadata && intentParams.metadata.unit_price ? intentParams.metadata.unit_price : 3000)));
+
+          const plantingPayload = recipientInfo ? {
+            surname: recipientInfo.surname || '',
+            name: recipientInfo.name || '',
+            phone: recipientInfo.phone || '',
+            city: recipientInfo.city || (formData && formData.city) || '',
+            trees_quantity: resolvedTreesCount,
+            recipient: true
+          } : {
+            surname: intentParams.userInfo.lastName || intentParams.userInfo.surname || '',
+            name: intentParams.userInfo.firstName || intentParams.userInfo.name || '',
+            phone: intentParams.userInfo.phone || '',
+            // city may not be provided by TipTop userInfo — fallback to original formData
+            city: (intentParams.userInfo && intentParams.userInfo.city) || (formData && formData.city) || '',
+            trees_quantity: resolvedTreesCount
+          };
+
+          if (!plantingPayload.city) {
+            console.warn('Warning: plantingPayload.city is empty. Server requires city — request may be rejected. plantingPayload:', plantingPayload);
+          }
+
+          // POST directly to local create endpoint (client-side immediate flow)
+          // отправляем на backend (используем apiBaseUrl чтобы попасть на правильный порт)
+          const plantEndpoint = `${apiBaseUrl}/api/plantings/create.php`;
+          const plantResp = await fetch(plantEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Object.assign({}, plantingPayload, {
+              payment_external_id: intentParams.externalId || null,
+              payment_status: 'pending', // пометка pending, окончательное подтверждение через webhook
+              tiptop_widget_result: widgetResult || null
+            }))
+          });
+
+          // Устойчиво обрабатываем ответ — сервер может вернуть HTML при ошибке
+          if (plantResp.ok) {
+            const raw = await plantResp.text();
+            let plantJson = null;
+            try {
+              plantJson = JSON.parse(raw);
+            } catch (parseErr) {
+              console.warn('Planting create returned non-JSON response:', raw);
+            }
+
+            console.log('Local planting create response (parsed):', plantJson, ' raw:', raw);
+
+            if (plantJson && plantJson.status === 'success') {
+              alert('Оплата прошла успешно и посадка зарегистрирована. Спасибо!');
+              closePlantTreeModal();
+              document.getElementById('plant-tree-form').reset();
+            } else {
+              // Если сервер вернул неструктурированный ответ, считаем заявка принята локально, но просим подождать верификации
+              alert('Оплата принята, но регистрация пока не подтвердилась. Если проблема сохранится, свяжитесь с поддержкой.');
+              closePlantTreeModal();
+              document.getElementById('plant-tree-form').reset();
+            }
+          } else {
+            const raw = await plantResp.text();
+            console.warn('Local planting endpoint HTTP error:', plantResp.status, raw);
+            alert('Оплата прошла, но сервер регистрации посадки вернул ошибку. Сервер получит уведомление через webhook.');
+          }
+        } catch (errLocal) {
+          console.error('Error calling local planting create:', errLocal);
+          // fallback: отправим на proxy для дальнейшей обработки сервером
+          try {
+            const proxyEndpoint = `${apiBaseUrl}/api/tiptoppay_create.php`;
+            const proxyResp = await fetch(proxyEndpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                amount: intentParams.amount,
+                currency: intentParams.currency,
+                externalId: intentParams.externalId,
+                description: intentParams.description,
+                userInfo: intentParams.userInfo,
+                metadata: intentParams.metadata,
+                widgetResult
+              })
+            });
+            const proxyJson = await proxyResp.json();
+            console.log('Proxy response:', proxyJson);
+            alert('Оплата прошла. Серверная регистрация будет выполнена через webhook/прокси.');
+            closePlantTreeModal();
+            document.getElementById('plant-tree-form').reset();
+          } catch (proxyErr) {
+            console.error('Proxy call failed:', proxyErr);
+            alert('Оплата прошла, но ни локальная, ни серверная регистрация не выполнилась. Свяжитесь с поддержкой.');
+          }
+        }
+      } catch (err) {
+        console.error('TipTop payment error:', err);
+        alert('Оплата не была завершена. Попробуйте снова.');
+      } finally {
+        submitBtn.disabled = false;
+        // Снимаем обработчик — чтобы повторный submit снова собирал актуальные formData
+        submitBtn.removeEventListener('click', invokeWidget);
+      }
+    };
+
+    // Сначала гарантируем, что предыдущее событие не добавлено
+    submitBtn.removeEventListener('click', invokeWidget);
+    submitBtn.addEventListener('click', invokeWidget);
+    // Информируем пользователя, что оплата будет через TipTop
+    // Возврат для handlePlantTreeFormSubmit — он завершён, остальное обрабатывает click
+    return;
+  }
+
+  // Если widget не загружен — fallback: отправляем заявку и просим оплатить вручную
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/plantings/create.php`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    alert('Заявка принята. Мы свяжемся с вами для оплаты.');
     closePlantTreeModal();
     document.getElementById('plant-tree-form').reset();
-    
-  } catch (error) {
+  } catch (err) {
+    console.error('Fallback plant create error:', err);
+    alert('Произошла ошибка при регистрации заявки. Попробуйте позже.');
   }
 }
 
@@ -1003,6 +1394,17 @@ async function fetchAndRenderStats() {
 // Запускаем получение статистики при загрузке страницы
 window.addEventListener('load', () => {
   fetchAndRenderStats();
+
+  // Read TipTop public id from meta if present for testing
+  try {
+    const meta = document.querySelector('meta[name="tiptoppay-public-id"]');
+    if (meta && meta.content) {
+      window.TIPTOP_PUBLIC_ID = meta.content;
+      console.log('TIPTOP_PUBLIC_ID set from meta:', window.TIPTOP_PUBLIC_ID);
+    }
+  } catch (e) {
+    console.warn('Unable to read tiptoppay-public-id meta:', e);
+  }
 
   // Добавляем обработчик для стрелки прокрутки проектов на странице Donate
   if (document.querySelector('body.donate-mobile')) {
@@ -2773,7 +3175,7 @@ function createCarbonFootprintModal() {
       <div class="bg-white rounded-3xl w-full max-w-[800px] max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 relative" id="carbon-modal-content">
         <style>
           /* Scoped styles for carbon modal injected via main.js */
-          #carbon-modal-content { font-family: 'PP Neue Montreal', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
+          #carbon-modal-content { font-family: 'PP Neue Montreal', sans-serif; }
           #carbon-modal-content .floating-label { color: #666666; background: #ffffff; padding: 0 6px; }
           #carbon-modal-content input, #carbon-modal-content select, #carbon-modal-content .carbon-contact-heading, #carbon-modal-content p { color: #666666; }
           #carbon-modal-content input::placeholder { color: #666666; opacity: 1; }
@@ -3634,34 +4036,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Обработчики для кнопок +/- количества деревьев
-    document.addEventListener('click', function(event) {
-        if (event.target.id === 'increase-trees' || event.target.closest('#increase-trees')) {
-            updateTreeCount(1);
-        }
-        if (event.target.id === 'decrease-trees' || event.target.closest('#decrease-trees')) {
-            updateTreeCount(-1);
-        }
-    });
-    
-    // Обработчик для ручного ввода количества деревьев
-    document.addEventListener('input', function(event) {
-        if (event.target.id === 'tree-count') {
-            const countInput = event.target;
-            const totalAmountSpan = document.getElementById('total-amount');
-            
-            let currentCount = parseInt(countInput.value) || 1;
-            if (currentCount < 1) currentCount = 1;
-            if (currentCount > 1000) currentCount = 1000;
-            
-            countInput.value = currentCount;
-            
-            const totalAmount = currentCount * 2000;
-            if (totalAmountSpan) {
-                totalAmountSpan.textContent = totalAmount.toLocaleString('ru-RU') + ' ₸';
-            }
-        }
-    });
+  // NOTE: локальные обработчики для +/- и input назначены отдельно (decBtn/incBtn/treeCountInput)
     
     // Обработчики для чекбоксов
     document.addEventListener('click', function(event) {
