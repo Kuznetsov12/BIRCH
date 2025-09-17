@@ -566,7 +566,7 @@ function createPlantTreeModal() {
             <!-- Сумма к оплате -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-2 text-lg sm:text-xl total-row">
               <span id="totalsumpay" class="text-[#666666] text-xl font-light">Сумма к оплате:</span>
-              <span id="total-amount" class="font-normal text-[#999999] sm:text-lg md:text-xl">0 ₸</span>
+              <span id="total-amount" class="font-normal text-[#999999] text-2xl sm:text-lg md:text-2xl">0 ₸</span>
             </div>
             
             <button 
