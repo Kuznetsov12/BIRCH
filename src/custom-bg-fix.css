@@ -500,5 +500,50 @@ footer .grid.grid-cols-4 > div:nth-child(3) {
   font-display: swap;
 }
 
+/* Footer: explicit styling for the 'Пользовательское соглашение' link to match mobile mock */
+.user-agreement-link {
+  display: block !important;
+  color: #BFBFBF !important;
+  text-decoration: none !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+  margin-top: 18px !important;
+  max-width: 180px !important;
+  box-sizing: border-box !important;
+  line-height: 105% !important;
+}
+
+.user-agreement-link:hover,
+.user-agreement-link:focus {
+  color: #FFFFFF !important;
+  border-color: rgba(191,191,191,0.18) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px !important;
+}
+
+@media (max-width: 767px) {
+  footer#footerMainPageFirst .user-agreement-link {
+    font-size: 20px !important;
+    line-height: 1.15 !important;
+    padding: 10px 12px !important;
+    margin-left: 12px !important;
+  }
+}
+
+/* Remove any extra pseudo-element underline or blue border that footer rules may add
+   for this specific link. This prevents duplicate underlines/borders while keeping
+   other footer links intact. */
+.user-agreement-link::after,
+footer#footerMainPageFirst .user-agreement-link::after {
+  display: none !important;
+  content: none !important;
+}
+
+.user-agreement-link,
+footer#footerMainPageFirst .user-agreement-link {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
 
 
