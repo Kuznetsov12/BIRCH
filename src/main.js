@@ -355,7 +355,7 @@ function createPlantTreeModal() {
           #plant-modal-content input[type="text"],
           #plant-modal-content input[type="tel"],
           #plant-modal-content input[type="number"] { padding-top: 14px !important; padding-bottom: 14px !important; font-size: 18px !important; font-weight: 400 !important; }
-          #tree-count { font-size: 28px !important; font-weight: 400 !important; padding: 0 !important; }
+          #tree-count { font-size: 28px !important; font-weight: 400 !important; padding: 0 !important; width: 40px !important; text-align: center !important; }
           /* force count and total into one row on mobile */
           #plant-modal-content .count-row, #plant-modal-content .total-row { flex-direction: row !important; align-items: center !important; }
           #plant-modal-content .count-row .items-center { gap: 1px !important; }
@@ -3005,7 +3005,7 @@ async function loadUsersForMarquee() {
             console.log('Загружаем данные пользователей из API...');
         }
         
-        const apiUrl = `${config.apiBaseUrl}/api/users/read.php`;
+        const apiUrl = `${apiBaseUrl}/api/users/read.php`;
         console.log('Запрос к API:', apiUrl);
         
         const response = await fetch(apiUrl);

@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Content Security Policy: allow TipTop Pay widget and local dev endpoints -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: https://birch.green; script-src 'self' https://widget.tiptoppay.kz https://checkout.tiptoppay.kz https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline' https://birch.green; connect-src 'self' https://api.tiptoppay.kz https://birch.green ws://birch.green https://unpkg.com; style-src 'self' 'unsafe-inline' https://pay.google.com https://unpkg.com https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; frame-src https://widget.tiptoppay.kz https://show.tiptoppay.kz https://orders.tiptoppay.kz https://checkout.tiptoppay.kz https://apple-pay-gateway.apple.com https://pay.google.com; img-src 'self' data: https:;">
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self' https: https://birch.green;
+  script-src 'self' https://widget.tiptoppay.kz https://checkout.tiptoppay.kz https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline' https://birch.green;
+  connect-src 'self' http://localhost:3000 https://api.tiptoppay.kz https://birch.green ws://birch.green https://unpkg.com;
+  style-src 'self' 'unsafe-inline' https://pay.google.com https://unpkg.com https://cdn.jsdelivr.net https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com data:;
+  frame-src https://widget.tiptoppay.kz https://show.tiptoppay.kz https://orders.tiptoppay.kz https://checkout.tiptoppay.kz https://apple-pay-gateway.apple.com https://pay.google.com;
+  img-src 'self' data: https:;
+">
     
     <!-- SEO Meta Tags -->
     <title>Донаты на посадку деревьев | BIRCH - Экологические пожертвования для сохранения природы</title>
