@@ -217,7 +217,7 @@ a[aria-current='page']::after {
 .desktop-nav a[aria-current='page'],
 nav[role="navigation"] .desktop-nav a[aria-current='page'],
 nav[role="navigation"] a[aria-current='page'] {
-  font-weight: 800 !important; /* extra bold to be visually prominent */
+  font-weight: 700 !important; /* extra bold to be visually prominent */
   color: #DAFFF1 !important;
 }
 

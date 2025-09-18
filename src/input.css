@@ -265,7 +265,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
 }
 
 /* Адаптация главной страницы для планшетов (до 1024px) */
-@media (max-width: 1366px) {
+@media (max-width: 1300px) {
   
   /* Убираем серый фон - делаем полноэкранными секции */
   body {
@@ -890,8 +890,6 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   section.w-full.bg-white.py-20 .flex.gap-14 {
     flex-direction: row !important;
     gap: 10px !important;
-    width: 100% !important;
-    max-width: 500px !important;
     margin: 0 auto !important;
   }
   
@@ -905,7 +903,6 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     flex: none !important;
     box-sizing: border-box !important;
   }
-  
   section.w-full.bg-white.py-20 .flex.gap-14 button {
     height: 60px !important;
     font-size: 13px !important;
@@ -913,6 +910,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     width: 240px !important;
     max-width: 240px !important;
     flex: none !important;
+    flex-direction: row !important;
     box-sizing: border-box !important;
   }
   
@@ -4350,6 +4348,50 @@ body.forest-mobile #forestProjectsSection #projectCarousel .flex-1 {
   .carbon-field > div.border {
     padding: 8px !important;
   }
+tom-popup .leaflet-popup-content-wrapper {
+  background: transparent !important;
+}
+.custom-popup .leaflet-popup-tip-container {
+  display: block !important;
+}
+
+/* Carbon modal: fullscreen on small screens */
+@media (max-width: 767px) {
+  /* make the overlay center to top and remove outer padding */
+  #carbon-footprint-modal {
+    align-items: flex-start !important;
+    padding: 0 !important;
+  }
+
+  /* modal content should occupy full screen area with internal scroll */
+  #carbon-modal-content {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding-top: 12px !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+  }
+
+  /* ensure inside paddings are slightly reduced on mobile */
+  #carbon-modal-content .px-8 {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* make inputs slightly shorter vertically */
+  .carbon-field > .border,
+  .carbon-field > div.border {
+    padding: 8px !important;
+  }
 }
 .leaflet-popup-content-wrapper {
   background: transparent !important;
@@ -4394,4 +4436,85 @@ body.forest-mobile #forestProjectsSection #projectCarousel .flex-1 {
 }
 .custom-popup .leaflet-popup-tip-container {
   display: block !important;
+}
+}
+@media (min-width: 1369px) and (max-width: 1700px) {
+
+}
+
+@media (min-width: 800px) and (max-width: 1368px) {
+  #btnMainPageDealBirch{
+    flex-direction: row !important;
+  }
+  #treesDonatePageContainer{
+    margin: 0 !important;
+    max-width: 400px !important;
+    height: 400px !important;
+
+  }
+  #treesDonatePageContainer img{
+    width: 400px !important;
+    height: 100% !important;
+  }
+  #btnMainPageSled{
+    width: 320px !important;
+  }
+  #sectionDonatePenta{
+    margin-top: 0 !important;
+  }
+  #blockCOntainerWithPenta{
+    margin-top: 20px !important;
+  }
+  #formDonateInputWithBtn{
+    gap: 16px !important;
+  }
+  #sectionDonateWithMapOne{
+    margin-top: 0 !important;
+  }
+  #secondDonateProjectCarousel{
+    flex-shrink: initial !important;
+  }
+  #thirdDonateProjectCarousel{
+    flex-shrink: initial !important;
+  }
+  #forestForm{
+    flex-direction: column !important;
+  }
+  #forestFormButton{
+    max-width: none !important;
+    width: 100% !important;
+  }
+  #plantforestCarouselSecondCard{
+    flex-shrink: initial !important;
+  }
+  #plantforestCarouselThirdCard{
+    flex-shrink: initial !important;
+  }
+  #btnheaderprojectblock{
+    display: flex !important;
+  }
+  #rightBlurCircle{
+    top: 140px !important;
+  }
+  #rightProject{
+    top: 260px !important;
+  }
+  #leftBlurCircle{
+    top:  140px !important;
+  }
+  #leftProject{
+    top: 260px !important;
+  }
+  #allContent{
+    flex-direction: column !important;
+  }
+  #emissionPageAllContent{
+    flex-direction: column !important;
+  }
+  #newneedGap{
+    gap: 32px !important;
+  }
+  #emissionIcon{
+    justify-content: center !important;
+  }
 }

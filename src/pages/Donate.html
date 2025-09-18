@@ -378,7 +378,7 @@
     <div class="max-w-[1920px] mx-auto px-8 relative z-10">
       <div class="flex items-center justify-between">
         <!-- Изображение дерева слева -->
-        <div class="flex-shrink-0 mr-20">
+        <div id="treesDonatePageContainer" class="flex-shrink-0 mr-20">
           <img src="../../src/img/giantTree.png" alt="Гигантское дерево" class="max-w-[1000px] h-auto object-contain">
         </div>
 
@@ -406,8 +406,8 @@
   </section>
 
   <!-- Секция "Узнайте вашу эмиссию CO₂" -->
-  <section class="relative bg-white overflow-hidden -mt-[79px] z-20">
-    <div class="max-w-[1920px] mx-auto px-8">
+  <section id="sectionDonatePenta" class="relative bg-white overflow-hidden -mt-[79px] z-20">
+    <div id="blockCOntainerWithPenta" class="max-w-[1920px] mx-auto px-8">
       <div class="flex items-center justify-between">
         <!-- Текстовый блок слева (65%) -->
         <div class="w-[60%] pr-16">
@@ -425,7 +425,7 @@
           </p>
 
           <!-- Форма с полем ввода и кнопкой -->
-          <div class="flex items-center gap-16">
+          <div id="formDonateInputWithBtn" class="flex items-center gap-16">
             <input 
               id="emission-phone-input"
               type="tel" 
@@ -448,7 +448,7 @@
   </section>
 
   <!-- Секция с картой -->
-  <section class="relative bg-white overflow-hidden py-20 -mt-[180px] z-20">
+  <section id="sectionDonateWithMapOne" class="relative bg-white overflow-hidden py-20 -mt-[180px] z-20">
     <div class="max-w-[1920px] mx-auto px-8">
       <div class="w-full h-[920px] relative rounded-2xl overflow-hidden">
         <div id="openstreet-map" class="w-full h-full bg-gray-200 rounded-2xl">
@@ -599,7 +599,7 @@
               </div>
               
               <!-- Вторая страница - еще 4 карточки в сетке 2x2 -->
-              <div class="min-w-full grid grid-cols-2 gap-8 flex-shrink-0">
+              <div id="secondDonateProjectCarousel" class="min-w-full grid grid-cols-2 gap-8 flex-shrink-0">
                 <!-- Карточка проекта 5 - КСО ТЭЦ -->
                 <div class="rounded-[20px] overflow-hidden w-full max-w-[910px] relative h-[469px] bg-cover bg-center bg-no-repeat" style="background-image: url('../img/tenProject.png');">
                   <div class="absolute inset-0"></div>
@@ -670,7 +670,7 @@
               </div>
               
               <!-- Третья страница - 2 карточки -->
-              <div class="min-w-full grid grid-cols-2 gap-8 flex-shrink-0">
+              <div id="thirdDonateProjectCarousel" class="min-w-full grid grid-cols-2 gap-8 flex-shrink-0">
                 <!-- Карточка проекта 9 - BOLEK -->
                 <div class="rounded-[20px] overflow-hidden w-full max-w-[910px] relative h-[469px] bg-cover bg-center bg-no-repeat" style="background-image: url('../img/secondProject.png');">
                   <div class="absolute inset-0"></div>

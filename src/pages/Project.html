@@ -64,10 +64,10 @@
         
         /* Адаптивность хедера как в PlantForest */
         .desktop-button,
-        .tablet-menu,
         .mobile-menu {
             display: none;
         }
+        
         
         /* Десктоп - показываем кнопку */
         @media screen and (min-width: 1025px) {
@@ -185,14 +185,13 @@
                                 <li><a href="./Project.html" class="font-bold pb-1 cursor-default" aria-current="page">Проекты</a></li>
                             <li><a href="../../index.html" class="hover:underline">Контакты</a></li>
                         </ul>
-                        <button class="flex items-center partnership-btn bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
+                        <button id="btnheaderprojectblock" class="flex items-center partnership-btn bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
                             Оставить заявку
                             <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
                                 <img src="../../src/img/arrowdown.svg" alt="" class="w-11 h-11" />
                             </span>
                         </button>
-                        <!-- Меню для планшетов -->
-                        <img src="../../src/img/headerTable.svg" alt="Меню" class="w-11 h-11 tablet-menu" />
+                        
                                                 <!-- Бургер-меню для мобильных -->
                                                 <div onclick="toggleMobileMenu()" class="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 mobile-menu" aria-hidden="true">
                                                     <img src="../../src/img/burgerMenu.svg" alt="Меню" class="w-5 h-5 rounded-none" />
