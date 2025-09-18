@@ -1848,7 +1848,6 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
       right: auto !important;
       display: flex !important;
       justify-content: center !important;
-      width: 100% !important;
       z-index: 5 !important;
       overflow: hidden !important;
     }
@@ -4438,11 +4437,235 @@ tom-popup .leaflet-popup-content-wrapper {
   display: block !important;
 }
 }
-@media (min-width: 1369px) and (max-width: 1700px) {
+@media (min-width: 1300px) and (max-width: 1700px) {
+ #newAdaptForBook{
+  max-width: 700px !important;
+  height: 600px !important;
+ }
+ #bookTextMainPage{
+  font-size: 64px !important;
+ }
+ #textAllforTable{
+  font-size: 52px !important;
+ }
+ #mainBookContainerWithTextImg{
+  gap: 120px !important;
+ }
+ #colesoBookMain{
+  width: 800px !important;
+ }
+ #bookMainHThree{
+  font-size: 40px !important;
+ }
+#bookMainH{
+  font-size: 40px !important;
+ }
+#bookMainHTwo{
+  font-size: 40px !important;
+ }
+ #bookMainPThree{
+  font-size: 16px !important;
+ }
+ #bookMainPTwo{
+  font-size: 16px !important;
+ }
+ #bookMainP{
+  
+  font-size: 16px !important;
+ }
+ #mainBookHContext{
+  font-size: 52px !important;
+ }
+ #mainBookChanceForPlanet{
+  margin-right: 40px !important;
+ }
+ #bookCompensUgl{
+  font-size: 52px !important;
+ }
+ #bookCompensUglThree{
+  font-size: 18px !important;
+ }
+ #bookCompensUglTwo{
+  font-size: 18px !important;
+ }
+   .desktop-partner-mosaic {
+    display: none !important;
+  }
+
+  .tablet-partner-image {
+    display: block !important;
+    width: 100% !important;
+    height: 400px !important; /* разумная высота для мобильного */
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    border-radius: 8px !important;
+    margin: 0 auto 16px auto !important;
+
+  }
+  .tablet-partner-image img{
+    max-width: 1000px !important;
+  }
+  #zagolovBookUsPartner{
+    top: -80px !important;
+    right: 100px !important;
+  }
+  #handBookImgWidth img{
+    width: 700px !important;
+    height: 600px !important;
+  }
+  #firstBookProjectNeedBook{
+    flex-shrink: initial !important;
+  }
+  #secondBookProjectNeedBook{
+    flex-shrink: initial !important;
+  }
+  #thirdBookProjectNeedBook{
+    flex-shrink: initial !important;
+  }
+  #donateTextNewPervi{
+    font-size: 52px !important;
+  }
+  #donateTextNewOne{
+    font-size: 40px !important;
+  }
+  #donateTextNewSix{
+    font-size: 16px !important;
+  }
+  #donateTextNewTwo{
+    font-size: 40px !important;
+  }
+  #donateTextNewFive{
+    font-size: 16px !important;
+  }
+  #donateTextNewThree{
+    font-size: 40px !important;
+  }
+  #donateTextNewFour{
+    font-size: 16px !important;
+  }
+  #bookDonatemainContainer{
+    width: 50% !important;
+  }
+  #colesoDonatePageYears{
+    width: 800px !important;
+  }
+  #needDonateBookChance{
+    margin-right: 20px !important;
+  }
+  #indexBookWidth{
+    width: 50% !important;
+  }
+  #btnMainPageSled{
+    width: 320px !important;
+  }
+  #treesDonatePageContainer img{
+    width: 800px !important;
+  }
+  #calculatorCoTwoBookDonate{
+    font-size: 52px !important;
+  }
+  #calculatorCoTwoBookDonateP{
+    font-size: 20px !important;
+  }
+  #sectionDonateWithMapOne{
+    margin-top: -60px !important;
+  }
+  #textDonatePageUznayCo{
+    font-size: 52px !important;
+  }
+  #textDonatePageUznayCoP{
+    font-size: 20px !important;
+  }
+  #textDonatePageUznayCoPP{
+    font-size: 20px !important;
+  }
+    #bookFirstDonateProjectCarousel{
+    flex-shrink: initial !important;
+  }
+  #secondDonateProjectCarousel{
+    flex-shrink: initial !important;
+  }
+  #thirdDonateProjectCarousel{
+    flex-shrink: initial !important;
+  }
+  #forestForm{
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  #forestSecondSpan{
+    font-size: 20px !important;
+  }
+  #forestSecondText{
+    font-size: 52px !important;
+  }
+  #forestCompensationBadge{
+    width: 400px !important;
+  }
+  #forestCompensationBadgeText{
+    font-size: 18px !important;
+  }
+  #plantForestNeedStyles{
+  gap: 120px !important;
+  }
+  #plantForestForBookFortuna{
+    width: 800px !important;
+  }
+  #chancePlantForestForBook{
+    margin-right: 40px !important;
+  }
+  #textPlantForestforBookOneHHHHHH{
+    font-size: 16px !important;
+  }
+  #textPlantForestforBookOneHHHHH{
+    font-size: 40px !important;
+  }
+  #textPlantForestforBookOneHHHH{
+    font-size: 16px !important;
+  }
+  #textPlantForestforBookOneHHH{
+    font-size: 40px !important;
+  }
+  #textPlantForestforBookOneHH{
+    font-size: 16px !important;
+  }
+  #textPlantForestforBookOneH{
+    font-size: 40px !important;
+  }
+  #textPlantForestforBookOne{
+    font-size: 52px !important;
+  }
+  #bookPlantForestContainerWithAll{
+    width: 50% !important;
+  }
+  #plantforestCarouselThirdCardYes{
+    flex-shrink: initial !important;
+  }
+  #plantforestCarouselThirdCard{
+    flex-shrink: initial !important;
+  }
+  #plantforestCarouselSecondCard{
+    flex-shrink: initial !important;
+  }
+  #project-description{
+    font-size: 20px !important;
+  }
+  #project-title{
+    font-size: 40px !important;
+  }
+  #emissionPageAllContent{
+    flex-direction: column !important;
+  }
+  #newneedGap{
+    gap: 40px !important;
+  }
+  #allContent{
+    flex-direction: column !important;
+  }
 
 }
 
-@media (min-width: 800px) and (max-width: 1368px) {
+@media (min-width: 800px) and (max-width: 1300px) {
   #btnMainPageDealBirch{
     flex-direction: row !important;
   }
@@ -4517,4 +4740,17 @@ tom-popup .leaflet-popup-content-wrapper {
   #emissionIcon{
     justify-content: center !important;
   }
+  #textAllforTable{
+    letter-spacing: normal !important;
+  }
+  #emission-phone-input{
+    width: 260px !important;
+    max-width: 270px !important;
+  }
+  #emission-check-btn{
+    max-width: 250px !important;
+  }
+
+
+
 }

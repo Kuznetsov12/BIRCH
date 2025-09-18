@@ -414,7 +414,7 @@
 <!-- Секция CO₂ калькулятор -->
 <section id="coTwoSection" class="w-full bg-white py-20 relative">
   <div class="max-w-[1920px] mx-auto px-8">
-    <div class="flex items-center">
+    <div id="plantForestNeedStyles" class="flex items-center">
       <!-- Левая часть - изображение -->
       <div class="flex-1">
         <div class="relative">
@@ -463,8 +463,8 @@ BIRCH высаживает деревья за ваш вклад — вы пол
        style="background: radial-gradient(circle, #008852, #164125);"></div>
 
   <!-- Контент слева -->
-  <div class="relative z-10 max-w-[800px] text-white space-y-8 ">
-    <h2 class="text-[84px] max-w-[1000px] mb-[50px] font-light leading-[100%] text-white opacity-20">Восстановление <br> лесов</h2>
+  <div id="bookPlantForestContainerWithAll" class="relative z-10 max-w-[800px] text-white space-y-8 ">
+    <h2 id="textPlantForestforBookOne" class="text-[84px] max-w-[1000px] mb-[50px] font-light leading-[100%] text-white opacity-20">Восстановление <br> лесов</h2>
         <!-- Блок для мобильной версии (будет показан только на мобильных) -->
     <div class="birch-mobile-info hidden">
       <img src="../img/greenStarBgWhite.svg" alt="">
@@ -473,33 +473,33 @@ BIRCH высаживает деревья за ваш вклад — вы пол
     <div class="space-y-6 max-w-[1000px]">
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
-          <h3 class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-[#23B77F]">1 тонна CO₂</h3>
-          <p class="text-lg mb-4 font-normal text-[#BFBFBF]">За всю жизнь поглощает 1 дерево</p>
+          <h3 id="textPlantForestforBookOneH" class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-[#23B77F]">1 тонна CO₂</h3>
+          <p id="textPlantForestforBookOneHH" class="text-lg mb-4 font-normal text-[#BFBFBF]">За всю жизнь поглощает 1 дерево</p>
         </div>
         <img src="../../src/img/axe.svg" alt="" class="w-14 h-14"/>
       </div>
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
-          <h3 class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal">до 20% CO₂</h3>
-          <p class="text-lg mb-4 font-normal text-[#BFBFBF]">Может поглотить каждое посаженное дерево в год</p>
+          <h3 id="textPlantForestforBookOneHHH" class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal">до 20% CO₂</h3>
+          <p id="textPlantForestforBookOneHHHH" class="text-lg mb-4 font-normal text-[#BFBFBF]">Может поглотить каждое посаженное дерево в год</p>
         </div>
         <img src="../../src/img/earth.svg" alt="" class="w-14 h-14"/>
       </div>
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
-          <h3 class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-white">10%</h3>
-          <p class="text-lg mb-4 font-normal text-white">Увеличения площади лесов, могут снизить CO₂ на 25%</p>
+          <h3 id="textPlantForestforBookOneHHHHH" class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-white">10%</h3>
+          <p id="textPlantForestforBookOneHHHHHH" class="text-lg mb-4 font-normal text-white">Увеличения площади лесов, могут снизить CO₂ на 25%</p>
         </div>
         <img src="../../src/img/treesSvg.svg" alt="" class="w-14 h-14"/>
       </div>
     </div>
   </div>
-  <div class="flex gap-2 mb-100 text-2xl font-normal justify-start items-center mr-40">
+  <div id="chancePlantForestForBook" class="flex gap-2 mb-100 text-2xl font-normal justify-start items-center mr-40">
     <img src="../../src/img/greenStarBgWhite.svg" alt="">
     <span>Шанс для планеты</span>
   </div>
   <!-- Колесо с годами -->
-  <div class="absolute bottom-0 right-0 z-10 w-[1100px] h-[1100px] -mb-[680px] -mr-[280px]">
+  <div id="plantForestForBookFortuna" class="absolute bottom-0 right-0 z-10 w-[1100px] h-[1100px] -mb-[680px] -mr-[280px]">
     <svg viewBox="0 0 1000 1000" class="w-full h-full" id="yearWheel">
       <!-- Внешние декоративные окружности - увеличиваем размеры -->
       <circle cx="500" cy="500" r="480" class="stroke-white/10 bg-white/10 fill-none" stroke-width="3"/>  
@@ -555,7 +555,7 @@ BIRCH высаживает деревья за ваш вклад — вы пол
             <div id="projectCarousel" class="flex transition-transform duration-500 ease-in-out">
               
               <!-- Первая страница - 4 карточки в сетке 2x2 -->
-              <div class="min-w-full max-w-[1920px] grid grid-cols-2 gap-8 flex-shrink-0">
+              <div id="plantforestCarouselThirdCardYes" class="min-w-full max-w-[1920px] grid grid-cols-2 gap-8 flex-shrink-0">
                 <!-- Карточка проекта 1 - AirSorb -->
                 <div class="rounded-[20px] overflow-hidden max-w-[910px] relative h-[469px] bg-cover bg-center bg-no-repeat" style="background-image: url('../img/thirdProject.png');">
                   <div class="absolute inset-0"></div>
@@ -771,7 +771,7 @@ BIRCH высаживает деревья за ваш вклад — вы пол
               </div>
 
                   <div onclick="window.open('https://www.instagram.com/birch.green/')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
-                    <img src="../../src/img/insta.svg" alt="Instagram" class="w-8 h-8">
+                    <img src="../../src/img/instaTwo.svg" alt="Instagram" class="w-8 h-8">
                   </div>
             </div>
           </div>

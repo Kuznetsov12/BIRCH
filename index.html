@@ -331,7 +331,7 @@
   
   <!-- Контент внизу под картинками -->
   <div class="max-w-[1920px] flex flex-col justify-center px-8 w-full relative z-30 mt-auto desktop-height-fix">
-    <div class="max-w-[1000px] text-center">
+    <div id="newAdaptForBook" class="max-w-[1000px] text-center">
       <!-- Заголовок секции -->
       <div class="flex items-center mb-6 gap-2">
         <img src="./src/img/greenStar.svg" alt="">
@@ -517,7 +517,7 @@
     <!-- Основной контент -->
     <div class="text-left max-w-[1920px] mx-auto px-8 relative z-10">
       <div class="flex items-center justify-between w-full">
-        <h2 class="text-[84px] leading-[100%] font-light text-white tracking-tighter opacity-20 mb-12 max-w-5xl">
+        <h2 id="bookTextMainPage" class="text-[84px] leading-[100%] font-light text-white tracking-tighter opacity-20 mb-12 max-w-5xl">
           Смотри, сколько деревьев уже<br>
           высадили такие же, как ты
         </h2>
@@ -534,7 +534,7 @@
 <!-- Секция CO₂ калькулятор -->
 <section class="w-full bg-white py-20">
   <div class="max-w-[1920px] mx-auto px-8">
-    <div class="flex items-center">
+    <div id="mainBookContainerWithTextImg" class="flex items-center">
       <!-- Левая часть - изображение -->
       <div class="flex-1">
         <div class="relative">
@@ -548,7 +548,7 @@
             <div id="fourco2tonn" class="bg-[#3C3C3C] w-[250px] flex items-center justify-center h-[60px] text-center text-white px-4 py-2 rounded text-sm font-medium z-10">
               <span class="text-2xl font-medium">4–12 ТОНН CO₂</span>
           </div>
-        <h2 class="text-[84px] font-light text-black mb-8 leading-tight md:tracking-[-4px]">
+        <h2 id="textAllforTable" class="text-[84px] font-light text-black mb-8 leading-tight md:tracking-[-4px]">
           Один человек в среднем<br>
           производит за год
         </h2>
@@ -591,8 +591,8 @@
        style="background: radial-gradient(circle, #008852, #164125);"></div>
 
   <!-- Контент слева -->
-  <div class="relative z-10 max-w-[800px] text-white space-y-8 ">
-    <h2 class="text-[84px] max-w-[1000px] mb-[50px] font-light leading-[100%] text-white opacity-20">Мы уже 10 лет восстанавливаем <br> природу Казахстана</h2>
+  <div id="indexBookWidth" class="relative z-10 max-w-[800px] text-white space-y-8 ">
+    <h2 id="mainBookHContext" class="text-[84px] max-w-[1000px] mb-[50px] font-light leading-[100%] text-white opacity-20">Мы уже 10 лет восстанавливаем <br> природу Казахстана</h2>
     
     <!-- Блок для мобильной версии (будет показан только на мобильных) -->
     <div class="birch-mobile-info hidden">
@@ -603,33 +603,33 @@
     <div class="space-y-6 max-w-[1000px]">
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
-          <h3 class="md:text-[70px] md:font-[400] text-5xl mb-4 text-[#23B77F] font-normal">1 тонна CO₂ </h3>
-          <p class="text-lg mb-4 font-normal text-[#BFBFBF]">За всю жизнь поглощает 1 дерево</p>
+          <h3 id="bookMainH" class="md:text-[70px] md:font-[400] text-5xl mb-4 text-[#23B77F] font-normal">1 тонна CO₂ </h3>
+          <p id="bookMainP" class="text-lg mb-4 font-normal text-[#BFBFBF]">За всю жизнь поглощает 1 дерево</p>
         </div>
         <img src="./src/img/axe.svg" alt="" class="w-14 h-14"/>
       </div>
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
-          <h3 class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal">до 20% CO₂ </h3>
-          <p class="text-lg mb-4 font-normal text-[#BFBFBF]">Может поглотить каждое посаженное дерево в год</p>
+          <h3 id="bookMainHTwo" class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal">до 20% CO₂ </h3>
+          <p id="bookMainPTwo" class="text-lg mb-4 font-normal text-[#BFBFBF]">Может поглотить каждое посаженное дерево в год</p>
         </div>
         <img src="./src/img/earth.svg" alt="" class="w-14 h-14"/>
       </div>
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
-          <h3 class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-[#FFFFFF]">10%</h3>
-          <p class="text-lg mb-4 font-normal text-white">Увеличения площади лесов, могут снизить CO₂ на 25%</p>
+          <h3 id="bookMainHThree" class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-[#FFFFFF]">10%</h3>
+          <p id="bookMainPThree" class="text-lg mb-4 font-normal text-[#BFBFBF]">Увеличения площади лесов, могут снизить CO₂ на 25%</p>
         </div>
         <img src="./src/img/treesSvg.svg" alt="" class="w-14 h-14"/>
       </div>
     </div>
   </div>
-  <div class="flex gap-2 mb-100 text-2xl font-normal justify-start items-center mr-40">
+  <div id="mainBookChanceForPlanet" class="flex gap-2 mb-100 text-2xl font-normal justify-start items-center mr-40">
     <img src="./src/img/greenStarBgWhite.svg" alt="">
     <span>Шанс для планеты</span>
   </div>
   <!-- Колесо с годами -->
-  <div class="absolute bottom-0 right-0 z-10 w-[1100px] h-[1100px] -mb-[680px] -mr-[280px]">
+  <div id="colesoBookMain" class="absolute bottom-0 right-0 z-10 w-[1100px] h-[1100px] -mb-[680px] -mr-[280px]">
     <svg viewBox="0 0 1000 1000" class="w-full h-full" id="yearWheel">
       <!-- Внешние декоративные окружности - используем SVG-градиент для обводки -->
       <defs>
@@ -667,19 +667,19 @@
   <div class="max-w-[1920px] mx-auto px-8 w-full relative z-10 flex items-center">
     <div class="max-w-[1500px]">
       <!-- Основной заголовок -->
-        <h2 class="text-[84px] font-light text-black mb-8 leading-tight">
+        <h2 id="bookCompensUgl" class="text-[84px] font-light text-black mb-8 leading-tight">
           Компенсируйте углеродный след — <br>
           высаживайте леса
         </h2>
         
         <!-- Описание -->
         <div class="space-y-6 mb-12">
-          <p class="text-2xl text-[#3C3C3C] leading-relaxed font-light">
+          <p id="bookCompensUglTwo" class="text-2xl text-[#3C3C3C] leading-relaxed font-light">
             Карбоновый оффсет — это способ для бизнеса компенсировать выбросы <br> 
             CO₂ и других парниковых газов, которые невозможно полностью избежать.
           </p>
           
-          <p class="text-2xl text-[#3C3C3C] leading-relaxed font-light">
+          <p id="bookCompensUglThree" class="text-2xl text-[#3C3C3C] leading-relaxed font-light">
             С BIRCH вы поддерживаете реальные проекты по посадке деревьев <br>
             и получаете прозрачный отчёт о сокращении углеродного следа.
           </p>
@@ -713,7 +713,7 @@
            style="background: radial-gradient(circle, #008852, #164125);"></div>
 
       <!-- Заголовок секции -->
-      <div class="relative z-10 text-right mb-16">
+      <div id="zagolovBookUsPartner" class="relative z-10 text-right mb-16">
         <h2 class="absolute -top-20 right-60 text-[84px] tracking-tighter font-light text-white mb-4">Наши партнеры</h2>
         <p class=" absolute top-10 right-55 text-2xl text-[#BFBFBF] font-light">Компенсируют выбросы и поддерживают экологию</p>
       </div>
@@ -847,7 +847,7 @@
         </div>
 
         <!-- Правая часть с изображением руки -->
-        <div class="absolute -bottom-70 -right-35">
+        <div id="handBookImgWidth" class="absolute -bottom-70 -right-35">
           <img src="./src/img/hads_v2.png" alt="Рука" class="w-[1200px] h-[800px] rotate-[-20deg]" />
         </div>
       </div>
@@ -923,19 +923,6 @@
               </div>
             </div>
             
-            <!-- Карточка 4 -->
-            <div class="min-w-[350px] rounded-[30px] overflow-hidden flex-shrink-0">
-              <div class="h-[400px] bg-gradient-to-b from-gray-200 to-gray-300 flex items-center justify-center rounded-[30px]">
-                <img src="./src/img/employeeFour.png" alt="Алексей Воробьев" class="w-full h-full rounded-[30px] object-cover">
-              </div>
-              <div class="py-8 text-center">
-                <h3 class="text-2xl font-bold text-left text-black mb-2">Абай Батыров</h3>
-                <p class="text-[#3C3C3C] text-xl font-normal text-left mb-6">Помощник руководителя</p>
-                <button onclick="window.location.href='#footerMainPageFirst'" class="w-full border text-xl border-black text-black py-3 px-6 rounded-md font-bold hover:bg-gray-50 transition-all duration-300">
-                  Связаться
-                </button>
-              </div>
-            </div>
 
               <div class="min-w-[350px] rounded-[30px] overflow-hidden flex-shrink-0">
               <div class="h-[400px] bg-gradient-to-b from-gray-200 to-gray-300 flex items-center justify-center rounded-[30px]">
@@ -997,7 +984,7 @@
             <div id="projectCarousel" class="flex transition-transform duration-500 ease-in-out">
               
               <!-- Первая страница - 4 карточки в сетке 2x2 -->
-              <div class="min-w-full max-w-[1920px] grid grid-cols-2 gap-8 flex-shrink-0">
+              <div id="firstBookProjectNeedBook" class="min-w-full max-w-[1920px] grid grid-cols-2 gap-8 flex-shrink-0">
                 <!-- Карточка проекта 1 - AirSorb -->
                 <div class="rounded-[20px] overflow-hidden max-w-[910px] relative h-[469px] bg-cover bg-center bg-no-repeat" style="background-image: url('./src/img/thirdProject.png');">
                   <div class="absolute inset-0"></div>
@@ -1068,7 +1055,7 @@
               </div>
               
               <!-- Вторая страница - еще 4 карточки в сетке 2x2 -->
-              <div class="min-w-full grid grid-cols-2 gap-8 flex-shrink-0">
+              <div id="secondBookProjectNeedBook" class="min-w-full grid grid-cols-2 gap-8 flex-shrink-0">
                 <!-- Карточка проекта 5 - КСО ТЭЦ -->
                 <div class="rounded-[20px] overflow-hidden w-full max-w-[910px] relative h-[469px] bg-cover bg-center bg-no-repeat" style="background-image: url('./src/img/tenProject.png');">
                   <div class="absolute inset-0"></div>
@@ -1139,7 +1126,7 @@
               </div>
               
               <!-- Третья страница - 2 карточки -->
-              <div class="min-w-full grid grid-cols-2 gap-8 flex-shrink-0">
+              <div id="thirdBookProjectNeedBook" class="min-w-full grid grid-cols-2 gap-8 flex-shrink-0">
                 <!-- Карточка проекта 9 - BOLEK -->
                 <div class="rounded-[20px] overflow-hidden w-full max-w-[910px] relative h-[469px] bg-cover bg-center bg-no-repeat" style="background-image: url('./src/img/secondProject.png');">
                   <div class="absolute inset-0"></div>
@@ -1209,7 +1196,7 @@
                     <img src="./src/img/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
                   </div>
                   <div onclick="window.open('https://www.instagram.com/birch.green/')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
-                    <img src="./src/img/insta.svg" alt="Instagram" class="w-8 h-8">
+                    <img src="./src/img/instaTwo.svg" alt="Instagram" class="w-8 h-8">
                   </div>
                 </div>
               </div>

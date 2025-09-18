@@ -300,8 +300,8 @@
     <div class="relative flex flex-col md:flex-row justify-between items-center">
 
   <!-- Контент слева -->
-  <div class="relative z-10 max-w-[800px] text-black space-y-8 ">
-    <h2 class="text-[84px] max-w-[1000px] mb-[50px] font-light leading-[100%] text-black">Восстановление <br> лесов</h2>
+  <div id="bookDonatemainContainer" class="relative z-10 max-w-[800px] text-black space-y-8 ">
+    <h2 id="donateTextNewPervi" class="text-[84px] max-w-[1000px] mb-[50px] font-light leading-[100%] text-black">Восстановление <br> лесов</h2>
               <div class="birch-mobile-info hidden">
       <img src="../../src/img/greenStar.svg" alt="">
       <span class="text-black">Шанс для планеты</span>
@@ -311,33 +311,33 @@
     <div class="space-y-6 max-w-[1000px]">
       <div class="flex items-center justify-between border-b border-black/10 pb-4">
         <div>
-          <h3 class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-black">1 тонна CO₂</h3>
-          <p class="text-lg mb-4 font-normal text-[#3C3C3C]">За всю жизнь поглощает 1 дерево</p>
+          <h3 id="donateTextNewOne" class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-black">1 тонна CO₂</h3>
+          <p id="donateTextNewSix" class="text-lg mb-4 font-normal text-[#3C3C3C]">За всю жизнь поглощает 1 дерево</p>
         </div>
         <img src="../../src/img/axeGreen.svg" alt="" class="w-14 h-14"/>
       </div>
       <div class="flex items-center justify-between border-b border-black/10 pb-4">
         <div>
-          <h3 class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-black">до 20% CO₂</h3>
-          <p class="text-lg font-normal mb-4 text-[#3C3C3C]">Может поглотить каждое посаженное дерево в год</p>
+          <h3 id="donateTextNewTwo" class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-black">до 20% CO₂</h3>
+          <p id="donateTextNewFive" class="text-lg font-normal mb-4 text-[#3C3C3C]">Может поглотить каждое посаженное дерево в год</p>
         </div>
         <img src="../../src/img/earthGreen.svg" alt="" class="w-14 h-14"/>
       </div>
       <div class="flex items-center justify-between border-b border-black/10 pb-4">
         <div>
-          <h3 class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-black">10%</h3>
-          <p class="text-lg mb-4 font-normal text-[#3C3C3C]">Увеличения площади лесов, могут снизить CO₂ на 25%</p>
+          <h3 id="donateTextNewThree" class="md:text-[70px] md:font-[400] text-5xl mb-4 font-normal text-black">10%</h3>
+          <p id="donateTextNewFour" class="text-lg mb-4 font-normal text-[#3C3C3C]">Увеличения площади лесов, могут снизить CO₂ на 25%</p>
         </div>
         <img src="../../src/img/treeGreen.svg" alt="" class="w-14 h-14"/>
       </div>
     </div>
   </div>
-  <div class="flex gap-2 mb-100 text-2xl font-normal justify-start items-center mr-40 text-black">
+  <div id="needDonateBookChance" class="flex gap-2 mb-100 text-2xl font-normal justify-start items-center mr-40 text-black">
     <img src="../../src/img/greenStar.svg" alt="">
     <span>Шанс для планеты</span>
   </div>
   <!-- Колесо с годами -->
-     <div class="absolute bottom-0 right-0 z-10 w-[1100px] h-[1100px] -mb-[680px] -mr-[280px]">
+     <div id="colesoDonatePageYears" class="absolute bottom-0 right-0 z-10 w-[1100px] h-[1100px] -mb-[680px] -mr-[280px]">
     <svg viewBox="0 0 1000 1000" class="w-full h-full" id="yearWheel">
       <!-- Внешние декоративные окружности - увеличиваем размеры -->
       <circle cx="500" cy="500" r="480" class="stroke-black/10 bg-black/10 fill-none" stroke-width="3"/>  
@@ -384,12 +384,12 @@
 
         <!-- Текстовый блок справа -->
         <div class="flex-1 max-w-[800px]">
-          <h2 class="text-white text-[84px] font-light leading-[100%] mb-8">
+          <h2 id="calculatorCoTwoBookDonate" class="text-white text-[84px] font-light leading-[100%] mb-8">
             Калькулятор<br>
             эмиссии CO₂
           </h2>
           
-          <p class="text-[#BFBFBF] text-[24px] font-light leading-relaxed mb-12 max-w-[600px]">
+          <p id="calculatorCoTwoBookDonateP" class="text-[#BFBFBF] text-[24px] font-light leading-relaxed mb-12 max-w-[600px]">
             Заполните анкету, чтобы узнать свою точную эмиссию<br>
             CO₂ и рассчитать, сколько деревьев поможет вам<br>
             полностью её компенсировать.
@@ -411,15 +411,15 @@
       <div class="flex items-center justify-between">
         <!-- Текстовый блок слева (65%) -->
         <div class="w-[60%] pr-16">
-          <h2 class="text-black text-[84px] font-light leading-[100%] mb-8">
+          <h2 id="textDonatePageUznayCo" class="text-black text-[84px] font-light leading-[100%] mb-8">
             Узнайте вашу эмиссию CO₂
           </h2>
           
-          <p class="text-[#3C3C3C] text-[24px] font-light leading-relaxed mb-8">
+          <p id="textDonatePageUznayCoP" class="text-[#3C3C3C] text-[24px] font-light leading-relaxed mb-8">
             Посмотрите, сколько выбросов CO₂ вы уже компенсировали вместе с BIRCH.
           </p>
 
-          <p class="text-[#3C3C3C] text-[24px] font-light leading-relaxed mb-12">
+          <p id="textDonatePageUznayCoPP" class="text-[#3C3C3C] text-[24px] font-light leading-relaxed mb-12">
             Отправьте пожертвование — и следите за своей персональной<br>
             статистикой и картой высаженных деревьев.
           </p>
@@ -528,7 +528,7 @@
             <div id="projectCarousel" class="flex transition-transform duration-500 ease-in-out">
               
               <!-- Первая страница - 4 карточки в сетке 2x2 -->
-              <div class="min-w-full max-w-[1920px] grid grid-cols-2 gap-8 flex-shrink-0">
+              <div id="bookFirstDonateProjectCarousel" class="min-w-full max-w-[1920px] grid grid-cols-2 gap-8 flex-shrink-0">
                 <!-- Карточка проекта 1 - AirSorb -->
                 <div class="rounded-[20px] overflow-hidden max-w-[910px] relative h-[469px] bg-cover bg-center bg-no-repeat" style="background-image: url('../img/thirdProject.png');">
                   <div class="absolute inset-0"></div>
@@ -737,7 +737,7 @@
                 <img src="../../src/img/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
               </div>
                   <div onclick="window.open('https://www.instagram.com/birch.green/')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
-                    <img src="../../src/img/insta.svg" alt="Instagram" class="w-8 h-8">
+                    <img src="../../src/img/instaTwo.svg" alt="Instagram" class="w-8 h-8">
                   </div>
             </div>
           </div>
