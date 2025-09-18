@@ -1,6 +1,6 @@
 // API Configuration
 export const API_CONFIG = {
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://birch.green',
   timeout: parseInt(import.meta.env.VITE_API_TIMEOUT) || 10000,
   isDebug: import.meta.env.VITE_APP_DEBUG === 'true',
   environment: import.meta.env.VITE_APP_ENV || 'development'

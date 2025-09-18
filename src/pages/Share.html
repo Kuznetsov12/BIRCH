@@ -132,7 +132,7 @@
         return;
       }
 
-      const apiBaseUrl = window.VITE_API_BASE_URL || 'http://localhost:3000';
+      const apiBaseUrl = window.VITE_API_BASE_URL || 'https://birch.green';
       fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`)
         .then(r=>r.json())
         .then(data=>{
