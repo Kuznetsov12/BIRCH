@@ -4359,13 +4359,17 @@ function initializeEmissionPage() {
   if (typeof user.emission_cleared_percent !== 'undefined') {
     // Выводим в консоль для отладки
     console.log('emission_cleared_percent из API:', user.emission_cleared_percent);
-    // Обновляем визуализацию процента
-    updateEmissionPercentage(user.emission_cleared_percent);
-    // Если есть элементы с data-emission-percent, обновим их
-    const percentElements = document.querySelectorAll('[data-emission-percent]');
-    const numericDisplay = user.emission_cleared_percent > 100 ? (user.emission_cleared_percent + '%') : (user.emission_cleared_percent + '%');
-    const overMessage = 'Отлично! Вы превысили максимальную цель — так держать!';
-    percentElements.forEach(el => {
+  // Обновляем визуализацию процента
+  updateEmissionPercentage(user.emission_cleared_percent);
+  // Если есть элементы с data-emission-percent, обновим их
+  const percentElements = document.querySelectorAll('[data-emission-percent]');
+  // Форматируем процент: максимум 2 значащих цифры
+  const percentVal = Number(user.emission_cleared_percent);
+  const nf = new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 2 });
+  const formattedPercent = Number.isFinite(percentVal) ? nf.format(percentVal) : user.emission_cleared_percent;
+  const numericDisplay = percentVal > 100 ? (percentVal + '%') : (formattedPercent + '%');
+  const overMessage = 'Отлично! Вы превысили максимальную цель — так держать!';
+  percentElements.forEach(el => {
       // Большой индикатор рядом с картинкой имеет id="percentageText" — там оставляем сообщение
       if (el.id === 'percentageText') {
         el.textContent = (user.emission_cleared_percent > 100) ? overMessage : numericDisplay;
