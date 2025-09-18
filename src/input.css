@@ -1331,6 +1331,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   
   section.w-full.bg-white.min-h-\[700px\] .mb-8 {
     margin-bottom: 12px !important;
+    letter-spacing: normal !important;
   }
   
   section.w-full.bg-white.min-h-\[700px\] .mb-6 {
@@ -1426,7 +1427,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   
   /* Стили для заголовка */
     section.relative.bg-black.overflow-hidden .text-\[84px\] {
-    font-size: 30px !important;
+    font-size: 32px !important;
     line-height: 1.2 !important;
     text-align: left !important;
     margin-bottom: 0 !important;
@@ -1509,7 +1510,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
 
   /* Подзаголовок - сохраняем оригинальный текст пользователя */
   section.w-full.bg-white.py-20 p.text-2xl {
-    font-size: 14px !important;
+    font-size: 16px !important;
     margin-bottom: 24px !important;
     max-width: 100% !important;
     text-align: left !important;
@@ -1565,8 +1566,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   
   /* Добавляем отступ вниз для заголовка */
   section.relative.bg-black.overflow-hidden .text-\[84px\] {
-    font-size: 30px !important;
-    line-height: 1.3 !important;
+    font-size: 32px !important;
     margin-bottom: 20px !important;
   }
 
@@ -2357,8 +2357,8 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   }
   
   body.donate-mobile .flex.items-center.mb-6.gap-2 span {
-    font-size: 12px !important;
-    letter-spacing: 1px !important;
+    font-size: 16px !important;
+    letter-spacing: 0px !important;
   }
   
   /* Заголовок */
@@ -2431,7 +2431,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   
   /* Заголовок и основной контент */
   body.donate-mobile section.relative.bg-white.overflow-hidden.py-20.-mt-60.z-20 h2 {
-    font-size: 26px !important;
+    font-size: 32px !important;
     line-height: 1.2 !important;
     margin-bottom: 24px !important;
     max-width: 100% !important;
