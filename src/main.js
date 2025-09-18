@@ -751,7 +751,8 @@ window.getUnitPrice = function(type) {
     if (document.getElementById(fontStyleId)) return;
     const style = document.createElement('style');
     style.id = fontStyleId;
-    style.innerHTML = `@font-face { font-family: 'PP Neue Montreal'; src: local('PP Neue Montreal'), local('PPNeueMontreal'), url('./src/fonts/PPNeueMontreal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; }
+    /* Use existing fonts from /public/fonts — requesting from root avoids dev-server absolute localhost rewriting */
+    style.innerHTML = `@font-face { font-family: 'PP Neue Montreal'; src: local('PP Neue Montreal'), local('PPNeueMontreal'), url('/public/fonts/PPNeueMontreal-Book.otf') format('opentype'); font-weight: 100 900; font-style: normal; font-display: swap; }
       #plant-modal-content, #plant-modal-content * { font-family: 'PP Neue Montreal' !important; }
     `;
     document.head.appendChild(style);

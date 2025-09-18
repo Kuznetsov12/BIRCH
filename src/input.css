@@ -4510,10 +4510,16 @@ tom-popup .leaflet-popup-content-wrapper {
     top: -80px !important;
     right: 100px !important;
   }
-  #handBookImgWidth img{
-    width: 700px !important;
-    height: 600px !important;
+  #handBookImgWidth{
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
   }
+  #handBookImgWidth img{
+    width: 800px !important;
+    height: auto !important;
+  }
+
   #firstBookProjectNeedBook{
     flex-shrink: initial !important;
   }
@@ -4661,6 +4667,24 @@ tom-popup .leaflet-popup-content-wrapper {
   }
   #allContent{
     flex-direction: column !important;
+  }
+  #indexTextKazdiy{
+    line-height: 105% !important;
+  }
+  #textDonatePolusai{
+    line-height: 105% !important;
+  }
+  #textDonatePolusai br{
+    display: none !important;
+  }
+  #calculatorCoTwoBookDonateP br{
+    display: none !important;
+  }
+  #plantForestKarbonOffSet br{
+    display: none !important;
+  }
+  #plantForestKarbonOffSet{
+    line-height: 105% !important;
   }
 
 }

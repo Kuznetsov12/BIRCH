@@ -1440,6 +1440,9 @@
   .object-cover {
     object-fit: cover;
   }
+  .p-0 {
+    padding: calc(var(--spacing) * 0);
+  }
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
@@ -1517,6 +1520,9 @@
   }
   .pr-16 {
     padding-right: calc(var(--spacing) * 16);
+  }
+  .pb-0 {
+    padding-bottom: calc(var(--spacing) * 0);
   }
   .pb-1 {
     padding-bottom: calc(var(--spacing) * 1);
@@ -5806,9 +5812,14 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     top: -80px !important;
     right: 100px !important;
   }
+  #handBookImgWidth {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+  }
   #handBookImgWidth img {
-    width: 700px !important;
-    height: 600px !important;
+    width: 800px !important;
+    height: auto !important;
   }
   #firstBookProjectNeedBook {
     flex-shrink: initial !important;
@@ -5957,6 +5968,24 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   }
   #allContent {
     flex-direction: column !important;
+  }
+  #indexTextKazdiy {
+    line-height: 105% !important;
+  }
+  #textDonatePolusai {
+    line-height: 105% !important;
+  }
+  #textDonatePolusai br {
+    display: none !important;
+  }
+  #calculatorCoTwoBookDonateP br {
+    display: none !important;
+  }
+  #plantForestKarbonOffSet br {
+    display: none !important;
+  }
+  #plantForestKarbonOffSet {
+    line-height: 105% !important;
   }
 }
 @media (min-width: 800px) and (max-width: 1300px) {
