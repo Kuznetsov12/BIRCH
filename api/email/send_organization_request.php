@@ -1,4 +1,15 @@
 <?php
+// Ensure we don't output PHP warnings/notices as HTML (which breaks JSON responses)
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+// Ensure logs directory exists
+$logDir = __DIR__ . '/../logs';
+if (!is_dir($logDir)) {
+    @mkdir($logDir, 0755, true);
+}
+ini_set('error_log', $logDir . '/email_errors.log');
+error_reporting(E_ALL);
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST , OPTIONS");
@@ -220,11 +231,57 @@ BIRCH PROJECT - Новая заявка от организации
         ));
         
     } catch (Exception $e) {
+        // Log full exception for server-side debugging
+        error_log("PHPMailer exception: " . $e->getMessage() . " -- ErrorInfo: " . $mail->ErrorInfo);
+
+        // Try fallback using PHP mail() if available
+        $to = $emailConfig['recipients']['organization_requests'];
+        $subject = 'Новая заявка от организации: ' . ($data->organization_name ?? 'No name');
+        $plainMessage = "Новая заявка от организации\n\n" .
+            "Наименование организации: " . ($data->organization_name ?? '') . "\n" .
+            "ФИО контактного лица: " . ($data->contact_person ?? '') . "\n" .
+            "Контактная информация: " . ($data->contact_info ?? '') . "\n" .
+            "Потенциальный бюджет: " . ($data->potential_budget ?? '') . "\n\n" .
+            "Отправлено автоматически.";
+
+        $headers = "From: " . ($emailConfig['from']['email'] ?? 'no-reply@' . $_SERVER['SERVER_NAME']) . "\r\n" .
+                   "Reply-To: " . ($data->contact_info ?? ($emailConfig['from']['email'] ?? '')) . "\r\n" .
+                   "Content-Type: text/plain; charset=UTF-8\r\n" .
+                   "X-Mailer: PHP/" . phpversion();
+
+        $mailSent = false;
+        try {
+            $mailSent = @mail($to, $subject, $plainMessage, $headers);
+        } catch (Exception $mailEx) {
+            error_log('PHP mail() exception: ' . $mailEx->getMessage());
+            $mailSent = false;
+        }
+
+        if ($mailSent) {
+            http_response_code(200);
+            echo json_encode(array(
+                "status" => "success",
+                "message" => "Email sent via PHP mail() fallback",
+                "data" => array(
+                    "organization_name" => $data->organization_name,
+                    "contact_person" => $data->contact_person,
+                    "contact_info" => $data->contact_info,
+                    "potential_budget" => $data->potential_budget,
+                    "sent_to" => $to,
+                    "sent_at" => date('Y-m-d H:i:s'),
+                    "method" => "php_mail_fallback"
+                )
+            ));
+            exit;
+        }
+
+        // If fallback also failed, return structured JSON error
         http_response_code(500);
         echo json_encode(array(
             "status" => "error",
-            "message" => "Email sending failed: " . $mail->ErrorInfo,
-            "debug" => $e->getMessage()
+            "message" => "Email sending failed via PHPMailer and fallback mail().",
+            "debug" => $mail->ErrorInfo,
+            "exception" => $e->getMessage()
         ));
     }
     
