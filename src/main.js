@@ -2987,18 +2987,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // === Код для динамической бегущей строки ===
 
-// Получаем API URL из переменных окружения или используем fallback
-const getApiConfig = () => {
-    // Используем переменные из .env файла через глобальные переменные или fallback
-    return {
-        apiBaseUrl: window.VITE_API_BASE_URL || import.meta.env.VITE_API_BASE_URL || 'https://birch.green',
-        isDebug: window.VITE_APP_DEBUG === 'true' || false
-    };
-};
+// NOTE: getApiConfig removed — use top-level `apiBaseUrl` and window.VITE_APP_DEBUG directly
 
 // Функция для загрузки пользователей из API
 async function loadUsersForMarquee() {
-    const config = getApiConfig();
+  const config = { apiBaseUrl: apiBaseUrl, isDebug: (window.VITE_APP_DEBUG === 'true') || false };
     
     try {
         if (config.isDebug) {
