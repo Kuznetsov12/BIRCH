@@ -230,9 +230,6 @@ h1 {
 .read-the-docs {
   color: #888;
 }
-
-
-
 /* Исправление для предупреждения vertical-align с display: block */
 img, svg, video, canvas, audio, iframe, embed, object {
   vertical-align: unset;

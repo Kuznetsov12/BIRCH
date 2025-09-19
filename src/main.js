@@ -554,7 +554,7 @@ function createPlantTreeModal() {
                   id="tree-count" 
                   value="1" 
                   min="1" 
-                  max="1000"
+                  max="999"
                   class="w-16 text-center text-3xl font-normal border-none focus:outline-none text-[#999999]"
                 />
                 <button type="button" id="increase-trees" class="w-10 h-10 bg-[#23B77F] text-white rounded-sm flex items-center justify-center hover:bg-green-600 transition">
@@ -705,16 +705,26 @@ window.getUnitPrice = function(type) {
     decBtn.addEventListener('click', function() {
       let v = parseInt(treeCountInput.value || '1', 10);
       v = Math.max(1, v - 1);
+      v = Math.min(999, v);
       treeCountInput.value = v;
       recalcTotal();
     });
     incBtn.addEventListener('click', function() {
       let v = parseInt(treeCountInput.value || '0', 10);
-      v = Math.min(1000, v + 1);
+      v = Math.min(999, v + 1);
+      v = Math.max(1, v);
       treeCountInput.value = v;
       recalcTotal();
     });
-    treeCountInput.addEventListener('input', recalcTotal);
+    treeCountInput.addEventListener('input', function(e){
+      // sanitize input: allow only numbers and clamp between 1 and 999
+      let raw = e.target.value.replace(/[^0-9]/g, '');
+      if (raw === '') { e.target.value = ''; recalcTotal(); return; }
+      let num = parseInt(raw, 10) || 0;
+      num = Math.max(1, Math.min(999, num));
+      e.target.value = num;
+      recalcTotal();
+    });
   }
 
   if (treeTypeSpruce) treeTypeSpruce.addEventListener('change', recalcTotal);
