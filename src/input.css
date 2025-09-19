@@ -269,7 +269,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   
   /* Убираем серый фон - делаем полноэкранными секции */
   body {
-    background: transparent !important;
+    background: white !important;
   }
   
   /* Хедер - делаем на весь экран и меньше */
@@ -1857,6 +1857,9 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
       height: auto !important;
           transform: translateX(-10%) !important;
     }
+  }
+  #percentageText{
+    font-size: 44px !important;
   }
 }
 
@@ -4341,6 +4344,11 @@ body.forest-mobile #forestProjectsSection #projectCarousel .flex-1 {
     padding-left: 16px !important;
     padding-right: 16px !important;
   }
+  #percentageText{
+    display: flex !important;
+    font-size: 25px !important;
+    width: 100px !important;
+  }
 
   /* make inputs slightly shorter vertically */
   .carbon-field > .border,
@@ -4437,7 +4445,7 @@ tom-popup .leaflet-popup-content-wrapper {
   display: block !important;
 }
 }
-@media (min-width: 1300px) and (max-width: 1700px) {
+@media (min-width: 1300px) and (max-width: 1800px) {
  #newAdaptForBook{
   max-width: 700px !important;
   height: 600px !important;
@@ -4757,6 +4765,9 @@ tom-popup .leaflet-popup-content-wrapper {
   }
   #newneedGap{
     gap: 32px !important;
+  }
+  #percentageText{
+    font-size:44px !important; ;
   }
   #emissionIcon{
     justify-content: center !important;

@@ -398,6 +398,65 @@ footer .grid.grid-cols-4 > div:nth-child(3) {
 
   /* Remove any visible border / background / glow on hover for desktop
      keep a subtle scale to indicate interactivity but no bordered highlight */
+
+  /* iOS / Safari color-stability fixes
+     iOS can automatically adjust/invert some images and svg when the system
+     appearance switches between light/dark. Disable auto color adjustments
+     and force images/icons/buttons to use intended colors. */
+  img, svg, button, .icon, .btn {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+  }
+
+  /* Remove blend modes and filters that may cause visual inversion on iOS */
+  img, svg {
+    mix-blend-mode: normal !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    background-blend-mode: normal !important;
+    isolation: isolate !important;
+  }
+
+  /* Some inline SVGs use currentColor — ensure the intended color is set explicitly
+     where we know icons should be white/green etc. Add targeted overrides below. */
+  .lepestok-icon,
+  .kaspi-logo,
+  svg.lepestok-icon,
+  svg.kaspi-logo,
+  img.lepestok-icon,
+  img.kaspi-logo {
+    mix-blend-mode: normal !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    /* if icons should stay white on dark backgrounds, force white; adjust if needed */
+    color: inherit !important;
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+  /* Buttons: ensure background and foreground do not get auto-inverted */
+  button, .btn, input[type="button"], input[type="submit"] {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    mix-blend-mode: normal !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    background-clip: padding-box !important;
+  }
+
+  /* Prevent forced color adjustments in user agents that support forced-color-adjust */
+  * {
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    forced-color-adjust: none !important;
+    -webkit-text-size-adjust: 100% !important;
+  }
   .nav-arrow:hover {
     background-color: transparent !important;
     border: none !important;
