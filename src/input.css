@@ -12,6 +12,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+button,
+input[type="button"],
+input[type="submit"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  background-color: inherit !important; /* чтобы точно взять твой bg */
+  color: inherit !important;
+  border: none !important;
+}
 
 
 /* Базовые настройки для компонентов партнеров */
