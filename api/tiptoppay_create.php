@@ -40,7 +40,8 @@ $intentPayload = [
   'failRedirectUrl' => $body['failRedirectUrl'] ?? null,
 ];
 
-$ch = curl_init('https://api.tiptoppay.kz/test'); // use test endpoint to validate connectivity first
+// Для прода
+$ch = curl_init('https://api.tiptoppay.kz/payments/intents');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_USERPWD, $config['TIPTOP_PUBLIC_ID'] . ':' . $config['TIPTOP_API_SECRET']);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [

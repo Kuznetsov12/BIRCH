@@ -11,9 +11,8 @@ $env = function($names, $default = null) {
 
 return [
   // Public key / id (accept old and new names)
-  'TIPTOP_PUBLIC_ID' => $env(['TIPTOP_PUBLIC_ID','TIPTOPPAY_PUBLIC_KEY'], 'your_public_id_here'),
-  // Secret key used server-side
-  'TIPTOP_API_SECRET' => $env(['TIPTOP_API_SECRET','TIPTOPPAY_SECRET_KEY'], 'your_api_secret_here'),
+'TIPTOP_PUBLIC_ID' => $env(['TIPTOP_PUBLIC_ID','TIPTOPPAY_PUBLIC_KEY'], 'pk_76a209a17baf048f909c37df9c33c'),
+'TIPTOP_API_SECRET' => $env(['TIPTOP_API_SECRET','TIPTOPPAY_SECRET_KEY'], 'f432ebce6a3382fbd1e452e8ae91aede'),
   // Webhook secret for verifying signatures
   'TIPTOP_WEBHOOK_SECRET' => $env(['TIPTOP_WEBHOOK_SECRET','TIPTOPPAY_WEBHOOK_SECRET'], null),
 
