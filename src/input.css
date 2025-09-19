@@ -4492,7 +4492,7 @@ tom-popup .leaflet-popup-content-wrapper {
     display: none !important;
   }
 
-  .tablet-partner-image {
+  .book-partner-image {
     display: block !important;
     width: 100% !important;
     height: 400px !important; /* разумная высота для мобильного */
@@ -4502,9 +4502,6 @@ tom-popup .leaflet-popup-content-wrapper {
     border-radius: 8px !important;
     margin: 0 auto 16px auto !important;
 
-  }
-  .tablet-partner-image img{
-    max-width: 1000px !important;
   }
   #zagolovBookUsPartner{
     top: -80px !important;

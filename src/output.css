@@ -219,9 +219,6 @@
   }
 }
 @layer utilities {
-  .visible {
-    visibility: visible;
-  }
   .sr-only {
     position: absolute;
     width: 1px;
@@ -347,11 +344,23 @@
   .right-12 {
     right: calc(var(--spacing) * 12);
   }
+  .right-40 {
+    right: calc(var(--spacing) * 40);
+  }
+  .right-45 {
+    right: calc(var(--spacing) * 45);
+  }
+  .right-50 {
+    right: calc(var(--spacing) * 50);
+  }
   .right-55 {
     right: calc(var(--spacing) * 55);
   }
   .right-60 {
     right: calc(var(--spacing) * 60);
+  }
+  .right-70 {
+    right: calc(var(--spacing) * 70);
   }
   .right-\[-12px\] {
     right: -12px;
@@ -911,6 +920,9 @@
   .w-\[1370px\] {
     width: 1370px;
   }
+  .w-\[1650px\] {
+    width: 1650px;
+  }
   .w-auto {
     width: auto;
   }
@@ -1443,9 +1455,6 @@
   .object-cover {
     object-fit: cover;
   }
-  .p-0 {
-    padding: calc(var(--spacing) * 0);
-  }
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
@@ -1523,9 +1532,6 @@
   }
   .pr-16 {
     padding-right: calc(var(--spacing) * 16);
-  }
-  .pb-0 {
-    padding-bottom: calc(var(--spacing) * 0);
   }
   .pb-1 {
     padding-bottom: calc(var(--spacing) * 1);
@@ -2061,6 +2067,11 @@
       outline-style: none;
     }
   }
+  .sm\:right-\[240px\] {
+    @media (width >= 40rem) {
+      right: 240px;
+    }
+  }
   .sm\:mx-4 {
     @media (width >= 40rem) {
       margin-inline: calc(var(--spacing) * 4);
@@ -2165,6 +2176,16 @@
   .md\:top-1\/2 {
     @media (width >= 48rem) {
       top: calc(1/2 * 100%);
+    }
+  }
+  .md\:right-50 {
+    @media (width >= 48rem) {
+      right: calc(var(--spacing) * 50);
+    }
+  }
+  .md\:right-\[240px\] {
+    @media (width >= 48rem) {
+      right: 240px;
     }
   }
   .md\:flex {
@@ -5798,7 +5819,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   .desktop-partner-mosaic {
     display: none !important;
   }
-  .tablet-partner-image {
+  .book-partner-image {
     display: block !important;
     width: 100% !important;
     height: 400px !important;
@@ -5807,9 +5828,6 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     background-repeat: no-repeat !important;
     border-radius: 8px !important;
     margin: 0 auto 16px auto !important;
-  }
-  .tablet-partner-image img {
-    max-width: 1000px !important;
   }
   #zagolovBookUsPartner {
     top: -80px !important;
