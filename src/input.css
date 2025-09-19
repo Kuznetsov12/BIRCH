@@ -3,7 +3,6 @@
 
 :root {
   background-color: #242424; /* твой цвет */
-  color-scheme: light dark; /* пусть система не вмешивается */
   line-height: 1.5;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.87);
@@ -43,7 +42,6 @@ body {
   max-width: 1920px;
   margin: 0 auto;
   min-height: 100vh;
-  color-scheme: light;
   -webkit-appearance: none !important;
   appearance: none !important;
 }
@@ -83,15 +81,6 @@ h1 {
   color: #888;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
 
 /* Исправление для предупреждения vertical-align с display: block */
 img, svg, video, canvas, audio, iframe, embed, object {
@@ -206,7 +195,6 @@ body {
   max-width: 1920px;
   margin: 0 auto;
   min-height: 100vh;
-    color-scheme:light; /* отключает авто-инверсию в Safari/iOS */
   -webkit-appearance: none !important;
   appearance: none !important;
 }

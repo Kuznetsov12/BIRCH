@@ -1798,6 +1798,9 @@
       color: transparent;
     }
   }
+  .scheme-dark {
+    color-scheme: dark;
+  }
   .opacity-0 {
     opacity: 0%;
   }
@@ -2264,7 +2267,6 @@
 }
 :root {
   background-color: #242424;
-  color-scheme: light dark;
   line-height: 1.5;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.87);
@@ -2296,7 +2298,6 @@ body {
   max-width: 1920px;
   margin: 0 auto;
   min-height: 100vh;
-  color-scheme: light;
   -webkit-appearance: none !important;
   appearance: none !important;
 }
@@ -2329,15 +2330,6 @@ h1 {
 }
 .read-the-docs {
   color: #888;
-}
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
 img, svg, video, canvas, audio, iframe, embed, object {
   vertical-align: unset;
@@ -2426,7 +2418,6 @@ body {
   max-width: 1920px;
   margin: 0 auto;
   min-height: 100vh;
-  color-scheme: light;
   -webkit-appearance: none !important;
   appearance: none !important;
 }
