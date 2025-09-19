@@ -410,7 +410,7 @@ footer .grid.grid-cols-4 > div:nth-child(3) {
   }
 
   /* Remove blend modes and filters that may cause visual inversion on iOS */
-  img, svg {
+  img:not(#grayImage):not(#colorImage), svg:not(#grayImage):not(#colorImage) {
     mix-blend-mode: normal !important;
     filter: none !important;
     -webkit-filter: none !important;
@@ -454,7 +454,7 @@ footer .grid.grid-cols-4 > div:nth-child(3) {
 
 /* Mobile-specific overrides: ensure fixes apply on phones (max-width 1023px) */
 @media (max-width: 1023px) {
-  img, svg, button, .icon, .btn {
+  img:not(#grayImage):not(#colorImage), svg:not(#grayImage):not(#colorImage), button, .icon, .btn {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     -webkit-touch-callout: none !important;
@@ -518,6 +518,18 @@ footer .grid.grid-cols-4 > div:nth-child(3) {
   background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
+
+  /* Keep emission image clipping/grayscale intact — do not override these
+     via global img/svg rules. This rule ensures the grayImage effect works. */
+  #grayImage {
+    filter: grayscale(100%) !important;
+    -webkit-filter: grayscale(100%) !important;
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%) !important;
+  }
+
+  #colorImage {
+    clip-path: polygon(0 33%, 100% 33%, 100% 100%, 0 100%) !important;
+  }
 }
 
 .nav-arrow img {
