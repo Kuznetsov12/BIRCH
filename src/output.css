@@ -2448,15 +2448,6 @@ h1 {
 .read-the-docs {
   color: #888;
 }
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
 img, svg, video, canvas, audio, iframe, embed, object {
   vertical-align: unset;
 }
