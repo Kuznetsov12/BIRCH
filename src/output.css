@@ -2263,7 +2263,8 @@
   font-weight: 700;
 }
 :root {
-  color-scheme: light;
+  background-color: #242424;
+  color-scheme: light dark;
   line-height: 1.5;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.87);
@@ -2273,12 +2274,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-button, input[type="button"], input[type="submit"] {
+a {
+  -webkit-tap-highlight-color: transparent;
+  color: inherit;
+  text-decoration: none;
+}
+button, input, select, textarea {
   -webkit-appearance: none !important;
   appearance: none !important;
-  background-color: inherit !important;
-  color: inherit !important;
-  border: none !important;
+  background-clip: padding-box;
 }
 .tablet-partner-image {
   display: none;
