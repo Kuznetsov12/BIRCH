@@ -404,9 +404,6 @@ footer .grid.grid-cols-4 > div:nth-child(3) {
      appearance switches between light/dark. Disable auto color adjustments
      and force images/icons/buttons to use intended colors. */
   img, svg, button, .icon, .btn {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
     -webkit-touch-callout: none !important;
     -webkit-user-select: none !important;
     user-select: none !important;
@@ -441,9 +438,6 @@ footer .grid.grid-cols-4 > div:nth-child(3) {
 
   /* Buttons: ensure background and foreground do not get auto-inverted */
   button, .btn, input[type="button"], input[type="submit"] {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
     mix-blend-mode: normal !important;
     filter: none !important;
     -webkit-filter: none !important;

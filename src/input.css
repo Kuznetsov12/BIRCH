@@ -31,7 +31,7 @@ body {
   max-width: 1920px;
   margin: 0 auto;
   min-height: 100vh;
-  color-scheme: only light; /* отключает авто-инверсию в Safari/iOS */
+  color-scheme: light;
   -webkit-appearance: none !important;
   appearance: none !important;
 }
@@ -194,7 +194,7 @@ body {
   max-width: 1920px;
   margin: 0 auto;
   min-height: 100vh;
-    color-scheme: only light; /* отключает авто-инверсию в Safari/iOS */
+    color-scheme:light; /* отключает авто-инверсию в Safari/iOS */
   -webkit-appearance: none !important;
   appearance: none !important;
 }
@@ -4773,7 +4773,7 @@ tom-popup .leaflet-popup-content-wrapper {
     gap: 32px !important;
   }
   #percentageText{
-    font-size:44px !important; ;
+    font-size:44px !important;
   }
   #emissionIcon{
     justify-content: center !important;
@@ -4788,7 +4788,4 @@ tom-popup .leaflet-popup-content-wrapper {
   #emission-check-btn{
     max-width: 250px !important;
   }
-
-
-
 }
