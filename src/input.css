@@ -31,6 +31,9 @@ body {
   max-width: 1920px;
   margin: 0 auto;
   min-height: 100vh;
+  color-scheme: only light; /* отключает авто-инверсию в Safari/iOS */
+  -webkit-appearance: none !important;
+  appearance: none !important;
 }
 button {
   outline: none;

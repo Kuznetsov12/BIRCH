@@ -457,6 +457,46 @@ footer .grid.grid-cols-4 > div:nth-child(3) {
     forced-color-adjust: none !important;
     -webkit-text-size-adjust: 100% !important;
   }
+
+/* Mobile-specific overrides: ensure fixes apply on phones (max-width 1023px) */
+@media (max-width: 1023px) {
+  img, svg, button, .icon, .btn {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    mix-blend-mode: normal !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    background-blend-mode: normal !important;
+    isolation: isolate !important;
+    opacity: 1 !important;
+  }
+
+  .lepestok-icon,
+  .kaspi-logo,
+  svg.lepestok-icon,
+  svg.kaspi-logo,
+  img.lepestok-icon,
+  img.kaspi-logo {
+    mix-blend-mode: normal !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+  button, .btn, input[type="button"], input[type="submit"] {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    mix-blend-mode: normal !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    background-clip: padding-box !important;
+  }
+}
   .nav-arrow:hover {
     background-color: transparent !important;
     border: none !important;
