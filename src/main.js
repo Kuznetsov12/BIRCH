@@ -3275,7 +3275,7 @@ function createCarbonFootprintModal() {
           <!-- Общественный транспорт в месяц -->
           <div class="relative carbon-field">
             <div class="border border-gray-300 rounded-lg p-3">
-              <input type="number" id="carbon-public-transport" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Общественный транспорт в месяц" min="0" step="1" />
+              <input type="number" id="carbon-public-transport" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Сколько часов в месяц Вы проводите в общественном транспорте" min="0" step="1" />
               <div class="field-hint">Сколько часов в месяц Вы проводите в общественном транспорте</div>
             </div>
             <label for="carbon-public-transport" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Общественный транспорт в месяц</label>
@@ -3784,13 +3784,29 @@ async function handleCarbonFootprintFormSubmit(event) {
         
         form.insertAdjacentHTML('beforeend', actionButtonHTML);
         
-        // Добавляем обработчик для кнопки посадки деревьев
-        document.getElementById('plant-trees-action').addEventListener('click', function() {
-          closeCarbonFootprintModal();
-          setTimeout(() => {
-            openPlantTreeModal();
-          }, 300);
-        });
+        // Добавляем обработчик для кнопки посадки деревьев — сохраняем телефон и редиректим на /src/pages/Emission.html
+        const plantBtn = document.getElementById('plant-trees-action');
+        if (plantBtn) {
+          plantBtn.addEventListener('click', function() {
+            try {
+              // Попробуем взять телефон из формы модалки
+              const phoneInput = document.getElementById('carbon-phone');
+              const phoneRaw = phoneInput ? phoneInput.value : '';
+              const digits = phoneRaw.replace(/\D/g, '');
+              const normalized = digits.length === 10 ? `+7${digits}` : (digits.length === 11 && digits.startsWith('7') ? `+${digits}` : (phoneRaw || ''));
+
+              if (normalized) {
+                localStorage.setItem('userPhone', normalized);
+              }
+
+              // Сформируем абсолютный путь к src/pages для dev сервера
+              const target = `/src/pages/Emission.html${normalized ? `?phone=${encodeURIComponent(normalized)}` : ''}`;
+              window.location.href = target;
+            } catch (err) {
+              console.error('Ошибка при редиректе на Emission:', err);
+            }
+          });
+        }
       }
       
     } else {
@@ -4302,10 +4318,10 @@ async function handleEmissionCheck() {
             const user = checkData.data;
             
             // Пользователь найден - проверяем есть ли у него эмиссия
-            if (user.emission_kg && user.emission_kg > 0) {
-                // У пользователя есть рассчитанная эмиссия - переходим на Emission.html
-                localStorage.setItem('userData', JSON.stringify(user));
-                window.location.href = 'Emission.html';
+      if (user.emission_kg && user.emission_kg > 0) {
+        // У пользователя есть рассчитанная эмиссия - переходим на Emission.html и передаём номер в URL
+        localStorage.setItem('userData', JSON.stringify(user));
+        window.location.href = `Emission.html?phone=${encodeURIComponent(phone)}`;
             } else {
                 // Пользователь есть, но нет эмиссии - переходим на EmissionAuth.html для расчета
                 localStorage.setItem('userData', JSON.stringify(user));
@@ -4335,36 +4351,61 @@ async function handleEmissionCheck() {
 
 // Функция для инициализации страницы Emission.html
 function initializeEmissionPage() {
-  const userData = localStorage.getItem('userData');
-  if (!userData) {
-    window.location.href = 'Donate.html';
+  // Сначала попробуем получить телефон из URL (в случае редиректа из модалки)
+  const urlParams = new URLSearchParams(window.location.search);
+  const phoneFromUrl = urlParams.get('phone');
+  const phoneFromStorage = localStorage.getItem('userPhone');
+  const phone = phoneFromUrl || phoneFromStorage;
+
+  if (!phone) {
+    // Если телефона нет — попробуем использовать уже сохранённые данные
+    const stored = localStorage.getItem('userData');
+    if (!stored) {
+      window.location.href = 'Donate.html';
+      return;
+    }
+    try {
+      const user = JSON.parse(stored);
+      updateUserDataOnPage(user);
+      if (typeof user.emission_cleared_percent !== 'undefined') updateEmissionPercentage(user.emission_cleared_percent);
+      initializeEmissionMap(user);
+    } catch (e) {
+      console.error('Ошибка парсинга локальных данных пользователя:', e);
+      window.location.href = 'Donate.html';
+    }
     return;
   }
 
-  let user = JSON.parse(userData);
+  // Нормализуем телефон и сохраняем в localStorage
+  const digits = phone.replace(/\D/g, '');
+  const normalized = digits.length === 10 ? `+7${digits}` : (digits.length === 11 && digits.startsWith('7') ? `+${digits}` : phone);
+  localStorage.setItem('userPhone', normalized);
 
-  // Если нет процента эмиссии — пробуем догрузить из API по номеру телефона
-  if (typeof user.emission_cleared_percent === 'undefined') {
-    const phone = user.phone || localStorage.getItem('userPhone');
-    if (phone) {
-      fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phone)}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === 'success' && data.data) {
-            localStorage.setItem('userData', JSON.stringify(data.data));
-            // Перезапускаем инициализацию с новыми данными
-            initializeEmissionPage();
-          }
-        })
-        .catch(err => {
-          console.error('Ошибка автозагрузки данных пользователя:', err);
-        });
-      return;
-    }
-  }
-
-  // Обновляем данные пользователя на странице
-  updateUserDataOnPage(user);
+  // Загружаем пользователя с сервера по телефону — перезаписываем localStorage.userData и обновляем страницу
+  fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(normalized)}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.status === 'success' && data.data) {
+        const user = data.data;
+        localStorage.setItem('userData', JSON.stringify(user));
+        updateUserDataOnPage(user);
+        if (typeof user.emission_cleared_percent !== 'undefined') updateEmissionPercentage(user.emission_cleared_percent);
+        initializeEmissionMap(user);
+      } else {
+        // Если пользователь не найден, переходим на EmissionAuth для ввода данных и расчёта
+        console.warn('Пользователь не найден по телефону:', normalized, data);
+        localStorage.setItem('userPhone', normalized);
+        window.location.href = 'EmissionAuth.html';
+      }
+    })
+    .catch(err => {
+      console.error('Ошибка при загрузке пользователя по телефону:', err);
+      // В случае ошибки используем локальные данные, если есть
+      const stored = localStorage.getItem('userData');
+      if (stored) {
+        try { const user = JSON.parse(stored); updateUserDataOnPage(user); if (typeof user.emission_cleared_percent !== 'undefined') updateEmissionPercentage(user.emission_cleared_percent); initializeEmissionMap(user); } catch(e){}
+      }
+    });
 
   // Динамически выводим процент очищенной эмиссии, если есть
   if (typeof user.emission_cleared_percent !== 'undefined') {
@@ -4765,4 +4806,3 @@ function initializeEmissionAuthMap(user) {
         marker.openPopup();
     }
 }
-

@@ -635,6 +635,32 @@ footer .grid.grid-cols-4 > div:nth-child(3) {
   }
 }
 
+/* Mobile: make long placeholders truncate with ellipsis for modal inputs */
+@media (max-width: 767px) {
+  /* Target the carbon modal public transport input specifically */
+  #carbon-public-transport {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Ensure the placeholder text also truncates visually */
+  #carbon-public-transport::placeholder {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: inline-block !important;
+    max-width: 100% !important;
+  }
+
+  /* If the input is inside a modal with limited width, make sure it doesn't wrap */
+  .carbon-field .border input[type="number"] {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+}
+
 /* Remove any extra pseudo-element underline or blue border that footer rules may add
    for this specific link. This prevents duplicate underlines/borders while keeping
    other footer links intact. */
