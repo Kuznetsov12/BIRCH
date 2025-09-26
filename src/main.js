@@ -3284,8 +3284,8 @@ function createCarbonFootprintModal() {
           <!-- Авиаперелеты в месяц -->
           <div class="relative carbon-field">
             <div class="border border-gray-300 rounded-lg p-3">
-              <input type="number" id="carbon-flights" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Авиаперелеты в месяц" min="0" step="1" />
-              <div class="field-hint">Сколько часов в месяц Вы проводите в полётах</div>
+              <input type="number" id="carbon-flights" class="w-full py-2 bg-transparent text-gray-900 placeholder-transparent focus:outline-none" placeholder="Сколько часов в месяц Вы проводите в полётах" min="0" step="1" />
+              <div class="field-hint truncate">Сколько часов в месяц Вы проводите в полётах</div>
             </div>
             <label for="carbon-flights" class="floating-label absolute -top-2 left-4 px-1 text-xs font-medium text-gray-700 bg-white">Авиаперелеты в месяц</label>
           </div>
@@ -3739,7 +3739,7 @@ async function handleCarbonFootprintFormSubmit(event) {
     }
     console.log('Ответ от сервера:', result);
 
-    if (result.status === 'success') {
+  if (result.status === 'success') {
       // Показываем результат расчета в красивом блоке
       const monthlyEmission = result.data.total_emission_kg / 1000; // Переводим в тонны
       const yearlyEmission = monthlyEmission * 12;
@@ -3761,6 +3761,16 @@ async function handleCarbonFootprintFormSubmit(event) {
         </div>
       `;
       
+      // Сохраняем свежие данные пользователя, если они пришли от сервера
+      try {
+        const freshUser = (result.data && (result.data.user || result.data)) || null;
+        if (freshUser) {
+          localStorage.setItem('userData', JSON.stringify(freshUser));
+        }
+      } catch (e) {
+        console.warn('Не удалось сохранить userData в localStorage:', e);
+      }
+
       // Находим форму и добавляем результат
       const form = document.getElementById('carbon-footprint-form');
       if (form) {
@@ -4407,29 +4417,36 @@ function initializeEmissionPage() {
       }
     });
 
-  // Динамически выводим процент очищенной эмиссии, если есть
-  if (typeof user.emission_cleared_percent !== 'undefined') {
-    // Выводим в консоль для отладки
-    console.log('emission_cleared_percent из API:', user.emission_cleared_percent);
-  // Обновляем визуализацию процента
-  updateEmissionPercentage(user.emission_cleared_percent);
-  // Если есть элементы с data-emission-percent, обновим их
-  const percentElements = document.querySelectorAll('[data-emission-percent]');
-  // Форматируем процент: максимум 2 значащих цифры
-  const percentVal = Number(user.emission_cleared_percent);
-  const nf = new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 2 });
-  const formattedPercent = Number.isFinite(percentVal) ? nf.format(percentVal) : user.emission_cleared_percent;
-  const numericDisplay = percentVal > 100 ? (percentVal + '%') : (formattedPercent + '%');
-  const overMessage = 'Отлично! Вы превысили максимальную цель — так держать!';
-  percentElements.forEach(el => {
-      // Большой индикатор рядом с картинкой имеет id="percentageText" — там оставляем сообщение
-      if (el.id === 'percentageText') {
-        el.textContent = (user.emission_cleared_percent > 100) ? overMessage : numericDisplay;
-      } else {
-        // Все остальные (левый блок) показывают числовой процент
-        el.textContent = numericDisplay;
+  // Динамически выводим процент очищенной эмиссии, если есть.
+  // Ранее здесь использовался `user` без гарантий, что он объявлен в текущей области видимости —
+  // это могло вызывать ReferenceError и оставлять вёрстку с '?%'.
+  try {
+    const stored = localStorage.getItem('userData');
+    if (stored) {
+      const storedUser = JSON.parse(stored);
+      if (typeof storedUser.emission_cleared_percent !== 'undefined' && storedUser.emission_cleared_percent !== null) {
+        console.log('emission_cleared_percent из localStorage:', storedUser.emission_cleared_percent);
+        // Обновляем визуализацию процента (если есть отдельная функция)
+        if (typeof updateEmissionPercentage === 'function') updateEmissionPercentage(storedUser.emission_cleared_percent);
+
+        const percentElements = document.querySelectorAll('[data-emission-percent]');
+        const percentVal = Number(storedUser.emission_cleared_percent);
+        const nf = new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 2 });
+        const formattedPercent = Number.isFinite(percentVal) ? nf.format(percentVal) : storedUser.emission_cleared_percent;
+        const numericDisplay = percentVal > 100 ? (percentVal + '%') : (formattedPercent + '%');
+        const overMessage = 'Отлично! Вы превысили максимальную цель — так держать!';
+
+        percentElements.forEach(el => {
+          if (el.id === 'percentageText') {
+            el.textContent = (percentVal > 100) ? overMessage : numericDisplay;
+          } else {
+            el.textContent = numericDisplay;
+          }
+        });
       }
-    });
+    }
+  } catch (err) {
+    console.error('Ошибка при обновлении процента эмиссии из localStorage:', err);
   }
 
   // Инициализируем карту с маркером
