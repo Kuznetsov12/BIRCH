@@ -149,38 +149,62 @@ if ($isSuccess) {
       'transaction' => $body
     ]
   ];
+  // Попытка извлечь transaction id для идемпотентности и добавить его в payload
+  $txId = null;
+  $txCandidates = [
+    $body['Model']['Id'] ?? null,
+    $body['Model']['id'] ?? null,
+    $body['Model']['TransactionId'] ?? null,
+    $body['Model']['transaction_id'] ?? null,
+    $body['Model']['PaymentId'] ?? null,
+    $body['Model']['Payment']['Id'] ?? null,
+    $body['Model']['Payment']['id'] ?? null,
+    $body['Model']['ExternalId'] ?? null,
+    $body['Model']['OrderId'] ?? null,
+    $body['id'] ?? null,
+  ];
+  foreach ($txCandidates as $c) { if (!empty($c)) { $txId = $c; break; } }
+  if ($txId) $plantingPayload['payment_tx'] = (string)$txId;
 
-  // Try to call local create flow directly (avoid external HTTP when webhook and app share filesystem)
+  // Первичная попытка: переслать на внешний/локальный PLANTING_ENDPOINT (конфиг)
+  if (!empty($config['PLANTING_ENDPOINT'])) {
+    $ch = curl_init($config['PLANTING_ENDPOINT']);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    $headers = ['Content-Type: application/json'];
+    if (!empty($config['PLANTING_API_KEY'])) $headers[] = 'Authorization: Bearer ' . $config['PLANTING_API_KEY'];
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($plantingPayload));
+    $resp = curl_exec($ch);
+    $http = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlErr = curl_error($ch);
+    curl_close($ch);
+
+    @file_put_contents(__DIR__ . '/logs/tiptoppay_forward_' . date('Ymd') . '.log', date(DATE_ATOM) . " FORWARD ATTEMPT TO PLANTING_ENDPOINT: HTTP:" . $http . " ERR:" . $curlErr . " BODY:" . $resp . "\n", FILE_APPEND);
+
+    if ($http >= 200 && $http < 300) {
+      http_response_code(200);
+      echo json_encode(['success'=>true,'forward'=>'external','plantResponseCode'=>$http,'plantResponseBody'=>$resp]);
+      exit;
+    }
+  }
+
+  // Если пересылка не удалась или ENDPOINT не указан — пытаемся локально вызвать helper
   try {
-    // include models and database and call the same logic as plantings/create.php
     require_once __DIR__ . '/plantings/create_local_helper.php';
     $localResp = try_local_planting_create($plantingPayload);
-    // Log local response
     @file_put_contents(__DIR__ . '/logs/tiptoppay_forward_' . date('Ymd') . '.log', date(DATE_ATOM) . " LOCAL RESPONSE: " . json_encode($localResp) . "\n", FILE_APPEND);
     http_response_code(200);
     echo json_encode(['success'=>true,'forward'=>'local','result'=>$localResp]);
     exit;
   } catch (Throwable $e) {
-    // If local call fails, fallback to forwarding via HTTP
     @file_put_contents(__DIR__ . '/logs/tiptoppay_forward_' . date('Ymd') . '.log', date(DATE_ATOM) . " LOCAL ERROR: " . $e->getMessage() . "\n", FILE_APPEND);
   }
 
-  // Fallback: send to configured PLANTING_ENDPOINT
-  $ch = curl_init($config['PLANTING_ENDPOINT']);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_POST, true);
-  $headers = ['Content-Type: application/json'];
-  if (!empty($config['PLANTING_API_KEY'])) $headers[] = 'Authorization: Bearer ' . $config['PLANTING_API_KEY'];
-  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($plantingPayload));
-  $resp = curl_exec($ch);
-  $http = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-  curl_close($ch);
-
-  @file_put_contents(__DIR__ . '/logs/tiptoppay_forward_' . date('Ymd') . '.log', date(DATE_ATOM) . " FORWARD RESPONSE CODE: " . $http . " BODY: " . $resp . "\n", FILE_APPEND);
-
+  // Если все способы не сработали — вернуть 200 с сообщением об ошибке обработки
+  @file_put_contents(__DIR__ . '/logs/tiptoppay_forward_' . date('Ymd') . '.log', date(DATE_ATOM) . " ALL FORWARD ATTEMPTS FAILED\n", FILE_APPEND);
   http_response_code(200);
-  echo json_encode(['success'=>true,'forward'=>true,'plantResponseCode'=>$http,'plantResponseBody'=>$resp]);
+  echo json_encode(['success'=>false,'message'=>'Failed to forward or process planting']);
   exit;
 }
 

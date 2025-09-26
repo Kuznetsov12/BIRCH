@@ -23,6 +23,18 @@ function try_local_planting_create($payload) {
     }
     $data->trees_quantity = $treesQty;
 
+    // Try to extract transaction id from payload for idempotency
+    $txId = null;
+    if (!empty($payload['payment']['transaction']['Model']['Id'])) $txId = $payload['payment']['transaction']['Model']['Id'];
+    elseif (!empty($payload['payment']['transaction']['Model']['id'])) $txId = $payload['payment']['transaction']['Model']['id'];
+    elseif (!empty($payload['payment']['transaction']['Model']['TransactionId'])) $txId = $payload['payment']['transaction']['Model']['TransactionId'];
+    elseif (!empty($payload['payment']['transaction']['Model']['transaction_id'])) $txId = $payload['payment']['transaction']['Model']['transaction_id'];
+    elseif (!empty($payload['payment']['transaction']['ExternalId'])) $txId = $payload['payment']['transaction']['ExternalId'];
+    elseif (!empty($payload['payment']['transaction']['id'])) $txId = $payload['payment']['transaction']['id'];
+    elseif (!empty($payload['payment']['transaction']['Model']['PaymentId'])) $txId = $payload['payment']['transaction']['Model']['PaymentId'];
+
+    $data->payment_tx = $txId;
+
     // Debug log for webhook/local calls to aid investigation
     @file_put_contents(__DIR__ . '/logs/create_local_helper_incoming_' . date('Ymd') . '.log', date(DATE_ATOM) . " PAYLOAD: " . json_encode($payload) . "\n", FILE_APPEND);
 
@@ -44,7 +56,7 @@ function try_local_planting_create($payload) {
     $stats = new HomepageStats($db);
 
     try {
-        $db->beginTransaction();
+    $db->beginTransaction();
 
         $stats->ensureExists();
 
@@ -52,6 +64,15 @@ function try_local_planting_create($payload) {
         $user_exists = $user->findByPhone();
         $user_was_created = false;
 
+        // Если у нас есть tx id, проверим, не была ли уже создана посадка по нему
+        if (!empty($data->payment_tx)) {
+            $checkPlant = new Planting($db);
+            $checkPlant->payment_tx = $data->payment_tx;
+            if ($checkPlant->existsByPaymentTx()) {
+                $db->commit();
+                return ['status'=>'success','message'=>'Already processed','user_created'=>$user_was_created,'user_id'=>$user->id ?? null,'trees_planted'=>0,'idempotent'=>true];
+            }
+        }
         if (!$user_exists) {
             $user->surname = $data->surname;
             $user->name = $data->name;

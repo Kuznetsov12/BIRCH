@@ -49,6 +49,18 @@ if(
         $user_exists = $user->findByPhone();
         $user_was_created = false;
         
+        // Если в запросе пришёл payment_tx, проверим идемпотентность — не была ли уже обработана эта транзакция
+        if (!empty($data->payment_tx)) {
+            $planting->payment_tx = $data->payment_tx;
+            if ($planting->existsByPaymentTx()) {
+                // Уже обработана — возвращаем успех без дублирования
+                $db->commit();
+                http_response_code(200);
+                echo json_encode(array('status'=>'success','message'=>'Already processed','idempotent'=>true));
+                exit();
+            }
+        }
+
         if(!$user_exists) {
             // Если пользователь не найден, создаем нового
             $user->surname = $data->surname;

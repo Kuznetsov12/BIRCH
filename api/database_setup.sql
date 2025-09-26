@@ -21,6 +21,7 @@ CREATE TABLE plantings (
     trees_quantity INT NOT NULL,
     year INT NOT NULL,
     city VARCHAR(255) NOT NULL,
+    payment_tx VARCHAR(255) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
