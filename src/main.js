@@ -476,6 +476,7 @@ function createPlantTreeModal() {
                   <option value="" disabled selected>Выберите дерево для высадки</option>
                   <option value="spruce">Ель тянь-шаньская — Стоимость: 25 000₸</option>
                   <option value="apple">Яблоня Сиверса — Стоимость: 3 000₸</option>
+                  <option value="seed">Семечко — Стоимость: 100₸</option>
                 </select>
               </div>
             </div>
@@ -631,8 +632,8 @@ function createPlantTreeModal() {
   const treeTypeSpruce = document.getElementById('tree-type-spruce');
   const treeTypeApple = document.getElementById('tree-type-apple');
 
-  // Цены (обновлено: ель 25 000, яблоня 3 000)
-  const PRICES = { spruce: 25000, apple: 3000 };
+  // Цены (обновлено: ель 25 000, яблоня 3 000, семечко 100)
+  const PRICES = { spruce: 25000, apple: 3000, seed: 100 };
 
 // expose for other scripts and provide a safe getter
 window.PRICES = window.PRICES || PRICES;
@@ -1258,22 +1259,170 @@ async function startTipTopPayment(formData) {
 
           // Устойчиво обрабатываем ответ — сервер может вернуть HTML при ошибке
           if (plantResp.ok) {
+            // Debug: always log status and content-type to help diagnose empty responses
+            try {
+              console.log('Local planting endpoint HTTP status:', plantResp.status);
+              try { console.log('Local planting endpoint Content-Type:', plantResp.headers.get('Content-Type')); } catch(e){}
+            } catch(e){}
             const raw = await plantResp.text();
             let plantJson = null;
             try {
               plantJson = JSON.parse(raw);
             } catch (parseErr) {
-              console.warn('Planting create returned non-JSON response:', raw);
+              if (!raw || raw.trim().length === 0) {
+                console.warn('Planting create returned EMPTY body (raw length 0). plantResp status:', plantResp.status, 'headers content-type:', plantResp.headers.get('Content-Type'));
+              } else {
+                console.warn('Planting create returned non-JSON response:', raw);
+              }
             }
 
             console.log('Local planting create response (parsed):', plantJson, ' raw:', raw);
 
-            if (plantJson && plantJson.status === 'success') {
+            // Robust success detection: accept strict status or presence of planted trees information
+            // Also accept TipTop widget success (widgetResult) as a valid signal — server may confirm via webhook later
+            let plantingSucceeded = false;
+            try {
+              if (plantJson) {
+                if (plantJson.status && String(plantJson.status).toLowerCase() === 'success') plantingSucceeded = true;
+                if (typeof plantJson.trees_planted !== 'undefined' && Number(plantJson.trees_planted) > 0) plantingSucceeded = true;
+                if (typeof plantJson.trees_quantity !== 'undefined' && Number(plantJson.trees_quantity) > 0) plantingSucceeded = true;
+                // some responses use 'trees_planted' vs 'trees_quantity' or nested result.result.trees_planted
+                if (plantJson.result && typeof plantJson.result.trees_planted !== 'undefined' && Number(plantJson.result.trees_planted) > 0) plantingSucceeded = true;
+              }
+
+              // If server didn't yet record trees but TipTop widget signalled success, treat as success (optimistic)
+              if (!plantingSucceeded && widgetResult) {
+                try {
+                  const wr = widgetResult;
+                  // TipTop may put status under wr.data.status or wr.status
+                  const wrStatus = (wr.data && wr.data.status) ? String(wr.data.status).toLowerCase() : (wr.status ? String(wr.status).toLowerCase() : '');
+                  if (wrStatus === 'success') {
+                    plantingSucceeded = true;
+                  }
+                } catch (we) {
+                  // ignore
+                }
+              }
+            } catch (e) {
+              console.warn('Error while inspecting planting JSON response:', e);
+            }
+
+            // If parsing failed or fields missing, inspect raw text for hints
+            if (!plantingSucceeded && raw && typeof raw === 'string') {
+              const rawLower = raw.toLowerCase();
+              if (rawLower.includes('"trees_quantity"') || rawLower.includes('"trees_planted"') || rawLower.includes('"status":"success"') || rawLower.includes('"status": "success"')) plantingSucceeded = true;
+            }
+
+            if (plantingSucceeded) {
+              // Update local UI / localStorage: if server returned quantity, use it; otherwise use resolvedTreesCount
+              let added = 0;
+              try {
+                if (plantJson && typeof plantJson.trees_planted !== 'undefined') added = Number(plantJson.trees_planted) || 0;
+                else if (plantJson && typeof plantJson.trees_quantity !== 'undefined') added = Number(plantJson.trees_quantity) || 0;
+                else added = Number(resolvedTreesCount) || 0;
+              } catch (ae) {
+                added = Number(resolvedTreesCount) || 0;
+              }
+
+              // Update localStorage user data if present (add trees to existing user or create simple record)
+              try {
+                const userKey = 'birch_user';
+                let user = null;
+                try { user = JSON.parse(localStorage.getItem(userKey)); } catch (e) { user = null; }
+                if (user && typeof user.total_trees !== 'undefined') {
+                  user.total_trees = Number(user.total_trees || 0) + added;
+                } else if (user && typeof user.trees !== 'undefined') {
+                  user.trees = Number(user.trees || 0) + added;
+                } else if (user) {
+                  // attach a simple trees counter
+                  user.trees = Number(added);
+                } else if (added > 0) {
+                  // create minimal user placeholder so UI can show trees
+                  const placeholder = {created_at: Date.now(), trees: Number(added)};
+                  localStorage.setItem(userKey, JSON.stringify(placeholder));
+                }
+                if (user) localStorage.setItem(userKey, JSON.stringify(user));
+              } catch (lse) {
+                console.warn('Failed to update localStorage user trees:', lse);
+              }
+
+              // Try to refresh server-side user record to get authoritative plantings list if we have a phone
+              try {
+                const rawPhone = (plantingPayload && plantingPayload.phone) ? plantingPayload.phone : (formData && formData.phone ? formData.phone : null);
+                if (rawPhone) {
+                  // Normalize phone to +7XXXXXXXXXX
+                  const normalized = ('+' + rawPhone.replace(/[^0-9]/g, '')).replace(/^\+7?0+/, '+7');
+                  const phoneForQuery = normalized.startsWith('+7') ? normalized : ('+7' + normalized.replace(/^\+/, '').slice(-10));
+
+                  // Try fetching user data with retries (exponential backoff) - server may process webhook slightly later
+                  let userJson = null;
+                  const maxAttempts = 3;
+                  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                    try {
+                      const userResp = await fetch(`${apiBaseUrl}/api/users/get_by_phone.php?phone=${encodeURIComponent(phoneForQuery)}`);
+                      if (userResp.ok) {
+                        const parsed = await userResp.json();
+                        if (parsed && parsed.status === 'success' && parsed.data) {
+                          userJson = parsed;
+                          break;
+                        }
+                      }
+                    } catch (e) {
+                      console.warn('Attempt', attempt, 'to refresh user failed:', e);
+                    }
+                    // backoff: 1s, 2s, 4s
+                    await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt - 1)));
+                  }
+
+                  if (userJson) {
+                    // store authoritative user object in localStorage under 'userData' to keep consistency with other flows
+                    localStorage.setItem('userData', JSON.stringify(userJson.data));
+                    localStorage.setItem('userPhone', phoneForQuery);
+                    console.log('Refreshed user data after planting:', userJson.data);
+
+                    // If server hasn't yet included the new planting (race), insert an optimistic entry so the UI shows the added trees immediately
+                    try {
+                      const existingPlantings = Array.isArray(userJson.data.plantings) ? userJson.data.plantings : [];
+                      // Detect if a planting with the same trees_quantity within last 2 minutes exists
+                      const nowTs = Date.now();
+                      const foundRecent = existingPlantings.some(p => {
+                        try {
+                          const pTime = p.created_at ? new Date(p.created_at).getTime() : 0;
+                          return Number(p.trees_quantity) === Number(added) && (nowTs - pTime) < (2 * 60 * 1000);
+                        } catch (ie) { return false; }
+                      });
+                      if (!foundRecent && Number(added) > 0) {
+                        const fakePlanting = {
+                          id: 'local-' + nowTs,
+                          trees_quantity: Number(added),
+                          year: new Date().getFullYear(),
+                          city: plantingPayload && plantingPayload.city ? plantingPayload.city : (formData && formData.city ? formData.city : ''),
+                          created_at: new Date().toISOString().slice(0,19).replace('T',' ')
+                        };
+                        existingPlantings.unshift(fakePlanting);
+                        // update user object and store
+                        const updatedUser = Object.assign({}, userJson.data, { plantings: existingPlantings });
+                        // recalc total_trees
+                        const totalTrees = existingPlantings.reduce((s, it) => s + Number(it.trees_quantity || 0), 0);
+                        updatedUser.total_trees = totalTrees;
+                        localStorage.setItem('userData', JSON.stringify(updatedUser));
+                        console.log('Inserted optimistic planting into local userData:', fakePlanting);
+                      }
+                    } catch (optErr) {
+                      console.warn('Error inserting optimistic planting:', optErr);
+                    }
+                  }
+                }
+              } catch (refreshErr) {
+                console.warn('Failed to refresh user data after planting:', refreshErr);
+              }
+
               alert('Оплата прошла успешно и посадка зарегистрирована. Спасибо!');
               closePlantTreeModal();
               document.getElementById('plant-tree-form').reset();
             } else {
-              // Если сервер вернул неструктурированный ответ, считаем заявка принята локально, но просим подождать верификации
+              // Если сервер вернул неструктурированный ответ или регистрация ещё в обработке — просим подождать верификации
+              console.warn('Planting create did not clearly signal success. Parsed:', plantJson, ' raw:', raw);
               alert('Оплата принята, но регистрация пока не подтвердилась. Если проблема сохранится, свяжитесь с поддержкой.');
               closePlantTreeModal();
               document.getElementById('plant-tree-form').reset();
