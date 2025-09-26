@@ -474,7 +474,7 @@ function createPlantTreeModal() {
               <div class="relative">
                 <select id="tree-type-select" class="w-full text-[#666666] py-3 px-4 border outline-0 border-[#666666] rounded-lg appearance-none bg-white bg-no-repeat bg-right" style="background-image: url('${imagePath}arrowdown.svg'); background-position: right 12px center; background-size: 18px;">
                   <option value="" disabled selected>Выберите дерево для высадки</option>
-                  <option value="spruce">Ель тянь-шаньская — Стоимость: 18 000₸</option>
+                  <option value="spruce">Ель тянь-шаньская — Стоимость: 25 000₸</option>
                   <option value="apple">Яблоня Сиверса — Стоимость: 3 000₸</option>
                 </select>
               </div>
@@ -631,8 +631,8 @@ function createPlantTreeModal() {
   const treeTypeSpruce = document.getElementById('tree-type-spruce');
   const treeTypeApple = document.getElementById('tree-type-apple');
 
-  // Цены (обновлено: ель 18 000, яблоня 3 000)
-  const PRICES = { spruce: 18000, apple: 3000 };
+  // Цены (обновлено: ель 25 000, яблоня 3 000)
+  const PRICES = { spruce: 25000, apple: 3000 };
 
 // expose for other scripts and provide a safe getter
 window.PRICES = window.PRICES || PRICES;
