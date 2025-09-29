@@ -1214,8 +1214,39 @@ async function startTipTopPayment(formData) {
         }
 
   console.log('Payment unit (KZT) being charged per tree:', unit, 'trees:', formData.trees_quantity, 'total:', intentParams.amount);
-  const widgetResult = await widget.start(intentParams);
-        console.log('TipTop widget result:', widgetResult);
+const widgetResult = await widget.start(intentParams);
+console.log('TipTop widget result:', widgetResult);
+
+// 🚫 Если пользователь закрыл/отменил оплату — ничего не делаем
+if (widgetResult?.type === 'cancel' || widgetResult?.type === 'fail') {
+  alert('Оплата была отменена. Посадка не зарегистрирована.');
+  return;
+}
+
+// ✅ Явная проверка успешного статуса
+const widgetIndicatesSuccess = (() => {
+  try {
+    if (!widgetResult) return false;
+    if (widgetResult.type && String(widgetResult.type).toLowerCase() === 'payment') return true;
+    const s = (widgetResult.data?.status || widgetResult.status || '').toLowerCase();
+    return s === 'success';
+  } catch {
+    return false;
+  }
+})();
+
+if (!widgetIndicatesSuccess) {
+  console.log('Оплата не успешна, skip:', widgetResult);
+  alert('Оплата не была завершена. Посадка не зарегистрирована.');
+  return;
+}
+
+        if (!widgetIndicatesSuccess) {
+          console.log('TipTop payment not successful or cancelled, skipping planting create. widgetResult:', widgetResult);
+          alert('Оплата не была завершена или была отменена. Посадка не будет зарегистрирована.');
+          // flow will reach finally to re-enable button and remove handler
+          return;
+        }
 
         // Попытка зарегистрировать посадку сразу с клиента (используем данные из intentParams/widgetResult)
         try {
