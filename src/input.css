@@ -683,6 +683,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     z-index: 5 !important;
   }
   
+  
   /* Адаптация секции проектов для планшетов */
   /* Уменьшаем размер карточек проектов */
   section.relative.bg-black.overflow-hidden.py-20 #projectCarousel .h-\[469px\] {
