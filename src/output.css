@@ -3124,7 +3124,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     top: 50px !important;
     width: 500px !important;
     height: 500px !important;
-    z-index: 0 !important;
+    z-index: 20 !important;
   }
   #handsectionText {
     font-size: 38px !important;
