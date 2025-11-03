@@ -822,6 +822,93 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     pointer-events: none;
     z-index: 1;
   }
+
+/* Для секции с большой картинкой завода поднимем круг поверх изображения */
+#factorySection::before,
+#factorySection::after {
+  z-index: 60 !important;
+  pointer-events: none !important;
+
+}
+#UspehCaseText{
+  font-size: 38px !important;
+  margin-bottom: 30px !important;
+}
+#nextTextGrid{
+  display: flex !important;
+  flex-direction: column !important;
+}
+#resultsSectionFcsContainer{
+  display: flex !important;
+  flex-direction: column !important;
+}
+#resultsSectionFcsTextTwo{
+  font-size: 38px !important;
+}
+#resultsSectionFcsText{
+  font-size: 20px !important;
+}
+#resultsSectionFcsTextOne{
+  font-size: 16px !important;
+}
+#footerTextAddBussines{
+  font-size: 20px !important;
+}
+#footerTextAddBussines span{
+  font-size: 20px !important;
+}
+#factorySection::before{
+  left: -400px !important;
+  top: 50px !important;
+  width: 500px !important;
+  height: 500px !important;
+  z-index: 0 !important;
+  
+}
+#handsectionText{
+font-size: 38px !important;
+margin-bottom: 30px !important;
+}
+#handsectionTextOne{
+  font-size: 20px !important;
+}
+#handsectionTextTwo{
+  font-size: 16px !important;
+}
+#handsectionTextTwo br{
+  display: none !important;
+}
+#handsectionTextOne br{
+  display: none !important;
+}
+#UspehCaseTextTwo{
+  font-size: 16px !important;
+}
+#YearFcsTextAddPropTwo{
+  font-size: 20px !important;
+}
+#YearFcsTextAddProp{
+  font-size: 60px !important;
+}
+#UspehCaseTextOne{
+  font-size: 20px !important;
+}
+#UspehCaseTextTwo br{
+  display: none !important;
+}
+#UspehCaseTextOne br{
+  display: none !important;
+}
+#factorySection::after{
+  display: none !important;
+}
+#projectCasesGrid{
+  display: flex !important;
+  flex-direction: column !important;
+}
+#yearWheelContainerAddNewBussines{
+  margin-top: -200px !important;
+}
   
   /* Секция CO2 калькулятор - адаптация для планшетов */
   section.w-full.bg-white.py-20 .flex.items-center {
@@ -1065,6 +1152,231 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     margin-top: 0 !important;
     overflow: hidden !important;
   }
+  #BirchService{
+    font-size: 23px !important;
+  }
+  #BirchServiceImg{
+    width: 40px !important;
+    height: 40px !important;
+  }
+  #titleHeroProff{
+    font-size: 42px !important;
+    font-weight: 400 !important;
+  }
+#containerbussines{
+  flex-direction: column !important;
+}
+#rightcolumnBusi{
+  flex-direction: row !important;
+  width: 100% !important;
+  justify-content: center !important;
+  gap: 44px !important;
+  margin-top: 40px !important;
+}
+#titlebusProject{
+  font-size: 38px !important;
+  margin-bottom: 30px !important;
+}
+#busProjectTextOne{
+  font-size: 18px !important;
+}
+#busProjectTextOne br{
+  display: none !important;
+}
+#containerbussinesTwo{
+  width: 100% !important;
+}
+#busProjectTextTwo{
+  font-size: 18px !important;
+}
+#busProjectTextThree{
+  font-size: 18px !important;
+}
+#busProjectTextTwo br{
+  display: none !important;
+}
+#busProjectTextThree br{
+  display: none !important;
+}
+#textBusyCycle{
+  font-size: 38px !important;
+}
+#businContainerCardSection{
+  flex-direction: column !important;
+  display: flex !important;
+}
+#businContainerCardSectionText{
+  font-size: 38px !important;
+
+}
+#fcsContainerBlock{
+  flex-direction: column !important;
+  gap: 0 !important;
+}
+#fcsblockOne{
+  width: 100% !important;
+}
+#fcsblockTwo{
+  width: 100% !important;
+}
+#fcsblockOneItem{
+  margin-bottom: 28px !important;
+}
+#newMetaTextBusinOne{
+  font-size: 20px !important;
+}
+#newMetaTextBusinTwo{
+  font-size: 16px !important;
+}
+#fcsSectionYearText{
+  font-size: 38px !important;
+  margin-bottom: 32px !important;
+}
+#TextfcsBlockOne{
+  font-size: 20px !important;
+}
+#TextfcsBlockTwo{
+  font-size: 16px !important;
+}
+#TextfcsBlockOne br{
+  display: none !important;
+}
+#TextfcsOtrasl{
+  font-size: 38px !important;
+}
+#containerOtraslNewM{
+  display: flex !important;
+  flex-direction: column !important;
+}
+#textOtralslNewTitle{
+  font-size: 20px !important;
+}
+#factoryBigTextOne{
+  font-size: 20px !important;
+}
+#factoryBigTextTwo{
+  font-size: 16px !important;
+}
+#factoryBigTextThree{
+  font-size: 38px !important;
+}
+#factoryBigTextOne br{
+  display: none !important;
+}
+#factoryBigTextTwo br{
+  display: none !important;
+}
+#textOtralslNewTitleOne{
+  font-size: 16px !important;
+}
+#textOtralslNewTitle br{
+  display: none !important;
+}
+#textOtralslNewTitleOne br{
+  display: none !important;
+}
+#factoryBig{
+  flex-direction: column !important;
+}
+#factoryBigTwo{
+  width: 100% !important;
+}
+#factoryBigThree{
+  width: 100% !important;
+}
+#TextfcsBlockTwo br{
+  display: none !important;}
+#fc-images-top,
+#fc-images-mid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+#fc-images-top img,
+#fc-images-mid img {
+  width: 100% !important;
+  max-width: 760px !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+#fc-texts-top,
+#fc-texts-mid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin-top: 12px !important;
+}
+
+#fc-texts-top > div,
+#fc-texts-mid > div {
+  width: 100% !important;
+  text-align: left !important;
+  margin-bottom: 12px !important;
+}
+
+#fc-texts-top h3,
+#fc-texts-mid h3 {
+  font-size: 26px !important;
+}
+
+#fc-texts-top p,
+#fc-texts-mid p,
+#fc-summary {
+  font-size: 18px !important;
+  color: #FFFFFF !important;
+}
+
+#fullCycleSection {
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+}
+
+/* Скрываем двухколоночную картинку ракеты на планшетах, но оставляем её в stacked-карточке (#fc-card-4) */
+#fc-images-rocket {
+  display: none !important;
+}
+
+/* Показываем stacked-версию и прячем старую на планшетах */
+#fc-stack {
+  display: block !important;
+}
+
+#fc-images-top,
+#fc-images-mid,
+#fc-texts-top,
+#fc-texts-mid {
+  display: none !important;
+}
+
+.fc-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.fc-card img {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.fc-card h3 {
+  font-size: 26px !important;
+  margin-top: 8px !important;
+}
+
+.fc-card p {
+  font-size: 18px !important;
+  margin-top: 6px !important;
+  color: rgba(255,255,255,0.85) !important;
+}
+
+/* Убираем отрицательные margin/top для колеса, чтобы stacked блоки не перекрывались */
+#yearWheelContainer {
+  margin-top: 0 !important;
+}
 
   /* Текст по центру */
   section.relative.bg-black.overflow-hidden.py-20 .flex.items-start.max-w-\[900px\] {
@@ -4442,6 +4754,23 @@ tom-popup .leaflet-popup-content-wrapper {
 }
 }
 @media (min-width: 1300px) and (max-width: 1800px) {
+#factoryBig{
+  flex-direction: column !important;
+}
+#factoryBigTextOne br{
+  display: none !important;
+}
+#factoryBigTextTwo br{
+  display: none !important;
+}
+#factoryBigTwo{
+  width: 100% !important;
+}
+#factoryBigThree{
+  width: 100% !important;
+  justify-content: center !important;
+}
+
  #newAdaptForBook{
   max-width: 700px !important;
   height: 600px !important;

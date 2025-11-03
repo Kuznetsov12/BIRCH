@@ -1679,6 +1679,13 @@ const projectsData = {
   investment: {
     background: '../../src/img/projectThree.png',
     projects: [
+            {
+        id: 11,
+        title: 'Профессиональная разработка бизнес‑планов',
+        description: 'Разработка бизнес‑планов, ТЭО, финансовых моделей и инвестиционных материалов',
+        image: '../../src/img/fonNew.png',
+        link: './project-business.html'
+      },
       {
         id: 6,
         title: 'Масштабное облесение в Карагандинской области, Казахстан',
@@ -1709,6 +1716,8 @@ const projectsData = {
         description: 'Проект предусматривает строительство трёх гидроэлектростанций общей мощностью 10 МВт (1 ГЭС – 6 МВт, 2 ГЭС – по 2 МВт) для обеспечения стабильной и чистой энергии',
         image: '../../src/img/firstProject.png'
       }
+      
+
     ]
   }
 };
@@ -1785,7 +1794,7 @@ function renderProjects(projects) {
                     <h3 class="text-xl font-normal text-white mb-3">${project.title}</h3>
                     <p class="text-[#BFBFBF] text-base leading-relaxed">${project.description}</p>
                   </div>
-                  <button onclick="openProjectInfo(${project.id})" class="bg-white backdrop-blur-md text-[#5F6161] px-8 py-3 rounded-full h-[80px] text-xl font-bold flex items-center gap-2 ml-4">
+                  <button ${project.link ? `onclick="window.location.href='${project.link}'"` : `onclick="openProjectInfo(${project.id})"`} class="bg-white backdrop-blur-md text-[#5F6161] px-8 py-3 rounded-full h-[80px] text-xl font-bold flex items-center gap-2 ml-4">
                     Узнать подробнее
                     <img src="../../src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
                   </button>
@@ -1808,7 +1817,7 @@ function renderProjects(projects) {
                     <h3 class="text-xl font-normal text-white mb-3">${project.title}</h3>
                     <p class="text-[#BFBFBF] text-base leading-relaxed">${project.description}</p>
                   </div>
-                  <button onclick="openProjectInfo(${project.id})" class="bg-white backdrop-blur-md text-[#5F6161] px-8 py-3 rounded-full h-[80px] text-xl font-bold flex items-center gap-2 ml-4">
+                  <button ${project.link ? `onclick="window.location.href='${project.link}'"` : `onclick="openProjectInfo(${project.id})"`} class="bg-white backdrop-blur-md text-[#5F6161] px-8 py-3 rounded-full h-[80px] text-xl font-bold flex items-center gap-2 ml-4">
                     Узнать подробнее
                     <img src="../../src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
                   </button>
@@ -2933,10 +2942,10 @@ function generateProjectCards(projectList) {
                                 <h3 class="text-xl font-normal text-white mb-3">${project.title.replace(/<br>/g, ' ')}</h3>
                                 <p class="text-[#BFBFBF] text-base leading-relaxed">${project.description.replace(/<br>/g, ' ').substring(0, 100)}...</p>
                             </div>
-                            <button onclick="openProjectInfo(${project.id})" class="bg-white backdrop-blur-md text-[#5F6161] px-6 py-2 rounded-full h-[74px] text-xl font-bold flex items-center gap-2 ml-4">
-                                Узнать подробнее
-                                <img src="../../src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
-                            </button>
+              <button ${project.link ? `onclick="window.location.href='${project.link}'"` : `onclick="openProjectInfo(${project.id})"`} class="bg-white backdrop-blur-md text-[#5F6161] px-6 py-2 rounded-full h-[74px] text-xl font-bold flex items-center gap-2 ml-4">
+                Узнать подробнее
+                <img src="../../src/img/arrowdown.svg" alt="" class="w-10 h-10 text-white">
+              </button>
                         </div>
                     </div>
                 </div>
@@ -2947,7 +2956,25 @@ function generateProjectCards(projectList) {
 
 // Функция перехода на страницу ProjectInfo с определенным проектом
 function openProjectInfo(projectId) {
-    window.location.href = `./ProjectInfo.html?id=${projectId}`;
+  try {
+    // Явный хардкод: если id === 11, перенаправляем на страницу бизнес‑проекта
+    if (Number(projectId) === 11) {
+      window.location.href = './project-business.html';
+      return;
+    }
+    // Ищем проект в projectsData (технологии и инвестиции)
+    const allProjects = [];
+    if (projectsData.technology && projectsData.technology.projects) allProjects.push(...projectsData.technology.projects);
+    if (projectsData.investment && projectsData.investment.projects) allProjects.push(...projectsData.investment.projects);
+    const found = allProjects.find(p => Number(p.id) === Number(projectId));
+    if (found && found.link) {
+      window.location.href = found.link;
+      return;
+    }
+  } catch (err) {
+    console.warn('openProjectInfo: unable to resolve project link', err);
+  }
+  window.location.href = `./ProjectInfo.html?id=${projectId}`;
 }
 
 // Инициализация страниц

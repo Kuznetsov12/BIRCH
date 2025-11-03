@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Профессиональная разработка бизнес‑планов — BIRCH</title>
+            <link rel="icon" type="image/png" href="../../src/img/newheadmainlogo.png">
+    <link rel="apple-touch-icon" href="../../src/img/newheadmainlogo.png">
+        <link href="../../src/output.css" rel="stylesheet">
+        <link href="../../src/custom-bg-fix.css" rel="stylesheet">
+        <!-- Inline font-face for this page (relative to src/pages) -->
+        <style>
+            @font-face {
+                font-family: 'PP Neue Montreal';
+                src: url('../../public/fonts/PPNeueMontreal-Thin.otf') format('opentype');
+                font-weight: 300;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: 'PP Neue Montreal';
+                src: url('../../public/fonts/PPNeueMontreal-Book.otf') format('opentype');
+                font-weight: 400;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: 'PP Neue Montreal';
+                src: url('../../public/fonts/PPNeueMontreal-Medium.otf') format('opentype');
+                font-weight: 600;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: 'PP Neue Montreal';
+                src: url('../../public/fonts/PPNeueMontreal-Bold.otf') format('opentype');
+                font-weight: 700;
+                font-display: swap;
+            }
+            
+            /* Ensure this page uses the PP Neue font */
+            body { font-family: 'PP Neue Montreal', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
+        </style>
+        <style>
+            .hero-title {
+                font-size: 80px;
+                font-weight: 400;
+                line-height: 0.95;
+            }
+            .pl-65px { padding-left: 65px; }
+            .experience-title { font-weight: 700; }
+            #yearWheel { overflow: visible; }
+            .rotating-years { animation: rotateYears 60s linear infinite; transform-origin: 500px 500px; }
+            @keyframes rotateYears { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            .years-image { transform-origin: 400px 400px; filter: brightness(0.8) contrast(1.1); }
+            #outerYears, #middleYears { transition: transform 0.1s ease-out; transform-origin: 500px 500px; }
+            .year-text { font-size: 50px; font-weight: 400; fill: rgba(255,255,255,0.3); letter-spacing: 2px; }
+            /* removed min-height to keep natural heights */
+        </style>
+</head>
+<body class="overflow-x-hidden project-mobile bg-black text-white">
+     <div class="flex flex-col w-full mx-auto max-w-[1920px]">
+
+         <section class="w-full bg-cover bg-center bg-no-repeat relative h-[800px]" style="background-image: url('../../src/img/fonNew.png');">
+             
+             <div class="relative max-w-[1920px] w-full mx-auto px-8 h-full">
+  <header class="w-full flex justify-center pt-8 px-8" role="banner">
+    <nav class="flex items-center max-w-[1920px] w-full h-[109px] pl-16 pr-4 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <img onclick="window.location.href='../../index.html'" src="../../src/img/mainLogo.png" alt="Birch - логотип компании" class="h-[46px] w-[144px]" />
+      </div>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-6">
+        <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
+          <li><a href="../../index.html" class="hover:underline">Главная</a></li>
+          <li><a href="./Donate.html" class="font-bold transition-all">Взносы</a></li>
+          <li><a href="./PlantForest.html" class="hover:underline whitespace-nowrap">CO₂ Оффсет</a></li>
+          <li><a href="../../index.html" class="hover:underline">Партнеры</a></li>
+          <li><a href="./Project.html" aria-current="page" class="hover:underline">Проекты</a></li>
+          <li><a href="#footerDonatePageNeed" class="hover:underline">Контакты</a></li>
+        </ul>
+        <button class="flex items-center partnership-btn bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
+          Оставить заявку
+          <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
+            <img src="../../src/img/arrowdown.svg" alt="" class="w-11 h-11" />
+          </span>
+        </button>
+        <!-- Меню для планшетов -->
+        <img src="../../src/img/headerTable.svg" alt="Меню" class="w-11 h-11 tablet-menu" />
+        <!-- Бургер-меню для мобильных -->
+        <div onclick="toggleMobileMenu()" class="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 mobile-menu" aria-hidden="true">
+          <img src="../../src/img/burgerMenu.svg" alt="Меню" class="w-5 h-5 rounded-none" />
+        </div>
+      </div>
+    </nav>
+    
+    <!-- Мобильное меню (скрыто по умолчанию) -->
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-black/95 z-50 hidden flex-col items-center justify-center">
+      <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
+  <ul class="flex flex-col gap-8 text-white text-xl items-start">
+        <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Главная</a></li>
+  <li><a href="./Donate.html" class="font-bold" onclick="toggleMobileMenu()">Взносы</a></li>
+        <li><a href="./PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">CO₂ Оффсет</a></li>
+        <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
+        <li><a href="./Project.html" class="hover:text-green-400" aria-current="page" onclick="toggleMobileMenu()">Проекты</a></li>
+        <li><a href="#footerDonatePageNeed" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
+        <a href="./UserAgreement.html" class="user-agreement-link block text-white text-xl font-light" aria-label="Пользовательское соглашение">Пользовательское <br> соглашение</a>
+      </ul>
+      <button id="open-partnership-modal-mobile" class="mt-10 bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600 flex items-center gap-3" onclick="toggleMobileMenu()">
+        <img src="../../src/img/aloneLepestok.svg" alt="" class="w-5 h-5">
+        Оставить заявку
+      </button>
+    </div>
+  </header>
+
+                 <!-- Текстовый контент по центру -->
+                 <div class="flex items-center h-[calc(100%-180px)] text-left">
+                     <div class="text-white max-w-[1200px]">
+                        <div class="flex items-center text-center">
+                            <img id="BirchServiceImg" class="h-9 w-9" src="../img/lepestki.svg" alt="">
+                            <p id="BirchService" class=" text-base text-white/80">BIRCH SERVICES</p>
+                        </div>
+                         <h1 id="titleHeroProff" class="hero-title text-white leading-tight">Профессиональная <br> разработка бизнес‑планов<br>и инвестиционных проектов</h1>
+                     </div>
+                 </div>
+             </div>
+         </section>
+     
+        <section class="w-full bg-white py-10">
+            <div class="max-w-[1920px] w-full mx-auto px-8">
+                <div class="">
+                    <h2 id="titlebusProject" class="text-[#323F6F] text-6xl experience-title mb-18">Опыт и экспертиза</h2>
+
+                    <div id="containerbussines" class="flex items-start justify-between max-w-[1900px]">
+                        <div id="containerbussinesTwo" class="w-[60%] text-[#323F6F]">
+                            <div class="mb-8">
+                                <p id="busProjectTextOne" class="text-xl leading-relaxed"><span class="font-bold">Разрабатываю бизнес-планы, ТЭО и ФЭО,</span> а также финансовые модели, <br> инвестиционные тизеры и презентации для различных отраслей экономики <br> Казахстана.</p>
+                            </div>
+
+                            <div class="mb-8">
+                                <p id="busProjectTextTwo" class="text-xl"><span class="text-[#25A587] font-bold">Более 10 лет в сфере финансового анализа,</span> стратегического планирования <br> и инвестиционного консалтинга.</p>
+                            </div>
+
+                            <div>
+                                <p id="busProjectTextThree" class="text-xl"><span class="text-[#25A587] font-bold">Более 100 проектов</span> — от производственных предприятий до социальных, <br> инфраструктурных и IT-инициатив.</p>
+                            </div>
+                        </div>
+
+                        <!-- Правая колонка: большие цифры (ширина ~35%) -->
+                        <div id="rightcolumnBusi" class="w-[35%] flex flex-col items-start justify-end pr-8">
+                            <div class="flex flex-col items-center mb-8">
+                                <span id="YearFcsTextAddProp" class="text-[#323F6F] text-[80px] leading-none font-bold">10+</span>
+                                <span id="YearFcsTextAddPropTwo" class="text-[#323F6F] text-[32px] font-bold">Лет опыта</span>
+                            </div>
+
+                            <div class="flex flex-col items-center">
+                                <span id="YearFcsTextAddProp" class="text-[#323F6F] text-[80px] leading-none font-bold">100+</span>
+                                <span id="YearFcsTextAddPropTwo" class="text-[#323F6F] text-[32px] font-bold">Проектов</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="fullCycleSection" class="w-full bg-black py-8 relative overflow-hidden">
+            <div class="max-w-[1920px] w-full mx-auto px-8 pl-65px relative">
+                <div class="absolute top-[-800px] -left-[750px] w-[1000px] h-[1000px] rounded-full blur-[600px] opacity-100"
+                     style="background: radial-gradient(circle, #008852, #164125);"></div>
+                <div class="absolute -bottom-[750px] -right-[600px] w-[760px] h-[760px] rounded-full blur-[600px] opacity-100"
+                     style="background: radial-gradient(circle, #008852, #164125);"></div>
+
+                <div class="relative z-10 text-white max-w-[1920px]">
+                    <h2 id="textBusyCycle" class="text-6xl font-bold text-white  mb-18 mt-10">Полный цикл сопровождения проектов</h2>
+
+                    <div id="fc-images-top" class="w-full flex items-center justify-between mb-4">
+                        <img src="../../src/img/arrowLampa.png" alt="Идея" class="w-[48%] object-contain">
+                        <img src="../../src/img/arrowPapka.png" alt="Разработка" class="w-[48%] object-contain">
+                    </div>
+
+                    <div id="fc-texts-top" class="w-full flex justify-between items-start mb-10">
+                        <div class="w-[48%]">
+                            <h3 class="text-3xl text-white font-bold">Идея</h3>
+                            <p class="text-[26px] font-normal text-[#FFFFFF]">Анализ концепции и потенциала</p>
+                        </div>
+                        <div class="w-[48%] text-left">
+                            <h3 class="text-3xl text-white font-bold">Разработка</h3>
+                            <p class="text-[26px] font-normal text-[#FFFFFF]">Создание документации и моделей</p>
+                        </div>
+                    </div>
+                    <div class="w-full flex items-center justify-between gap-4 mb-4">
+                        <img id="fc-images-mid" src="../../src/img/arrowMoney.png" alt="Финансирование" class="w-[48%] object-contain">
+                        <img id="fc-images-rocket" src="../../src/img/arrowRocket.png" alt="Запуск" class="w-[48%] object-contain">
+                    </div>
+                    <div id="fc-texts-mid" class="w-full flex justify-between items-start mb-8">
+                        <div class="w-[48%]">
+                            <h3 class="text-3xl text-white font-bold">Финансирование</h3>
+                            <p class="text-[26px] font-normal text-[#FFFFFF]">Привлечение инвестиций</p>
+                        </div>
+                        <div class="w-[48%] text-left">
+                            <h3 class="text-3xl text-white font-bold">Запуск</h3>
+                            <p class="text-[26px] font-normal text-[#FFFFFF]">Реализация и старт проекта</p>
+                        </div>
+                    </div>
+
+                    <!-- Stacked variant for tablets: each block = image above, text below -->
+                    <div id="fc-stack" class="hidden mt-8">
+                        <div id="fc-card-1" class="fc-card mb-8">
+                            <img src="../../src/img/arrowLampa.png" alt="Идея" class="w-full object-contain mb-4" />
+                            <h3 class="text-3xl text-white font-bold">Идея</h3>
+                            <p class="text-[20px] text-white/80">Анализ концепции и потенциала</p>
+                        </div>
+
+                        <div id="fc-card-2" class="fc-card mb-8">
+                            <img src="../../src/img/arrowPapka.png" alt="Разработка" class="w-full object-contain mb-4" />
+                            <h3 class="text-3xl text-white font-bold">Разработка</h3>
+                            <p class="text-[20px] text-white/80">Создание документации и моделей</p>
+                        </div>
+
+                        <div id="fc-card-3" class="fc-card mb-8">
+                            <img src="../../src/img/arrowMoney.png" alt="Финансирование" class="w-full object-contain mb-4" />
+                            <h3 class="text-3xl text-white font-bold">Финансирование</h3>
+                            <p class="text-[20px] text-white/80">Привлечение инвестиций</p>
+                        </div>
+
+                        <div id="fc-card-4" class="fc-card mb-8">
+                            <img src="../../src/img/arrowRocket.png" alt="Запуск" class="w-full object-contain mb-4" />
+                            <h3 class="text-3xl text-white font-bold">Запуск</h3>
+                            <p class="text-[20px] text-white/80">Реализация и старт проекта</p>
+                        </div>
+                    </div>
+
+                    <p id="fc-summary" class="text-[26px] font-normal text-[#FFFFFF] mt-6 max-w-[1400px]">Адаптирую решения под требования инвестора, банка, государственных программ, или частного фонда на каждом этапе.</p>
+
+        </section>
+            <section class="w-full bg-white py-28">
+            <div class="max-w-[1920px] w-full mx-auto px-8">
+                <h2 id="businContainerCardSectionText" class="text-6xl font-bold text-[#323F6F] mb-18">Разработка инвестиционных документов</h2>
+
+                <div id="businContainerCardSection" class="grid grid-cols-2 gap-8 max-w-[1920px]">
+                    <div class="rounded-lg p-8 flex flex-col items-start text-left" style="background:#E9FEF9; border:3px solid #BEDED7;">
+                        <div class="w-18 h-18 rounded-full bg-white/0 flex items-center justify-center mb-6">
+                            <img src="../../src/img/money.svg" alt="money" class="w-18 h-18">
+                        </div>
+                        <div class="text-[#323F6F]">
+                            <h3 id="newMetaTextBusinOne" class="text-3xl font-bold mb-3">Бизнес-план</h3>
+                            <p id="newMetaTextBusinTwo" class="text-[26px]">Полное описание проекта, включая анализ рынка, <br> производственную программу, организационную структуру, <br> финансовые прогнозы и оценку эффективности</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg p-8 flex flex-col items-start text-left" style="background:#E9FEF9; border:3px solid #BEDED7;">
+                        <div class="w-18 h-18 rounded-full bg-white/0 flex items-center justify-center mb-6">
+                            <img src="../../src/img/calculator.svg" alt="calculator" class="w-18 h-18">
+                        </div>
+                        <div class="text-[#323F6F]">
+                            <h3 id="newMetaTextBusinOne" class="text-3xl font-bold mb-3">ТЭО / ФЭО</h3>
+                            <p id="newMetaTextBusinTwo" class="text-[26px]">Расчёт инвестиционных и эксплуатационных затрат, анализ <br> рисков, экономическая и социальная эффективность, <br> окупаемость</p>
+                        </div>
+                    </div>
+
+                    <div class="rounded-lg p-8 flex flex-col items-start text-left" style="background:#E9FEF9; border:3px solid #BEDED7;">
+                        <div class="w-18 h-18 rounded-full bg-white/0 flex items-center justify-center mb-6">
+                            <img src="../../src/img/bussinesUp.svg" alt="bussinesUp" class="w-18 h-18">
+                        </div>
+                        <div class="text-[#323F6F]">
+                            <h3 id="newMetaTextBusinOne" class="text-3xl font-bold mb-3">Финансовая модель</h3>
+                            <p id="newMetaTextBusinTwo" class="text-[26px]">Excel-инструмент с расчётами выручки, затрат, прибыли, <br> денежных потоков (Cash Flow), IRR, NPV, PI, точки <br> безубыточности</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg p-8 flex flex-col items-start text-left" style="background:#E9FEF9; border:3px solid #BEDED7;">
+                        <div class="w-18 h-18 rounded-full bg-white/0 flex items-center justify-center mb-6">
+                            <img src="../../src/img/gift.svg" alt="gift" class="w-18 h-18">
+                        </div>
+                        <div class="text-[#323F6F]">
+                            <h3 id="newMetaTextBusinOne" class="text-3xl font-bold mb-3">Инвестиционный тизер</h3>
+                            <p id="newMetaTextBusinTwo" class="text-[26px]">Краткое и визуально структурированное представление <br> проекта для инвесторов, банков и госорганов</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>            
+        <section class="w-full bg-black py-20 relative overflow-hidden">
+            <div  class="max-w-[1920px] w-full mx-auto px-8 pl-65px relative">
+                <div class="absolute top-[-600px] -left-[1050px] w-[1000px] h-[1000px] rounded-full blur-[600px] opacity-100"
+                     style="background: radial-gradient(circle, #008852, #164125);"></div>
+                <div class="absolute -bottom-[150px] -right-[850px] w-[760px] h-[760px] rounded-full blur-[600px] opacity-100"
+                     style="background: radial-gradient(circle, #008852, #164125);"></div>
+
+                <div class="relative z-10 text-white max-w-[1920px] mx-auto">
+                    <h2 id="fcsSectionYearText" class="text-6xl font-bold text-white mb-18">Консультационные услуги</h2>
+
+                    <div id="fcsContainerBlock" class="w-full flex items-start justify-between gap-12">
+                        <div id="fcsblockOne" class="w-1/2 space-y-16 text-white">
+                            <div id="fcsblockOneItem">
+                                <h3 id="TextfcsBlockOne" class="text-[32px] font-bold" style="line-height: 120%; letter-spacing: 1%;">Подготовка для финансирования</h3>
+                                <p id="TextfcsBlockTwo" class="text-[26px] mt-3 text-white/80">Получение кредитов, грантов, льгот и земельных участков</p>
+                            </div>
+
+                            <div id="fcsblockOneItem">
+                                <h3 id="TextfcsBlockOne" class="text-[32px] font-bold">Работа с институтами развития</h3>
+                                <p id="TextfcsBlockTwo" class="text-[26px] mt-3 text-white/80">Консультации по требованиям Даму, Qazinnovations, СПК, БРК, <br> ЕБРР</p>
+                            </div>
+
+                            <div id="fcsblockOneItem">
+                                <h3 id="TextfcsBlockOne" class="text-[32px] font-bold">Анализ инвестиционной <br> привлекательности</h3>
+                                <p id="TextfcsBlockTwo" class="text-[26px] mt-3 text-white/80">Оценка рисков и потенциала проекта</p>
+                            </div>
+                        </div>
+                        <div id="fcsblockTwo" class="w-1/2 space-y-16 text-white">
+                            <div id="fcsblockOneItem">
+                                <h3 id="TextfcsBlockOne" class="text-[32px] font-bold">Государственные программы</h3>
+                                <p id="TextfcsBlockTwo" class="text-[26px] mt-3 text-white/80">Подготовка документов для &laquo;Казиноваэйшн&raquo;, &laquo;Фонд Науки&raquo;, &laquo;Orleu&raquo;, &laquo;Индустрия&nbsp;4.0&raquo;</p>
+                            </div>
+
+                            <div id="fcsblockOneItem">
+                                <h3 id="TextfcsBlockOne" class="text-[32px] font-bold">Поддержка в переговорах</h3>
+                                <p id="TextfcsBlockTwo" class="text-[26px] mt-3 text-white/80">Сопровождение встреч с банками, инвесторами <br> и госструктурами</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="w-full bg-white py-20">
+            <div class="max-w-[1920px] w-full mx-auto px-8 pl-65px">
+                <h2 id="TextfcsOtrasl" class="text-6xl font-bold text-[#323F6F] mb-12">Отраслевые направления</h2>
+
+                <div id="containerOtraslNewM" class="grid grid-cols-2 gap-12">
+                    <div class="space-y-16">
+                        <div class="flex items-start gap-6">
+                            <img src="../../src/img/instruments.svg" alt="Строительство" class="w-18 h-18 flex-shrink-0" />
+                            <div>
+                                <h3 id="textOtralslNewTitle" class="text-[32px] font-bold text-[#323F6F]">Строительство и недвижимость</h3>
+                                <p id="textOtralslNewTitleOne" class="text-[26px] text-[#323F6F] mt-2">Частные школы, интернаты, больницы, родильные дома, <br> гостиницы, торговые центры</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6">
+                            <img src="../../src/img/programmer.svg" alt="IT" class="w-18 h-18 flex-shrink-0" />
+                            <div>
+                                <h3 id="textOtralslNewTitle" class="text-[32px] font-bold text-[#323F6F]">IT и инновации</h3>
+                                <p id="textOtralslNewTitleOne" class="text-[26px] text-[#323F6F] mt-2">Мобильные приложения, цифровые платформы, системы <br> искусственного интеллекта</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6">
+                            <img src="../../src/img/stebel.svg" alt="Агро" class="w-18 h-18 flex-shrink-0" />
+                            <div>
+                                <h3 id="textOtralslNewTitle" class="text-[32px] font-bold text-[#323F6F]">Агропромышленный комплекс</h3>
+                                <p id="textOtralslNewTitleOne" class="text-[26px] text-[#323F6F] mt-2">Животноводство, переработка молока и мяса, <br> птицефабрики, производство комбикормов, теплицы, <br> агрохабы</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-16">
+                        <div class="flex items-start gap-6">
+                            <img src="../../src/img/factory.svg" alt="Промышленность" class="w-18 h-18 flex-shrink-0" />
+                            <div>
+                                <h3 id="textOtralslNewTitle" class="text-[32px] font-bold text-[#323F6F]">Промышленность и производство</h3>
+                                <p id="textOtralslNewTitleOne" class="text-[26px] text-[#323F6F] mt-2">Брусчатка, бытовая техника, трансформаторы, <br> строительные материалы, упаковка, переработка отходов</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6">
+                            <img src="../../src/img/world.svg" alt="Туризм" class="w-18 h-18 flex-shrink-0" />
+                            <div>
+                                <h3 id="textOtralslNewTitle" class="text-[32px] font-bold text-[#323F6F]">Туризм и креативная экономика</h3>
+                                <p id="textOtralslNewTitleOne" class="text-[26px] text-[#323F6F] mt-2">Эко-туризм, ремесленные кластеры, культурные центры, <br> арт-пространства</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6">
+                            <img src="../../src/img/health.svg" alt="Социальные проекты" class="w-18 h-18 flex-shrink-0" />
+                            <div>
+                                <h3 id="textOtralslNewTitle" class="text-[32px] font-bold text-[#323F6F]">Социальные и медицинские проекты</h3>
+                                <p id="textOtralslNewTitleOne" class="text-[26px] text-[#323F6F] mt-2">Частные клиники, роддома, центры реабилитации, <br> образовательные центры</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <section id="factorySection" class="w-full bg-black pt-28 pb-12 relative overflow-hidden">
+            <div class="max-w-[1920px] w-full mx-auto px-8 pl-65px relative">
+                <div class="absolute top-[-600px] -left-[1100px] w-[1000px] h-[1000px] rounded-full blur-[600px] opacity-100 z-10"
+                     style="background: radial-gradient(circle, #008852, #164125);"></div>
+             <div class="absolute -bottom-[-150px] -right-[800px] w-[760px] h-[760px] rounded-full blur-[600px] opacity-100 z-50 pointer-events-none"
+                 style="background: radial-gradient(circle, #008852, #164125); z-index:50;"></div>
+
+                <div class="relative z-10 max-w-[1920px] w-full mx-auto">
+                    <h2 id="factoryBigTextThree" class="text-6xl font-bold text-white mb-18">Примеры реализованных проектов</h2>
+                    <div id="factoryBig" class="flex items-start gap-12">
+                    <div id="factoryBigTwo" class="w-1/2 text-white space-y-12">
+
+                        <div>
+                            <h3 id="factoryBigTextOne" class="text-[32px] font-bold" style="line-height: 120%; letter-spacing: 4%;">Частная школа-интернат <br> на 400 учащихся</h3>
+                            <p id="factoryBigTextTwo" class="text-[26px] mt-3 text-white/80" style="line-height: 135%; letter-spacing: 4%;">Актобе — проект с современными <br> образовательными стандартами, собственным кампусом <br> и спортивным блоком</p>
+                        </div>
+
+                        <div>
+                            <h3 id="factoryBigTextOne" class="text-[32px] font-bold" style="line-height: 120%; letter-spacing: 4%;">Завод по выпуску <br> бытовой техники</h3>
+                            <p id="factoryBigTextTwo" class="text-[26px] mt-3 text-white/80" style="line-height: 135%; letter-spacing: 4%;">Алматы — проект в индустриальной зоне с потенциалом <br> импортозамещения</p>
+                        </div>
+
+                        <div>
+                            <h3 id="factoryBigTextOne" class="text-[32px] font-bold" style="line-height: 120%; letter-spacing: 4%;">Завод по производству <br> брусчатки</h3>
+                            <p id="factoryBigTextTwo" class="text-[26px] mt-3 text-white/80" style="line-height: 135%; letter-spacing: 4%;">Проект с локализацией сырья и созданием 50 рабочих <br> мест</p>
+                        </div>
+                    </div>
+
+                    <div id="factoryBigThree" class="w-1/2 flex items-center justify-end z-10">
+                        <img src="../../src/img/bigfactory.png" alt="Завод" class="max-w-[1020px] w-full object-contain" />
+                    </div>
+                </div>
+            </div>
+        </section>
+         <section class="w-full bg-white pt-20 overflow-hidden">
+            <div class="max-w-[1920px] w-full mx-auto px-8 pl-65px text-[#323F6F]">
+                <h2 id="UspehCaseText" class=" text-6xl font-bold text-[#323F6F] mb-18">Больше успешных кейсов</h2>
+                <div id="projectCasesGrid" class="grid grid-cols-3 gap-12">
+                    <!-- Колонка 1 -->
+                    <div class="space-y-12">
+                        <div style="border-top:3px solid #25A587; padding-top:18px;">
+                            <h3 id="UspehCaseTextOne" class="text-[32px] font-bold" style="line-height: 120%; letter-spacing: 4%;">Производство <br> трансформаторов</h3>
+                            <p id="UspehCaseTextTwo" class="text-[26px] mt-3" style="line-height: 120%; letter-spacing: 4%;">Высокотехнологичный проект <br> для энергетического сектора</p>
+                        </div>
+                        <div style="border-top:3px solid #25A587; padding-top:18px;">
+                            <h3 id="UspehCaseTextOne" class="text-[32px] font-bold" style="line-height: 120%; letter-spacing: 4%;">Индустриальные <br> кластеры</h3>
+                            <p id="UspehCaseTextTwo" class="text-[26px] mt-3" style="line-height: 120%; letter-spacing: 4%;">Комплексное развитие <br> производственной и перерабатывающей <br> инфраструктуры</p>
+                        </div>
+                    </div>
+
+                    <!-- Колонка 2 -->
+                    <div class="space-y-12">
+                        <div style="border-top:3px solid #25A587; padding-top:18px;">
+                            <h3 id="UspehCaseTextOne" class="text-[32px] font-bold" style="line-height: 120%; letter-spacing: 4%;">Завод сухого <br> верблюжьего молока</h3>
+                            <p id="UspehCaseTextTwo" class="text-[26px] mt-3" style="line-height: 120%; letter-spacing: 4%;">Экспортно-ориентированный проект <br> с региональной поддержкой</p>
+                        </div>
+                        <div style="border-top:3px solid #25A587; padding-top:18px;">
+                            <h3 id="UspehCaseTextOne" class="text-[32px] font-bold" style="line-height: 120%; letter-spacing: 4%;">Частный родильный дом</h3>
+                            <p id="UspehCaseTextTwo" class="text-[26px] mt-3" style="line-height: 120%; letter-spacing: 4%;">Клинико-диагностический центр <br> с современными стандартами проект <br> для энергетического сектора</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-12 flex flex-col items-center">
+                        <div class="w-full" style="border-top:3px solid #25A587; padding-top:18px;">
+                            <h3 id="UspehCaseTextOne" class="text-[32px] font-bold" style="line-height: 120%; letter-spacing: 4%;">Мобильное приложение <br> AAC</h3>
+                            <p id="UspehCaseTextTwo" class="text-[26px] mt-3" style="line-height: 120%; letter-spacing: 4%;">IT-проект для детей с аутизмом в сфере <br> инклюзивного образования</p>
+                        </div>
+                        <div class="w-full flex justify-center">
+                                                        <div id="yearWheelContainerAddNewBussines" class="relative w-[620px] h-[620px] overflow-hidden mt-[-250px] mb-[-50px]">
+                                                                <svg viewBox="0 0 1000 1000" class="w-full h-full absolute bottom-[-210px]" id="yearWheel">
+                                                                    <circle cx="500" cy="500" r="480" stroke="#25A587" stroke-opacity="0.12" fill="none" stroke-width="6"/>
+                                                                    <circle cx="500" cy="500" r="320" stroke="#25A587" stroke-opacity="0.12" fill="none" stroke-width="4"/>
+                                                                    <circle cx="500" cy="500" r="200" stroke="#25A587" stroke-opacity="0.12" fill="none" stroke-width="3"/>
+                                                                    <g id="yearsImageGroup" class="rotating-years">
+                                                                        <image x="80" y="80" width="840" height="840" href="../../src/img/years.png" opacity="0.95" class="years-image"/>
+                                                                    </g>
+                                                                </svg>
+                                                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="w-full bg-black py-20 relative overflow-hidden">
+            <div class="max-w-[1920px] w-full mx-auto px-8 relative">
+                <!-- зелёные размытые круги (копия стиля) -->
+                <div class="absolute top-[-700px] -left-[850px] w-[1000px] h-[1000px] rounded-full blur-[600px] opacity-100"
+                     style="background: radial-gradient(circle, #008852, #164125);"></div>
+                <div class="absolute -bottom-[-200px] -right-[800px] w-[760px] h-[760px] rounded-full blur-[600px] opacity-100"
+                     style="background: radial-gradient(circle, #008852, #164125);"></div>
+
+                <div class="relative z-10 text-white max-w-[1920px] mx-auto">
+                    <h2 id="handsectionText" class="text-6xl font-bold text-white mb-18">Преимущества работы со мной</h2>
+
+                    <div id="nextTextGrid" class="grid grid-cols-2 gap-12">
+                        <!-- Левый столбец: 3 блока -->
+                        <div style="display:flex; flex-direction:column; justify-content:flex-start;">
+                            <h3 id="handsectionTextOne" class="text-[32px] font-bold">Глубокое понимание процессов</h3>
+                            <p id="handsectionTextTwo" class="text-[26px] mt-3 text-white/80">От анализа рынка до юридических и инфраструктурных нюансов</p>
+                        </div>
+
+                        <div style="display:flex; flex-direction:column; justify-content:flex-start;">
+                            <h3 id="handsectionTextOne" class="text-[32px] font-bold">Практический опыт</h3>
+                            <p id="handsectionTextTwo" class="text-[26px] mt-3 text-white/80">Взаимодействие с банками, институтами развития, частными <br> инвесторами и госструктурами</p>
+                        </div>
+
+                        <div style="display:flex; flex-direction:column; justify-content:flex-start;">
+                            <h3 id="handsectionTextOne" class="text-[32px] font-bold">Индивидуальный подход</h3>
+                            <p id="handsectionTextTwo" class="text-[26px] mt-3 text-white/80">Каждая модель и стратегия разрабатывается под конкретные <br> цели заказчика</p>
+                        </div>
+
+                        <div style="display:flex; flex-direction:column; justify-content:flex-start;">
+                            <h3 id="handsectionTextOne" class="text-[32px] font-bold">Высокий уровень аналитики</h3>
+                            <p id="handsectionTextTwo" class="text-[26px] mt-3 text-white/80">Расчёты на уровне профессиональных стандартов ЕБРР, UNDP, <br> QazInnovations</p>
+                        </div>
+
+                        <div style="display:flex; flex-direction:column; justify-content:flex-start;">
+                            <h3 id="handsectionTextOne" class="text-[32px] font-bold">Репутация и доверие</h3>
+                            <p id="handsectionTextTwo" class="text-[26px] mt-3 text-white/80">Проекты успешно защищены и одобрены для финансирования</p>
+                        </div>
+
+                        <div style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                            <!-- Картинка внизу правой колонке (по центру) -->
+                            <img src="../../src/img/handleforbus.png" alt="handle" class="w-[620px] max-w-full object-contain" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="w-full bg-white py-20">
+            <div class="max-w-[1920px] w-full mx-auto px-8 pl-65px text-[#323F6F]">
+                <h2 id="resultsSectionFcsTextTwo" class="text-6xl font-bold text-[#323F6F] mb-18">Результаты сотрудничества</h2>
+
+                <div id="resultsSectionFcsContainer" class="grid grid-cols-2 gap-12">
+                    <!-- Левая колонка: 3 пункта -->
+                    <div class="space-y-12">
+                        <div class="flex items-start gap-6">
+                            <div class="w-18 h-18  flex items-center justify-center flex-shrink-0">
+                                <img src="../../src/img/money.svg" alt="money" class="w-18 h-18" />
+                            </div>
+                            <div>
+                                <h3 id="resultsSectionFcsText" class="text-[32px] font-bold">Получение финансирования</h3>
+                                <p id="resultsSectionFcsTextOne" class="text-[26px] mt-2 text-[#323F6F]">Кредиты и инвестиции под готовый бизнес‑план</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6">
+                            <div class="w-18 h-18 flex items-center justify-center flex-shrink-0">
+                                <img src="../../src/img/potter.svg" alt="potter" class="w-18 h-18" />
+                            </div>
+                            <div>
+                                <h3 id="resultsSectionFcsText" class="text-[32px] font-bold">Привлечение инвесторов</h3>
+                                <p id="resultsSectionFcsTextOne" class="text-[26px] mt-2 text-[#323F6F]">Успешное партнёрство и капитал для развития</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6">
+                            <div class="w-18 h-18 flex items-center justify-center flex-shrink-0">
+                                <img src="../../src/img/bag.svg" alt="bag" class="w-18 h-18" />
+                            </div>
+                            <div>
+                                <h3 id="resultsSectionFcsText" class="text-[32px] font-bold">Господдержка</h3>
+                                <p id="resultsSectionFcsTextOne" class="text-[26px] mt-2 text-[#323F6F]">Земельные участки и льготы в индустриальных зонах</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Правая колонка: 2 пункта -->
+                    <div class="space-y-12">
+                        <div class="flex items-start gap-6">
+                            <div class="w-18 h-18 flex items-center justify-center flex-shrink-0">
+                                <img src="../../src/img/flag.svg" alt="flag" class="w-18 h-18" />
+                            </div>
+                            <div>
+                                <h3 id="resultsSectionFcsText" class="text-[32px] font-bold">Эффективная стратегия</h3>
+                                <p id="resultsSectionFcsTextOne" class="text-[26px] mt-2 text-[#323F6F]">Разработка плана развития предприятия</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6">
+                            <div class="w-18 h-18 flex items-center justify-center flex-shrink-0">
+                                <img src="../../src/img/rocket.svg" alt="rocket" class="w-18 h-18" />
+                            </div>
+                            <div>
+                                <h3 id="resultsSectionFcsText" class="text-[32px] font-bold">Запуск производств</h3>
+                                <p id="resultsSectionFcsTextOne" class="text-[26px] mt-2 text-[#323F6F]">Новые инновационные решения на рынке</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+          <footer id="footerEmissionAddNavi" class="relative overflow-hidden py-5">
+    <div class="max-w-[1920px] mx-auto">
+        <div class="flex justify-start items-start text-left p-4">
+
+            <h2 id="footerTextAddBussines" class="text-[32px] font-bold text-white" style="line-height: 120%;"><span class="text-[#25A587] text-[32px] font-bold">Моя цель</span> помочь предпринимателям и&nbsp;инвесторам реализовать их&nbsp;идеи в&nbsp;виде конкретных, финансово обоснованных проектов, способных привлечь капитал, создать рабочие места и&nbsp;внести вклад в&nbsp;развитие экономики Казахстана</h2>
+        </div>
+                        <div class="absolute top-[300px] -left-[50px] w-[600px] h-[600px] rounded-full blur-[600px] opacity-100"
+                     style="background: radial-gradient(circle, #008852, #164125);"></div>
+                <div class="absolute -bottom-[0px] -right-[600px] w-[760px] h-[760px] rounded-full blur-[600px] opacity-100"
+                     style="background: radial-gradient(circle, #008852, #164125);"></div>
+
+    <div class="relative">
+      <!-- Основной контент футера с табличной структурой -->
+      <div class="relative z-10 grid grid-cols-4 gap-0 border-b border-t border-white/10">
+        
+        <!-- Первая колонка - Логотип BIRCH -->
+        <div class="border-r border-white/10 p-8 flex items-center justify-center">
+          <img src="../../src/img/footerBirch.png" alt="BIRCH" class="w-auto h-auto">
+        </div>
+        
+  <!-- Вторая колонка - Контакты -->
+  <div class="p-8 flex items-center justify-center">
+          <div class="text-left">
+            <h3 class="text-xl font-normal text-white mb-6">По вопросам сотрудничества<br>и партнёрства</h3>
+            
+            <div class="space-y-4 text-white/80">
+              <p class="text-base">Казахстан, г. Астана</p>
+              <p class="text-base">vladimir.o@birch.green</p>
+            </div>
+            
+            <h4 class="text-lg font-normal text-white mt-8 mb-4">Присоединяйтесь к нам</h4>
+            <div class="flex">
+              <div onclick="window.open('https://wa.me/77478115927')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
+                <img src="../../src/img/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
+              </div>
+                  <div onclick="window.open('https://www.instagram.com/birch.green/')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
+                    <img src="../../src/img/instaTwo.svg" alt="Instagram" class="w-8 h-8">
+                  </div>
+                                    <div onclick="window.open('https://t.me/Checkout_ibot?start=0499f6b4-f77a-40f8-aff1-f1f3b5ea930b')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
+                    <img src="../../src/img/tg.svg" alt="Telegram" class="w-8 h-8">
+                    </div>
+                                                <div onclick="window.open('https://www.tiktok.com/@mr.rich.media?_t=ZM-902xuZj0Lmd&_r=1')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-hidden="true">
+                    <img src="../../src/img/TikTok.svg" alt="TikTok" class="w-8 h-8">
+                    </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Третья колонка - Навигация -->
+        <div class="border-r border-white/10 p-8 flex items-center justify-center">
+          <div class="text-left">
+            <h3 class="text-xl font-normal text-white mb-6">Навигация<br>по сайту</h3>
+            
+            <!-- Vertical footer navigation (visible on all viewports) -->
+            <nav class="block space-y-4">
+              <a href="../index.html" class="block text-white/80 hover:text-white transition-all text-base">Главная</a>
+              <a href="./Donate.html" class="block text-white/80 hover:text-white transition-all text-base">Взносы</a>
+              <a href="./PlantForest.html" class="block text-white/80 hover:text-white transition-all text-base">CO₂ Оффсет</a>
+              <a href="../../index.html" class="block text-white/80 hover:text-white transition-all text-base">Партнёры</a>
+              <a href="./Project.html" class="block text-white/80 hover:text-white transition-all text-base">Проекты</a>
+              <a href="#footerEmissionAddNavi" class="block text-white/80 hover:text-white transition-all text-base">Контакты</a>
+            </nav>
+                        <a href="./UserAgreement.html" class="user-agreement-link block text-white text-xl font-light" aria-label="Пользовательское соглашение">Пользовательское <br> соглашение</a>
+          </div>
+        </div>
+        
+        <!-- Четвертая колонка - Стрелка вверх -->
+        <div class="p-8 flex items-center justify-center">
+          <button onclick="scrollToTop()" class="w-16 h-16 rounded-full border-[3px] border-white/20 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
+            <img src="../../src/img/arrowUp.svg" alt="Наверх" class="w-6 h-6">
+          </button>
+        </div>
+      </div>
+      
+      <!-- Нижняя часть футера -->
+      <div class="relative z-10 mt-8 pt-6 text-center">
+        <p class="text-[#DAFFF1] text-xl font-normal">© 2025 BIRCH. Все права защищены. </p>
+      </div>
+    </div>
+  </div>
+        </footer>
+
+    <script type="module" src="../main.js"></script>
+</body>
+</html>
+
