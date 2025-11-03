@@ -1689,10 +1689,7 @@ margin-bottom: 30px !important;
 #textOtralslNewTitleOne{
   font-size: 14px !important;
 }
-#circlescfda{
-  width: 400px !important;
-  height: 400px !important;
-}
+
 #newFscContainerRow{
   flex-direction: row !important;
   gap: 20px !important;
