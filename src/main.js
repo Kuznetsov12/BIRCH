@@ -1684,7 +1684,7 @@ const projectsData = {
         title: 'Профессиональная разработка бизнес‑планов',
         description: 'Разработка бизнес‑планов, ТЭО, финансовых моделей и инвестиционных материалов',
         image: '../../src/img/fonNew.png',
-        link: './project-business.html'
+        link: './services.html'
       },
       {
         id: 6,

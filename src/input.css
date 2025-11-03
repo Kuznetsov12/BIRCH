@@ -26,6 +26,9 @@ textarea {
   background-clip: padding-box;
 }
 
+.unbound{
+  font-family: 'Unbounded';
+}
 
 /* Базовые настройки для компонентов партнеров */
 .tablet-partner-image {
@@ -908,6 +911,7 @@ margin-bottom: 30px !important;
 }
 #yearWheelContainerAddNewBussines{
   margin-top: -200px !important;
+  margin-bottom: -250px !important;
 }
   
   /* Секция CO2 калькулятор - адаптация для планшетов */
@@ -1160,7 +1164,7 @@ margin-bottom: 30px !important;
     height: 40px !important;
   }
   #titleHeroProff{
-    font-size: 42px !important;
+    font-size: 60px !important;
     font-weight: 400 !important;
   }
 #containerbussines{
@@ -1220,10 +1224,16 @@ margin-bottom: 30px !important;
   width: 100% !important;
 }
 #fcsblockOneItem{
-  margin-bottom: 28px !important;
+  margin-bottom: 32px !important;
 }
 #newMetaTextBusinOne{
   font-size: 20px !important;
+}
+#newMetaTextBusinOne br{
+  display: none !important;
+}
+#newMetaTextBusinTwo br{
+  display: none !important;
 }
 #newMetaTextBusinTwo{
   font-size: 16px !important;
@@ -1268,6 +1278,7 @@ margin-bottom: 30px !important;
 }
 #textOtralslNewTitleOne{
   font-size: 16px !important;
+  margin-top: 8px !important;
 }
 #textOtralslNewTitle br{
   display: none !important;
@@ -1601,7 +1612,126 @@ margin-bottom: 30px !important;
     top: -10% !important;
     height: 75% !important;
   }
+  #textBusyCycle{
+    font-size: 32px !important;
+  }
+#fc-card-1 img {
+  content: url("./img/shorylump.png");
+}
+#fc-card-2 img{
+  content: url("./img/shortyfile.png");
+}
+#fc-card-3 img{
+  content: url("./img/shortmoney.png");
+}
+#fc-card-4 img{
+  content: url("./img/shortrocket.png");
+}
+#fc-card-4 h3{
+  font-size: 20px !important;
+}
+#fc-card-3 h3{
+  font-size: 20px !important;
+}
+#fullCycleSection{
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+#sectionAddDeveloper{
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+}
+#fc-card-2 h3{
+  font-size: 20px !important;
+}
+#fc-card-1 h3{
+  font-size: 20px !important;
+}
+#fc-card-4 p{
+  font-size: 16px !important;
+}
+#fc-card-3 p{
+  font-size: 16px !important;
+}
+#fc-card-2 p{
+  font-size: 16px !important;
+}
+#fc-card-1 p{
+  font-size: 16px !important;
+}
+#businContainerCardSectionText{
+  font-size: 32px !important;
+  margin-bottom: 32px !important;
+}
+#fcsSectionYearText{
+  font-size: 28px !important;
+}
+#textOtralslNewTitle{
+  font-size: 18px !important;
+}
+#factoryBigTextThree{
+  font-size: 32px !important;
+}
+#yearWheelContainerAddNewBussines{
+  margin-bottom: -150px !important;
+  margin-top: -360px !important;
+}
+#handsectionText{
+  font-size: 34px !important;
+}
+#factorySection{
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+#resultsSectionFcsTextTwo{
+  font-size: 32px !important;
+}
+#textOtralslNewTitleOne{
+  font-size: 14px !important;
+}
+#circlescfda{
+  width: 400px !important;
+  height: 400px !important;
+}
+#newFscContainerRow{
+  flex-direction: row !important;
+  gap: 20px !important;
+}
+#resultsSectionFcsText{
+  font-size: 18px !important;
+}
+#resultsSectionFcsTextOne{
+  font-size: 14px !important;
+}
   
+  #titleHeroProff{
+    font-size: 38px !important;
+  }
+  #headerServicesFsc{
+    padding: 0 !important;
+    padding-top: 12px !important;
+  }
+  #headerServicesFsc nav{
+    padding: 0 !important;
+  }
+  #titlebusProject{
+    font-size: 38px !important;
+  }
+  #busProjectTextOne{
+    font-size: 16px !important;
+  }
+  #busProjectTextTwo{
+    font-size: 16px !important;
+  }
+  #busProjectTextThree{
+    font-size: 16px !important;
+  }
+  #YearFcsTextAddProp{
+    font-size: 48px !important;
+  }
+  #rightcolumnBusi{
+    padding: 0 !important;
+  }
   /* Уменьшаем размер блока с текстом и добавляем отступы по бокам */
   section.w-full.bg-white.min-h-\[700px\] .max-w-\[1000px\] {
     position: relative !important;

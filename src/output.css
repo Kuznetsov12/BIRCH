@@ -222,9 +222,6 @@
   .pointer-events-none {
     pointer-events: none;
   }
-  .visible {
-    visibility: visible;
-  }
   .sr-only {
     position: absolute;
     width: 1px;
@@ -494,9 +491,6 @@
   .left-\[910px\] {
     left: 910px;
   }
-  .isolate {
-    isolation: isolate;
-  }
   .-z-10 {
     z-index: calc(10 * -1);
   }
@@ -674,9 +668,6 @@
   .inline {
     display: inline;
   }
-  .inline-block {
-    display: inline-block;
-  }
   .inline-flex {
     display: inline-flex;
   }
@@ -803,6 +794,9 @@
   .h-\[620px\] {
     height: 620px;
   }
+  .h-\[650px\] {
+    height: 650px;
+  }
   .h-\[760px\] {
     height: 760px;
   }
@@ -862,12 +856,6 @@
   }
   .max-h-screen {
     max-height: 100vh;
-  }
-  .min-h-\[90vh\] {
-    min-height: 90vh;
-  }
-  .min-h-\[95vh\] {
-    min-height: 95vh;
   }
   .min-h-\[700px\] {
     min-height: 700px;
@@ -1624,6 +1612,9 @@
   .p-8 {
     padding: calc(var(--spacing) * 8);
   }
+  .p-12 {
+    padding: calc(var(--spacing) * 12);
+  }
   .px-1 {
     padding-inline: calc(var(--spacing) * 1);
   }
@@ -1842,6 +1833,10 @@
     --tw-font-weight: 400;
     font-weight: 400;
   }
+  .font-\[600\] {
+    --tw-font-weight: 600;
+    font-weight: 600;
+  }
   .font-\[700\] {
     --tw-font-weight: 700;
     font-weight: 700;
@@ -1980,10 +1975,6 @@
   .underline {
     text-decoration-line: underline;
   }
-  .antialiased {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
   .placeholder-transparent {
     &::placeholder {
       color: transparent;
@@ -2054,10 +2045,6 @@
   }
   .blur-\[600px\] {
     --tw-blur: blur(600px);
-    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-  }
-  .grayscale {
-    --tw-grayscale: grayscale(100%);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .filter {
@@ -2485,6 +2472,9 @@ button, input, select, textarea {
   -webkit-appearance: none !important;
   appearance: none !important;
   background-clip: padding-box;
+}
+.unbound {
+  font-family: 'Unbounded';
 }
 .tablet-partner-image {
   display: none;
@@ -3175,6 +3165,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   }
   #yearWheelContainerAddNewBussines {
     margin-top: -200px !important;
+    margin-bottom: -250px !important;
   }
   section.w-full.bg-white.py-20 .flex.items-center {
     flex-direction: column !important;
@@ -3370,7 +3361,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     height: 40px !important;
   }
   #titleHeroProff {
-    font-size: 42px !important;
+    font-size: 60px !important;
     font-weight: 400 !important;
   }
   #containerbussines {
@@ -3429,10 +3420,16 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     width: 100% !important;
   }
   #fcsblockOneItem {
-    margin-bottom: 28px !important;
+    margin-bottom: 32px !important;
   }
   #newMetaTextBusinOne {
     font-size: 20px !important;
+  }
+  #newMetaTextBusinOne br {
+    display: none !important;
+  }
+  #newMetaTextBusinTwo br {
+    display: none !important;
   }
   #newMetaTextBusinTwo {
     font-size: 16px !important;
@@ -3477,6 +3474,7 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   }
   #textOtralslNewTitleOne {
     font-size: 16px !important;
+    margin-top: 8px !important;
   }
   #textOtralslNewTitle br {
     display: none !important;
@@ -3730,6 +3728,125 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
     right: -15% !important;
     top: -10% !important;
     height: 75% !important;
+  }
+  #textBusyCycle {
+    font-size: 32px !important;
+  }
+  #fc-card-1 img {
+    content: url("./img/shorylump.png");
+  }
+  #fc-card-2 img {
+    content: url("./img/shortyfile.png");
+  }
+  #fc-card-3 img {
+    content: url("./img/shortmoney.png");
+  }
+  #fc-card-4 img {
+    content: url("./img/shortrocket.png");
+  }
+  #fc-card-4 h3 {
+    font-size: 20px !important;
+  }
+  #fc-card-3 h3 {
+    font-size: 20px !important;
+  }
+  #fullCycleSection {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  #sectionAddDeveloper {
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
+  }
+  #fc-card-2 h3 {
+    font-size: 20px !important;
+  }
+  #fc-card-1 h3 {
+    font-size: 20px !important;
+  }
+  #fc-card-4 p {
+    font-size: 16px !important;
+  }
+  #fc-card-3 p {
+    font-size: 16px !important;
+  }
+  #fc-card-2 p {
+    font-size: 16px !important;
+  }
+  #fc-card-1 p {
+    font-size: 16px !important;
+  }
+  #businContainerCardSectionText {
+    font-size: 32px !important;
+    margin-bottom: 32px !important;
+  }
+  #fcsSectionYearText {
+    font-size: 28px !important;
+  }
+  #textOtralslNewTitle {
+    font-size: 18px !important;
+  }
+  #factoryBigTextThree {
+    font-size: 32px !important;
+  }
+  #yearWheelContainerAddNewBussines {
+    margin-bottom: -150px !important;
+    margin-top: -360px !important;
+  }
+  #handsectionText {
+    font-size: 34px !important;
+  }
+  #factorySection {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  #resultsSectionFcsTextTwo {
+    font-size: 32px !important;
+  }
+  #textOtralslNewTitleOne {
+    font-size: 14px !important;
+  }
+  #circlescfda {
+    width: 400px !important;
+    height: 400px !important;
+  }
+  #newFscContainerRow {
+    flex-direction: row !important;
+    gap: 20px !important;
+  }
+  #resultsSectionFcsText {
+    font-size: 18px !important;
+  }
+  #resultsSectionFcsTextOne {
+    font-size: 14px !important;
+  }
+  #titleHeroProff {
+    font-size: 38px !important;
+  }
+  #headerServicesFsc {
+    padding: 0 !important;
+    padding-top: 12px !important;
+  }
+  #headerServicesFsc nav {
+    padding: 0 !important;
+  }
+  #titlebusProject {
+    font-size: 38px !important;
+  }
+  #busProjectTextOne {
+    font-size: 16px !important;
+  }
+  #busProjectTextTwo {
+    font-size: 16px !important;
+  }
+  #busProjectTextThree {
+    font-size: 16px !important;
+  }
+  #YearFcsTextAddProp {
+    font-size: 48px !important;
+  }
+  #rightcolumnBusi {
+    padding: 0 !important;
   }
   section.w-full.bg-white.min-h-\[700px\] .max-w-\[1000px\] {
     position: relative !important;
