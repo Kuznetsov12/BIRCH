@@ -2286,12 +2286,6 @@ margin-bottom: 30px !important;
       z-index: 5 !important;
       overflow: hidden !important;
     }
-    #circleServiceNumberOne{
-      width: 500px !important;
-      height: 500px !important;
-      top: 100px !important;
-      left: -250px !important;
-    }
     
     section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-70.-right-35 img {
       width: 700px !important;
@@ -4892,12 +4886,7 @@ tom-popup .leaflet-popup-content-wrapper {
     box-sizing: border-box !important;
     overflow-y: auto !important;
   }
-  #circleServiceNumberTwo{
-    width: 350px !important;
-    height: 350px !important;
-    top: 1700px !important;
-    right: 100px !important;
-  }
+
 
   #containerwithtextservicecard{
     padding: 16px !important;

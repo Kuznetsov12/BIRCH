@@ -2426,6 +2426,11 @@
       top: calc(1/2 * 100%);
     }
   }
+  .md\:block {
+    @media (width >= 48rem) {
+      display: block;
+    }
+  }
   .md\:flex {
     @media (width >= 48rem) {
       display: flex;
@@ -4351,12 +4356,6 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
       justify-content: center !important;
       z-index: 5 !important;
       overflow: hidden !important;
-    }
-    #circleServiceNumberOne {
-      width: 500px !important;
-      height: 500px !important;
-      top: 100px !important;
-      left: -250px !important;
     }
     section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-70.-right-35 img {
       width: 700px !important;
@@ -6434,12 +6433,6 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
       padding-top: 12px !important;
       box-sizing: border-box !important;
       overflow-y: auto !important;
-    }
-    #circleServiceNumberTwo {
-      width: 350px !important;
-      height: 350px !important;
-      top: 1700px !important;
-      right: 100px !important;
     }
     #containerwithtextservicecard {
       padding: 16px !important;
