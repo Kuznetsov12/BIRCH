@@ -102,21 +102,29 @@
                     text-align: center;
                 }
             }
+            
+            /* Стили для зеленых кругов МОБИЛЬНЫХ (для Safari/iOS) */
+            .green-circle-mobile {
+                background: radial-gradient(circle, #008852, #164125);
+                background: -webkit-radial-gradient(circle, #008852, #164125);
+                filter: blur(150px);
+                -webkit-filter: blur(150px);
+            }
         </style>
 </head>
 <body class="overflow-x-hidden bg-black text-white">
     <div class="flex flex-col w-full mx-auto relative overflow-hidden service-bg-wrapper">
-                    <!-- Круги для ДЕСКТОПА -->
+                    <!-- Круги для ДЕСКТОПА (не трогаем) -->
                     <div id="circleServiceNumberOne" class="hidden md:block absolute top-[800px] -left-[750px] w-[1000px] h-[1000px] rounded-full blur-[600px] opacity-100 pointer-events-none"
                  style="background: radial-gradient(circle, #008852, #164125);"></div>
             <div id="circleServiceNumberTwo" class="hidden md:block absolute -bottom-[-500px] -right-[600px] w-[760px] h-[760px] rounded-full blur-[600px] opacity-100 pointer-events-none"
                  style="background: radial-gradient(circle, #008852, #164125);"></div>
             
-            <!-- Круги для МОБИЛЬНЫХ (управляются через input.css) -->
-            <div id="circleServiceMobileOne" class="md:hidden absolute rounded-full blur-[600px] opacity-100 pointer-events-none"
-                 style="background: radial-gradient(circle, #008852, #164125); width: 1000px; height: 1000px; left: -1000px; top: -600px;"></div>
-            <div id="circleServiceMobileTwo" class="md:hidden absolute rounded-full blur-[600px] opacity-100 pointer-events-none"
-                 style="background: radial-gradient(circle, #008852, #164125); width: 650px; height: 650px; top: 1700px; right: 100px;"></div>
+            <!-- Круги для МОБИЛЬНЫХ (с фиксом для iOS) -->
+            <div id="circleServiceMobileOne" class="green-circle-mobile md:hidden absolute rounded-full opacity-100 pointer-events-none"
+                 style="width: 600px; height: 600px; left: -500px; top: -200px;"></div>
+            <div id="circleServiceMobileTwo" class="green-circle-mobile md:hidden absolute rounded-full opacity-100 pointer-events-none"
+                 style="width: 650px; height: 650px; top: 1700px; right: 100px;"></div>
         
         <header class="w-full flex justify-center pt-8 px-4 relative z-10" role="banner">
             <nav class="flex items-center max-w-[1920px] w-full h-[109px] pl-16 pr-4 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
