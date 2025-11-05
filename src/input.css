@@ -2303,6 +2303,21 @@ margin-bottom: 30px !important;
   position: relative !important;
   z-index: 100 !important;
 }
+#btnheaderprojectblockforservice{
+  display: flex !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  font-size: 20px !important;
+  width: 255px !important;
+  height: 64px !important;
+  gap: 0 !important;
+  background-color: white !important;
+  opacity: 100% !important;
+  border: none !important;
+}
+#divWithWhatSappService{
+  margin-bottom: 8px !important;
+}
 #blockwithcreatorImg{
  
   margin-bottom: 32px !important;
