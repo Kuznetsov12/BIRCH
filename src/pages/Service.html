@@ -58,7 +58,27 @@
             /* Мобильные устройства (до 768px) */
             @media (max-width: 767px) {
                 .service-bg-wrapper {
-                    background-position: center top;
+                    background-image: none;
+                    background-color: #000;
+                }
+                
+                .service-bg-wrapper::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 600px;
+                    background-image: url('../../src/img/bgService.png');
+                    background-size: cover;
+                    background-position: top center;
+                    background-repeat: no-repeat;
+                    z-index: 0;
+                }
+                
+                header, main {
+                    position: relative;
+                    z-index: 10;
                 }
             }
             

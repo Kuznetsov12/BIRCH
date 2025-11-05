@@ -6435,6 +6435,12 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
       box-sizing: border-box !important;
       overflow-y: auto !important;
     }
+    #circleServiceNumberTwo {
+      width: 350px !important;
+      height: 350px !important;
+      top: 1700px !important;
+      right: 100px !important;
+    }
     #containerwithtextservicecard {
       padding: 16px !important;
     }
