@@ -105,10 +105,14 @@
             
             /* Стили для зеленых кругов МОБИЛЬНЫХ (для Safari/iOS) */
             .green-circle-mobile {
-                background: radial-gradient(circle, #008852, #164125);
-                background: -webkit-radial-gradient(circle, #008852, #164125);
-                filter: blur(150px);
-                -webkit-filter: blur(150px);
+                background: #008852;
+                background: radial-gradient(circle at center, #008852 0%, #164125 100%);
+                background: -webkit-radial-gradient(circle at center, #008852 0%, #164125 100%);
+                filter: blur(80px);
+                -webkit-filter: blur(80px);
+                will-change: transform;
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
             }
         </style>
 </head>
@@ -121,10 +125,10 @@
                  style="background: radial-gradient(circle, #008852, #164125);"></div>
             
             <!-- Круги для МОБИЛЬНЫХ (с фиксом для iOS) -->
-            <div id="circleServiceMobileOne" class="green-circle-mobile md:hidden absolute rounded-full opacity-100 pointer-events-none"
-                 style="width: 600px; height: 600px; left: -500px; top: -200px;"></div>
-            <div id="circleServiceMobileTwo" class="green-circle-mobile md:hidden absolute rounded-full opacity-100 pointer-events-none"
-                 style="width: 650px; height: 650px; top: 1700px; right: 100px;"></div>
+            <div id="circleServiceMobileOne" class="green-circle-mobile md:hidden absolute rounded-full pointer-events-none"
+                 style="width: 600px; height: 600px; left: -450px; top: -120px; opacity: 0.8; z-index: 1;"></div>
+            <div id="circleServiceMobileTwo" class="green-circle-mobile md:hidden absolute rounded-full pointer-events-none"
+                 style="width: 400px; height: 400px; left: -200px; bottom: -200px; opacity: 0.8; z-index: 1;"></div>
         
         <header class="w-full flex justify-center pt-8 px-4 relative z-10" role="banner">
             <nav class="flex items-center max-w-[1920px] w-full h-[109px] pl-16 pr-4 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
