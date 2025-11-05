@@ -317,11 +317,11 @@
   .top-\[210px\] {
     top: 210px;
   }
-  .top-\[300px\] {
-    top: 300px;
-  }
   .top-\[364px\] {
     top: 364px;
+  }
+  .top-\[800px\] {
+    top: 800px;
   }
   .-right-35 {
     right: calc(var(--spacing) * -35);
@@ -587,8 +587,14 @@
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
   }
+  .mr-3 {
+    margin-right: calc(var(--spacing) * 3);
+  }
   .mr-4 {
     margin-right: calc(var(--spacing) * 4);
+  }
+  .mr-12 {
+    margin-right: calc(var(--spacing) * 12);
   }
   .mr-20 {
     margin-right: calc(var(--spacing) * 20);
@@ -712,6 +718,9 @@
   }
   .h-\[1px\] {
     height: 1px;
+  }
+  .h-\[38px\] {
+    height: 38px;
   }
   .h-\[46px\] {
     height: 46px;
@@ -910,6 +919,9 @@
   }
   .w-\[35\%\] {
     width: 35%;
+  }
+  .w-\[38px\] {
+    width: 38px;
   }
   .w-\[40\%\] {
     width: 40%;
@@ -1408,6 +1420,9 @@
   .border-\[\#BFBFBF\] {
     border-color: #BFBFBF;
   }
+  .border-\[\#D9D9D9\] {
+    border-color: #D9D9D9;
+  }
   .border-black {
     border-color: var(--color-black);
   }
@@ -1470,6 +1485,9 @@
   }
   .bg-\[\#23B77F\] {
     background-color: #23B77F;
+  }
+  .bg-\[\#25A587\] {
+    background-color: #25A587;
   }
   .bg-black {
     background-color: var(--color-black);
@@ -1624,6 +1642,9 @@
   .px-6 {
     padding-inline: calc(var(--spacing) * 6);
   }
+  .px-7 {
+    padding-inline: calc(var(--spacing) * 7);
+  }
   .px-8 {
     padding-inline: calc(var(--spacing) * 8);
   }
@@ -1677,6 +1698,9 @@
   }
   .pt-32 {
     padding-top: calc(var(--spacing) * 32);
+  }
+  .pr-2 {
+    padding-right: calc(var(--spacing) * 2);
   }
   .pr-4 {
     padding-right: calc(var(--spacing) * 4);
@@ -2117,6 +2141,13 @@
   .focus-within\:border-green-500 {
     &:focus-within {
       border-color: var(--color-green-500);
+    }
+  }
+  .hover\:bg-\[\#1f8a6e\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #1f8a6e;
+      }
     }
   }
   .hover\:bg-gray-50 {
@@ -4284,6 +4315,17 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   #percentageText {
     font-size: 44px !important;
   }
+  #blockwithcreator {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    position: relative !important;
+    z-index: 100 !important;
+  }
+  #blockwithcreatorImg {
+    margin-bottom: 32px !important;
+    margin-top: 12px !important;
+  }
 }
 @media (max-width: 767px) {
   section.w-full.py-20.px-8.bg-white {
@@ -5680,6 +5722,36 @@ body.emission-mobile .emission-stats p.text-\[24px\] {
   #forestForm {
     width: 100% !important;
     max-width: none !important;
+  }
+  #divWithWhatSappService {
+    margin-top: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  #btnheaderprojectblockforservice {
+    display: flex !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    font-size: 20px !important;
+    width: 255px !important;
+    height: 64px !important;
+    gap: 0 !important;
+    background-color: white !important;
+    opacity: 100% !important;
+    border: none !important;
+  }
+  #blockwithcreator {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    position: relative !important;
+    z-index: 100 !important;
+  }
+  #blockwithcreatorImg {
+    border-bottom: 2px solid #D9D9D9 !important;
+    margin-bottom: 32px !important;
+    margin-top: 12px !important;
   }
   #forestFormButton {
     width: 100% !important;

@@ -2296,6 +2296,18 @@ margin-bottom: 30px !important;
   #percentageText{
     font-size: 44px !important;
   }
+  #blockwithcreator{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 100 !important;
+}
+#blockwithcreatorImg{
+ 
+  margin-bottom: 32px !important;
+  margin-top: 12px !important;
+}
 }
 
 /* Стили для команды на мобильных */
@@ -4075,6 +4087,36 @@ font-size: 27px !important;
   width: 100% !important;
   max-width: none !important;
 }
+#divWithWhatSappService{
+  margin-top: 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+#btnheaderprojectblockforservice{
+  display: flex !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  font-size: 20px !important;
+  width: 255px !important;
+  height: 64px !important;
+  gap: 0 !important;
+  background-color: white !important;
+  opacity: 100% !important;
+  border: none !important;
+}
+#blockwithcreator{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  position: relative !important;
+  z-index: 100 !important;
+}
+#blockwithcreatorImg{
+  border-bottom: 2px solid #D9D9D9 !important;
+  margin-bottom: 32px !important;
+  margin-top: 12px !important;
+}
 #forestFormButton{
   width: 100% !important;
   max-width: none !important;
@@ -4880,6 +4922,7 @@ tom-popup .leaflet-popup-content-wrapper {
   display: block !important;
 }
 }
+
 @media (min-width: 1300px) and (max-width: 1800px) {
 #factoryBig{
   flex-direction: column !important;
