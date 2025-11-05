@@ -2286,6 +2286,12 @@ margin-bottom: 30px !important;
       z-index: 5 !important;
       overflow: hidden !important;
     }
+    #circleServiceNumberOne{
+      width: 500px !important;
+      height: 500px !important;
+      top: 100px !important;
+      left: -250px !important;
+    }
     
     section.relative.bg-black.overflow-hidden.py-20 .absolute.-bottom-70.-right-35 img {
       width: 700px !important;
@@ -3831,6 +3837,28 @@ margin-bottom: 30px !important;
     height: 400px !important;
     opacity: 0.3 !important;
   }
+  #servicecontainerBirchUsleg{
+    flex-direction: column !important;
+    align-items: start !important;
+  }
+  #servicecontainerBirchUslegImg{
+    margin-left: -9px !important;
+    margin-bottom: -24px !important;
+  }
+  #servicecontainerBirchUslegText{
+    font-size: 24px !important;
+  }
+  #btnserviceWhatspaap{
+    padding-left: 32px !important;
+    padding-right: 0   !important;
+    font-size: 18px !important;
+  }
+  #circleServiceNumberOne{
+    width: 1000px !important;
+    height: 1000px !important;
+    left: -1000px !important;
+    top: -600px !important;
+  }
   #emissionIcon {
     flex-direction: row !important;
     gap: 20px !important;
@@ -4865,6 +4893,21 @@ tom-popup .leaflet-popup-content-wrapper {
     overflow-y: auto !important;
   }
 
+  #containerwithtextservicecard{
+    padding: 16px !important;
+  }
+  #containerwithtextservicecardImgDe{
+    width: 100% !important;
+  }
+  #containerwithtextservicecardImgDe img{
+    width: 100% !important;
+  }
+  #containerwithtextservicecardTitle{
+    font-size: 24px !important;
+  }
+  #containerwithtextservicecardText{
+    font-size: 20px !important;
+  }
   /* ensure inside paddings are slightly reduced on mobile */
   #carbon-modal-content .px-8 {
     padding-left: 16px !important;
@@ -5276,5 +5319,19 @@ tom-popup .leaflet-popup-content-wrapper {
   }
   #emission-check-btn{
     max-width: 250px !important;
+  }
+  #btnserviceWhatspaap{
+    font-size: 18px !important;
+    padding-left: 32px !important;
+  }
+  #containerwithtextservicecardTitle{
+    font-size: 24px !important;
+  }
+  #containerwithtextservicecardText{
+    font-size: 20px !important;
+  }
+  #containerwithtextservicecard{
+    text-align: left !important;
+    padding: 12px !important;
   }
 }

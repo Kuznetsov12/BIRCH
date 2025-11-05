@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сервисы — BIRCH</title>
+    <link rel="icon" type="image/png" href="../../src/img/newheadmainlogo.png">
+    <link rel="apple-touch-icon" href="../../src/img/newheadmainlogo.png">
+    <link href="../../src/output.css" rel="stylesheet">
+    <link href="../../src/custom-bg-fix.css" rel="stylesheet">
+            <style>
+            @font-face {
+                font-family: 'PP Neue Montreal';
+                src: url('../../public/fonts/PPNeueMontreal-Thin.otf') format('opentype');
+                font-weight: 300;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: 'PP Neue Montreal';
+                src: url('../../public/fonts/PPNeueMontreal-Book.otf') format('opentype');
+                font-weight: 400;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: 'PP Neue Montreal';
+                src: url('../../public/fonts/PPNeueMontreal-Medium.otf') format('opentype');
+                font-weight: 600;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: 'PP Neue Montreal';
+                src: url('../../public/fonts/PPNeueMontreal-Bold.otf') format('opentype');
+                font-weight: 700;
+                font-display: swap;
+            }
+            
+            /* Ensure this page uses the PP Neue font */
+            body { font-family: 'PP Neue Montreal', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
+            
+            /* Адаптация фона для планшетов и мобильных */
+            .service-bg-wrapper {
+                background-image: url('../../src/img/bgService.png');
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                min-height: 100vh; /* Минимальная высота = высота viewport */
+            }
+            
+            /* Планшеты (768px - 1024px) */
+            @media (max-width: 1200px) and (min-width: 768px) {
+                .service-bg-wrapper {
+                    background-size: auto 100%; /* Увеличение фона по высоте */
+                    background-position: center center;
+                }
+            }
+            
+            /* Мобильные устройства (до 768px) */
+            @media (max-width: 767px) {
+                .service-bg-wrapper {
+                    background-position: center top;
+                }
+            }
+            
+            /* Адаптация карточек для планшетов (820px - 1200px) */
+            @media (max-width: 1200px) and (min-width: 820px) {
+                .service-card {
+                    flex-direction: column !important;
+                    align-items: center !important;
+                }
+                .service-card .card-image {
+                    width: 100% !important;
+                    margin-bottom: 1.5rem;
+                    display: flex;
+                    justify-content: center;
+                }
+                .service-card .card-image img {
+                    max-width: 250px;
+                }
+                .service-card .card-text {
+                    width: 100% !important;
+                    text-align: center;
+                }
+            }
+        </style>
+</head>
+<body class="overflow-x-hidden bg-black text-white">
+    <div class="flex flex-col w-full mx-auto relative overflow-hidden service-bg-wrapper">
+                    <div id="circleServiceNumberOne" class="absolute top-[800px] -left-[750px] w-[1000px] h-[1000px] rounded-full blur-[600px] opacity-100 pointer-events-none"
+                 style="background: radial-gradient(circle, #008852, #164125);"></div>
+            <div id="circleServiceNumberTwo" class="absolute -bottom-[-500px] -right-[600px] w-[760px] h-[760px] rounded-full blur-[600px] opacity-100 pointer-events-none"
+                 style="background: radial-gradient(circle, #008852, #164125);"></div>
+        
+        <header class="w-full flex justify-center pt-8 px-4 relative z-10" role="banner">
+            <nav class="flex items-center max-w-[1920px] w-full h-[109px] pl-16 pr-4 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg" role="navigation" aria-label="Основная навигация">
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <img onclick="window.location.href='../../index.html'" src="../../src/img/mainLogo.png" alt="Birch - логотип компании" class="h-[46px] w-[144px] cursor-pointer" />
+                </div>
+                <div class="flex-1"></div>
+                <div class="flex items-center gap-6">
+                    <ul class="flex gap-6 text-white text-lg font-light whitespace-nowrap">
+                        <li><a href="../../index.html" class="hover:underline">Главная</a></li>
+                        <li><a href="./Donate.html" class="hover:underline">Взносы</a></li>
+                        <li><a href="./PlantForest.html" class="hover:underline whitespace-nowrap">CO₂ Оффсет</a></li>
+                        <li><a href="../../index.html#partners" class="hover:underline">Партнеры</a></li>
+                        <li><a href="./Project.html" class="hover:underline">Проекты</a></li>
+                        <li><a href="./Service.html" class="font-bold pb-1" aria-current="page">Сервисы</a></li>
+                        <li><a href="../../index.html#contacts" class="hover:underline">Контакты</a></li>
+                    </ul>
+                    <button class="flex items-center partnership-btn bg-white h-[72px] text-[#5F6161] font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-gray-100 whitespace-nowrap flex-shrink-0 desktop-button" aria-label="Оставить заявку на сотрудничество">
+                        Оставить заявку
+                        <span class="ml-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
+                            <img src="../../src/img/arrowdown.svg" alt="" class="w-11 h-11" />
+                        </span>
+                    </button>
+                    
+                    <!-- Бургер-меню для мобильных -->
+                    <div onclick="toggleMobileMenu()" class="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 mobile-menu cursor-pointer" aria-hidden="true">
+                        <img src="../../src/img/burgerMenu.svg" alt="Меню" class="w-5 h-5 rounded-none" />
+                    </div>
+                </div>
+            </nav>
+            
+            <!-- Мобильное меню -->
+            <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-black/95 hidden flex-col items-center justify-center" style="z-index: 99999;">
+                <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
+                <ul class="flex flex-col gap-8 text-white text-xl items-start">
+                    <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Главная</a></li>
+                    <li><a href="./Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Взносы</a></li>
+                    <li><a href="./PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">CO₂ Оффсет</a></li>
+                    <li><a href="../../index.html#partners" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
+                    <li><a href="./Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
+                    <li><a href="./Service.html" class="font-bold text-green-400" aria-current="page" onclick="toggleMobileMenu()">Сервисы</a></li>
+                    <li><a href="../../index.html#contacts" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
+                    <li><a href="./UserAgreement.html" class="user-agreement-link block text-white text-xl font-light" aria-label="Пользовательское соглашение">Пользовательское <br> соглашение</a></li>
+                </ul>
+                <button class="mt-10 partnership-btn bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600 flex items-center gap-3" onclick="toggleMobileMenu()">
+                    <img src="../../src/img/aloneLepestok.svg" alt="" class="w-5 h-5">
+                    Оставить заявку
+                </button>
+            </div>
+        </header>
+
+        <main class="flex-1 p-4 relative overflow-hidden">
+
+
+            <div class=" max-w-[1920px] mx-auto py-20">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div class="py-8 flex flex-col justify-center">
+                        <div id="servicecontainerBirchUsleg" class="flex items-center">
+                            <img id="servicecontainerBirchUslegImg" src="../../src/img/lepestki.svg" alt="" class="h-20 w-20">
+                            <p class="text-[40px] font-medium text-white">BIRCH Service</p>
+                        </div>
+                        <h1 id="servicecontainerBirchUslegText" style="line-height: 100%; letter-spacing: 0%;" class="text-[32px] font-medium text-white mb-8">Услуги для людей и компаний</h1>
+                        <a id="btnserviceWhatspaap" href="https://wa.me/77773332227" target="_blank" class="inline-flex items-center bg-[#23B77F] h-[64px] w-[320px] text-white font-bold text-lg px-8 py-4 rounded-full shadow transition hover:bg-[#1f8a6e] whitespace-nowrap" aria-label="Написать в WhatsApp">
+                            <span class="mr-3 flex items-center justify-center w-11 h-11 rounded-full" aria-hidden="true">
+                                <img src="../../src/img/whatsappSevice.svg" alt="" class="w-11 h-11" />
+                            </span>
+                            Написать в WhatsApp
+                        </a>
+                    </div>
+
+                    <!-- Карточка 1 (фото слева - текст справа) - Ссылка на services.html -->
+                    <a href="./services.html" class="service-card flex items-center gap-6 bg-white/10 backdrop-blur-md rounded-[48px] border border-white/20 p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+                        <div id="containerwithtextservicecardImgDe" class="card-image w-[30%] flex-shrink-0">
+                            <img src="../../src/img/investPage.png" alt="Разработка инвестиционных проектов" class="w-[250px] h-[250px] object-contain rounded-xl">
+                        </div>
+                        <div id="containerwithtextservicecard" class="card-text flex-1">
+                            <h2 id="containerwithtextservicecardTitle" class="text-2xl font-medium text-white mb-4" style="line-height: 100%; letter-spacing: 0%;">Разработка инвестиционных проектов</h2>
+                            <p id="containerwithtextservicecardText" class="text-[20px] font-[400] text-white" style="line-height: 100%; letter-spacing: 0%;">Бизнес‑планов, ТЭО, финансовых моделей и&nbsp;инвестиционных материалов</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Вторая строка: две карточки -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Карточка 2 (фото слева - текст справа) - В разработке -->
+                    <div class="service-card flex items-center gap-6 bg-white/10 backdrop-blur-md rounded-[48px] border border-white/20 p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer" onclick="alert('Страница HELIO Solar скоро появится! Следите за обновлениями.')">
+                        <div id="containerwithtextservicecardImgDe" class="card-image w-[30%] flex-shrink-0">
+                            <img src="../../src/img/firstProjectContract.png" alt="HELIO Solar" class="w-[250px] h-[250px] object-contain rounded-xl">
+                        </div>
+                        <div id="containerwithtextservicecard" class="card-text flex-1">
+                            <h2 id="containerwithtextservicecardTitle" class="text-2xl font-medium text-white mb-4" style="line-height: 100%; letter-spacing: 0%;">HELIO Solar</h2>
+                            <p id="containerwithtextservicecardText" class="text-[20px] font-[400] text-white" style="line-height: 100%; letter-spacing: 0%;">Проектирование и установка солнечных электростанций для бизнеса и частных домов</p>
+                        </div>
+                    </div>
+
+                    <!-- Карточка 3 (фото слева - текст справа) - В разработке -->
+                    <div class="service-card flex items-center gap-6 bg-white/10 backdrop-blur-md rounded-[48px] border border-white/20 p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer" onclick="alert('Страница ECO DEVELOPMENT скоро появится! Следите за обновлениями.')">
+                        <div id="containerwithtextservicecardImgDe" class="card-image w-[30%] flex-shrink-0">
+                            <img src="../../src/img/ecocity.png" alt="ECO DEVELOPMENT CONCEPT&STRATEGIES" class="w-[250px] h-[250px] object-contain rounded-xl">
+                        </div>
+                        <div id="containerwithtextservicecard" class="card-text flex-1">
+                            <h2 id="containerwithtextservicecardTitle" class="text-2xl font-medium text-white mb-4" style="line-height: 100%; letter-spacing: 0%;">ECO DEVELOPMENT CONCEPT&STRATEGIES</h2>
+                            <p id="containerwithtextservicecardText" class="text-[20px] font-[400] text-white" style="line-height: 100%; letter-spacing: 0%;">Создаем концепции, в которых архитектура, технологии и природа находятся в балансе</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Футер секции -->
+                <div class="text-center mt-16">
+                    <p class="text-[#E9FEF9] text-[20px]">© BIRCH Services - все права защищены</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="../../src/main.js"></script>
+</body>
+</html>
