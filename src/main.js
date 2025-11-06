@@ -78,7 +78,7 @@ function createPartnershipModal() {
     <style>
       @media (max-width: 768px) {
         /* fullscreen partnership modal on mobile */
-        #partnership-modal { padding: 0 !important; align-items: flex-start !important; }
+        #partnership-modal { padding: 0 !important; align-items: flex-start !important; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
         #modal-content {
           width: 100vw !important;
           height: 100vh !important;
@@ -87,8 +87,25 @@ function createPartnershipModal() {
           border-radius: 0 !important;
           padding: 0 !important;
           overflow: auto !important;
+          transform: none !important; /* отключаем масштабирование анимацией на мобильных */
         }
         #modal-content .modal-inner { padding: 16px !important; }
+
+        /* Гарантируем минимальный читаемый размер текста внутри модалки */
+        #modal-content, #modal-content .modal-inner, #modal-content .modal-inner * {
+          font-size: 16px !important;
+          line-height: 1.4 !important;
+        }
+        #modal-content input, #modal-content textarea, #modal-content button {
+          font-size: 16px !important;
+        }
+      }
+
+      /* Также применяем минимум шрифта для планшетов, чтобы избежать мелкого текста */
+      @media (max-width: 1024px) {
+        #modal-content, #modal-content .modal-inner, #modal-content .modal-inner * {
+          font-size: 16px !important;
+        }
       }
     </style>
   <div id="partnership-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-2 sm:p-4" style="z-index:1000000;">
