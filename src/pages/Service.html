@@ -159,25 +159,6 @@
                     </div>
                 </div>
             </nav>
-            
-            <!-- Мобильное меню -->
-            <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-black/95 hidden flex-col items-center justify-center" style="z-index: 99999;">
-                <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
-                <ul class="flex flex-col gap-8 text-white text-xl items-start">
-                    <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Главная</a></li>
-                    <li><a href="./Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Взносы</a></li>
-                    <li><a href="./PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">CO₂ Оффсет</a></li>
-                    <li><a href="../../index.html#partners" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
-                    <li><a href="./Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
-                    <li><a href="./Service.html" class="font-bold text-green-400" aria-current="page" onclick="toggleMobileMenu()">Сервисы</a></li>
-                    <li><a href="../../index.html#contacts" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
-                    <li><a href="./UserAgreement.html" class="user-agreement-link block text-white text-xl font-light" aria-label="Пользовательское соглашение">Пользовательское <br> соглашение</a></li>
-                </ul>
-                <button class="mt-10 partnership-btn bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600 flex items-center gap-3" onclick="toggleMobileMenu()">
-                    <img src="../../src/img/aloneLepestok.svg" alt="" class="w-5 h-5">
-                    Оставить заявку
-                </button>
-            </div>
         </header>
 
         <main class="flex-1 p-4 relative overflow-hidden">
@@ -244,6 +225,25 @@
                     <p class="text-[#E9FEF9] text-[20px]">© BIRCH Services - все права защищены</p>
                 </div>
     </div>
+    <!-- Мобильное меню (вынесено из header, чтобы всегда быть поверх контента) -->
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-black/95 hidden flex-col items-center justify-center" style="z-index: 99999;">
+        <button class="absolute top-6 right-6 text-white text-3xl" onclick="toggleMobileMenu()">&times;</button>
+        <ul class="flex flex-col gap-8 text-white text-xl items-start">
+            <li><a href="../../index.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Главная</a></li>
+            <li><a href="./Donate.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Взносы</a></li>
+            <li><a href="./PlantForest.html" class="hover:text-green-400" onclick="toggleMobileMenu()">CO₂ Оффсет</a></li>
+            <li><a href="../../index.html#partners" class="hover:text-green-400" onclick="toggleMobileMenu()">Партнеры</a></li>
+            <li><a href="./Project.html" class="hover:text-green-400" onclick="toggleMobileMenu()">Проекты</a></li>
+            <li><a href="./Service.html" class="font-bold text-green-400" aria-current="page" onclick="toggleMobileMenu()">Сервисы</a></li>
+            <li><a href="../../index.html#contacts" class="hover:text-green-400" onclick="toggleMobileMenu()">Контакты</a></li>
+            <li><a href="./UserAgreement.html" class="user-agreement-link block text-white text-xl font-light" aria-label="Пользовательское соглашение">Пользовательское <br> соглашение</a></li>
+        </ul>
+        <button class="mt-10 partnership-btn bg-[#23B77F] text-white px-6 py-4 rounded-md font-semibold hover:bg-green-600 flex items-center gap-3" onclick="toggleMobileMenu()">
+            <img src="../../src/img/aloneLepestok.svg" alt="" class="w-5 h-5">
+            Оставить заявку
+        </button>
+    </div>
+
     <script type="module" src="../../src/main.js"></script>
 </body>
 </html>

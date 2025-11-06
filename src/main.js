@@ -91,7 +91,7 @@ function createPartnershipModal() {
         #modal-content .modal-inner { padding: 16px !important; }
       }
     </style>
-    <div id="partnership-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-2 sm:p-4">
+  <div id="partnership-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-2 sm:p-4" style="z-index:1000000;">
       <div class="bg-white rounded-3xl w-full max-w-[600px] sm:w-full sm:mx-4 transform transition-all duration-300 scale-95 opacity-0 relative border-2 border-gray-200" id="modal-content">
         <!-- Крестик для закрытия -->
         <button 
