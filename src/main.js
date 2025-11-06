@@ -96,8 +96,18 @@ function createPartnershipModal() {
           font-size: 16px !important;
           line-height: 1.4 !important;
         }
+        /* Оставляем поля ввода и кнопки минимум 16px */
         #modal-content input, #modal-content textarea, #modal-content button {
           font-size: 16px !important;
+        }
+        /* Но позволяeм специфическим заголовкам иметь свои размеры */
+        #modal-content .modal-inner h2 {
+          font-size: 27px !important; /* заголовок */
+          line-height: 1.1 !important;
+        }
+        #modal-content .modal-inner p {
+          font-size: 20px !important; /* подзаголовок / описание */
+          line-height: 1.3 !important;
         }
       }
 
